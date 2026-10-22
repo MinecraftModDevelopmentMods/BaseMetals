@@ -1,4 +1,4 @@
-package zone.moddev.mc.basemetals.compat;
+/* package zone.moddev.mc.basemetals.compat;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,7 +15,7 @@ import net.neoforged.eventbus.api.IEventBus;
 import net.neoforged.registries.DeferredRegister;
 import net.neoforged.registries.RegistryObject;
 
-/** The only code-backed optional integration: Mekanism slurries are registry entries, not data-pack entries. */
+/** The only code-backed optional integration: Mekanism slurries are registry entries, not data-pack entries. * /
 public final class MekanismCompat {
     public static final List<String> PROCESSING_MATERIALS = List.of(
             "adamantine", "antimony", "bismuth", "coldiron",
@@ -43,3 +43,4 @@ public final class MekanismCompat {
         SLURRIES.register(modBus);
     }
 }
+ */

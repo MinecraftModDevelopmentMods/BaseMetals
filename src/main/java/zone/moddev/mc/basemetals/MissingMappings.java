@@ -1,76 +1,62 @@
 package zone.moddev.mc.basemetals;
 
-import zone.moddev.mc.basemetals.content.ModContent;
-import net.neoforged.registries.RegistryObject;
-import net.minecraft.world.level.material.Fluid;
+import java.util.List;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.registries.MissingMappingsEvent;
-import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import zone.moddev.mc.basemetals.content.ModContent;
 
 /** Registry-name aliases used when loading older Minecraft and Base Metals saves. */
-@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class MissingMappings {
     private MissingMappings() {}
 
-    @SubscribeEvent
-    public static void blocks(MissingMappingsEvent event) {
-        for (MissingMappingsEvent.Mapping<Block> mapping : event.getAllMappings(ForgeRegistries.Keys.BLOCKS)) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
-            if (vanillaTarget != null) {
-                Block target = ForgeRegistries.BLOCKS.getValue(vanillaTarget);
-                if (target != null) mapping.remap(target);
-                continue;
-            }
-            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
-            RegistryObject<? extends Block> target = ModContent.blocksById().get(blockTargetPath(mapping.getKey().getPath()));
-            if (target != null) mapping.remap(target.get());
+    public static void registerAliases() {
+        for (String namespace : List.of(BaseMetals.MOD_ID, "mmdlib")) {
+            ModContent.blocksById().keySet().forEach(path -> alias(ModContent.BLOCKS,
+                    namespace, path, id(BaseMetals.MOD_ID, path)));
+            ModContent.itemsById().keySet().forEach(path -> alias(ModContent.ITEMS,
+                    namespace, path, itemTargetId(path)));
+            ModContent.itemsById().keySet().stream().filter(path -> path.endsWith("_door"))
+                    .forEach(path -> alias(ModContent.ITEMS, namespace, path + "_item",
+                            id(BaseMetals.MOD_ID, path)));
+            ModContent.fluids().keySet().forEach(path -> alias(ModContent.FLUIDS,
+                    namespace, path, id(BaseMetals.MOD_ID, path)));
+
+            alias(ModContent.BLOCKS, namespace, "liquid_mercury", id(BaseMetals.MOD_ID, "mercury"));
+            alias(ModContent.ITEMS, namespace, "liquid_mercury", id(BaseMetals.MOD_ID, "mercury_bucket"));
+            alias(ModContent.ITEMS, namespace, "carbon_powder", id(BaseMetals.MOD_ID, "coal_powder"));
+            alias(ModContent.ITEMS, namespace, "iron_nugget", id("minecraft", "iron_nugget"));
+            alias(ModContent.FLUIDS, namespace, "liquid_mercury", id(BaseMetals.MOD_ID, "mercury"));
+        }
+        for (String path : List.of("sign", "wall_sign")) {
+            alias(ModContent.BLOCKS, "minecraft", path, vanilla114Target(id("minecraft", path)));
+        }
+        for (String path : List.of("sign", "rose_red", "cactus_green", "dandelion_yellow")) {
+            alias(ModContent.ITEMS, "minecraft", path, vanilla114Target(id("minecraft", path)));
         }
     }
 
-    @SubscribeEvent
-    public static void items(MissingMappingsEvent event) {
-        for (MissingMappingsEvent.Mapping<Item> mapping : event.getAllMappings(ForgeRegistries.Keys.ITEMS)) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
-            if (vanillaTarget != null) {
-                Item target = ForgeRegistries.ITEMS.getValue(vanillaTarget);
-                if (target != null) mapping.remap(target);
-                continue;
-            }
-            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
-            Item target = ForgeRegistries.ITEMS.getValue(itemTargetId(mapping.getKey().getPath()));
-            if (target != null) mapping.remap(target);
-        }
+    private static ResourceLocation id(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
-    @SubscribeEvent
-    public static void fluids(MissingMappingsEvent event) {
-        for (var mapping : event.getAllMappings(ForgeRegistries.Keys.FLUIDS)) {
-            if (!isLegacyNamespace(mapping.getKey().getNamespace())) continue;
-            var target = ModContent.fluids().get(fluidTargetPath(mapping.getKey().getPath()));
-            if (target != null) mapping.remap(target.source().get());
-        }
-    }
-
-    private static boolean isLegacyNamespace(String namespace) {
-        return BaseMetals.MOD_ID.equals(namespace) || "mmdlib".equals(namespace);
+    private static void alias(DeferredRegister<?> registry, String namespace,
+            String oldPath, ResourceLocation target) {
+        ResourceLocation oldId = id(namespace, oldPath);
+        // Identity aliases would introduce a resolution loop.
+        if (!oldId.equals(target)) registry.addAlias(oldId, target);
     }
 
     public static ResourceLocation vanilla114Target(ResourceLocation oldName) {
         if (!"minecraft".equals(oldName.getNamespace())) return null;
 
-        // Vanilla converts the saved blocks and items, but Forge's registry
-        // snapshot still needs aliases for names retired in 1.14.
+        // Preserve registry aliases for vanilla names retired in 1.14.
         switch (oldName.getPath()) {
-            case "sign": return new ResourceLocation("minecraft", "oak_sign");
-            case "wall_sign": return new ResourceLocation("minecraft", "oak_wall_sign");
-            case "rose_red": return new ResourceLocation("minecraft", "red_dye");
-            case "cactus_green": return new ResourceLocation("minecraft", "green_dye");
-            case "dandelion_yellow": return new ResourceLocation("minecraft", "yellow_dye");
+            case "sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_sign");
+            case "wall_sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_wall_sign");
+            case "rose_red": return ResourceLocation.fromNamespaceAndPath("minecraft", "red_dye");
+            case "cactus_green": return ResourceLocation.fromNamespaceAndPath("minecraft", "green_dye");
+            case "dandelion_yellow": return ResourceLocation.fromNamespaceAndPath("minecraft", "yellow_dye");
             default: return null;
         }
     }
@@ -87,8 +73,8 @@ public final class MissingMappings {
 
     public static ResourceLocation itemTargetId(String path) {
         return "iron_nugget".equals(path)
-                ? new ResourceLocation("minecraft", "iron_nugget")
-                : new ResourceLocation(BaseMetals.MOD_ID, itemTargetPath(path));
+                ? ResourceLocation.fromNamespaceAndPath("minecraft", "iron_nugget")
+                : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));
     }
 
     public static String fluidTargetPath(String name) {

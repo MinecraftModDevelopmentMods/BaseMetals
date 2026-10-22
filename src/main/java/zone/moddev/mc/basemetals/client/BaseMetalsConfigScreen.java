@@ -2,28 +2,27 @@ package zone.moddev.mc.basemetals.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.FormattedCharSequence;
 
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.resources.language.I18n;
 
-import net.neoforged.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ConfigEdits;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
-/** The same screen is used by Forge's Mods list and OreSpawn's configuration cog. */
+/** The same screen is used by NeoForge's Mods list and OreSpawn's configuration cog. */
 public final class BaseMetalsConfigScreen extends Screen {
     private static final String PREFIX = "config.basemetals.";
     private static final String[] OPTIONS = {
             "specialEffects", "starsteelRegeneration", "mercuryImmersionEffects", "villagerTrades"
     };
-    private static final ForgeConfigSpec.BooleanValue[] VALUES = {
+    private static final ModConfigSpec.BooleanValue[] VALUES = {
             BaseMetalsConfig.SPECIAL_EFFECTS, BaseMetalsConfig.STARSTEEL_REGENERATION,
             BaseMetalsConfig.MERCURY_EFFECTS, BaseMetalsConfig.VILLAGER_TRADES
     };
@@ -119,10 +118,9 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(matrices);
-        drawCenteredString(matrices, font, title, width / 2, 12, 0xFFFFFF);
-        super.render(matrices, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
 
         for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
             if (child instanceof OptionButton && ((OptionButton) child).isHoveredOrFocused()) {
@@ -134,7 +132,7 @@ public final class BaseMetalsConfigScreen extends Screen {
                         help.addAll(font.split(net.minecraft.network.chat.Component.translatable(edits.mode().translationKey() + ".description"), 280));
                         help.addAll(font.split(net.minecraft.network.chat.Component.translatable(PREFIX + "restart"), 280));
                     }
-                    renderTooltip(matrices, help, mouseX, mouseY);
+                    graphics.renderTooltip(font, help, mouseX, mouseY);
                 }
             }
         }

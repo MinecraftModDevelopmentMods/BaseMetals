@@ -40,6 +40,7 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -407,12 +408,14 @@ public final class ModContent {
                 hardness, strength, magic, colour, false));
     }
 
-    @SuppressWarnings("unchecked")
     private static void registerFluid(String name, int colour, boolean mercury) {
-        DeferredHolder<Fluid, BaseFlowingFluid.Source>[] source = new DeferredHolder[1];
-        DeferredHolder<Fluid, BaseFlowingFluid.Flowing>[] flowing = new DeferredHolder[1];
-        DeferredHolder<Block, LiquidBlock>[] block = new DeferredHolder[1];
-        DeferredHolder<Item, ? extends Item>[] bucket = new DeferredHolder[1];
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, name);
+        DeferredHolder<Fluid, BaseFlowingFluid.Source> source = DeferredHolder.create(Registries.FLUID, id);
+        DeferredHolder<Fluid, BaseFlowingFluid.Flowing> flowing = DeferredHolder.create(
+                Registries.FLUID, id.withPrefix("flowing_"));
+        DeferredHolder<Block, MoltenMetalBlock> block = DeferredHolder.create(Registries.BLOCK, id);
+        DeferredHolder<Item, BaseMetalBucketItem> bucket = DeferredHolder.create(
+                Registries.ITEM, id.withSuffix("_bucket"));
         ResourceLocation still = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_still" : "block/molten_metal_still");
         ResourceLocation flow = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
@@ -424,24 +427,23 @@ public final class ModContent {
                         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
                         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA), still, flow, colour));
         BaseFlowingFluid.Properties properties = new BaseFlowingFluid.Properties(
-                type, () -> source[0].get(), () -> flowing[0].get())
-                .bucket(() -> bucket[0].get())
-                .block(() -> block[0].get())
+                type, source, flowing)
+                .bucket(bucket)
+                .block(block)
                 .slopeFindDistance(2)
                 .levelDecreasePerBlock(2)
                 .tickRate(30)
                 .explosionResistance(100.0F);
-        source[0] = FLUIDS.register(name, () -> new BaseFlowingFluid.Source(properties));
-        flowing[0] = FLUIDS.register("flowing_" + name, () -> new BaseFlowingFluid.Flowing(properties));
-        block[0] = BLOCKS.register(name, () -> new MoltenMetalBlock(() -> source[0].get(),
-                BlockBehaviour.Properties.of().mapColor(MapColor.LAVA).noCollission().strength(100.0F).noLootTable(), mercury));
-        BLOCKS_BY_ID.put(name, block[0]);
+        FLUIDS.register(name, () -> new BaseFlowingFluid.Source(properties));
+        FLUIDS.register("flowing_" + name, () -> new BaseFlowingFluid.Flowing(properties));
+        registerBlock(name, () -> new MoltenMetalBlock(source,
+                BlockBehaviour.Properties.of().mapColor(MapColor.FIRE).noCollission().strength(100.0F).noLootTable(), mercury), false);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.
-        registerItem(name, () -> new BlockItem(block[0].get(), new Item.Properties()));
-        bucket[0] = registerItem(name + "_bucket", () -> new BaseMetalBucketItem(() -> source[0].get(),
+        registerItem(name, () -> new BlockItem(block.get(), new Item.Properties()));
+        registerItem(name + "_bucket", () -> new BaseMetalBucketItem(source,
                 new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
-        FLUID_CONTENT.put(name, new FluidContent(source[0], flowing[0], block[0], bucket[0]));
+        FLUID_CONTENT.put(name, new FluidContent(source, flowing, block, bucket));
     }
 
     private static DeferredHolder<Block, ? extends Block> registerAnvil(String id, BlockBehaviour.Properties properties) {

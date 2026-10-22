@@ -1,4 +1,4 @@
-package zone.moddev.mc.basemetals.compat;
+/* package zone.moddev.mc.basemetals.compat;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
-/** Filters bundled material stats after Tinkers loads them and before login sync. */
+/** Filters bundled material stats after Tinkers loads them and before login sync. * /
 public final class TinkersCompat {
     private TinkersCompat() {}
 
@@ -55,3 +55,4 @@ public final class TinkersCompat {
                 .anyMatch(resource -> !bundledPack.equals(resource.sourcePackId()));
     }
 }
+ */

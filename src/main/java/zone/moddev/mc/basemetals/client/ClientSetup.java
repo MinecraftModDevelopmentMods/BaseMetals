@@ -16,12 +16,15 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.client.event.EntityRenderersEvent;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
-@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientSetup {
     private ClientSetup() {}
 
@@ -33,10 +36,9 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        net.neoforged.fml.ModLoadingContext.get().registerExtensionPoint(
-                net.neoforged.client.ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new net.neoforged.client.ConfigScreenHandler.ConfigScreenFactory(
-                        (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
+        ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow()
+                .registerExtensionPoint(IConfigScreenFactory.class,
+                        () -> (container, parent) -> new BaseMetalsConfigScreen(parent));
         event.enqueueWork(() -> {
             zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(
                     BaseMetals.MOD_ID, BaseMetalsConfigScreen::new);
@@ -54,18 +56,18 @@ public final class ClientSetup {
             ModContent.itemsById().values().forEach(entry -> {
                 net.minecraft.world.item.Item item = entry.get();
                 if (item instanceof MaterialItems.Bow || item instanceof MaterialItems.Crossbow) {
-                    ItemProperties.register(item, new ResourceLocation("pull"), (stack, level, user, seed) ->
+                    ItemProperties.register(item, ResourceLocation.withDefaultNamespace("pull"), (stack, level, user, seed) ->
                             user == null || user.getUseItem() != stack ? 0.0F
-                                    : (float) (stack.getUseDuration() - user.getUseItemRemainingTicks()) / 20.0F);
-                    ItemProperties.register(item, new ResourceLocation("pulling"), (stack, level, user, seed) ->
+                                    : (float) (stack.getUseDuration(user) - user.getUseItemRemainingTicks()) / 20.0F);
+                    ItemProperties.register(item, ResourceLocation.withDefaultNamespace("pulling"), (stack, level, user, seed) ->
                             user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
                 }
                 if (item instanceof MaterialItems.Shield) {
-                    ItemProperties.register(item, new ResourceLocation("blocking"), (stack, level, user, seed) ->
+                    ItemProperties.register(item, ResourceLocation.withDefaultNamespace("blocking"), (stack, level, user, seed) ->
                             user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
                 }
                 if (item instanceof MaterialItems.FishingRod) {
-                    ItemProperties.register(item, new ResourceLocation("cast"), (stack, level, user, seed) -> {
+                    ItemProperties.register(item, ResourceLocation.withDefaultNamespace("cast"), (stack, level, user, seed) -> {
                         if (user == null) return 0.0F;
                         boolean main = user.getMainHandItem() == stack;
                         boolean off = user.getOffhandItem() == stack;
@@ -74,6 +76,16 @@ public final class ClientSetup {
                     });
                 }
             });
+        });
+    }
+
+    @SubscribeEvent
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        // Bridge the existing MetalFluidType rendering definition to the 1.21
+        // registration event; initializeClient is no longer invoked by the loader.
+        ModContent.FLUID_TYPES.getEntries().forEach(holder -> {
+            var type = holder.get();
+            type.initializeClient(extensions -> event.registerFluidType(extensions, type));
         });
     }
 

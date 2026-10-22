@@ -9,15 +9,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
-import javax.annotation.Nullable;
 
 public final class ScytheItem extends DiggerItem implements MaterialBacked {
     /**
      * The nested calls use the ordinary server break path so every affected
-     * block still fires Forge's protection event and receives vanilla drops.
+     * block still fires NeoForge's protection event and receives vanilla drops.
      * The guard lets those nested calls complete without recursively starting
      * another 3x3 harvest.
      */
@@ -25,42 +25,43 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
     private final MaterialDefinition material;
 
     public ScytheItem(MaterialDefinition material, Properties properties) {
-        super(0.0F, 0.0F, new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE, properties);
+        super(new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE,
+                properties.attributes(DiggerItem.createAttributes(new MaterialTier(material), 0.0F, 0.0F)));
         this.material = material;
     }
 
     @Override public MaterialDefinition baseMetalsMaterial() { return material; }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, BlockPos position, Player player) {
-        if (player.level.isClientSide || !(player instanceof ServerPlayer serverPlayer)
-                || HARVESTING.get()) {
-            return false;
-        }
-        if (!player.level.getBlockState(position).is(ModTags.SCYTHE_HARVESTABLE)) {
-            return false;
+    public boolean mineBlock(ItemStack stack, Level level, BlockState state,
+            BlockPos position, LivingEntity miner) {
+        boolean result = super.mineBlock(stack, level, state, position, miner);
+        if (level.isClientSide || !(miner instanceof ServerPlayer player)
+                || HARVESTING.get() || !state.is(ModTags.SCYTHE_HARVESTABLE) || stack.isEmpty()) {
+            return result;
         }
 
         HARVESTING.set(true);
         try {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
+                    // The ordinary break already handled the center block.
+                    if (dx == 0 && dz == 0) continue;
+                    if (stack.isEmpty()) return result;
                     BlockPos target = position.offset(dx, 0, dz);
-                    if (player.level.getBlockState(target).is(ModTags.SCYTHE_HARVESTABLE)) {
-                        serverPlayer.gameMode.destroyBlock(target);
+                    if (level.getBlockState(target).is(ModTags.SCYTHE_HARVESTABLE)) {
+                        player.gameMode.destroyBlock(target);
                     }
                 }
             }
         } finally {
-            HARVESTING.set(false);
+            HARVESTING.remove();
         }
-        // The centre was included above; prevent the outer break from paying
-        // drops and durability a second time.
-        return true;
+        return result;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level,
+    public void appendHoverText(ItemStack stack, TooltipContext context,
             List<Component> tooltip, TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);
     }

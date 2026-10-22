@@ -39,6 +39,7 @@ import com.google.gson.JsonParser;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
@@ -65,7 +66,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.neoforged.registries.ForgeRegistries;
+import net.minecraft.core.component.DataComponents;
 
 /**
  * Runs Mojang's complete legacy-to-flattening chunk data fixes, then restores the
@@ -148,7 +149,7 @@ public final class Legacy112WorldMigrator {
     public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
         CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
         if (loaded == null) return;
-        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat").toFile());
+        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat"), null);
         CompoundTag data = level.getCompound("Data");
         if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
         int version = data.getInt("DataVersion");
@@ -173,7 +174,7 @@ public final class Legacy112WorldMigrator {
         for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag candidate = NbtIo.readCompressed(file.toFile());
+            CompoundTag candidate = NbtIo.readCompressed(file, null);
             int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
             if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
@@ -346,7 +347,7 @@ public final class Legacy112WorldMigrator {
         ItemMigration converted = ItemMigration.NONE;
         for (Path file : files) {
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag data = NbtIo.readCompressed(file.toFile());
+            CompoundTag data = NbtIo.readCompressed(file, null);
             ItemMigration changed = convertLegacyItems(data);
             if (changed.isEmpty()) continue;
             Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(file));
@@ -372,14 +373,14 @@ public final class Legacy112WorldMigrator {
             return ItemMigration.NONE;
         }
 
-        CompoundTag current = NbtIo.readCompressed(currentFile.toFile());
+        CompoundTag current = NbtIo.readCompressed(currentFile, null);
         CompoundTag currentData = current.getCompound("Data");
         if (currentData.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION
                 || !currentData.contains("Player", Tag.TAG_COMPOUND)) {
             return ItemMigration.NONE;
         }
 
-        CompoundTag legacy = NbtIo.readCompressed(legacyFile.toFile());
+        CompoundTag legacy = NbtIo.readCompressed(legacyFile, null);
         CompoundTag legacyData = legacy.getCompound("Data");
         int legacyVersion = legacyData.getInt("DataVersion");
         if (legacyVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
@@ -423,13 +424,15 @@ public final class Legacy112WorldMigrator {
                         || oldId.getNamespace().equals("mmdlib"))
                         && compound.contains("Count", Tag.TAG_ANY_NUMERIC)) {
                     ResourceLocation targetId = MissingMappings.itemTargetId(oldId.getPath());
-                    net.minecraft.world.item.Item item = ForgeRegistries.ITEMS.getValue(targetId);
+                    net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(targetId);
                     if (item != null && !oldId.equals(targetId)) {
                         compound.putString("id", targetId.toString());
                         convertedItemAliases++;
                     }
                     int damage = compound.getInt("Damage");
-                    if (item != null && item.canBeDepleted() && damage > 0
+                    if (item != null
+                            && item.components().getOrDefault(DataComponents.MAX_DAMAGE, 0) > 0
+                            && damage > 0
                             && compound.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
                         CompoundTag itemTag = compound.contains("tag", Tag.TAG_COMPOUND)
                                 ? compound.getCompound("tag") : new CompoundTag();
@@ -463,7 +466,7 @@ public final class Legacy112WorldMigrator {
 
     private static void writeCompressedAtomically(Path file, CompoundTag data) throws IOException {
         Path temporary = file.resolveSibling(file.getFileName() + ".basemetals.tmp");
-        NbtIo.writeCompressed(data, temporary.toFile());
+        NbtIo.writeCompressed(data, temporary);
         try {
             Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
         } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
@@ -641,8 +644,8 @@ public final class Legacy112WorldMigrator {
         if (oldId == null) throw new IOException("Invalid legacy block registry name " + legacy.name());
         if (oldId.getNamespace().equals(BaseMetals.MOD_ID) || oldId.getNamespace().equals("mmdlib")) {
             String path = MissingMappings.blockTargetPath(oldId.getPath());
-            ResourceLocation targetId = new ResourceLocation(BaseMetals.MOD_ID, path);
-            Block block = ForgeRegistries.BLOCKS.getValue(targetId);
+            ResourceLocation targetId = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path);
+            Block block = BuiltInRegistries.BLOCK.get(targetId);
             if (block == null) throw new IOException("No 1.18 block exists for legacy block " + legacy.name());
             BlockState state = stateForLegacyMetadata(block, legacy.metadata());
             if (block instanceof DoorBlock) {

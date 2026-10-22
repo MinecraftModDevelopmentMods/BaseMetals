@@ -1,6 +1,7 @@
 package zone.moddev.mc.basemetals.content;
 
 import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
 import zone.moddev.mc.basemetals.entity.MaterialProjectile;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
@@ -29,9 +30,16 @@ public final class BaseMetalAmmoItem extends ArrowItem implements MaterialBacked
     public Kind kind() { return kind; }
     @Override public MaterialDefinition baseMetalsMaterial() { return material; }
 
+    /*
+    
+    public AbstractArrow createArrow(Level p_40513_, ItemStack p_40514_, LivingEntity p_40515_, @Nullable ItemStack p_344832_) {
+        return new Arrow(p_40513_, p_40515_, p_40514_.copyWithCount(1), p_344832_);
+    }
+    
+    */
     @Override
-    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-        MaterialProjectile projectile = new MaterialProjectile(entityType.get(), level, shooter, stack);
+    public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter, @Nullable ItemStack firedFrom) {
+        MaterialProjectile projectile = new MaterialProjectile(entityType.get(), level, shooter, stack, firedFrom);
         projectile.setBaseDamage(1.0D + material.baseAttackDamage());
         return projectile;
     }

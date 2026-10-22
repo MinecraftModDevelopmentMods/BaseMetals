@@ -26,6 +26,8 @@ public final class BaseMetals {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public BaseMetals(IEventBus modBus, ModContainer modContainer) {
+        MissingMappings.registerAliases();
+        ModContent.register(modBus);
         modBus.addListener(ModTabs::register);
         modBus.addListener(BaseMetalsConfig::onConfigLoading);
         modBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) -> {

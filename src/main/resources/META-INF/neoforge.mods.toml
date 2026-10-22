@@ -13,49 +13,49 @@ description='''${mod_description}'''
 
 [[dependencies.${mod_id}]]
 modId="orespawn"
-mandatory=true
-versionRange="[4.1.0.119041,5.0.0)"
+type="required"
+versionRange="[4.0,)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="neoforge"
-mandatory=true
-versionRange="${forge_version_range}"
+type="required"
+versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="minecraft"
-mandatory=true
+type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="mekanism"
-mandatory=false
+type="optional"
 versionRange="[10.2,11)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="thermal_expansion"
-mandatory=false
+type="optional"
 versionRange="[9,10)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="tconstruct"
-mandatory=false
+type="optional"
 versionRange="[3.7,4)"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="enderio_machines"
-mandatory=false
+type="optional"
 # Maven qualifier ordering places commit-suffixed 6.0.0 alpha builds below
 # the bare 6.0.0-alpha token. This range admits the intended major-6 alpha
 # line while still rejecting every other Ender IO major version.

@@ -1,38 +1,37 @@
 package zone.moddev.mc.basemetals.entity;
 
+import javax.annotation.Nullable;
+
 import zone.moddev.mc.basemetals.content.ModContent;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.entity.IEntityAdditionalSpawnData;
-import net.neoforged.network.NetworkHooks;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
-public final class MaterialProjectile extends AbstractArrow implements IEntityAdditionalSpawnData, ItemSupplier {
-    private ItemStack ammunition = ItemStack.EMPTY;
-
+public final class MaterialProjectile extends AbstractArrow implements IEntityWithComplexSpawn, ItemSupplier {
     public MaterialProjectile(EntityType<? extends MaterialProjectile> type, Level level) {
         super(type, level);
     }
 
     public MaterialProjectile(EntityType<? extends MaterialProjectile> type, Level level,
             LivingEntity shooter, ItemStack ammunition) {
-        this(type, level);
-        setOwner(shooter);
-        setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
-        this.ammunition = ammunition.copy();
-        this.ammunition.setCount(1);
+        this(type, level, shooter, ammunition, null);
+    }
+
+    public MaterialProjectile(EntityType<? extends MaterialProjectile> type, Level level,
+            LivingEntity shooter, ItemStack ammunition, @Nullable ItemStack weapon) {
+        super(type, shooter, level, ammunition.copyWithCount(1), weapon);
     }
 
     @Override
-    protected ItemStack getPickupItem() {
-        return ammunition.isEmpty() ? ModContent.item("copper_arrow").get().getDefaultInstance() : ammunition.copy();
+    protected ItemStack getDefaultPickupItem() {
+        return ModContent.item("copper_arrow").get().getDefaultInstance();
     }
 
     /** Used by the renderer so arrows and bolts retain their actual ammunition appearance. */
@@ -42,27 +41,24 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(new CompoundTag()));
-    }
-
-    @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        ammunition = tag.contains("Ammunition") ? ItemStack.of(tag.getCompound("Ammunition")) : ItemStack.EMPTY;
+        // New saves use AbstractArrow's "item" field. Accept the former custom
+        // field when it contains a stack in the current component format.
+        if (!tag.contains("item", net.minecraft.nbt.Tag.TAG_COMPOUND)
+                && tag.contains("Ammunition", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            ItemStack.parse(registryAccess(), tag.getCompound("Ammunition"))
+                    .ifPresent(this::setPickupItemStack);
+        }
     }
 
-    @Override public void writeSpawnData(FriendlyByteBuf buffer) { buffer.writeItem(ammunition); }
-    @Override public void readSpawnData(FriendlyByteBuf additionalData) { ammunition = additionalData.readItem(); }
-
-    /**
-     * AbstractArrow's vanilla packet omits Forge additional spawn data. The
-     * Forge packet carries the retained ammunition to the client before the
-     * projectile's first render.
-     */
     @Override
-    public Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+    public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
+        ItemStack.STREAM_CODEC.encode(buffer, getPickupItem());
+    }
+
+    @Override
+    public void readSpawnData(RegistryFriendlyByteBuf buffer) {
+        setPickupItemStack(ItemStack.STREAM_CODEC.decode(buffer));
     }
 }

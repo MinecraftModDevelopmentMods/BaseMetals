@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.Block;
 
 public final class ModTags {
     public static final TagKey<Block> SCYTHE_HARVESTABLE = BlockTags.create(
-            new ResourceLocation(BaseMetals.MOD_ID, "scythe_harvestable"));
+            ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "scythe_harvestable"));
     public static final TagKey<Block> CRACKHAMMER_CRUSHABLE = BlockTags.create(
-            new ResourceLocation(BaseMetals.MOD_ID, "crackhammer_crushable"));
+            ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "crackhammer_crushable"));
 
     private ModTags() {}
 }

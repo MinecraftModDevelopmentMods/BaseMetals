@@ -1,10 +1,10 @@
-package zone.moddev.mc.basemetals.compat;
+/* package zone.moddev.mc.basemetals.compat;
 
 import zone.moddev.mc.basemetals.config.ContentMode;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 import zone.moddev.mc.basemetals.config.MaterialForm;
 
-/** Tinkers head stats enable a whole tool family, not individual tools. */
+/** Tinkers head stats enable a whole tool family, not individual tools. * /
 public final class TinkersContentPolicy {
     private TinkersContentPolicy() {}
 
@@ -23,3 +23,4 @@ public final class TinkersContentPolicy {
         };
     }
 }
+ */

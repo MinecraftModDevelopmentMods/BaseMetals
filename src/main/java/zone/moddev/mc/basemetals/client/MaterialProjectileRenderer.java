@@ -2,8 +2,6 @@ package zone.moddev.mc.basemetals.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 import zone.moddev.mc.basemetals.content.MaterialBacked;
 import zone.moddev.mc.basemetals.entity.MaterialProjectile;
 
@@ -35,16 +33,15 @@ public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProj
     }
 
     @Override
-    public void vertex(Matrix4f pose, Matrix3f normal, VertexConsumer vertices,
+    public void vertex(PoseStack.Pose pose, VertexConsumer vertices,
             int x, int y, int z, float u, float v, int normalX, int normalY,
             int normalZ, int packedLight) {
-        vertices.vertex(pose, x, y, z)
-                .color((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, 0xFF)
-                .uv(u, v)
-                .overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(packedLight)
-                .normal(normal, normalX, normalZ, normalY)
-                .endVertex();
+        vertices.addVertex(pose, x, y, z)
+                .setColor((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, 0xFF)
+                .setUv(u, v)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setLight(packedLight)
+                .setNormal(pose, normalX, normalZ, normalY);
     }
 
     @Override

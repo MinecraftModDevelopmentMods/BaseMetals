@@ -3,25 +3,25 @@ package zone.moddev.mc.basemetals.config;
 import java.io.IOException;
 import java.util.Map;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import net.neoforged.common.ForgeConfigSpec;
+import net.neoforged.fml.config.IConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import zone.moddev.mc.basemetals.BaseMetals;
 
 public final class BaseMetalsConfig {
-    public static final ForgeConfigSpec SPEC;
-    public static final ForgeConfigSpec.BooleanValue SPECIAL_EFFECTS;
-    public static final ForgeConfigSpec.BooleanValue STARSTEEL_REGENERATION;
-    public static final ForgeConfigSpec.BooleanValue MERCURY_EFFECTS;
-    public static final ForgeConfigSpec.BooleanValue VILLAGER_TRADES;
-    public static final ForgeConfigSpec.ConfigValue<String> CONTENT_MODE;
+    public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.BooleanValue SPECIAL_EFFECTS;
+    public static final ModConfigSpec.BooleanValue STARSTEEL_REGENERATION;
+    public static final ModConfigSpec.BooleanValue MERCURY_EFFECTS;
+    public static final ModConfigSpec.BooleanValue VILLAGER_TRADES;
+    public static final ModConfigSpec.ConfigValue<String> CONTENT_MODE;
     private static ContentMode activeMode = ContentMode.HIGH_FANTASY;
     private static boolean modeLoaded;
     private static ModConfig loadedConfig;
 
     static {
-        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.comment("Base Metals gameplay settings. Existing items remain usable in either mode. Change ore generation in OreSpawn.");
         CONTENT_MODE = builder.comment("high_fantasy lets you craft freely with every metal.",
                         "low_fantasy limits what you can make from each material, with no Base Metals bows, crossbows or fishing rods.",
@@ -47,7 +47,7 @@ public final class BaseMetalsConfig {
         if (!ContentMode.isValid(value)) {
             BaseMetals.LOGGER.warn("Unknown Base Metals content mode '{}'; using high_fantasy.", value);
             set(CONTENT_MODE, "high_fantasy");
-            event.getConfig().save();
+            save();
         }
 
         activeMode = ContentMode.parse(value);
@@ -59,29 +59,37 @@ public final class BaseMetalsConfig {
     }
 
     public static void save() {
-        if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
-        loadedConfig.save();
+        requireLoadedConfig().save();
     }
 
     public static void saveEdits(ConfigEdits edits) {
-        if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
-
+        IConfigSpec.ILoadedConfig config = requireLoadedConfig();
+        Map<String, Object> values = Map.of(
+                "contentMode", edits.mode().serializedName(),
+                "specialEffects", edits.option(0),
+                "starsteelRegeneration", edits.option(1),
+                "mercuryImmersionEffects", edits.option(2),
+                "villagerTrades", edits.option(3));
         try {
-            ConfigFileEdits.save(loadedConfig.getConfigData(), loadedConfig.getFullPath(), Map.of(
-                    "contentMode", edits.mode().serializedName(),
-                    "specialEffects", edits.option(0),
-                    "starsteelRegeneration", edits.option(1),
-                    "mercuryImmersionEffects", edits.option(2),
-                    "villagerTrades", edits.option(3)));
-            ((CommentedFileConfig) loadedConfig.getConfigData()).load();
+            ConfigFileEdits.save(config.config(), loadedConfig.getFullPath(), values);
+            // Loaded data is no longer a CommentedFileConfig. Mirror the
+            // successfully saved edits in memory without writing the file again.
+            values.forEach((key, value) -> config.config().set(key, value));
             SPEC.afterReload();
         } catch (IOException exception) {
             throw new IllegalStateException("Could not save Base Metals settings", exception);
         }
     }
 
-    public static <T> void set(ForgeConfigSpec.ConfigValue<T> property, T value) {
-        if (loadedConfig == null) throw new IllegalStateException("Base Metals configuration has not loaded");
+    private static IConfigSpec.ILoadedConfig requireLoadedConfig() {
+        if (loadedConfig == null || loadedConfig.getLoadedConfig() == null) {
+            throw new IllegalStateException("Base Metals configuration has not loaded");
+        }
+        return loadedConfig.getLoadedConfig();
+    }
+
+    public static <T> void set(ModConfigSpec.ConfigValue<T> property, T value) {
+        requireLoadedConfig();
         property.set(value);
     }
 }
