@@ -20,7 +20,7 @@ public final class ModTabs {
     public static final DeferredRegister<CreativeModeTab> REGISTER =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BaseMetals.MOD_ID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BLOCKS = REGISTER.register("creative_tab", () ->
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BLOCKS = REGISTER.register("blocks", () ->
         CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.basemetals.blocks"))
             .icon(() -> ModContent.item("starsteel_block").get().getDefaultInstance())
@@ -30,9 +30,9 @@ public final class ModTabs {
                         output.accept(entry.get());
                     }
             })).build());
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = REGISTER.register("creative_tab", () ->
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = REGISTER.register("items", () ->
         CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.basemetals.blocks"))
+            .title(Component.translatable("itemGroup.basemetals.items"))
             .icon(() -> ModContent.item("starsteel_gear").get().getDefaultInstance())
             .displayItems((parameters, output) -> ModContent.itemsById().forEach((id, entry) -> {
                      // Molten block items are kept for old saves; filled buckets are shown instead.
@@ -40,9 +40,9 @@ public final class ModTabs {
                         output.accept(entry.get());
                     }
             })).build());
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TOOLS = REGISTER.register("creative_tab", () ->
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TOOLS = REGISTER.register("tools", () ->
         CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.basemetals.blocks"))
+            .title(Component.translatable("itemGroup.basemetals.tools"))
             .icon(() -> ModContent.item("starsteel_pickaxe").get().getDefaultInstance())
             .displayItems((parameters, output) -> ModContent.itemsById().forEach((id, entry) -> {
                      // Molten block items are kept for old saves; filled buckets are shown instead.
@@ -50,9 +50,9 @@ public final class ModTabs {
                         output.accept(entry.get());
                     }
             })).build());
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COMBAT = REGISTER.register("creative_tab", () ->
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> COMBAT = REGISTER.register("combat", () ->
         CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.basemetals.blocks"))
+            .title(Component.translatable("itemGroup.basemetals.combat"))
             .icon(() -> ModContent.item("starsteel_sword").get().getDefaultInstance())
             .displayItems((parameters, output) -> ModContent.itemsById().forEach((id, entry) -> {
                      // Molten block items are kept for old saves; filled buckets are shown instead.

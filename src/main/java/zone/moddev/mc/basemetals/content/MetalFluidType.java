@@ -2,6 +2,8 @@ package zone.moddev.mc.basemetals.content;
 
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -19,8 +21,7 @@ public final class MetalFluidType extends FluidType {
         this.colour = 0xFF000000 | colour;
     }
 
-    @Override
-    public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+    public void registerClientExtensions(@Nonnull Consumer<IClientFluidTypeExtensions> consumer) {
         consumer.accept(new IClientFluidTypeExtensions() {
             @Override public ResourceLocation getStillTexture() { return still; }
             @Override public ResourceLocation getFlowingTexture() { return flowing; }

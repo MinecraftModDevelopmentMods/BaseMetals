@@ -2,6 +2,7 @@ package zone.moddev.mc.basemetals.client;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.content.MaterialItems;
+import zone.moddev.mc.basemetals.content.MetalFluidType;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 
@@ -79,11 +80,12 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        // Bridge the existing MetalFluidType rendering definition to the 1.21
-        // registration event; initializeClient is no longer invoked by the loader.
+        // Register each fluid extension once through the current event API.
         ModContent.FLUID_TYPES.getEntries().forEach(holder -> {
             var type = holder.get();
-            type.initializeClient(extensions -> event.registerFluidType(extensions, type));
+            if (type instanceof MetalFluidType metal) {
+                metal.registerClientExtensions(extensions -> event.registerFluidType(extensions, type));
+            }
         });
     }
 

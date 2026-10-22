@@ -44,6 +44,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -149,7 +150,7 @@ public final class Legacy112WorldMigrator {
     public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
         CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
         if (loaded == null) return;
-        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat"), null);
+        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat"), NbtAccounter.unlimitedHeap());
         CompoundTag data = level.getCompound("Data");
         if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
         int version = data.getInt("DataVersion");
@@ -174,7 +175,7 @@ public final class Legacy112WorldMigrator {
         for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag candidate = NbtIo.readCompressed(file, null);
+            CompoundTag candidate = NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap());
             int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
             if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
@@ -347,7 +348,7 @@ public final class Legacy112WorldMigrator {
         ItemMigration converted = ItemMigration.NONE;
         for (Path file : files) {
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag data = NbtIo.readCompressed(file, null);
+            CompoundTag data = NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap());
             ItemMigration changed = convertLegacyItems(data);
             if (changed.isEmpty()) continue;
             Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(file));
@@ -373,14 +374,14 @@ public final class Legacy112WorldMigrator {
             return ItemMigration.NONE;
         }
 
-        CompoundTag current = NbtIo.readCompressed(currentFile, null);
+        CompoundTag current = NbtIo.readCompressed(currentFile, NbtAccounter.unlimitedHeap());
         CompoundTag currentData = current.getCompound("Data");
         if (currentData.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION
                 || !currentData.contains("Player", Tag.TAG_COMPOUND)) {
             return ItemMigration.NONE;
         }
 
-        CompoundTag legacy = NbtIo.readCompressed(legacyFile, null);
+        CompoundTag legacy = NbtIo.readCompressed(legacyFile, NbtAccounter.unlimitedHeap());
         CompoundTag legacyData = legacy.getCompound("Data");
         int legacyVersion = legacyData.getInt("DataVersion");
         if (legacyVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION

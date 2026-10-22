@@ -18,7 +18,7 @@ public final class MoltenMetalBlock extends LiquidBlock {
     private final boolean mercury;
 
     public MoltenMetalBlock(Supplier<? extends FlowingFluid> fluid, Properties properties, boolean mercury) {
-        super((FlowingFluid)fluid, properties);
+        super(fluid.get(), properties);
         this.mercury = mercury;
     }
 

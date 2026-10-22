@@ -16,51 +16,55 @@ import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.event.TickEvent;
-import net.neoforged.event.entity.living.LivingHurtEvent;
-import net.neoforged.event.entity.player.PlayerEvent;
-import net.neoforged.event.AnvilUpdateEvent;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.level.storage.LevelResource;
+
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
-import net.neoforged.event.level.BlockEvent;
-import net.neoforged.eventbus.api.EventPriority;
-import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.event.village.VillagerTradesEvent;
 import zone.moddev.mc.basemetals.trade.BaseMetalsTrades;
 import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
-import net.minecraft.world.level.storage.LevelResource;
-import net.neoforged.event.server.ServerAboutToStartEvent;
 
-/** Forge event handlers for Base Metals. */
+/** NeoForge event handlers for Base Metals. */
 public final class BaseMetalsEvents {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        var recipes = new ArrayList<net.minecraft.world.item.crafting.Recipe<?>>();
+        var recipes = new ArrayList<RecipeHolder<?>>();
 
         for (var recipe : player.server.getRecipeManager().getRecipes()) {
-            if (!recipe.getId().getNamespace().equals(BaseMetals.MOD_ID) || recipe.isSpecial()) continue;
+            if (!recipe.id().getNamespace().equals(BaseMetals.MOD_ID) || recipe.value().isSpecial()) continue;
 
-            var unlock = player.server.getAdvancements().getAdvancement(new ResourceLocation(
-                    BaseMetals.MOD_ID, "recipes/" + recipe.getId().getPath()));
+            var unlock = player.server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
+                    BaseMetals.MOD_ID, "recipes/" + recipe.id().getPath()));
             if (unlock != null && player.getAdvancements().getOrStartProgress(unlock).isDone()) recipes.add(recipe);
         }
 
@@ -87,8 +91,8 @@ public final class BaseMetalsEvents {
         ItemStack held = player.getMainHandItem();
         if (held.getItem() instanceof CrackhammerItem && !player.isCreative()
                 && event.getState().canHarvestBlock(level, event.getPos(), player)) {
-            Optional<CrushingRecipe> recipe = level.getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
-                    new SimpleContainer(new ItemStack(event.getState().getBlock())), level);
+            Optional<RecipeHolder<CrushingRecipe>> recipe = level.getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
+                    new SingleRecipeInput(new ItemStack(event.getState().getBlock())), level);
             if (recipe.isPresent()) {
                 event.setCanceled(true);
                 event.getState().getBlock().playerWillDestroy(level, event.getPos(), event.getState(), player);
@@ -96,23 +100,23 @@ public final class BaseMetalsEvents {
                         true, level.getFluidState(event.getPos()));
                 if (!removed) return;
                 event.getState().getBlock().destroy(level, event.getPos(), event.getState());
-                ItemStack result = recipe.get().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
+                ItemStack result = recipe.get().value().getResultItem(level.registryAccess());
                 ItemEntity entity = new ItemEntity(level, event.getPos().getX() + 0.5D,
                         event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D, result);
                 entity.setDefaultPickUpDelay();
                 level.addFreshEntity(entity);
                 player.awardStat(net.minecraft.stats.Stats.BLOCK_MINED.get(event.getState().getBlock()));
                 player.causeFoodExhaustion(0.005F);
-                held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+                held.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 return;
             }
         }
     }
 
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (event.phase != TickEvent.Phase.END || player.level.isClientSide) return;
+    public void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide) return;
         if (BaseMetalsConfig.STARSTEEL_REGENERATION.get() && player.tickCount % 200 == 0) {
             repairStarsteel(player.getMainHandItem());
             repairStarsteel(player.getOffhandItem());
@@ -163,7 +167,7 @@ public final class BaseMetalsEvents {
         }
         if (count(armor, "mithril") == 4) {
             for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
-                if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
                     player.removeEffect(effect.getEffect());
                 }
             }
@@ -173,13 +177,13 @@ public final class BaseMetalsEvents {
         if (starsteel >= 2) add(player, MobEffects.MOVEMENT_SPEED, Math.min(2, starsteel - 2));
     }
 
-    private static void add(Player player, net.minecraft.world.effect.MobEffect effect, int amplifier) {
+    private static void add(Player player, Holder<net.minecraft.world.effect.MobEffect> effect, int amplifier) {
         player.addEffect(new MobEffectInstance(effect, 45, amplifier, false, false, true));
     }
 
     @SubscribeEvent
-    public void onLivingHurt(LivingHurtEvent event) {
-        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntity().level.isClientSide
+    public void onLivingHurt(LivingIncomingDamageEvent event) {
+        if (!BaseMetalsConfig.SPECIAL_EFFECTS.get() || event.getEntity().level().isClientSide
                 || !(event.getSource().getEntity() instanceof LivingEntity attacker)) return;
         ItemStack held = attacker.getMainHandItem();
         if (!(held.getItem() instanceof MaterialBacked backed) || !(held.getItem() instanceof TieredItem)) return;
@@ -195,7 +199,7 @@ public final class BaseMetalsEvents {
                 if (target.fireImmune()) event.setAmount(event.getAmount() + 3.0F);
             }
             case "mithril" -> {
-                if (target.getMobType() == MobType.UNDEAD) {
+                if (target.getType().is(EntityTypeTags.UNDEAD)) {
                     target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 3));
                     target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 1));
                 }
@@ -212,15 +216,15 @@ public final class BaseMetalsEvents {
         MaterialDefinition upgrade = shieldMaterials().values().stream()
                 .filter(candidate -> candidate.hardness() > current.hardness())
                 .filter(candidate -> event.getRight().is(ItemTags.create(
-                        new ResourceLocation("forge", "plates/" + candidate.name()))))
+                        ResourceLocation.fromNamespaceAndPath("forge", "plates/" + candidate.name()))))
                 .sorted(Comparator.comparingDouble(MaterialDefinition::hardness)
                         .thenComparing(MaterialDefinition::name))
                 .findFirst().orElse(null);
         if (upgrade == null) return;
         if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + upgrade.name() + "_shield")) return;
         ItemStack output = ModContent.item(upgrade.name() + "_shield").get().getDefaultInstance();
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getLeft()), output);
-        int enchantments = EnchantmentHelper.getEnchantments(event.getLeft()).size();
+        output.set(DataComponents.ENCHANTMENTS, event.getLeft().getEnchantments());
+        int enchantments = event.getLeft().getEnchantments().size();
         int cost = shieldUpgradeCost(current, upgrade, enchantments);
         event.setOutput(output);
         event.setCost(cost);
