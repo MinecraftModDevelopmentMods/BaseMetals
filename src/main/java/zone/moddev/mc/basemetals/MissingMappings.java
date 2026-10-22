@@ -1,16 +1,16 @@
 package zone.moddev.mc.basemetals;
 
 import zone.moddev.mc.basemetals.content.ModContent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.registries.RegistryObject;
 import net.minecraft.world.level.material.Fluid;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.MissingMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.registries.MissingMappingsEvent;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.registries.ForgeRegistries;
 
 /** Registry-name aliases used when loading older Minecraft and Base Metals saves. */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)

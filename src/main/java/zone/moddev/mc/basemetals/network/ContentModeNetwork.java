@@ -9,11 +9,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
-import net.minecraftforge.network.HandshakeHandler;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.network.HandshakeHandler;
+import net.neoforged.network.NetworkDirection;
+import net.neoforged.network.NetworkEvent;
+import net.neoforged.network.NetworkRegistry;
+import net.neoforged.network.simple.SimpleChannel;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
 

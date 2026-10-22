@@ -15,11 +15,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.client.event.EntityRenderersEvent;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientSetup {
@@ -33,9 +33,9 @@ public final class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
-                net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory(
+        net.neoforged.fml.ModLoadingContext.get().registerExtensionPoint(
+                net.neoforged.client.ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new net.neoforged.client.ConfigScreenHandler.ConfigScreenFactory(
                         (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
         event.enqueueWork(() -> {
             zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(

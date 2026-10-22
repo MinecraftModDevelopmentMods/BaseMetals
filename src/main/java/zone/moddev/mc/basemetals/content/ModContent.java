@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import zone.moddev.mc.basemetals.BaseMetals;
-import zone.moddev.mc.basemetals.ModTabs;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.entity.ModEntities;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.DoorBlock;
@@ -31,33 +29,34 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 /** All content registration, generated from the immutable catalogues. */
 public final class ModContent {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BaseMetals.MOD_ID);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BaseMetals.MOD_ID);
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BaseMetals.MOD_ID);
-    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, BaseMetals.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, BaseMetals.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, BaseMetals.MOD_ID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, BaseMetals.MOD_ID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, BaseMetals.MOD_ID);
 
-    private static final Map<String, RegistryObject<? extends Block>> BLOCKS_BY_ID = new LinkedHashMap<>();
-    private static final Map<String, RegistryObject<Item>> ITEMS_BY_ID = new LinkedHashMap<>();
+    private static final Map<String, DeferredHolder<Block, ? extends Block>> BLOCKS_BY_ID = new LinkedHashMap<>();
+    private static final Map<String, DeferredHolder<Item, ? extends Item>> ITEMS_BY_ID = new LinkedHashMap<>();
     private static final Map<String, MaterialContent> MATERIALS = new LinkedHashMap<>();
     private static final Map<String, FluidContent> FLUID_CONTENT = new LinkedHashMap<>();
     private static final List<String> HIDDEN_BLOCKS = new ArrayList<>();
 
-    public static final RegistryObject<Block> HUMAN_DETECTOR;
+    public static final DeferredHolder<Block, ? extends Block> HUMAN_DETECTOR;
 
     private static final List<String> MATERIAL_BLOCK_FORMS = List.of(
             "block", "plate", "bars", "door", "trapdoor", "button", "slab", "lever",
@@ -68,12 +67,12 @@ public final class ModContent {
 
     static {
         MaterialCatalogue.ALL.forEach(ModContent::registerMaterial);
-        registerAnvil("stone_anvil", BlockBehaviour.Properties.of(Material.STONE)
+        registerAnvil("stone_anvil", BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                 .sound(SoundType.STONE).strength(5.0F, 10.0F));
         registerAnvil("steel_anvil", metalProperties(MaterialCatalogue.get("steel")));
         registerAnvil("adamantine_anvil", metalProperties(MaterialCatalogue.get("adamantine")));
         HUMAN_DETECTOR = registerBlock("human_detector",
-                () -> new HumanDetectorBlock(BlockBehaviour.Properties.of(Material.METAL)
+                () -> new HumanDetectorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                         .sound(SoundType.METAL).strength(5.0F).noCollission()), true);
         registerVanillaBits();
         MaterialCatalogue.ALL.forEach(material -> registerFluid(material.name(), material.colour(),
@@ -89,6 +88,7 @@ public final class ModContent {
     private ModContent() {}
 
     public static void register(IEventBus bus) {
+        MaterialArmor.REGISTER.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
         FLUIDS.register(bus);
@@ -99,11 +99,11 @@ public final class ModContent {
         return Collections.unmodifiableMap(MATERIALS);
     }
 
-    public static Map<String, RegistryObject<? extends Block>> blocksById() {
+    public static Map<String, DeferredHolder<Block, ? extends Block>> blocksById() {
         return Collections.unmodifiableMap(BLOCKS_BY_ID);
     }
 
-    public static Map<String, RegistryObject<Item>> itemsById() {
+    public static Map<String, DeferredHolder<Item, ? extends Item>> itemsById() {
         return Collections.unmodifiableMap(ITEMS_BY_ID);
     }
 
@@ -115,19 +115,19 @@ public final class ModContent {
         return Collections.unmodifiableMap(FLUID_CONTENT);
     }
 
-    public static RegistryObject<Item> item(String id) {
-        RegistryObject<Item> item = ITEMS_BY_ID.get(id);
+    public static DeferredHolder<Item, ? extends Item> item(String id) {
+        DeferredHolder<Item, ? extends Item> item = ITEMS_BY_ID.get(id);
         if (item == null) throw new IllegalArgumentException("Unknown item " + id);
         return item;
     }
 
     private static void registerMaterial(MaterialDefinition material) {
-        Map<String, RegistryObject<Block>> blocks = new LinkedHashMap<>();
-        Map<String, RegistryObject<Item>> items = new LinkedHashMap<>();
+        Map<String, DeferredHolder<Block, ? extends Block>> blocks = new LinkedHashMap<>();
+        Map<String, DeferredHolder<Item, ? extends Item>> items = new LinkedHashMap<>();
         if (material.hasEquipment()) {
             for (String form : MATERIAL_BLOCK_FORMS) {
                 String id = material.name() + "_" + form;
-                RegistryObject<Block> block = registerMaterialBlock(id, form, material, true);
+                DeferredHolder<Block, ? extends Block> block = registerMaterialBlock(id, form, material, true);
                 blocks.put(form, block);
                 items.put(form, ITEMS_BY_ID.get(id));
             }
@@ -163,7 +163,7 @@ public final class ModContent {
                 Collections.unmodifiableMap(blocks), Collections.unmodifiableMap(items)));
     }
 
-    private static RegistryObject<Block> registerMaterialBlock(String id, String form,
+    private static DeferredHolder<Block, ? extends Block> registerMaterialBlock(String id, String form,
             MaterialDefinition material, boolean item) {
         return registerMaterialBlock(id, form, material, item,
                 () -> metalProperties(material),
@@ -172,20 +172,20 @@ public final class ModContent {
                         : net.minecraft.world.level.block.Blocks.IRON_BLOCK.defaultBlockState());
     }
 
-    private static RegistryObject<Block> registerMaterialBlock(String id, String form,
+    private static DeferredHolder<Block, ? extends Block> registerMaterialBlock(String id, String form,
             MaterialDefinition material, boolean item, Supplier<BlockBehaviour.Properties> properties,
             Supplier<net.minecraft.world.level.block.state.BlockState> stairBase) {
         Supplier<Block> factory = switch (form) {
             case "plate" -> () -> new PlateBlock(properties.get().noOcclusion());
             case "bars" -> () -> new IronBarsBlock(properties.get().noOcclusion().dynamicShape());
-            case "door" -> () -> new DoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
-            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
-            case "button" -> () -> new ButtonBlock(properties.get().noCollission(), BlockSetType.STONE, 20, false);
+            case "door" -> () -> new DoorBlock(doorType(material), properties.get().noOcclusion().dynamicShape());
+            case "trapdoor" -> () -> new TrapDoorBlock(doorType(material), properties.get().noOcclusion().dynamicShape());
+            case "button" -> () -> new ButtonBlock(BlockSetType.STONE, 20, properties.get().noCollission());
             case "slab" -> () -> new SlabBlock(properties.get());
             case "lever" -> () -> new LeverBlock(properties.get().noCollission());
             case "pressure_plate" -> () -> new PressurePlateBlock(
-                    PressurePlateBlock.Sensitivity.MOBS, properties.get(), BlockSetType.STONE);
-            case "stairs" -> () -> new StairBlock(stairBase, properties.get());
+                    BlockSetType.STONE, properties.get());
+            case "stairs" -> () -> new StairBlock(stairBase.get(), properties.get());
             case "wall" -> () -> new WallBlock(properties.get());
             default -> () -> new Block(properties.get());
         };
@@ -196,7 +196,8 @@ public final class ModContent {
         return material.name().equals("quartz") ? BlockSetType.STONE : BlockSetType.IRON;
     }
 
-    private static void registerEquipment(MaterialDefinition material, Map<String, RegistryObject<Item>> items) {
+    private static void registerEquipment(MaterialDefinition material, Map<String, DeferredHolder<Item, ? extends Item>> items) {
+        MaterialArmor.register(material);
         Item.Properties tool = new Item.Properties().durability(material.toolDurability());
         Item.Properties combat = new Item.Properties();
         items.put("pickaxe", registerItem(material.name() + "_pickaxe", () -> new MaterialItems.Pickaxe(material, tool)));
@@ -238,7 +239,7 @@ public final class ModContent {
         items.put("boots", registerArmor(material, EquipmentSlot.FEET));
     }
 
-    private static RegistryObject<Item> registerArmor(MaterialDefinition material, EquipmentSlot slot) {
+    private static DeferredHolder<Item, ? extends Item> registerArmor(MaterialDefinition material, EquipmentSlot slot) {
         String id = material.name() + "_" + switch (slot) {
             case HEAD -> "helmet";
             case CHEST -> "chestplate";
@@ -252,8 +253,8 @@ public final class ModContent {
 
     private static void registerVanillaBits() {
         Map<String, MaterialDefinition> vanilla = vanillaDefinitions();
-        RegistryObject<Block> charcoalBlock = registerBlock("charcoal_block",
-                () -> new Block(BlockBehaviour.Properties.of(Material.STONE)
+        DeferredHolder<Block, ? extends Block> charcoalBlock = registerBlock("charcoal_block",
+                () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                         .sound(SoundType.SAND).requiresCorrectToolForDrops().strength(5.0F)), false);
         registerItem("charcoal_block", () -> new MaterialItems.BurnableBlock(
                 charcoalBlock.get(), 16000, new Item.Properties()));
@@ -269,8 +270,8 @@ public final class ModContent {
                 List.of("button", "slab", "lever", "stairs", "wall"));
         registerVanillaDecorative("quartz", vanilla.get("quartz"),
                 List.of("bars", "door", "trapdoor", "button", "lever", "pressure_plate", "wall"));
-        registerBlock("gold_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.GOLD_BLOCK).noOcclusion()), true);
-        registerBlock("iron_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion()), true);
+        registerBlock("gold_plate", () -> new PlateBlock(BlockBehaviour.Properties.ofLegacyCopy(net.minecraft.world.level.block.Blocks.GOLD_BLOCK).noOcclusion()), true);
+        registerBlock("iron_plate", () -> new PlateBlock(BlockBehaviour.Properties.ofLegacyCopy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion()), true);
 
         for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             registerVanillaCombatAndUtility(vanilla.get(name));
@@ -323,9 +324,9 @@ public final class ModContent {
                 || name.equals("obsidian") || name.equals("quartz");
         boolean lockedGemDoor = gem && !name.equals("quartz")
                 && (form.equals("door") || form.equals("trapdoor"));
-        Material blockMaterial = name.equals("gold") || name.equals("iron") || lockedGemDoor
-                ? Material.METAL : Material.STONE;
-        return BlockBehaviour.Properties.of(blockMaterial)
+        MapColor mapColor = name.equals("gold") || name.equals("iron") || lockedGemDoor
+                ? MapColor.METAL : MapColor.STONE;
+        return BlockBehaviour.Properties.of().mapColor(mapColor)
                 .sound(gem ? SoundType.GLASS : SoundType.METAL)
                 .requiresCorrectToolForDrops()
                 .strength(material.blockHardness(), material.blastResistance());
@@ -344,6 +345,7 @@ public final class ModContent {
     }
 
     private static void registerVanillaCombatAndUtility(MaterialDefinition material) {
+        MaterialArmor.register(material);
         String name = material.name();
         registerItem(name + "_arrow", () -> new BaseMetalAmmoItem(material, BaseMetalAmmoItem.Kind.ARROW,
                 ModEntities.CUSTOM_ARROW::get, new Item.Properties()));
@@ -407,21 +409,21 @@ public final class ModContent {
 
     @SuppressWarnings("unchecked")
     private static void registerFluid(String name, int colour, boolean mercury) {
-        RegistryObject<ForgeFlowingFluid.Source>[] source = new RegistryObject[1];
-        RegistryObject<ForgeFlowingFluid.Flowing>[] flowing = new RegistryObject[1];
-        RegistryObject<LiquidBlock>[] block = new RegistryObject[1];
-        RegistryObject<Item>[] bucket = new RegistryObject[1];
-        ResourceLocation still = new ResourceLocation(BaseMetals.MOD_ID,
+        DeferredHolder<Fluid, BaseFlowingFluid.Source>[] source = new DeferredHolder[1];
+        DeferredHolder<Fluid, BaseFlowingFluid.Flowing>[] flowing = new DeferredHolder[1];
+        DeferredHolder<Block, LiquidBlock>[] block = new DeferredHolder[1];
+        DeferredHolder<Item, ? extends Item>[] bucket = new DeferredHolder[1];
+        ResourceLocation still = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_still" : "block/molten_metal_still");
-        ResourceLocation flow = new ResourceLocation(BaseMetals.MOD_ID,
+        ResourceLocation flow = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_flow" : "block/molten_metal_flow");
-        RegistryObject<FluidType> type = FLUID_TYPES.register(name, () -> new MetalFluidType(
+        DeferredHolder<FluidType, MetalFluidType> type = FLUID_TYPES.register(name, () -> new MetalFluidType(
                 FluidType.Properties.create().density(mercury ? 13594 : 2000)
                         .viscosity(mercury ? 2000 : 10000).temperature(769)
                         .lightLevel(mercury ? 0 : 10).descriptionId("fluid.basemetals." + name)
                         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
                         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA), still, flow, colour));
-        ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
+        BaseFlowingFluid.Properties properties = new BaseFlowingFluid.Properties(
                 type, () -> source[0].get(), () -> flowing[0].get())
                 .bucket(() -> bucket[0].get())
                 .block(() -> block[0].get())
@@ -429,10 +431,10 @@ public final class ModContent {
                 .levelDecreasePerBlock(2)
                 .tickRate(30)
                 .explosionResistance(100.0F);
-        source[0] = FLUIDS.register(name, () -> new ForgeFlowingFluid.Source(properties));
-        flowing[0] = FLUIDS.register("flowing_" + name, () -> new ForgeFlowingFluid.Flowing(properties));
+        source[0] = FLUIDS.register(name, () -> new BaseFlowingFluid.Source(properties));
+        flowing[0] = FLUIDS.register("flowing_" + name, () -> new BaseFlowingFluid.Flowing(properties));
         block[0] = BLOCKS.register(name, () -> new MoltenMetalBlock(() -> source[0].get(),
-                BlockBehaviour.Properties.of(Material.LAVA).noCollission().strength(100.0F).noLootTable(), mercury));
+                BlockBehaviour.Properties.of().mapColor(MapColor.LAVA).noCollission().strength(100.0F).noLootTable(), mercury));
         BLOCKS_BY_ID.put(name, block[0]);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.
@@ -442,13 +444,13 @@ public final class ModContent {
         FLUID_CONTENT.put(name, new FluidContent(source[0], flowing[0], block[0], bucket[0]));
     }
 
-    private static RegistryObject<Block> registerAnvil(String id, BlockBehaviour.Properties properties) {
+    private static DeferredHolder<Block, ? extends Block> registerAnvil(String id, BlockBehaviour.Properties properties) {
         return registerBlock(id, () -> new BaseMetalAnvilBlock(properties), true);
     }
 
-    private static RegistryObject<Block> registerBlock(String id, Supplier<? extends Block> factory, boolean hasItem) {
+    private static DeferredHolder<Block, ? extends Block> registerBlock(String id, Supplier<? extends Block> factory, boolean hasItem) {
         if (BLOCKS_BY_ID.containsKey(id)) throw new IllegalStateException("Duplicate block " + id);
-        RegistryObject<Block> block = BLOCKS.register(id, factory);
+        DeferredHolder<Block, ? extends Block> block = BLOCKS.register(id, factory);
         BLOCKS_BY_ID.put(id, block);
         if (hasItem) {
             registerItem(id, () -> new BlockItem(block.get(), new Item.Properties()));
@@ -456,7 +458,7 @@ public final class ModContent {
         return block;
     }
 
-    private static RegistryObject<Item> registerSimpleMaterialItem(String id, MaterialDefinition material) {
+    private static DeferredHolder<Item, ? extends Item> registerSimpleMaterialItem(String id, MaterialDefinition material) {
         return registerItem(id, () -> new MaterialItems.Basic(material, burnTime(id),
                 new Item.Properties()));
     }
@@ -476,21 +478,21 @@ public final class ModContent {
         return false;
     }
 
-    private static RegistryObject<Item> registerItem(String id, Supplier<? extends Item> factory) {
+    private static DeferredHolder<Item, ? extends Item> registerItem(String id, Supplier<? extends Item> factory) {
         if (ITEMS_BY_ID.containsKey(id)) throw new IllegalStateException("Duplicate item " + id);
-        RegistryObject<Item> item = ITEMS.register(id, factory);
+        DeferredHolder<Item, ? extends Item> item = ITEMS.register(id, factory);
         ITEMS_BY_ID.put(id, item);
         return item;
     }
 
     private static BlockBehaviour.Properties metalProperties(MaterialDefinition material) {
-        return BlockBehaviour.Properties.of(Material.METAL)
+        return BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                 .sound(SoundType.METAL).requiresCorrectToolForDrops()
                 .strength(material.blockHardness(), material.blastResistance());
     }
 
     private static BlockBehaviour.Properties oreProperties(MaterialDefinition material) {
-        return BlockBehaviour.Properties.of(Material.STONE)
+        return BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                 .sound(SoundType.STONE).requiresCorrectToolForDrops()
                 .strength(material.oreHardness(), material.blastResistance());
     }

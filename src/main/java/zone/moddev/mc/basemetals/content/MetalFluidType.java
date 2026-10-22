@@ -3,8 +3,8 @@ package zone.moddev.mc.basemetals.content;
 import java.util.function.Consumer;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.fluids.FluidType;
 
 /** Shared molten-fluid rendering; Forge only requests these extensions on the client. */
 public final class MetalFluidType extends FluidType {

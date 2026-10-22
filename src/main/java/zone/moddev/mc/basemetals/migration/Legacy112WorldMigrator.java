@@ -65,7 +65,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.registries.ForgeRegistries;
 
 /**
  * Runs Mojang's complete legacy-to-flattening chunk data fixes, then restores the
@@ -141,7 +141,7 @@ public final class Legacy112WorldMigrator {
 
     /**
      * The integrated server reads the root Player tag before
-     * {@link net.minecraftforge.event.server.ServerAboutToStartEvent}. Reload
+     * {@link net.neoforged.event.server.ServerAboutToStartEvent}. Reload
      * that one tag from the corrected level.dat so the first upgraded
      * single-player session receives the same item migration as playerdata.
      */

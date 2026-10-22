@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.common.ForgeConfigSpec;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import zone.moddev.mc.basemetals.BaseMetals;
 
 public final class BaseMetalsConfig {

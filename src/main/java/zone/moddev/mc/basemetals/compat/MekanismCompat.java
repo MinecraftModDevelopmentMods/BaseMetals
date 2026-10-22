@@ -11,9 +11,9 @@ import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.slurry.Slurry;
 import mekanism.api.chemical.slurry.SlurryBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.eventbus.api.IEventBus;
+import net.neoforged.registries.DeferredRegister;
+import net.neoforged.registries.RegistryObject;
 
 /** The only code-backed optional integration: Mekanism slurries are registry entries, not data-pack entries. */
 public final class MekanismCompat {

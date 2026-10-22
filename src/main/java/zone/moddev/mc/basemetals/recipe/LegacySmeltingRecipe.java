@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.minecraftforge.common.crafting.CraftingHelper;
+import net.neoforged.common.crafting.CraftingHelper;
 
 /**
  * Furnace recipe serializer which retains the counted outputs supported by the
@@ -24,13 +24,13 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
 
     @Override
     public boolean matches(net.minecraft.world.Container inventory, net.minecraft.world.level.Level world) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
                 && super.matches(inventory, world);
     }
 
     @Override
     public ItemStack assemble(net.minecraft.world.Container inventory, net.minecraft.core.RegistryAccess registries) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
                 ? super.assemble(inventory, registries) : ItemStack.EMPTY;
     }
 

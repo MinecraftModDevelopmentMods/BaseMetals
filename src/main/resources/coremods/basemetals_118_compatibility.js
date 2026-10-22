@@ -8,7 +8,7 @@ var VarInsnNode = Java.type('org.objectweb.asm.tree.VarInsnNode');
 var HOOK = 'zone/moddev/mc/basemetals/migration/LegacyWorldDataHook';
 var NBT = 'Lnet/minecraft/nbt/CompoundTag;';
 var STATE = 'Lnet/minecraft/world/level/block/state/BlockState;';
-var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI');
+var ASMAPI = Java.type('net.neoforged.coremod.api.ASMAPI');
 
 function initializeCoreMod() {
     return {
@@ -64,7 +64,7 @@ function initializeCoreMod() {
                     for (var instruction = method.instructions.getFirst(); instruction !== null;
                             instruction = instruction.getNext()) {
                         if (instruction instanceof MethodInsnNode
-                                && instruction.owner === 'net/minecraftforge/common/ForgeHooks'
+                                && instruction.owner === 'net/neoforged/common/ForgeHooks'
                                 && instruction.name === 'readAdditionalLevelSaveData') readsSnapshot = true;
                     }
                     if (!readsSnapshot) continue;

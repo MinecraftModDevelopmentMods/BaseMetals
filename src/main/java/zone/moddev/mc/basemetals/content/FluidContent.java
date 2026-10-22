@@ -2,12 +2,12 @@ package zone.moddev.mc.basemetals.content;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public record FluidContent(
-        RegistryObject<ForgeFlowingFluid.Source> source,
-        RegistryObject<ForgeFlowingFluid.Flowing> flowing,
-        RegistryObject<LiquidBlock> block,
-        RegistryObject<Item> bucket) {
+        DeferredHolder<BaseFlowingFluid.Source, BaseFlowingFluid.Source> source,
+        DeferredHolder<BaseFlowingFluid.Flowing, BaseFlowingFluid.Flowing> flowing,
+        DeferredHolder<LiquidBlock, LiquidBlock> block,
+        DeferredHolder<Item, Item> bucket) {
 }

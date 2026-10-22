@@ -19,16 +19,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 
 public final class CrackhammerItem extends DiggerItem implements MaterialBacked {
     private final MaterialDefinition material;
 
     public CrackhammerItem(MaterialDefinition material, Properties properties) {
-        super(5.0F + material.baseAttackDamage(), -3.5F, new MaterialTier(material),
+        super(new MaterialTier(material),
                 BlockTags.MINEABLE_WITH_PICKAXE,
-                properties.durability(material.crackhammerDurability()));
+                properties
+                        .durability(material.crackhammerDurability())
+                        .attributes(DiggerItem.createAttributes(
+                                new MaterialTier(material),
+                                5.0F + material.baseAttackDamage(),
+                                -3.5F)));
         this.material = material;
     }
 
@@ -43,12 +48,12 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction action) {
-        return ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(action);
+    public boolean canPerformAction(ItemStack stack, ItemAbility action) {
+        return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(action);
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level,
+@Override
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
             List<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);

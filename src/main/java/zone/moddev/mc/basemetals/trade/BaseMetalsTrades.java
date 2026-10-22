@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.neoforged.event.village.VillagerTradesEvent;
 
 public final class BaseMetalsTrades {
     private BaseMetalsTrades() {}
@@ -59,7 +59,7 @@ public final class BaseMetalsTrades {
             MaterialDefinition material, String... forms) {
         for (String form : forms) {
             Item item = ModContent.item(material.name() + "_" + form).get();
-            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).toString())) continue;
+            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(item).toString())) continue;
             event.getTrades().get(level).add(selling(item, cost));
         }
     }

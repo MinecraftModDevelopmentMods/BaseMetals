@@ -1,53 +1,25 @@
+import groovy.xml.XmlSlurper
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.util.jar.Manifest
+import java.util.zip.ZipFile
+import org.apache.tools.ant.filters.FixCrLfFilter
+
 plugins {
-    id 'java'
     id 'eclipse'
     id 'idea'
+    id 'java-library'
     id 'maven-publish'
-    id 'net.minecraftforge.renamer' version '1.1.5'
-    id 'net.minecraftforge.gradle' version '7.0.34'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
 }
 
-ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
-        'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
-ext.mavenizerCompatibilitySha256 =
-        '341B3FB10ABA6EA7DC612FBE519DC290A1C81867AED5DD320ACD783688AC49DE'
+version = mod_version
+group = mod_group_id
 
-ext.mavenizerFixtureChecksums = [
-        'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
-        'minecraft-source-compatibility.json': '33A3217261EBB8F37D45F50BD2F8CE70B221C014A5C15F4C5F8F9091AD6D1EC8',
-        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': 'D856190DEF5574716C5E4F4379912C451B1F5952B0B111576651A98EECF58544',
-        'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331'
-]
-// Mavenizer runs during configuration, so verify its inputs before configuring Forge.
-mavenizerFixtureChecksums.each { name, expected ->
-    File fixture = file("ci-fixtures/tools/${name}")
-    if (!fixture.isFile() || java.security.MessageDigest.getInstance('SHA-256')
-            .digest(fixture.bytes).encodeHex().toString().toUpperCase(Locale.ROOT) != expected) {
-        throw new GradleException("Missing or altered Mavenizer fixture: ${name}")
-    }
+base {
+    archivesName = 'BaseMetals'
 }
 
-// OreSpawn's sealed Mavenizer fixture fixes duplicate record accessors in
-// Forge 45's decompiled sources. It is build tooling, not part of the mod.
-fgtools.configure('mavenizer') {
-    classpath.from(mavenizerCompatibilityJar)
-    mainClass.set('net.minecraftforge.mcmaven.cli.Main')
-    javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion = JavaLanguageVersion.of(25)
-        vendor = JvmVendorSpec.ADOPTIUM
-    })
-}
-
-version = project.mod_version
-group = project.mod_group
-base.archivesName = 'BaseMetals'
-
-// Eclipse imports this nested checkout under its stable folder name. Keep the
-// generated project and Forge launches aligned with that workspace identity.
-def eclipseWorkspaceProjectName = projectDir.name
-eclipse {
-    project { name = eclipseWorkspaceProjectName }
-}
 def versionParts = project.mod_version.toString().tokenize('.')
 if (versionParts.size() != 4 || !versionParts.every { it ==~ /\d+/ }) {
     throw new GradleException("mod_version must use Major.Minor.Bug.Target numeric form: ${project.mod_version}")
@@ -64,36 +36,17 @@ if (versionParts[3] != expectedTargetVersion) {
 ext.functional_version = versionParts[0..2].join('.')
 ext.display_version = project.mod_version
 ext.release_tag = project.mod_version
+def expectedMavenGroup = 'zone.moddev.mc.basemetals'
+def expectedMavenArtifact = 'BaseMetals'
+def expectedMavenCoordinate = "${expectedMavenGroup}:${expectedMavenArtifact}:${project.version}"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
     }
     withSourcesJar()
     withJavadocJar()
-}
-
-tasks.withType(JavaCompile).configureEach {
-    javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.ADOPTIUM
-    }
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-    options.encoding = 'UTF-8'
-    options.compilerArgs.addAll(['-Xmaxerrs', '1000'])
-}
-
-tasks.named('compileTestJava', JavaCompile) {
-    options.compilerArgs.add('-proc:none')
-}
-
-tasks.withType(Javadoc).configureEach {
-    failOnError = false
-    options.encoding = 'UTF-8'
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addBooleanOption('notimestamp', true)
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
@@ -101,262 +54,1071 @@ tasks.withType(AbstractArchiveTask).configureEach {
     reproducibleFileOrder = true
 }
 
-tasks.withType(Jar).configureEach {
-    includeEmptyDirs = false
+def archiveTextSuffixes = [
+        '.cfg', '.css', '.html', '.info', '.java', '.js', '.json', '.lang',
+        '.mcmeta', '.md', '.properties', '.toml', '.txt', '.xml'
+]
+def archiveTextPatterns = archiveTextSuffixes.collect { "**/*${it}".toString() }
+archiveTextPatterns.addAll(['**/element-list', '**/package-list'])
+def normalizeArchiveLineEndings = { details ->
+    details.filter(FixCrLfFilter,
+            eol: FixCrLfFilter.CrLf.newInstance('lf'),
+            eof: FixCrLfFilter.AddAsisRemove.newInstance('asis'))
 }
 
-// Validation-only client code is kept out of the published mod.  ForgeGradle
-// adds this source set to the client run only when the integrated-world smoke
-// is explicitly requested.
-sourceSets {
-    optionalMods {
-        java.setSrcDirs([])
-        resources.setSrcDirs([])
-        runtimeClasspath += sourceSets.main.output
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+def bundledDocumentationDirectory = layout.projectDirectory.dir(
+        'src/generated/resources/META-INF/basemetals/docs')
+def prepareBundledDocumentation = tasks.register('prepareBundledDocumentation', Sync) {
+    group = 'build'
+    description = 'Stages public documentation as a generated production resource tree.'
+    from 'docs'
+    into bundledDocumentationDirectory
+}
+
+// minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+
+def configureBenchmark = { run, String radius, String repetitions, String center ->
+    if (!providers.gradleProperty('basemetalsBenchmarkMode').isPresent()) {
+        return
     }
-    dataGenerator {
-        java.srcDir 'src/dataGenerator/java'
-        resources.setSrcDirs([])
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+    run.systemProperty 'basemetals.worldgenBenchmarkMode',
+            providers.gradleProperty('basemetalsBenchmarkMode').get()
+    run.systemProperty 'basemetals.worldgenBenchmarkRadius',
+            providers.gradleProperty('basemetalsBenchmarkRadius').getOrElse(radius)
+    run.systemProperty 'basemetals.worldgenBenchmarkRepetitions',
+            providers.gradleProperty('basemetalsBenchmarkRepetitions').getOrElse(repetitions)
+    run.systemProperty 'basemetals.worldgenBenchmarkVanillaOres',
+            providers.gradleProperty('basemetalsBenchmarkVanillaOres').getOrElse('false')
+    run.systemProperty 'basemetals.worldgenBenchmarkOreAudit',
+            providers.gradleProperty('basemetalsBenchmarkOreAudit').getOrElse('false')
+    run.systemProperty 'basemetals.worldgenBenchmarkFluidAudit',
+            providers.gradleProperty('basemetalsBenchmarkFluidAudit').getOrElse('false')
+    if (providers.gradleProperty('basemetalsBenchmarkBiomeAudit').isPresent()) {
+        run.systemProperty 'basemetals.worldgenBenchmarkBiomeAudit',
+                providers.gradleProperty('basemetalsBenchmarkBiomeAudit').get()
     }
-    gameTestValidation {
-        java.srcDir 'src/gametest/java'
-        resources.srcDir 'src/gametest/resources'
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+    if (providers.gradleProperty('basemetalsBenchmarkBlockAudit').isPresent()) {
+        run.systemProperty 'basemetals.worldgenBenchmarkBlockAudit',
+                providers.gradleProperty('basemetalsBenchmarkBlockAudit').get()
     }
-    integratedSmoke {
-        java.srcDir 'src/integratedSmoke/java'
-        resources.setSrcDirs([])
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+    run.systemProperty 'basemetals.worldgenBenchmarkCenterX',
+            providers.gradleProperty('basemetalsBenchmarkCenterX').getOrElse(center)
+    run.systemProperty 'basemetals.worldgenBenchmarkCenterZ',
+            providers.gradleProperty('basemetalsBenchmarkCenterZ').getOrElse(center)
+    run.systemProperty 'basemetals.worldgenBenchmarkCenterStep',
+            providers.gradleProperty('basemetalsBenchmarkCenterStep').getOrElse('64')
+    run.systemProperty 'basemetals.worldgenBenchmarkDimension',
+            providers.gradleProperty('basemetalsBenchmarkDimension').getOrElse('overworld')
+    if (providers.gradleProperty('basemetalsBenchmarkBiomeType').isPresent()) {
+        run.systemProperty 'basemetals.worldgenBenchmarkBiomeType',
+                providers.gradleProperty('basemetalsBenchmarkBiomeType').get()
     }
-    packagedClientSmoke {
-        java.srcDir 'src/packagedClientSmoke/java'
-        resources.setSrcDirs([])
-        compileClasspath += sourceSets.main.output
-        compileClasspath += sourceSets.integratedSmoke.output
-        runtimeClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.integratedSmoke.output
+    run.systemProperty 'basemetals.worldgenBenchmarkStopServer', 'true'
+    if (providers.gradleProperty('worldgenJfrFile').isPresent()) {
+        run.jvmArgument "-XX:StartFlightRecording=filename=${providers.gradleProperty('worldgenJfrFile').get()},settings=profile,dumponexit=true"
     }
-    upgradeSmoke {
-        java.srcDir 'src/upgradeSmoke/java'
-        resources.setSrcDirs([])
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        workingDirectory project.layout.projectDirectory.dir('run')
+        modSource project.sourceSets.main
     }
-    packagedServerSmoke {
-        java.srcDir 'src/packagedServerSmoke/java'
-        resources.setSrcDirs([])
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+
+    client {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+    }
+
+    server {
+        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
+        argument '--nogui'
+        configureBenchmark(delegate, '8', '5', '1024')
+    }
+
+    gameTestServer {
+        systemProperty 'neoforge.enabledGameTestNamespaces',
+                providers.gradleProperty('basemetalsBenchmarkMode').isPresent()
+                        ? "${mod_id},minecraft" : mod_id
+        configureBenchmark(delegate, '4', '3', '256')
+    }
+
+    data {
+        workingDirectory project.layout.projectDirectory.dir('run-data')
+        arguments.addAll '--mod', mod_id, '--all', '--output',
+                file('src/generated/resources/').absolutePath, '--existing',
+                file('src/main/resources/').absolutePath
+    }
+
+    ['Fresh', 'Reload'].each { String phase ->
+        register("surfaceIntegration${phase}") {
+            runType 'server'
+            workingDirectory layout.buildDirectory.dir('surface-integration-run')
+            systemProperty 'forge.logging.console.level', 'info'
+            systemProperty 'surfaceprobe.integrationPhase', phase.toLowerCase(Locale.ROOT)
+            argument '--nogui'
+            modSource project.sourceSets.main
+        }
     }
 }
 
 configurations {
-    optionalModsImplementation.extendsFrom implementation
-    dataGeneratorImplementation.extendsFrom implementation
-    dataGeneratorCompileOnly.extendsFrom compileOnly
-    dataGeneratorRuntimeOnly.extendsFrom runtimeOnly
-    orespawnRelease
-    gameTestValidationImplementation.extendsFrom implementation
-    gameTestValidationCompileOnly.extendsFrom compileOnly
-    gameTestValidationRuntimeOnly.extendsFrom runtimeOnly
-    integratedSmokeImplementation.extendsFrom implementation
-    integratedSmokeCompileOnly.extendsFrom compileOnly
-    integratedSmokeRuntimeOnly.extendsFrom runtimeOnly
-    packagedClientSmokeImplementation.extendsFrom implementation
-    packagedClientSmokeCompileOnly.extendsFrom compileOnly
-    packagedClientSmokeRuntimeOnly.extendsFrom runtimeOnly
-    upgradeSmokeImplementation.extendsFrom implementation
-    upgradeSmokeCompileOnly.extendsFrom compileOnly
-    upgradeSmokeRuntimeOnly.extendsFrom runtimeOnly
-    packagedServerSmokeImplementation.extendsFrom implementation
-    packagedServerSmokeCompileOnly.extendsFrom compileOnly
-    packagedServerSmokeRuntimeOnly.extendsFrom runtimeOnly
+    runtimeClasspath.extendsFrom localRuntime
 }
 
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-minecraft {
-    if (gradle.startParameter.offline) mavenizerArguments.add('--cache-only')
-    // Use the official mappings for the selected Minecraft target.
-    mappings channel: mapping_channel, version: mapping_version
+repositories {
+}
 
-    runs {
-        configureEach {
-            workingDir.convention layout.projectDirectory.dir('run')
-            with(sourceSets.optionalMods) {
-                workingDir.set(layout.projectDirectory.dir('run-optional-mods'))
+def fixtureRoot = file("${rootDir}/ci-fixtures")
+def mineralogy5OracleJar = new File(fixtureRoot,
+        'artifacts/Mineralogy-1.18.2-5.4.0.jar')
+def mineralogy5OracleSha256 =
+        'CCA84E9270585478B08F54BA091AD56AB2CB390386C650ED78B2673DC57403EB'
+
+tasks.register('verifyLegacyFixtures') {
+    group = 'verification'
+    description = 'Verifies the sealed Mineralogy 1.18.2 5.4.0 oracle used only by isolated tests.'
+    inputs.file mineralogy5OracleJar
+    doLast {
+        if (!mineralogy5OracleJar.isFile()) {
+            throw new GradleException("Missing mandatory Mineralogy oracle: ${mineralogy5OracleJar}")
+        }
+        MessageDigest digest = MessageDigest.getInstance('SHA-256')
+        mineralogy5OracleJar.withInputStream { input ->
+            byte[] buffer = new byte[8192]
+            for (int read = input.read(buffer); read >= 0; read = input.read(buffer)) {
+                if (read > 0) digest.update(buffer, 0, read)
             }
-            jvmArgs '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED'
+        }
+        String actual = digest.digest().encodeHex().toString().toUpperCase()
+        if (actual != mineralogy5OracleSha256) {
+            throw new GradleException("Mineralogy oracle checksum mismatch: ${actual}")
+        }
+    }
+}
 
-            // Keep registry diagnostics available in development logs.
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
 
-            systemProperty 'forge.logging.console.level', 'debug'
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.platform:junit-platform-launcher'
+}
 
-            systemProperty 'forge.enabledGameTestNamespaces', mod_id
+tasks.withType(ProcessResources).configureEach {
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
 
-            if (providers.gradleProperty('orespawnBenchmarkMode').isPresent()) {
-                systemProperty 'orespawn.worldgenBenchmarkMode', providers.gradleProperty('orespawnBenchmarkMode').get()
-                systemProperty 'orespawn.worldgenBenchmarkRadius',
-                        providers.gradleProperty('orespawnBenchmarkRadius').getOrElse('8')
-                systemProperty 'orespawn.worldgenBenchmarkRepetitions',
-                        providers.gradleProperty('orespawnBenchmarkRepetitions').getOrElse('5')
-                systemProperty 'orespawn.worldgenBenchmarkVanillaOres',
-                        providers.gradleProperty('orespawnBenchmarkVanillaOres').getOrElse('false')
-                systemProperty 'orespawn.worldgenBenchmarkOreAudit',
-                        providers.gradleProperty('orespawnBenchmarkOreAudit').getOrElse('false')
-                systemProperty 'orespawn.worldgenBenchmarkBlockAudit',
-                        providers.gradleProperty('orespawnBenchmarkBlockAudit').getOrElse('')
-                systemProperty 'orespawn.worldgenBenchmarkCenterX',
-                        providers.gradleProperty('orespawnBenchmarkCenterX').getOrElse('1024')
-                systemProperty 'orespawn.worldgenBenchmarkCenterZ',
-                        providers.gradleProperty('orespawnBenchmarkCenterZ').getOrElse('1024')
-                systemProperty 'orespawn.worldgenBenchmarkCenterStep',
-                        providers.gradleProperty('orespawnBenchmarkCenterStep').getOrElse('64')
-                systemProperty 'orespawn.worldgenBenchmarkDimension',
-                        providers.gradleProperty('orespawnBenchmarkDimension').getOrElse('overworld')
-                systemProperty 'orespawn.worldgenBenchmarkStopServer', 'true'
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
+    }
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    dependsOn prepareBundledDocumentation
+    from('docs/AGENTS.md') {
+        into ''
+        rename { 'AGENTS.md' }
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    archiveClassifier = ''
+    destinationDirectory = layout.buildDirectory.dir('libs')
+    filteringCharset = 'UTF-8'
+    includeEmptyDirs = false
+    filesMatching(archiveTextPatterns, normalizeArchiveLineEndings)
+    manifest {
+        attributes([
+                'Specification-Title'      : 'BaseMetals',
+                'Specification-Vendor'     : 'DShadowWolf',
+                'Specification-Version'    : '1',
+                'Implementation-Title'     : base.archivesName.get(),
+                'Implementation-Version'   : project.version,
+                'Implementation-Vendor'    : 'DShadowWolf',
+                'BaseMetals-API-Version'   : '1',
+                'BaseMetals-Loader'        : 'neoforge',
+                'FMLAT'                    : 'accesstransformer.cfg',
+                'Maven-Artifact'           : expectedMavenCoordinate,
+                'Built-On-Java'            : '21',
+                'Built-On'                 : "${project.minecraft_version}-${project.neo_version}"
+        ])
+    }
+}
+
+tasks.named('sourcesJar', Jar).configure {
+    dependsOn prepareBundledDocumentation
+    filteringCharset = 'UTF-8'
+    includeEmptyDirs = false
+    filesMatching(archiveTextPatterns, normalizeArchiveLineEndings)
+}
+tasks.named('javadocJar', Jar).configure {
+    filteringCharset = 'UTF-8'
+    includeEmptyDirs = false
+    filesMatching(archiveTextPatterns, normalizeArchiveLineEndings)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('javadoc', Javadoc).configure {
+    failOnError = false
+    options.encoding = 'UTF-8'
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addBooleanOption('notimestamp', true)
+}
+
+tasks.named('test', Test).configure {
+    useJUnitPlatform()
+    // Unit tests inspect target files relative to the checkout, but they do
+    // not need NeoForge's rolling runtime files. A console-only logger keeps
+    // them from contending with Eclipse/client logs in this working directory.
+    systemProperty 'log4j.configurationFile', file('src/test/resources/log4j2-test.xml').absolutePath
+    // Loaded only through an isolated URLClassLoader by the parity test. This
+    // is deliberately not a Gradle dependency and cannot leak into Eclipse or
+    // a published BaseMetals jar.
+    dependsOn tasks.named('verifyLegacyFixtures')
+    systemProperty 'basemetals.mineralogy5Oracle', mineralogy5OracleJar.absolutePath
+}
+
+tasks.named('compileTestJava', JavaCompile).configure {
+    dependsOn tasks.named('verifyLegacyFixtures')
+    options.compilerArgs.add('-proc:none')
+}
+
+tasks.register('verifyLegacyOracleIsolation') {
+    group = 'verification'
+    dependsOn tasks.named('verifyLegacyFixtures')
+    doLast {
+        configurations.findAll { it.canBeResolved }.each { configuration ->
+            if (configuration.files.any { it.canonicalFile == mineralogy5OracleJar.canonicalFile }) {
+                throw new GradleException("Mineralogy oracle leaked into ${configuration.name}")
             }
-            if (providers.gradleProperty('worldgenJfrFile').isPresent()) {
-                jvmArgs "-XX:StartFlightRecording=filename=${providers.gradleProperty('worldgenJfrFile').get()},settings=profile,dumponexit=true"
-            }
+        }
+    }
+}
 
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
+// Several registry-focused tests initialize the real global config singleton.
+// Keep that target-native coverage without creating or changing a developer's
+// checkout config as a side effect of `test` or `build`.
+def unitTestWorldgenConfig = file('config/basemetals-worldgen.json')
+def unitTestWorldgenConfigWasPresent = false
+byte[] unitTestWorldgenConfigBytes = null
+tasks.named('test', Test).configure {
+    doFirst {
+        unitTestWorldgenConfigWasPresent = unitTestWorldgenConfig.isFile()
+        unitTestWorldgenConfigBytes = unitTestWorldgenConfigWasPresent
+                ? unitTestWorldgenConfig.bytes : null
+    }
+}
+def preserveDeveloperWorldgenConfig = tasks.register('preserveDeveloperWorldgenConfig') {
+    doLast {
+        if (unitTestWorldgenConfigWasPresent) {
+            byte[] after = unitTestWorldgenConfig.isFile() ? unitTestWorldgenConfig.bytes : null
+            if (after == null || !java.util.Arrays.equals(unitTestWorldgenConfigBytes, after)) {
+                unitTestWorldgenConfig.parentFile.mkdirs()
+                unitTestWorldgenConfig.bytes = unitTestWorldgenConfigBytes
+                throw new GradleException('Unit tests changed config/basemetals-worldgen.json; the original was restored')
+            }
+        } else if (unitTestWorldgenConfig.isFile()) {
+            delete unitTestWorldgenConfig
+        }
+    }
+}
+tasks.named('test') {
+    finalizedBy preserveDeveloperWorldgenConfig
+}
+
+// A NeoForge process is not green merely because it returns exit code zero.
+// The loader can log a worldgen/linkage failure and still shut down normally.
+// NeoForge 21.1 probes the macOS kqueue and Linux epoll transports on Windows.
+// Their bounded DEBUG/Appender stack blocks are harmless when followed by the
+// normal NIO fallback. Do not broaden this to standalone initializer/linkage
+// failures or to any other ERROR/FATAL record.
+
+def runtimeCrashSnapshot = { File runDirectory ->
+    File crashDirectory = new File(runDirectory, 'crash-reports')
+    if (!crashDirectory.isDirectory()) return [] as Set
+    return fileTree(crashDirectory) { include '**/*' }.files
+            .findAll { it.isFile() }.collect { it.absolutePath } as Set
+}
+
+def assertRuntimeLogsClean = { File runDirectory, String context, Set priorCrashes ->
+    File crashDirectory = new File(runDirectory, 'crash-reports')
+    if (crashDirectory.isDirectory()) {
+        def crashes = fileTree(crashDirectory) { include '**/*' }.files
+                .findAll { it.isFile() && !priorCrashes.contains(it.absolutePath) }
+        if (!crashes.isEmpty()) {
+            throw new GradleException("${context} produced crash report ${crashes.first()}")
+        }
+    }
+
+    File logsDirectory = new File(runDirectory, 'logs')
+    if (!logsDirectory.isDirectory()) return
+    def failures = []
+    [new File(logsDirectory, 'latest.log'), new File(logsDirectory, 'debug.log')]
+            .findAll { it.isFile() }.each { File log ->
+        int lineNumber = 0
+        boolean nativeTransportFallback = false
+        log.eachLine('UTF-8') { String line ->
+            lineNumber++
+            boolean nativeTransportStart =
+                    line.contains('[io.ne.ch.kq.KQueue/]: KQueue support is not available') ||
+                    line.contains('[io.ne.ch.ep.Epoll/]: Epoll support is not available')
+            boolean nativeTransportAppender = nativeTransportFallback &&
+                    line.contains('Server thread ERROR An exception occurred processing Appender DebugFile')
+            boolean startsLogRecord = line ==~ /^\[[0-9]{2}:[0-9]{2}:[0-9]{2}\].*/ ||
+                    line ==~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}T.* (?:TRACE|DEBUG|INFO|WARN|ERROR|FATAL) .*/
+            if (startsLogRecord && !nativeTransportStart && !nativeTransportAppender) {
+                nativeTransportFallback = false
+            }
+            if (nativeTransportStart) nativeTransportFallback = true
+            boolean unexpectedSeverity = line ==~ /.*\/(?:ERROR|FATAL)\].*/
+            boolean knownNoise = nativeTransportFallback
+            boolean fatalText = line.contains('Encountered an unexpected exception') ||
+                    line.contains('Exception stopping the server') ||
+                    line.contains('Migration audit failed') ||
+                    line.contains('java.lang.Error:') ||
+                    line.contains('NoSuchMethodError') ||
+                    line.contains('NoClassDefFoundError') ||
+                    line.contains('ExceptionInInitializerError') ||
+                    line.contains('Tried to assign a mutable BlockPos') ||
+                    line.contains('causing cascading worldgen lag')
+            if ((unexpectedSeverity || fatalText) && !knownNoise) {
+                failures.add("${log.name}:${lineNumber}: ${line}")
+            }
+        }
+    }
+    if (!failures.isEmpty()) {
+        throw new GradleException("${context} logged unexpected errors:\n"
+                + failures.take(20).join('\n'))
+    }
+}
+
+tasks.register('runtimeLogScannerTest') {
+    group = 'verification'
+    description = 'Proves runtime log validation rejects real NeoForge failures.'
+    doLast {
+        File probe = file("${buildDir}/runtime-log-scanner-test")
+        delete probe
+        File logs = new File(probe, 'logs'); logs.mkdirs()
+        new File(logs, 'latest.log').setText(
+                '[Server thread/INFO] [neoforge]: Done\n', 'UTF-8')
+        assertRuntimeLogsClean(probe, 'scanner-clean-log-probe', [] as Set)
+        new File(logs, 'latest.log').setText(
+                '[Server thread/WARN]: Tried to assign a mutable BlockPos to tick data...\n', 'UTF-8')
+        boolean rejected = false
+        try { assertRuntimeLogsClean(probe, 'scanner-mutable-position-probe', [] as Set) }
+        catch (GradleException expected) { rejected = true }
+        if (!rejected) throw new GradleException('Runtime log scanner accepted a mutable BlockPos leak')
+        new File(logs, 'latest.log').setText(
+                '[Server thread/DEBUG] [neoforge]: Minecraft loaded a new chunk while populating another, causing cascading worldgen lag.\n', 'UTF-8')
+        rejected = false
+        try { assertRuntimeLogsClean(probe, 'scanner-cascading-probe', [] as Set) }
+        catch (GradleException expected) { rejected = true }
+        if (!rejected) throw new GradleException('Runtime log scanner accepted cascading worldgen')
+        new File(logs, 'latest.log').setText(
+                '[Server thread/ERROR] [example]: Unexpected fixture failure\n', 'UTF-8')
+        rejected = false
+        try { assertRuntimeLogsClean(probe, 'scanner-severity-probe', [] as Set) }
+        catch (GradleException expected) { rejected = true }
+        if (!rejected) throw new GradleException('Runtime log scanner accepted an unexpected ERROR line')
+        new File(logs, 'latest.log').setText(
+                '[10:00:00] [Server thread/DEBUG] [io.ne.ch.kq.KQueue/]: KQueue support is not available\n' +
+                'java.lang.ExceptionInInitializerError: null\n' +
+                '2026-08-17T10:00:00Z Server thread ERROR An exception occurred processing Appender DebugFile\n' +
+                'Caused by: java.lang.NoClassDefFoundError: Could not initialize class io.netty.channel.kqueue.Native\n' +
+                '[10:00:01] [Server thread/DEBUG] [io.ne.ch.ni.NioIoHandler/]: NIO fallback active\n', 'UTF-8')
+        assertRuntimeLogsClean(probe, 'scanner-windows-native-transport-probe', [] as Set)
+        new File(logs, 'latest.log').setText(
+                '[Server thread/ERROR] [example]: java.lang.ExceptionInInitializerError: real failure\n', 'UTF-8')
+        rejected = false
+        try { assertRuntimeLogsClean(probe, 'scanner-standalone-initializer-probe', [] as Set) }
+        catch (GradleException expected) { rejected = true }
+        if (!rejected) throw new GradleException('Runtime log scanner accepted a standalone initializer failure')
+        delete probe
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'runtimeLogScannerTest'
+}
+
+tasks.register('verifyMineralogyOracleIsolation') {
+    group = 'verification'
+    description = 'Prevents published Mineralogy engines from leaking into Gradle configurations or ordinary Eclipse launches.'
+    doLast {
+        configurations.each { configuration ->
+            if (configuration.canBeResolved &&
+                    configuration.files.any { it.name ==~ /Mineralogy-.*\.jar/ }) {
+                throw new GradleException("Mineralogy oracle leaked into Gradle configuration ${configuration.name}")
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'verifyMineralogyOracleIsolation'
+}
+
+['runClient', 'runServer', 'runGameTestServer', 'runClientData'].each { String taskName ->
+    tasks.matching { it.name == taskName }.configureEach { JavaExec runTask ->
+        doFirst {
+            new File(runTask.workingDir, 'mods').mkdirs()
+            if (taskName == 'runGameTestServer') {
+                File serverProperties = new File(runTask.workingDir, 'server.properties')
+                if (!serverProperties.isFile()) {
+                    serverProperties.setText('# Generated for the BaseMetals GameTest gate\n', 'UTF-8')
+                }
+            }
+            runTask.ext.oreSpawnCrashSnapshot = runtimeCrashSnapshot(runTask.workingDir)
+        }
+        doLast {
+            assertRuntimeLogsClean(runTask.workingDir, taskName,
+                    runTask.ext.oreSpawnCrashSnapshot as Set)
+        }
+    }
+}
+
+def surfaceIntegrationClasses = layout.buildDirectory.dir('surface-integration-fixture/classes')
+def compileSurfaceIntegrationTestMod = tasks.register('compileSurfaceIntegrationTestMod', JavaCompile) {
+    dependsOn tasks.named('classes')
+    source fileTree('src/biomeIntegrationTest/java')
+    classpath = files(sourceSets.main.output, sourceSets.main.compileClasspath)
+    destinationDirectory.set(surfaceIntegrationClasses)
+    javaCompiler.set(javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    })
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+
+def surfaceIntegrationTestModJar = tasks.register('surfaceIntegrationTestModJar', Jar) {
+    dependsOn compileSurfaceIntegrationTestMod
+    archiveFileName = 'surfaceprobe.jar'
+    destinationDirectory = layout.buildDirectory.dir('surface-integration-fixture')
+    from surfaceIntegrationClasses
+    from 'src/biomeIntegrationTest/resources'
+}
+
+def surfaceIntegrationRunDirectory = layout.buildDirectory.dir('surface-integration-run')
+def prepareSurfaceIntegrationTest = tasks.register('prepareSurfaceIntegrationTest') {
+    dependsOn surfaceIntegrationTestModJar
+    doLast {
+        File runDirectory = surfaceIntegrationRunDirectory.get().asFile
+        delete runDirectory
+        runDirectory.mkdirs()
+        copy {
+            from surfaceIntegrationTestModJar.flatMap { it.archiveFile }
+            into surfaceIntegrationRunDirectory.map { it.dir('mods') }
+        }
+        new File(runDirectory, 'server.properties').setText('''\
+level-name=surface-integration-world
+level-seed=0
+level-type=minecraft:normal
+online-mode=false
+allow-nether=true
+generate-structures=false
+spawn-protection=0
+max-tick-time=-1
+''', 'UTF-8')
+        new File(runDirectory, 'eula.txt').setText('eula=true\n', 'UTF-8')
+    }
+}
+
+tasks.configureEach {
+    if (name == 'runSurfaceIntegrationFresh') {
+        dependsOn prepareSurfaceIntegrationTest
+    } else if (name == 'runSurfaceIntegrationReload') {
+        dependsOn 'runSurfaceIntegrationFresh'
+    }
+    if (name == 'runSurfaceIntegrationFresh' || name == 'runSurfaceIntegrationReload') {
+        doFirst {
+            ext.oreSpawnCrashSnapshot = runtimeCrashSnapshot(workingDir)
+        }
+        doLast {
+            assertRuntimeLogsClean(workingDir, "NeoForge 1.21.1 ${name}",
+                    ext.oreSpawnCrashSnapshot as Set)
+        }
+    }
+}
+
+def surfaceIntegrationTest = tasks.register('surfaceIntegrationTest') {
+    group = 'verification'
+    description = 'Verifies provider surfaces and dynamic-biome geology across fresh and reloaded normal terrain.'
+    dependsOn 'runSurfaceIntegrationReload'
+    doLast {
+        File marker = surfaceIntegrationRunDirectory.get().file(
+                'surface-integration-world/surfaceprobe-integration.properties').asFile
+        if (!marker.isFile()) {
+            throw new GradleException("Surface integration completion marker is missing: ${marker}")
+        }
+        Properties result = new Properties()
+        marker.withInputStream { result.load(it) }
+        if (result.getProperty('reload_verified') != 'true') {
+            throw new GradleException("Surface integration reload was not verified: ${marker}")
+        }
+        logger.lifecycle('Provider surfaces and dynamic-biome geology verified: {} dimensions, {} columns each, fresh + reload',
+                result.getProperty('dimensions'), result.getProperty('columns_per_dimension'))
+    }
+}
+
+tasks.named('check') {
+    dependsOn surfaceIntegrationTest
+}
+
+def clientIntegrationClasses = layout.buildDirectory.dir('client-integration-fixture/classes')
+def compileClientIntegrationTestMod = tasks.register('compileClientIntegrationTestMod', JavaCompile) {
+    dependsOn tasks.named('classes')
+    source fileTree('src/clientIntegrationTest/java')
+    classpath = files(sourceSets.main.output, sourceSets.main.compileClasspath)
+    destinationDirectory.set(clientIntegrationClasses)
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', Jar) {
+    dependsOn compileClientIntegrationTestMod
+    archiveFileName = 'clientprobe.jar'
+    destinationDirectory = layout.buildDirectory.dir('client-integration-fixture')
+    from clientIntegrationClasses
+    from 'src/clientIntegrationTest/resources'
+}
+
+def benchmarkIntegrationClasses = layout.buildDirectory.dir('benchmark-integration-fixture/classes')
+def compileBenchmarkIntegrationTestMod = tasks.register('compileBenchmarkIntegrationTestMod', JavaCompile) {
+    dependsOn tasks.named('classes')
+    source fileTree('src/benchmarkIntegrationTest/java')
+    classpath = files(sourceSets.main.output, sourceSets.main.compileClasspath)
+    destinationDirectory.set(benchmarkIntegrationClasses)
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
+def benchmarkIntegrationTestModJar = tasks.register('benchmarkIntegrationTestModJar', Jar) {
+    dependsOn compileBenchmarkIntegrationTestMod
+    archiveFileName = 'benchmarkprobe.jar'
+    destinationDirectory = layout.buildDirectory.dir('benchmark-integration-fixture')
+    from benchmarkIntegrationClasses
+    from 'src/benchmarkIntegrationTest/resources'
+}
+
+def releaseJar = tasks.named('jar', Jar)
+def expectedReleaseFiles = providers.provider {
+    String prefix = "${base.archivesName.get()}-${project.version}"
+    ["${prefix}.jar", "${prefix}-sources.jar", "${prefix}-javadoc.jar"]
+}
+def preparedReleaseDir = providers.gradleProperty('preparedReleaseDir')
+
+tasks.named('assemble') {
+    dependsOn releaseJar
+    dependsOn tasks.named('sourcesJar')
+    dependsOn tasks.named('javadocJar')
+}
+
+tasks.register('verifyReleaseConfiguration') {
+    group = 'verification'
+    doLast {
+        if (project.mod_version != '3.1.0.121012'
+                || project.mod_group_id != expectedMavenGroup
+                || project.minecraft_version != '1.21.1'
+                || project.neo_version != '21.1.247') {
+            throw new GradleException('Unexpected BaseMetals NeoForge 1.21.1 release identity')
+        }
+        if (project.loader_name != 'neoforge' || project.loader_code != '2'
+                || project.java_version != '21' || project.gradle_java_version != '21'
+                || project.java_toolchain_version != '21.0.7+6'
+                || project.java_setup_version != '21.0.7+6.0.LTS') {
+            throw new GradleException('Unexpected dispatcher or Java target metadata')
+        }
+        List<String> expectedPublicArtifacts = [
+                'BaseMetals-3.1.0.121012.jar',
+                'BaseMetals-3.1.0.121012-sources.jar',
+                'BaseMetals-3.1.0.121012-javadoc.jar'
+        ]
+        if (base.archivesName.get() != expectedMavenArtifact
+                || expectedReleaseFiles.get().collect { it.toString() } != expectedPublicArtifacts) {
+            throw new GradleException('Public artifacts must use the version-only BaseMetals filename contract')
+        }
+        String ciWorkflow = file('.github/workflows/ci.yml').getText('UTF-8')
+        expectedPublicArtifacts.each { artifactName ->
+            if (!ciWorkflow.contains("build/libs/${artifactName}")) {
+                throw new GradleException("CI does not upload expected public artifact ${artifactName}")
+            }
+        }
+        [
+                'src/main/java/zone/moddev/mc/basemetals/worldgen/LegacyConfigMigrator.java',
+                'src/main/java/zone/moddev/mc/basemetals/worldgen/LegacyMineralogyProfileMigration.java',
+                'README.md', 'CHANGELOG.txt'
+        ].each { path ->
+            if (!file(path).getText('UTF-8').contains(project.mod_version)) {
+                throw new GradleException("Release identity missing from ${path}")
+            }
+        }
+        if (!file('docs/API.md').getText('UTF-8').contains('versionRange="[4.0.6,5.0.0)"')) {
+            throw new GradleException('Consumer compatibility floor must remain [4.0.6,5.0.0)')
+        }
+    }
+}
+
+def trackedDocumentationDirectory = file('docs')
+def documentationFiles = {
+    fileTree(trackedDocumentationDirectory).files.findAll { it.isFile() }.collect {
+        trackedDocumentationDirectory.canonicalFile.toPath().relativize(it.canonicalFile.toPath())
+                .toString().replace('\\', '/') }.sort()
+}
+def assertDocumentationTree = { File root, List<String> expected, String label ->
+    List<String> actual = root.isDirectory() ? fileTree(root).files.findAll { it.isFile() }
+            .collect { root.canonicalFile.toPath().relativize(it.canonicalFile.toPath())
+                    .toString().replace('\\', '/') }.sort() : []
+    if (actual != expected) {
+        throw new GradleException("${label} documentation set ${actual} does not match tracked ${expected}")
+    }
+    expected.each { relative ->
+        if (!java.util.Arrays.equals(new File(trackedDocumentationDirectory, relative).bytes,
+                new File(root, relative).bytes)) {
+            throw new GradleException("${label}/${relative} differs from tracked documentation")
+        }
+    }
+}
+
+def prepareEclipseResources = tasks.register('prepareEclipseResources', Sync) {
+    dependsOn tasks.named('processResources')
+    from layout.buildDirectory.dir('resources/main')
+    into file('bin/main')
+}
+
+def verifyDocumentationParity = tasks.register('verifyDocumentationParity') {
+    group = 'verification'
+    dependsOn prepareBundledDocumentation
+    dependsOn tasks.named('processResources')
+    dependsOn prepareEclipseResources
+    dependsOn releaseJar
+    doLast {
+        List<String> expected = documentationFiles()
+        if (expected.size() != 21 || !expected.contains('VERSIONS.md')) {
+            throw new GradleException("Expected exactly 21 tracked guide files including VERSIONS.md, found ${expected}")
+        }
+        assertDocumentationTree(bundledDocumentationDirectory.asFile, expected, 'generated resources')
+        assertDocumentationTree(new File(layout.buildDirectory.dir('resources/main').get().asFile,
+                'META-INF/basemetals/docs'), expected, 'processed resources')
+        assertDocumentationTree(file('bin/main/META-INF/basemetals/docs'), expected, 'Eclipse bin/main')
+        new ZipFile(releaseJar.get().archiveFile.get().asFile).withCloseable { zip ->
+            expected.each { relative ->
+                def entry = zip.getEntry("META-INF/basemetals/docs/${relative}")
+                if (entry == null || !java.util.Arrays.equals(
+                        new File(trackedDocumentationDirectory, relative).bytes,
+                        zip.getInputStream(entry).withCloseable { it.bytes })) {
+                    throw new GradleException("Release jar documentation differs at ${relative}")
                 }
             }
         }
+    }
+}
 
-        client {
-            systemProperty 'forge.enabledGameTestNamespaces', mod_id
-            if (providers.gradleProperty('integratedWorldSmoke').isPresent()) {
-                workingDir.set(layout.projectDirectory.dir('run-integrated-smoke'))
-                systemProperty 'basemetals.integratedWorldSmoke', 'true'
-                systemProperty 'basemetals.integratedWorldSmokeName',
-                        providers.gradleProperty('integratedWorldSmokeName').getOrElse('basemetals-integrated-smoke')
-                mods {
-                    "${mod_id}" {
-                        source sourceSets.integratedSmoke
+tasks.register('verifyReleaseArtifacts') {
+    group = 'verification'
+    dependsOn tasks.named('verifyReleaseConfiguration')
+    dependsOn verifyDocumentationParity
+    dependsOn tasks.named('assemble')
+    dependsOn tasks.named('verifyLegacyOracleIsolation')
+    doLast {
+        File libs = layout.buildDirectory.dir('libs').get().asFile
+        List<File> jars = (libs.listFiles() ?: [] as File[])
+                .findAll { it.name.endsWith('.jar') }.sort { it.name }
+        List<String> expected = expectedReleaseFiles.get().collect { it.toString() }.sort()
+        if (jars.collect { it.name } != expected) {
+            throw new GradleException("Expected exactly ${expected}, found ${jars*.name}")
+        }
+        jars.each { candidate ->
+            if (candidate.length() == 0L) throw new GradleException("Empty artifact ${candidate}")
+            new ZipFile(candidate).withCloseable { zip ->
+                zip.entries().findAll { entry ->
+                    !entry.isDirectory() && (archiveTextSuffixes.any { entry.name.endsWith(it) }
+                            || entry.name.endsWith('/element-list')
+                            || entry.name.endsWith('/package-list'))
+                }.each { entry ->
+                    boolean cr = zip.getInputStream(entry).withCloseable {
+                        input -> input.bytes.any { value -> value == 13 }
+                    }
+                    if (cr) throw new GradleException("${candidate.name}!/${entry.name} is not LF-normalized")
+                }
+                [
+                        'src/test/', 'src/biomeIntegrationTest/', 'src/clientIntegrationTest/',
+                        'src/benchmarkIntegrationTest/', 'agent-notes/', 'surfaceprobe',
+                        'clientprobe', 'benchmarkprobe', 'ci-fixtures/', 'net/neoforged/',
+                        'META-INF/mods.toml', 'org/junit/', 'org/mockito/', 'net/bytebuddy/',
+                        'Mineralogy-1.18.2-5.4.0.jar'
+                ].each { forbidden ->
+                    if (zip.entries().any { it.name.contains(forbidden) }) {
+                        throw new GradleException("${candidate.name} contains forbidden ${forbidden}")
                     }
                 }
             }
         }
 
-        server {
-            systemProperty 'forge.enabledGameTestNamespaces', mod_id
-            if (providers.gradleProperty('upgradeWorldSmoke').isPresent()
-                    || providers.gradleProperty('legacyWorldSmoke').isPresent()) {
-                workingDir.convention layout.projectDirectory.dir('run-upgrade')
-                systemProperty 'fml.doNotBackup', 'true'
-                systemProperty 'fml.queryResult', 'confirm'
-                if (providers.gradleProperty('upgradeWorldSmoke').isPresent()) {
-                    systemProperty 'basemetals.upgradeWorldSmoke', 'true'
-                    if (providers.gradleProperty('upgradeWorldName').isPresent()) {
-                        args '--world', providers.gradleProperty('upgradeWorldName').get()
-                    }
-                } else {
-                    systemProperty 'basemetals.legacyWorldSmoke', 'true'
-                    if (providers.gradleProperty('legacyWorldName').isPresent()) {
-                        args '--world', providers.gradleProperty('legacyWorldName').get()
-                    }
+        File mainJar = new File(libs, expectedReleaseFiles.get()[0])
+        new ZipFile(mainJar).withCloseable { zip ->
+            List<String> names = zip.entries().collect { it.name }
+            [
+                    'META-INF/neoforge.mods.toml',
+                    'META-INF/accesstransformer.cfg',
+                    'zone/moddev/mc/basemetals/api/BaseMetalsApi.class',
+                    'META-INF/basemetals/docs/VERSIONS.md',
+                    'META-INF/basemetals/docs/schemas/basemetals-provider.schema.json',
+                    'AGENTS.md'
+            ].each { required ->
+                if (!names.contains(required)) throw new GradleException("Release jar is missing ${required}")
+            }
+            String metadata = zip.getInputStream(zip.getEntry('META-INF/neoforge.mods.toml'))
+                    .getText(StandardCharsets.UTF_8.name())
+            if (!metadata.contains('modId="basemetals"')
+                    || !metadata.contains("version=\"${project.version}\"")
+                    || !metadata.contains('versionRange="[21.1.247,21.2)"')) {
+                throw new GradleException('Packaged NeoForge metadata is incorrect')
+            }
+            String transformer = zip.getInputStream(zip.getEntry('META-INF/accesstransformer.cfg'))
+                    .getText(StandardCharsets.UTF_8.name())
+            List<String> actualRules = transformer.readLines()
+                    .collect { it.replaceFirst(/\s*#.*/, '').trim() }.findAll { !it.isEmpty() }
+            List<String> expectedRules = [
+                    'public-f net.minecraft.world.level.chunk.ChunkGenerator biomeSource',
+                    'public-f net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator globalFluidPicker',
+                    'public-f net.minecraft.world.level.biome.Biome generationSettings',
+                    'public-f net.minecraft.world.level.levelgen.feature.configurations.SpringConfiguration validBlocks',
+                    'public net.minecraft.client.gui.screens.worldselection.CreateWorldScreen tabManager',
+                    'public net.minecraft.client.gui.screens.worldselection.CreateWorldScreen tabNavigationBar'
+            ]
+            if (actualRules != expectedRules) {
+                throw new GradleException("Unexpected packaged official-named access transformer: ${actualRules}")
+            }
+            def manifestEntry = zip.getEntry('META-INF/MANIFEST.MF')
+            def manifest = manifestEntry == null ? null :
+                    new Manifest(zip.getInputStream(manifestEntry)).mainAttributes
+            if (manifest == null
+                    || manifest.getValue('Implementation-Version') != project.mod_version
+                    || manifest.getValue('BaseMetals-API-Version') != '1'
+                    || manifest.getValue('BaseMetals-Loader') != 'neoforge'
+                    || manifest.getValue('Maven-Artifact') != expectedMavenCoordinate
+                    || manifest.getValue('Implementation-Timestamp') != null) {
+                throw new GradleException('Release manifest is incorrect or volatile')
+            }
+            zip.entries().findAll { it.name.endsWith('.class') }.each { entry ->
+                byte[] header = zip.getInputStream(entry).withCloseable { it.readNBytes(8) }
+                int major = ((header[6] & 0xff) << 8) | (header[7] & 0xff)
+                if (major != 65) throw new GradleException("${entry.name} uses class major ${major}, expected 65")
+            }
+        }
+        new ZipFile(new File(libs, expectedReleaseFiles.get()[1])).withCloseable { zip ->
+            if (zip.getEntry('zone/moddev/mc/basemetals/BaseMetals.java') == null) {
+                throw new GradleException('Sources jar is missing BaseMetals.java')
+            }
+        }
+        new ZipFile(new File(libs, expectedReleaseFiles.get()[2])).withCloseable { zip ->
+            if (zip.getEntry('index.html') == null
+                    || zip.getEntry('zone/moddev/mc/basemetals/api/BaseMetalsApi.html') == null) {
+                throw new GradleException('Javadoc jar is missing its index or public BaseMetals API page')
+            }
+        }
+    }
+}
+
+tasks.register('writeReleaseChecksums') {
+    group = 'verification'
+    dependsOn tasks.named('verifyReleaseArtifacts')
+    def outputFile = layout.buildDirectory.file('release/SHA256SUMS')
+    outputs.file outputFile
+    doLast {
+        File output = outputFile.get().asFile
+        output.parentFile.mkdirs()
+        File libs = layout.buildDirectory.dir('libs').get().asFile
+        String contents = expectedReleaseFiles.get().sort().collect { name ->
+            MessageDigest digest = MessageDigest.getInstance('SHA-256')
+            new File(libs, name).withInputStream { input ->
+                byte[] buffer = new byte[8192]
+                for (int read = input.read(buffer); read >= 0; read = input.read(buffer)) {
+                    if (read > 0) digest.update(buffer, 0, read)
                 }
-                mods {
-                    "${mod_id}" {
-                        source sourceSets.upgradeSmoke
+            }
+            "${digest.digest().encodeHex().toString().toUpperCase()}  ${name}"
+        }.join('\n') + '\n'
+        output.setText(contents, 'UTF-8')
+    }
+}
+
+tasks.register('verifyPreparedReleaseArtifacts') {
+    group = 'verification'
+    doLast {
+        if (!preparedReleaseDir.isPresent()) throw new GradleException('preparedReleaseDir is required')
+        File prepared = file(preparedReleaseDir.get())
+        List<String> expected = expectedReleaseFiles.get().collect { it.toString() }.sort()
+        List<File> jars = (prepared.listFiles() ?: [] as File[])
+                .findAll { it.name.endsWith('.jar') }.sort { it.name }
+        if (jars.collect { it.name } != expected || jars.any { it.length() == 0L }) {
+            throw new GradleException("Prepared release jars ${jars*.name} do not match ${expected}")
+        }
+        File checksums = new File(prepared, 'SHA256SUMS')
+        if (!checksums.isFile() || !new File(prepared, 'CHANGELOG.txt').isFile()) {
+            throw new GradleException('Prepared release is missing checksums or changelog')
+        }
+    }
+}
+
+def mavenUploadUrl = providers.environmentVariable('MAVEN_UPLOAD_URL')
+        .orElse('https://invalid.invalid/missing-maven-upload-url')
+def mavenUploadUsername = providers.environmentVariable('MAVEN_UPLOAD_USERNAME')
+def mavenUploadPassword = providers.environmentVariable('MAVEN_UPLOAD_PASSWORD')
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = expectedMavenGroup
+            artifactId = expectedMavenArtifact
+            version = project.version.toString()
+            if (preparedReleaseDir.isPresent()) {
+                File prepared = file(preparedReleaseDir.get())
+                artifact(new File(prepared, expectedReleaseFiles.get()[0]))
+                artifact(new File(prepared, expectedReleaseFiles.get()[1])) { classifier = 'sources' }
+                artifact(new File(prepared, expectedReleaseFiles.get()[2])) { classifier = 'javadoc' }
+            } else {
+                from components.java
+            }
+            pom {
+                name = 'MMD BaseMetals'
+                description = project.mod_description
+                url = 'https://github.com/MinecraftModDevelopmentMods/BaseMetals'
+                licenses {
+                    license {
+                        name = 'GNU Lesser General Public License, Version 2.1'
+                        url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt'
                     }
                 }
             }
-            args '--nogui'
         }
+    }
+    repositories {
+        maven {
+            name = 'release'
+            url = uri(mavenUploadUrl.get())
+            credentials {
+                username = mavenUploadUsername.orNull ?: ''
+                password = mavenUploadPassword.orNull ?: ''
+            }
+        }
+    }
+}
 
-        // Runs the isolated validation source set and exits when the suite completes.
-        gameTestServer {
-            workingDir.set(layout.projectDirectory.dir('run-gametest'))
-            systemProperty 'forge.enabledGameTestNamespaces', mod_id
-            mods {
-                "${mod_id}" {
-                    source sourceSets.gameTestValidation
+tasks.register('verifyMavenCoordinates') {
+    group = 'verification'
+    dependsOn tasks.named('generatePomFileForMavenJavaPublication')
+    doLast {
+        File pomFile = layout.buildDirectory.file(
+                'publications/mavenJava/pom-default.xml').get().asFile
+        def pom = new XmlSlurper(false, false).parse(pomFile)
+        def actual = [pom.groupId.text(), pom.artifactId.text(), pom.version.text()]
+        def expected = [expectedMavenGroup, expectedMavenArtifact, project.version.toString()]
+        if (project.group.toString() != expectedMavenGroup || actual != expected) {
+            throw new GradleException("Expected Maven coordinate ${expected.join(':')}, found ${actual.join(':')}")
+        }
+    }
+}
+
+tasks.register('validateMavenReleaseCredentials') {
+    group = 'publishing'
+    doLast {
+        if (!providers.environmentVariable('MAVEN_UPLOAD_URL').isPresent()
+                || !mavenUploadUsername.isPresent() || !mavenUploadPassword.isPresent()) {
+            throw new GradleException(
+                    'MAVEN_UPLOAD_URL, MAVEN_UPLOAD_USERNAME, and MAVEN_UPLOAD_PASSWORD are required')
+        }
+        if (providers.environmentVariable('MAVEN_UPLOAD_URL').get().startsWith('file:')) {
+            throw new GradleException('Release publication must use a remote repository')
+        }
+    }
+}
+tasks.withType(PublishToMavenRepository).configureEach {
+    dependsOn tasks.named('validateMavenReleaseCredentials')
+    dependsOn tasks.named('verifyMavenCoordinates')
+    dependsOn preparedReleaseDir.isPresent()
+            ? tasks.named('verifyPreparedReleaseArtifacts')
+            : tasks.named('verifyReleaseArtifacts')
+}
+
+tasks.register('verifyCommandPortability') {
+    group = 'verification'
+    description = 'Rejects shell-specific wrappers in generic Gradle task execution.'
+    doLast {
+        List<File> commandSources = [file('build.gradle')]
+        commandSources.addAll(fileTree('.github/workflows') { include '*.yml', '*.yaml' }.files)
+        commandSources.each { File source ->
+            String text = source.getText('UTF-8')
+            if (text =~ /(?i)(?:commandLine|executable)\s*[^\n]*(?:cmd(?:\.exe)?\s+\/c|powershell(?:\.exe)?\s+-command|(?:bash|sh)\s+-c)/) {
+                throw new GradleException("Shell-specific command wrapper in ${source}")
+            }
+        }
+    }
+}
+
+tasks.register('verifyColdNeoForgeBootstrapContract') {
+    group = 'verification'
+    description = 'Verifies that CI qualifies NeoGradle from an isolated Java 21 cache without Forge tooling.'
+    doLast {
+        String workflow = file('.github/workflows/ci.yml').getText('UTF-8')
+        [
+                'Cold NeoForge bootstrap',
+                'basemetals-neoforge-cold-cache',
+                '--no-build-cache',
+                '--offline',
+                "java-version: '21.0.7+6.0.LTS'"
+        ].each { required ->
+            if (!workflow.contains(required)) {
+                throw new GradleException("Cold NeoForge bootstrap is missing ${required}")
+            }
+        }
+        ['MinecraftMavenizer', 'mavenizer', 'java-version: \'25', 'net.neoforged.gradle'].each { forbidden ->
+            if (workflow.contains(forbidden)) {
+                throw new GradleException("Cold NeoForge bootstrap contains Forge-only tooling: ${forbidden}")
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyCommandPortability')
+    dependsOn tasks.named('verifyMavenCoordinates')
+    dependsOn tasks.named('verifyColdNeoForgeBootstrapContract')
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+eclipse {
+    project {
+        natures 'org.eclipse.buildship.core.gradleprojectnature'
+        buildCommand 'org.eclipse.buildship.core.gradleprojectbuilder'
+    }
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
+        file {
+            whenMerged { classpath ->
+                def libraryPaths = new LinkedHashSet<String>()
+                classpath.entries = classpath.entries.findAll { entry ->
+                    !(entry instanceof org.gradle.plugins.ide.eclipse.model.Library)
+                            || libraryPaths.add(entry.path)
+                }
+                classpath.entries.removeAll { entry ->
+                    entry instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder
+                            && ['src/main/resources', 'src/generated/resources'].contains(entry.path)
+                }
+                if (!classpath.entries.any { entry -> entry.path == 'build/resources/main' }) {
+                    classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder(
+                            'build/resources/main', 'bin/main'))
                 }
             }
         }
+    }
+    synchronizationTasks 'prepareEclipseResources'
+}
 
-        data {
-            workingDir.convention layout.projectDirectory.dir('run-data')
-            systemProperty 'basemetals.projectDir', projectDir.absolutePath
-            mods { "${mod_id}" { source sourceSets.dataGenerator } }
-            // Generate into build output. Only generateResources updates the checked-in files.
-            args '--mod', mod_id, '--all', '--output', file('build/generated-verification'), '--existing', file('src/main/resources/')
+tasks.named('eclipse').configure {
+    dependsOn prepareEclipseResources
+    doLast {
+        String requestedGradleHome = System.getenv('GRADLE_USER_HOME')
+        if (requestedGradleHome == null || requestedGradleHome.trim().isEmpty()) {
+            return
+        }
+
+        File preferencesFile = file('.settings/org.eclipse.buildship.core.prefs')
+        Properties preferences = new Properties()
+        if (preferencesFile.isFile()) {
+            preferencesFile.withInputStream { preferences.load(it) }
+        }
+        String gradleHome = file(requestedGradleHome).canonicalPath
+        preferences.setProperty('eclipse.preferences.version', '1')
+        preferences.setProperty('connection.gradle.distribution', 'GRADLE_DISTRIBUTION(WRAPPER)')
+        preferences.setProperty('override.workspace.settings', 'true')
+        preferences.setProperty('gradle.user.home', gradleHome)
+        preferences.setProperty('connection.gradle.user.home', gradleHome)
+        preferences.setProperty('java.home', System.getProperty('java.home'))
+        preferencesFile.parentFile.mkdirs()
+        preferencesFile.withOutputStream {
+            preferences.store(it, 'Generated by the BaseMetals Eclipse task to keep NeoGradle launch modules on one cache.')
         }
     }
 }
 
-// Forge expects each mod's classes and resources under one physical root.
-// These merged development outputs also keep validation-only classes out of
-// ordinary client/server runs and every distributable archive.
-def registerRunModOutput = { String taskName, SourceSet validationSourceSet ->
-    def outputDirectory = layout.buildDirectory.dir("forge-run-mod-classes/${taskName}")
-    tasks.register(taskName, Sync) {
-        group = 'ide'
-        dependsOn tasks.named(sourceSets.main.classesTaskName)
-        from sourceSets.main.output
-        if (validationSourceSet != null) {
-            dependsOn tasks.named(validationSourceSet.classesTaskName)
-            from validationSourceSet.output
+tasks.register('verifyEclipseProductionClasspath') {
+    group = 'verification'
+    dependsOn tasks.named('eclipse')
+    dependsOn tasks.named('verifyLegacyOracleIsolation')
+    doLast {
+        File prefs = file('.settings/org.eclipse.buildship.core.prefs')
+        if (!prefs.isFile()) throw new GradleException('Missing Buildship preferences')
+        Properties preferences = new Properties()
+        prefs.withInputStream { preferences.load(it) }
+        if (preferences.getProperty('override.workspace.settings') != 'true') {
+            throw new GradleException('Eclipse Buildship workspace override is not active')
         }
-        into outputDirectory
-    }
-    [task: tasks.named(taskName), directory: outputDirectory]
-}
-
-def productionRunMod = registerRunModOutput('prepareDevelopmentMod', null)
-def dataRunMod = registerRunModOutput('prepareDataDevelopmentMod', sourceSets.dataGenerator)
-def gameTestRunMod = registerRunModOutput('prepareGameTestDevelopmentMod', sourceSets.gameTestValidation)
-def integratedRunMod = registerRunModOutput('prepareIntegratedSmokeDevelopmentMod', sourceSets.integratedSmoke)
-def upgradeRunMod = registerRunModOutput('prepareUpgradeSmokeDevelopmentMod', sourceSets.upgradeSmoke)
-
-tasks.withType(JavaExec).configureEach { JavaExec runTask ->
-    def selected = productionRunMod
-    if (runTask.name == 'runData') {
-        selected = dataRunMod
-    } else if (runTask.name == 'runGameTestServer') {
-        selected = gameTestRunMod
-    } else if (runTask.name in ['runClient', 'runOptionalModsClient']
-            && providers.gradleProperty('integratedWorldSmoke').isPresent()) {
-        selected = integratedRunMod
-    } else if (runTask.name == 'runServer' && (providers.gradleProperty('upgradeWorldSmoke').isPresent()
-            || providers.gradleProperty('legacyWorldSmoke').isPresent())) {
-        selected = upgradeRunMod
-    }
-    runTask.dependsOn selected.task
-    runTask.environment 'MOD_CLASSES', "${mod_id}%%${selected.directory.get().asFile}"
-    runTask.doFirst {
-        File modsDirectory = new File(runTask.workingDir, 'mods')
-        if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
-            throw new GradleException("Could not create development mods directory: ${modsDirectory}")
+        File eclipseClasspath = file('.classpath')
+        if (!eclipseClasspath.isFile()) throw new GradleException('Eclipse .classpath was not generated')
+        String classpathText = eclipseClasspath.getText('UTF-8')
+        if (!classpathText.contains('path="build/resources/main"')
+                || classpathText.contains('path="src/main/resources"')
+                || classpathText.contains('path="src/generated/resources"')) {
+            throw new GradleException('Eclipse must consume only Gradle-processed production resources')
+        }
+        ['META-INF/neoforge.mods.toml', 'META-INF/basemetals/docs/README.md',
+                'META-INF/basemetals/docs/VERSIONS.md'].each { relative ->
+            if (!new File('bin/main', relative).isFile()) {
+                throw new GradleException("Eclipse output is missing ${relative}")
+            }
+        }
+        File metadata = file('bin/main/META-INF/neoforge.mods.toml')
+        String metadataText = metadata.getText('UTF-8')
+        if (metadataText.contains('\${mod_version}')
+                || !metadataText.contains("version=\"${project.version}\"")) {
+            throw new GradleException('Eclipse output contains unexpanded NeoForge metadata')
+        }
+        List<String> forbidden = [
+                'src/test', 'bin/test', 'build/classes/java/test',
+                'biomeIntegrationTest', 'clientIntegrationTest', 'benchmarkIntegrationTest',
+                'surfaceprobe', 'clientprobe', 'benchmarkprobe', 'junit-', 'opentest4j-',
+                'Mineralogy-1.18.2-5.4.0.jar', 'net.neoforged', 'META-INF/mods.toml',
+                'C:\\Users\\John'
+        ]
+        fileTree(project.projectDir) { include 'run*.launch' }.files.each { launch ->
+            List<String> leaked = forbidden.findAll { launch.getText('UTF-8').contains(it) }
+            if (!leaked.isEmpty()) {
+                throw new GradleException("${launch.name} exposes test/Forge/local content: ${leaked}")
+            }
         }
     }
 }
-
-tasks.register('runClientOptionalMods') {
-    group = 'forgegradle runs'
-    description = 'Runs the client in a separate folder for optional-mod testing.'
-    dependsOn 'runOptionalModsClient'
-}
-
-// Generated resources are checked in; the local cache is never packaged.
-sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-    exclude '.cache/**'
-}
-
-// Keep the top-level build readable; each script owns one build concern.
-apply from: 'gradle/dependencies.gradle'
-apply from: 'gradle/release/artifacts.gradle'
-apply from: 'gradle/release/publishing.gradle'
-apply from: 'gradle/verification/support.gradle'
-apply from: 'gradle/verification/packaged-runtime.gradle'
-apply from: 'gradle/ide/eclipse.gradle'

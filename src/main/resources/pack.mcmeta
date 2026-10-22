@@ -1,7 +1,6 @@
 {
     "pack": {
-        "description": "${mod_id} resources",
-        "pack_format": 13,
-        "forge:server_data_pack_format": 12
+        "description": "BaseMetals resources",
+        "pack_format": 34
     }
 }

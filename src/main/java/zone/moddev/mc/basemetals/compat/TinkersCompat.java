@@ -8,7 +8,7 @@ import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import net.minecraftforge.event.AddReloadListenerEvent;
+import net.neoforged.event.AddReloadListenerEvent;
 import slimeknights.tconstruct.library.materials.MaterialRegistry;
 import slimeknights.tconstruct.library.materials.definition.MaterialId;
 import slimeknights.tconstruct.library.materials.stats.IMaterialStats;
@@ -48,7 +48,7 @@ public final class TinkersCompat {
     private static boolean hasExplicitOverride(ResourceManager resources, MaterialId material) {
         ResourceLocation file = new ResourceLocation(material.getNamespace(),
                 "tinkering/materials/stats/" + material.getPath() + ".json");
-        String bundledPack = net.minecraftforge.resource.ResourcePackLoader.getPackFor(BaseMetals.MOD_ID)
+        String bundledPack = net.neoforged.resource.ResourcePackLoader.getPackFor(BaseMetals.MOD_ID)
                 .orElseThrow(() -> new IllegalStateException("Base Metals' data pack is missing"))
                 .packId();
         return resources.getResourceStack(file).stream()

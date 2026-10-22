@@ -1,37 +1,43 @@
 package zone.moddev.mc.basemetals.content;
 
-import java.util.function.Supplier;
+import java.util.List;
+import java.util.Map;
 
+import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class MaterialArmor implements ArmorMaterial {
-    private static final int[] DURABILITY = {13, 15, 16, 11};
-    private final MaterialDefinition material;
-    private final Supplier<Ingredient> repair;
+/** Registered armor statistics shared by humanoid and horse armor items. */
+public final class MaterialArmor {
+    public static final DeferredRegister<ArmorMaterial> REGISTER =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, BaseMetals.MOD_ID);
 
-    public MaterialArmor(MaterialDefinition material) {
-        this.material = material;
-        this.repair = () -> Ingredient.of(ItemTags.create(
-                new ResourceLocation(material.repairIngredientTag())));
+    private MaterialArmor() {}
+
+    public static DeferredHolder<ArmorMaterial, ArmorMaterial> register(MaterialDefinition material) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, material.name());
+        return REGISTER.register(material.name(), () -> new ArmorMaterial(
+                Map.of(
+                        ArmorItem.Type.HELMET, material.armorProtection(EquipmentSlot.HEAD),
+                        ArmorItem.Type.CHESTPLATE, material.armorProtection(EquipmentSlot.CHEST),
+                        ArmorItem.Type.LEGGINGS, material.armorProtection(EquipmentSlot.LEGS),
+                        ArmorItem.Type.BOOTS, material.armorProtection(EquipmentSlot.FEET),
+                        ArmorItem.Type.BODY, material.horseArmorProtection()),
+                material.enchantability(),
+                SoundEvents.ARMOR_EQUIP_IRON,
+                () -> Ingredient.of(ItemTags.create(ResourceLocation.parse(material.repairIngredientTag()))),
+                List.of(new ArmorMaterial.Layer(id)),
+                material.armorToughness(),
+                0.0F));
     }
-
-    public MaterialDefinition material() { return material; }
-    @Override public int getDurabilityForType(net.minecraft.world.item.ArmorItem.Type type) {
-        return DURABILITY[type.getSlot().getIndex()] * material.armorDurabilityFactor();
-    }
-    @Override public int getDefenseForType(net.minecraft.world.item.ArmorItem.Type type) { return material.armorProtection(type.getSlot()); }
-    @Override public int getEnchantmentValue() { return material.enchantability(); }
-    @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
-    @Override public Ingredient getRepairIngredient() { return repair.get(); }
-    @Override public String getName() { return "basemetals:" + material.name(); }
-    @Override public float getToughness() { return material.armorToughness(); }
-    @Override public float getKnockbackResistance() { return 0.0F; }
 }

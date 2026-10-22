@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
+import net.neoforged.common.crafting.conditions.ICondition;
+import net.neoforged.common.crafting.conditions.IConditionSerializer;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
 /** Applies the selected mode to Base Metals outputs made by optional machines. */

@@ -30,23 +30,23 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.AnvilUpdateEvent;
+import net.neoforged.event.TickEvent;
+import net.neoforged.event.entity.living.LivingHurtEvent;
+import net.neoforged.event.entity.player.PlayerEvent;
+import net.neoforged.event.AnvilUpdateEvent;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.neoforged.event.level.BlockEvent;
+import net.neoforged.eventbus.api.EventPriority;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.event.village.VillagerTradesEvent;
 import zone.moddev.mc.basemetals.trade.BaseMetalsTrades;
 import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
 import net.minecraft.world.level.storage.LevelResource;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.event.server.ServerAboutToStartEvent;
 
 /** Forge event handlers for Base Metals. */
 public final class BaseMetalsEvents {

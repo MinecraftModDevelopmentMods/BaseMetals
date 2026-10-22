@@ -65,8 +65,8 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.BlockStateData;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.registries.ForgeRegistries;
 
 /**
  * Restores old modded block IDs before Minecraft's 1.13 world conversion can
