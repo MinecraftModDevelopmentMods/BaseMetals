@@ -45,7 +45,7 @@ public final class MaterialItems {
         public Basic(MaterialDefinition material, int burnTime, Properties properties) {
             super(properties);
             this.material = material;
-            this.burnTime = burnTime;
+            this.burnTime = burnTime >= 0 ? burnTime : 0; // negative burn-times are not allowed
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
         @Override public int getBurnTime(ItemStack stack,

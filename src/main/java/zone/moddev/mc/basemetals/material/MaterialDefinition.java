@@ -109,10 +109,10 @@ public record MaterialDefinition(
 
     public String repairIngredientTag() {
         return switch (name) {
-            case "diamond", "emerald", "quartz" -> "forge:gems/" + name;
-            case "stone" -> "forge:stone";
+            case "diamond", "emerald", "quartz" -> "c:gems/" + name;
+            case "stone" -> "c:stones";
             case "wood" -> "minecraft:planks";
-            default -> "forge:ingots/" + name;
+            default -> "c:ingots/" + name;
         };
     }
 
