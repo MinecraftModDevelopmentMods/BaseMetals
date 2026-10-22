@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:raw_materials/mercury"
-  },
-  "result": "basemetals:mercury_ingot"
-}

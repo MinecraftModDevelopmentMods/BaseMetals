@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/starsteel"
-  },
-  "result": {
-    "item": "basemetals:starsteel_powder"
-  }
-}

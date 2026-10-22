@@ -1,7 +1,0 @@
-{
-  "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/adamantine"
-  },
-  "target": "basemetals:adamantine_leggings"
-}

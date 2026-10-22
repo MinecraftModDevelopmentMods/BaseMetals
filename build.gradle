@@ -17,6 +17,7 @@ java {
 }
 
 sourceSets {
+    main.java.srcDir 'src/dataGenerator/java'
     main.resources.srcDir 'src/generated/resources'
     test {
         java.setSrcDirs([])
@@ -38,6 +39,7 @@ runs {
         argument '--nogui'
     }
     data {
+        systemProperty 'basemetals.projectDir', projectDir.absolutePath
         workingDirectory project.layout.projectDirectory.dir('run-data')
         arguments.addAll '--mod', mod_id, '--all', '--output',
                 file('src/generated/resources').absolutePath, '--existing',
@@ -47,16 +49,24 @@ runs {
 
 repositories {
     mavenCentral()
+
+    maven { url = uri('https://maven.covers1624.net/') }
     maven {
         name = 'ModDevZone'
         url = uri('https://maven.moddev.zone/releases')
         content { includeGroup 'zone.moddev.mc.orespawn' }
     }
+
+    maven { url = uri('https://modmaven.dev/') }
+    maven { url = uri('https://dvs1.progwml6.com/files/maven/') }
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation 'zone.moddev.mc.orespawn:OreSpawn:4.0.16.121012'
+    // API only: Mekanism remains optional at runtime. Its public slurry
+    // registry is required to provide the eight historical processing chains.
+    compileOnly 'mekanism:Mekanism:1.21.1-10.7.19.85:api'
 }
 
 tasks.named('processResources', ProcessResources) {

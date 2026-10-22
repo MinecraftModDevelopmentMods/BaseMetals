@@ -8,10 +8,12 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 import zone.moddev.mc.basemetals.loot.ModLoot;
+import zone.moddev.mc.basemetals.compat.MekanismCompat;
 
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.common.Mod;
 
@@ -30,6 +32,10 @@ public final class BaseMetals {
         ModEntities.register(modBus);
         ModLoot.register(modBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
+        if (ModList.get().isLoaded("mekanism")) {
+            LOGGER.info("Loading Mekanism Compat");
+            MekanismCompat.register(modBus);
+        }
         NeoForge.EVENT_BUS.register(new BaseMetalsEvents());
     }
 }

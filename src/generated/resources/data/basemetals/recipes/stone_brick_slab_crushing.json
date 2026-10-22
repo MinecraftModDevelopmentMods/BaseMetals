@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:stone_brick_slab"
-  },
-  "result": {
-    "item": "minecraft:cobblestone_slab"
-  }
-}

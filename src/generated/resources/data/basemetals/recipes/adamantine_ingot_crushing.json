@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/adamantine"
-  },
-  "result": {
-    "item": "basemetals:adamantine_powder"
-  }
-}

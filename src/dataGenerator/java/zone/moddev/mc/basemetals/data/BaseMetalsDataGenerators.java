@@ -4,15 +4,15 @@ import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class BaseMetalsDataGenerators {
     private BaseMetalsDataGenerators() {}
 
@@ -216,7 +216,7 @@ public final class BaseMetalsDataGenerators {
             }
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name + "_bucket")
-                    .parent(getExistingFile(new net.minecraft.resources.ResourceLocation("forge", "item/bucket")))
+                    .parent(getExistingFile(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
                     .customLoader(DynamicFluidContainerModelBuilder::begin)
                     .fluid(fluid.source().get()));
 

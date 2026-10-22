@@ -3,13 +3,13 @@ package zone.moddev.mc.basemetals.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraft.core.registries.BuiltInRegistries;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
@@ -19,7 +19,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
  *
  * @author KiriCattus (Kiri), original two-layer model
  */
-@Mod.EventBusSubscriber(modid = "basemetals", bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = "basemetals", bus = EventBusSubscriber.Bus.MOD)
 public final class BMBlockStateProvider extends BlockStateProvider {
     private static final float OVERLAY_OFFSET = 0.05F;
 
@@ -57,7 +57,7 @@ public final class BMBlockStateProvider extends BlockStateProvider {
     }
 
     private void createOverlayOre(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
-        String blockName = ForgeRegistries.BLOCKS.getKey(block).getPath();
+        String blockName = BuiltInRegistries.BLOCK.getKey(block).getPath();
 
         BlockModelBuilder builder = models().withExistingParent(blockName, mcLoc("block/block"))
                 .texture("particle", baseTexture)

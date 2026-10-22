@@ -1,4 +1,4 @@
-/* package zone.moddev.mc.basemetals.compat;
+package zone.moddev.mc.basemetals.compat;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,32 +8,32 @@ import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 
 import mekanism.api.MekanismAPI;
-import mekanism.api.chemical.slurry.Slurry;
-import mekanism.api.chemical.slurry.SlurryBuilder;
+import mekanism.api.chemical.Chemical;
+import mekanism.api.chemical.ChemicalBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.eventbus.api.IEventBus;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
-/** The only code-backed optional integration: Mekanism slurries are registry entries, not data-pack entries. * /
+/** The only code-backed optional integration: Mekanism slurries are registry entries, not data-pack entries. */
 public final class MekanismCompat {
     public static final List<String> PROCESSING_MATERIALS = List.of(
             "adamantine", "antimony", "bismuth", "coldiron",
             "nickel", "platinum", "starsteel", "zinc");
 
-    private static final DeferredRegister<Slurry> SLURRIES = DeferredRegister.create(
-            MekanismAPI.slurryRegistryName(), BaseMetals.MOD_ID);
-    private static final Map<String, RegistryObject<Slurry>> DIRTY = new LinkedHashMap<>();
-    private static final Map<String, RegistryObject<Slurry>> CLEAN = new LinkedHashMap<>();
+    private static final DeferredRegister<Chemical> SLURRIES = DeferredRegister.create(
+            MekanismAPI.CHEMICAL_REGISTRY_NAME, BaseMetals.MOD_ID);
+    private static final Map<String, DeferredHolder<Chemical, Chemical>> DIRTY = new LinkedHashMap<>();
+    private static final Map<String, DeferredHolder<Chemical, Chemical>> CLEAN = new LinkedHashMap<>();
 
     static {
         for (String name : PROCESSING_MATERIALS) {
             int colour = MaterialCatalogue.get(name).colour();
-            ResourceLocation oreTag = new ResourceLocation("forge", "ores/" + name);
+            ResourceLocation oreTag = ResourceLocation.fromNamespaceAndPath("c", "ores/" + name);
             DIRTY.put(name, SLURRIES.register("dirty_" + name,
-                    () -> new Slurry(SlurryBuilder.dirty().color(colour).ore(oreTag))));
+                    () -> new Chemical(ChemicalBuilder.dirtySlurry().ore(oreTag).tint(colour))));
             CLEAN.put(name, SLURRIES.register("clean_" + name,
-                    () -> new Slurry(SlurryBuilder.clean().color(colour).ore(oreTag))));
+                    () -> new Chemical(ChemicalBuilder.cleanSlurry().tint(colour).ore(oreTag))));
         }
     }
 
@@ -43,4 +43,3 @@ public final class MekanismCompat {
         SLURRIES.register(modBus);
     }
 }
- */

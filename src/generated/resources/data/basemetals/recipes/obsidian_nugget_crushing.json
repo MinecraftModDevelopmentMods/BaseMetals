@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/obsidian"
-  },
-  "result": {
-    "item": "basemetals:obsidian_smallpowder"
-  }
-}

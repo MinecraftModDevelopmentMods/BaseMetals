@@ -1,7 +1,0 @@
-{
-  "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/bismuth"
-  },
-  "target": "basemetals:bismuth_chestplate"
-}

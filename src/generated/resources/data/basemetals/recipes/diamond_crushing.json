@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:diamond"
-  },
-  "result": {
-    "item": "basemetals:diamond_powder"
-  }
-}

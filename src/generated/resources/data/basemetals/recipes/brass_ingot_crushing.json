@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/brass"
-  },
-  "result": {
-    "item": "basemetals:brass_powder"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/bronze"
-  },
-  "target": "basemetals:bronze_leggings"
-}

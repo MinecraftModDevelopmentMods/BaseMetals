@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/mithril"
-  },
-  "result": "basemetals:mithril_nugget"
-}

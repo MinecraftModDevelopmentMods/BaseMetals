@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.02,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/tin"
-  },
-  "result": "basemetals:tin_nugget"
-}

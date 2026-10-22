@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/lead"
-  },
-  "result": {
-    "item": "basemetals:lead_powder"
-  }
-}

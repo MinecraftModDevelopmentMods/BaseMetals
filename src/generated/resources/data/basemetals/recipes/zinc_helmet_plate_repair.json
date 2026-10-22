@@ -1,7 +1,0 @@
-{
-  "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/zinc"
-  },
-  "target": "basemetals:zinc_helmet"
-}

@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/bismuth"
-  },
-  "result": {
-    "item": "basemetals:bismuth_powder"
-  }
-}

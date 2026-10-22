@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:mossy_cobblestone_wall"
-  },
-  "result": {
-    "item": "minecraft:gravel"
-  }
-}

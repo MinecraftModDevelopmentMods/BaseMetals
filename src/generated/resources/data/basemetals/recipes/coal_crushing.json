@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:coal"
-  },
-  "result": {
-    "item": "basemetals:coal_powder"
-  }
-}

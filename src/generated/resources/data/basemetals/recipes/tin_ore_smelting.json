@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.2,
-  "ingredient": {
-    "tag": "forge:ores/tin"
-  },
-  "result": "basemetals:tin_ingot"
-}

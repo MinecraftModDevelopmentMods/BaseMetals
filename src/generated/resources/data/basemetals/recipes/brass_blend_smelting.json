@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.9,
-  "ingredient": {
-    "tag": "forge:blends/brass"
-  },
-  "result": "basemetals:brass_ingot"
-}

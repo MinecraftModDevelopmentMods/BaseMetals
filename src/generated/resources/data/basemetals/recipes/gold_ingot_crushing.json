@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/gold"
-  },
-  "result": {
-    "item": "basemetals:gold_powder"
-  }
-}

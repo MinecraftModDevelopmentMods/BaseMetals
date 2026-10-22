@@ -40,17 +40,17 @@ final class GeneratedData implements DataProvider {
     private static final List<String> PROCESSING_MATERIALS = List.of(
             "adamantine", "antimony", "bismuth", "coldiron",
             "nickel", "platinum", "starsteel", "zinc");
-    private static final String WOODEN_ROD = "#forge:rods/wooden";
+    private static final String WOODEN_ROD = "#c:rods/wooden";
     private static final Map<String, List<AlloyComponent>> ALLOYS = Map.ofEntries(
             Map.entry("aquarium", List.of(component("copper", 2), component("zinc", 1),
-                    new AlloyComponent("#forge:dusts/prismarine", 1))),
+                    new AlloyComponent("#c:dusts/prismarine", 1))),
             Map.entry("brass", List.of(component("copper", 3), component("zinc", 1))),
             Map.entry("bronze", List.of(component("copper", 3), component("tin", 1))),
             Map.entry("cupronickel", List.of(component("copper", 3), component("nickel", 1))),
             Map.entry("electrum", List.of(component("gold", 1), component("silver", 1))),
             Map.entry("invar", List.of(component("iron", 2), component("nickel", 1))),
             Map.entry("mithril", List.of(component("silver", 2), component("coldiron", 1),
-                    new AlloyComponent("#forge:ingots/mercury", 1))),
+                    new AlloyComponent("#c:ingots/mercury", 1))),
             Map.entry("pewter", List.of(component("tin", 1), component("copper", 1), component("lead", 1))),
             Map.entry("steel", List.of(component("iron", 8), component("coal", 1))));
     private static final Map<String, Integer> ALLOY_OUTPUTS = Map.of(
@@ -218,42 +218,42 @@ final class GeneratedData implements DataProvider {
                     itemTag(cache, form, name, entries(name, itemSuffix));
                 }
             }
-            addAggregate(aggregateItems, "ingots", "#forge:ingots/" + name);
-            addAggregate(aggregateItems, "nuggets", "#forge:nuggets/" + name);
-            addAggregate(aggregateItems, "dusts", "#forge:dusts/" + name);
-            addAggregate(aggregateItems, "tiny_dusts", "#forge:tiny_dusts/" + name);
+            addAggregate(aggregateItems, "ingots", "#c:ingots/" + name);
+            addAggregate(aggregateItems, "nuggets", "#c:nuggets/" + name);
+            addAggregate(aggregateItems, "dusts", "#c:dusts/" + name);
+            addAggregate(aggregateItems, "tiny_dusts", "#c:tiny_dusts/" + name);
             if (material.hasEquipment()) {
-                addAggregate(aggregateItems, "plates", "#forge:plates/" + name);
-                addAggregate(aggregateItems, "rods", "#forge:rods/" + name);
-                addAggregate(aggregateItems, "gears", "#forge:gears/" + name);
-                addAggregate(aggregateItems, "storage_blocks", "#forge:storage_blocks/" + name);
-                addAggregate(aggregateBlocks, "storage_blocks", "#forge:storage_blocks/" + name);
+                addAggregate(aggregateItems, "plates", "#c:plates/" + name);
+                addAggregate(aggregateItems, "rods", "#c:rods/" + name);
+                addAggregate(aggregateItems, "gears", "#c:gears/" + name);
+                addAggregate(aggregateItems, "storage_blocks", "#c:storage_blocks/" + name);
+                addAggregate(aggregateBlocks, "storage_blocks", "#c:storage_blocks/" + name);
             }
             if (material.hasOre()) {
-                addAggregate(aggregateItems, "ores", "#forge:ores/" + name);
-                addAggregate(aggregateBlocks, "ores", "#forge:ores/" + name);
+                addAggregate(aggregateItems, "ores", "#c:ores/" + name);
+                addAggregate(aggregateBlocks, "ores", "#c:ores/" + name);
             }
         }
         for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz", "stone", "wood")) {
-            addAggregate(aggregateItems, "gears", "#forge:gears/" + name);
+            addAggregate(aggregateItems, "gears", "#c:gears/" + name);
         }
         for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
-            addAggregate(aggregateItems, "rods", "#forge:rods/" + name);
+            addAggregate(aggregateItems, "rods", "#c:rods/" + name);
         }
         for (String name : List.of("diamond", "emerald", "gold", "iron")) {
-            addAggregate(aggregateItems, "plates", "#forge:plates/" + name);
+            addAggregate(aggregateItems, "plates", "#c:plates/" + name);
         }
         aggregateItems.forEach((path, values) -> uncheckedTag(cache, "forge", "items/" + path, values));
         aggregateBlocks.forEach((path, values) -> uncheckedTag(cache, "forge", "blocks/" + path, values));
 
         for (String alias : List.of("adamant", "adamantite", "adamantium")) {
-            tag(cache, "forge", "items/ingots/" + alias, List.of("#forge:ingots/adamantine"));
-            tag(cache, "forge", "items/nuggets/" + alias, List.of("#forge:nuggets/adamantine"));
-            tag(cache, "forge", "items/dusts/" + alias, List.of("#forge:dusts/adamantine"));
+            tag(cache, "forge", "items/ingots/" + alias, List.of("#c:ingots/adamantine"));
+            tag(cache, "forge", "items/nuggets/" + alias, List.of("#c:nuggets/adamantine"));
+            tag(cache, "forge", "items/dusts/" + alias, List.of("#c:dusts/adamantine"));
         }
-        tag(cache, "forge", "items/ingots/quicksilver", List.of("#forge:ingots/mercury"));
+        tag(cache, "forge", "items/ingots/quicksilver", List.of("#c:ingots/mercury"));
         tag(cache, "forge", "items/gears/steel", List.of("basemetals:steel_gear"));
-        tag(cache, "forge", "items/sprockets/steel", List.of("#forge:gears/steel"));
+        tag(cache, "forge", "items/sprockets/steel", List.of("#c:gears/steel"));
         tag(cache, "forge", "items/plates/diamond", List.of());
         tag(cache, "forge", "items/plates/emerald", List.of());
         writeVanillaBitsTags(cache);
@@ -322,22 +322,22 @@ final class GeneratedData implements DataProvider {
     private static List<String> scytheHarvestableBlocks() {
         LinkedHashSet<String> values = new LinkedHashSet<>(List.of(
                 "#minecraft:leaves", "#minecraft:saplings", "#minecraft:flowers", "#minecraft:crops"));
-        java.util.Set<net.minecraft.world.level.material.Material> materials = java.util.Set.of(
-                net.minecraft.world.level.material.Material.WEB,
-                net.minecraft.world.level.material.Material.LEAVES,
-                net.minecraft.world.level.material.Material.PLANT,
-                net.minecraft.world.level.material.Material.WATER_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_FIREPROOF_PLANT,
-                net.minecraft.world.level.material.Material.REPLACEABLE_WATER_PLANT,
-                net.minecraft.world.level.material.Material.VEGETABLE,
-                net.minecraft.world.level.material.Material.CACTUS,
-                net.minecraft.world.level.material.Material.BAMBOO,
-                net.minecraft.world.level.material.Material.BAMBOO_SAPLING,
-                net.minecraft.world.level.material.Material.MOSS);
-        net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValues().stream()
-                .filter(block -> materials.contains(block.defaultBlockState().getMaterial()))
-                .map(net.minecraftforge.registries.ForgeRegistries.BLOCKS::getKey)
+        net.minecraft.core.registries.BuiltInRegistries.BLOCK.stream()
+                .filter(block -> block instanceof net.minecraft.world.level.block.BushBlock
+                        || block instanceof net.minecraft.world.level.block.LeavesBlock
+                        || block instanceof net.minecraft.world.level.block.WebBlock
+                        || block instanceof net.minecraft.world.level.block.CactusBlock
+                        || block instanceof net.minecraft.world.level.block.BambooStalkBlock
+                        || block instanceof net.minecraft.world.level.block.BambooSaplingBlock
+                        || block instanceof net.minecraft.world.level.block.WaterlilyBlock
+                        || block instanceof net.minecraft.world.level.block.GrowingPlantBlock
+                        || block == net.minecraft.world.level.block.Blocks.MOSS_BLOCK
+                        || block == net.minecraft.world.level.block.Blocks.MOSS_CARPET
+                        || block == net.minecraft.world.level.block.Blocks.MELON
+                        || block == net.minecraft.world.level.block.Blocks.PUMPKIN
+                        || block == net.minecraft.world.level.block.Blocks.CARVED_PUMPKIN
+                        || block == net.minecraft.world.level.block.Blocks.JACK_O_LANTERN)
+                .map(net.minecraft.core.registries.BuiltInRegistries.BLOCK::getKey)
                 .filter(java.util.Objects::nonNull)
                 .map(ResourceLocation::toString)
                 .forEach(values::add);
@@ -347,19 +347,19 @@ final class GeneratedData implements DataProvider {
     private static List<String> crackhammerCrushableBlocks() {
         LinkedHashSet<String> values = new LinkedHashSet<>();
         MaterialCatalogue.ALL.stream().filter(MaterialDefinition::hasOre)
-                .map(material -> "#forge:ores/" + material.name()).forEach(values::add);
+                .map(material -> "#c:ores/" + material.name()).forEach(values::add);
         MaterialCatalogue.ALL.stream().filter(MaterialDefinition::hasEquipment)
-                .map(material -> "#forge:storage_blocks/" + material.name()).forEach(values::add);
+                .map(material -> "#c:storage_blocks/" + material.name()).forEach(values::add);
         for (String name : List.of("coal", "diamond", "emerald", "gold", "iron",
                 "lapis", "redstone", "quartz", "netherite_scrap")) {
-            values.add("#forge:ores/" + name);
+            values.add("#c:ores/" + name);
         }
         for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold",
                 "iron", "lapis", "redstone")) {
-            values.add("#forge:storage_blocks/" + name);
+            values.add("#c:storage_blocks/" + name);
         }
         values.addAll(List.of(
-                "#forge:stone", "#forge:cobblestone", "#forge:gravel",
+                "#c:stone", "#c:cobblestone", "#c:gravel",
                 "minecraft:stone_bricks", "minecraft:stone_slab", "minecraft:stone_brick_slab",
                 "minecraft:mossy_cobblestone", "minecraft:cobblestone_wall",
                 "minecraft:mossy_cobblestone_wall", "minecraft:sandstone",
@@ -380,7 +380,7 @@ final class GeneratedData implements DataProvider {
             int level = content.definition().requiredHarvestLevel();
             if (level < 1) return;
             content.blocks().values().stream()
-                    .map(net.minecraftforge.registries.RegistryObject::getId)
+                    .map(net.neoforged.neoforge.registries.DeferredHolder::getId)
                     .map(ResourceLocation::toString)
                     .forEach(byTier.get(level)::add);
         });
@@ -414,7 +414,7 @@ final class GeneratedData implements DataProvider {
         for (String material : PROCESSING_MATERIALS) {
             for (String family : List.of("dirty_dusts", "clumps", "crystals", "shards")) {
                 tag(cache, "mekanism", "items/" + family + "/" + material,
-                        List.of("#forge:" + family + "/" + material));
+                        List.of("#c:" + family + "/" + material));
             }
         }
     }
@@ -423,7 +423,7 @@ final class GeneratedData implements DataProvider {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             String ingot = "basemetals:" + name + "_ingot";
-            String ingotIngredient = "#forge:ingots/" + name;
+            String ingotIngredient = "#c:ingots/" + name;
             String compactingIngotIngredient = name.equals("copper") ? ingot : ingotIngredient;
             if (material.hasEquipment()) {
                 shaped(cache, name + "_block", List.of("XXX", "XXX", "XXX"),
@@ -431,59 +431,59 @@ final class GeneratedData implements DataProvider {
                         "basemetals:" + name + "_block", 1);
                 String blockIngredient = name.equals("copper")
                         ? "basemetals:copper_block"
-                        : "#forge:storage_blocks/" + name;
+                        : "#c:storage_blocks/" + name;
                 shapeless(cache, name + "_block_ingot", List.of(blockIngredient), ingot, 9);
                 shaped(cache, name + "_plate", List.of("XXX"), Map.of('X', ingotIngredient),
                         "basemetals:" + name + "_plate", 3);
                 shaped(cache, name + "_rod", List.of("X", "X"), Map.of('X', ingotIngredient),
                         "basemetals:" + name + "_rod", 4);
                 shaped(cache, name + "_gear", List.of(" X ", "XRX", " X "),
-                        Map.of('X', ingotIngredient, 'R', "#forge:rods/" + name),
+                        Map.of('X', ingotIngredient, 'R', "#c:rods/" + name),
                         "basemetals:" + name + "_gear", 4);
                 equipmentRecipes(cache, name, ingotIngredient);
-                decorativeRecipes(cache, name, ingotIngredient, "#forge:storage_blocks/" + name);
+                decorativeRecipes(cache, name, ingotIngredient, "#c:storage_blocks/" + name);
             }
             String nuggetIngredient = name.equals("copper")
                     ? "basemetals:copper_nugget"
-                    : "#forge:nuggets/" + name;
+                    : "#c:nuggets/" + name;
             shaped(cache, name + "_ingot_from_nuggets", List.of("XXX", "XXX", "XXX"),
                     Map.of('X', nuggetIngredient), ingot, 1);
             String decompactingIngotIngredient = name.equals("copper") ? ingot : ingotIngredient;
             shapeless(cache, name + "_nuggets", List.of(decompactingIngotIngredient),
                     "basemetals:" + name + "_nugget", 9);
             shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
-                    Map.of('X', "#forge:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
-            shapeless(cache, name + "_smallpowder", List.of("#forge:dusts/" + name),
+                    Map.of('X', "#c:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
+            shapeless(cache, name + "_smallpowder", List.of("#c:dusts/" + name),
                     "basemetals:" + name + "_smallpowder", 9);
-            smelting(cache, name + "_powder_smelting", "#forge:dusts/" + name, ingot,
+            smelting(cache, name + "_powder_smelting", "#c:dusts/" + name, ingot,
                     material.oreSmeltingExperience(), 200, "minecraft:smelting");
-            smelting(cache, name + "_smallpowder_smelting", "#forge:tiny_dusts/" + name,
+            smelting(cache, name + "_smallpowder_smelting", "#c:tiny_dusts/" + name,
                     "basemetals:" + name + "_nugget",
                     legacyNuggetExperience(material.oreSmeltingExperience()), 200, "minecraft:smelting");
             if (material.hasOre()) {
-                smelting(cache, name + "_ore_smelting", "#forge:ores/" + name, ingot,
+                smelting(cache, name + "_ore_smelting", "#c:ores/" + name, ingot,
                         material.oreSmeltingExperience(), 200, "minecraft:smelting");
-                smelting(cache, name + "_ore_blasting", "#forge:ores/" + name, ingot,
+                smelting(cache, name + "_ore_blasting", "#c:ores/" + name, ingot,
                         material.oreSmeltingExperience(), 100, "minecraft:blasting");
-                crushing(cache, name + "_ore_crushing", "#forge:ores/" + name,
+                crushing(cache, name + "_ore_crushing", "#c:ores/" + name,
                         "basemetals:" + name + "_powder", 2);
             }
-            crushing(cache, name + "_ingot_crushing", "#forge:ingots/" + name,
+            crushing(cache, name + "_ingot_crushing", "#c:ingots/" + name,
                     "basemetals:" + name + "_powder", 1);
             if (material.hasEquipment()) {
-                crushing(cache, name + "_block_crushing", "#forge:storage_blocks/" + name,
+                crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
                         "basemetals:" + name + "_powder", 9);
             }
-            crushing(cache, name + "_nugget_crushing", "#forge:nuggets/" + name,
+            crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
                     "basemetals:" + name + "_smallpowder", 1);
             if (material.isAlloy()) {
                 shaped(cache, name + "_blend_from_small", List.of("XXX", "XXX", "XXX"),
-                        Map.of('X', "#forge:small_blends/" + name), "basemetals:" + name + "_blend", 1);
-                shapeless(cache, name + "_smallblend", List.of("#forge:blends/" + name),
+                        Map.of('X', "#c:small_blends/" + name), "basemetals:" + name + "_blend", 1);
+                shapeless(cache, name + "_smallblend", List.of("#c:blends/" + name),
                         "basemetals:" + name + "_smallblend", 9);
-                smelting(cache, name + "_blend_smelting", "#forge:blends/" + name, ingot,
+                smelting(cache, name + "_blend_smelting", "#c:blends/" + name, ingot,
                         material.oreSmeltingExperience(), 200, "minecraft:smelting");
-                smelting(cache, name + "_smallblend_smelting", "#forge:small_blends/" + name,
+                smelting(cache, name + "_smallblend_smelting", "#c:small_blends/" + name,
                         "basemetals:" + name + "_nugget",
                         legacyNuggetExperience(material.oreSmeltingExperience()), 200, "minecraft:smelting");
             }
@@ -514,27 +514,27 @@ final class GeneratedData implements DataProvider {
         shaped(cache, name + "_leggings", List.of("XXX", "X X", "X X"), Map.of('X', metal), "basemetals:" + name + "_leggings", 1);
         shaped(cache, name + "_boots", List.of("X X", "X X"), Map.of('X', metal), "basemetals:" + name + "_boots", 1);
         shaped(cache, name + "_crackhammer", List.of("X", "S", "S"),
-                Map.of('X', "#forge:storage_blocks/" + name, 'S', WOODEN_ROD),
+                Map.of('X', "#c:storage_blocks/" + name, 'S', WOODEN_ROD),
                 "basemetals:" + name + "_crackhammer", 1);
         shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "), tool, "basemetals:" + name + "_scythe", 1);
         shaped(cache, name + "_shears", List.of(" X", "X "), Map.of('X', metal),
                 "basemetals:" + name + "_shears", 1);
         shaped(cache, name + "_fishingrod", List.of("  R", " RS", "R S"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"),
                 "basemetals:" + name + "_fishing_rod", 1);
         shaped(cache, name + "_horsearmor", List.of("  X", "XWX", "XXX"),
                 Map.of('X', metal, 'W', "#minecraft:wool"),
                 "basemetals:" + name + "_horse_armor", 1);
         shaped(cache, name + "_arrow", List.of("N", "R", "F"),
-                Map.of('N', "#forge:nuggets/" + name, 'R', "#forge:rods/" + name, 'F', "minecraft:feather"),
+                Map.of('N', "#c:nuggets/" + name, 'R', "#c:rods/" + name, 'F', "minecraft:feather"),
                 "basemetals:" + name + "_arrow", 4);
         shaped(cache, name + "_bolt", List.of("R", "R", "F"),
-                Map.of('R', "#forge:rods/" + name, 'F', "minecraft:feather"),
+                Map.of('R', "#c:rods/" + name, 'F', "minecraft:feather"),
                 "basemetals:" + name + "_bolt", 4);
         shaped(cache, name + "_bow", List.of(" RS", "R S", " RS"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string"), "basemetals:" + name + "_bow", 1);
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"), "basemetals:" + name + "_bow", 1);
         shaped(cache, name + "_crossbow", List.of("GRR", " SR", "R G"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string", 'G', "#forge:gears/" + name),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string", 'G', "#c:gears/" + name),
                 "basemetals:" + name + "_crossbow", 1);
         shaped(cache, name + "_shield", List.of("XWX", "XXX", " X "),
                 Map.of('X', metal, 'W', "#minecraft:planks"), "basemetals:" + name + "_shield", 1);
@@ -542,30 +542,30 @@ final class GeneratedData implements DataProvider {
 
     private void decorativeRecipes(CachedOutput cache, String name, String metal, String block) throws IOException {
         shaped(cache, name + "_bars", List.of("XXX", "XXX"), Map.of('X', metal), "basemetals:" + name + "_bars", 16);
-        shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#forge:rods/" + name),
+        shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#c:rods/" + name),
                 "basemetals:" + name + "_bars", 4);
         shaped(cache, name + "_door", List.of("XX", "XX", "XX"), Map.of('X', metal), "basemetals:" + name + "_door", 3);
         shaped(cache, name + "_trapdoor", List.of("XX", "XX"), Map.of('X', metal),
                 "basemetals:" + name + "_trapdoor", 1);
-        shaped(cache, name + "_button", List.of("X", "X"), Map.of('X', "#forge:nuggets/" + name),
+        shaped(cache, name + "_button", List.of("X", "X"), Map.of('X', "#c:nuggets/" + name),
                 "basemetals:" + name + "_button", 1);
         shaped(cache, name + "_slab", List.of("XXX"), Map.of('X', block), "basemetals:" + name + "_slab", 6);
         shaped(cache, name + "_pressure_plate", List.of("XX"), Map.of('X', metal), "basemetals:" + name + "_pressure_plate", 1);
         shaped(cache, name + "_stairs", List.of("X  ", "XX ", "XXX"), Map.of('X', block), "basemetals:" + name + "_stairs", 4);
         shaped(cache, name + "_wall", List.of("XXX", "XXX"), Map.of('X', block), "basemetals:" + name + "_wall", 6);
         shaped(cache, name + "_lever", List.of("R", "X"),
-                Map.of('R', "#forge:rods/" + name, 'X', metal), "basemetals:" + name + "_lever", 1);
+                Map.of('R', "#c:rods/" + name, 'X', metal), "basemetals:" + name + "_lever", 1);
     }
 
     private void vanillaBitsRecipes(CachedOutput cache) throws IOException {
         Map<String, String> materials = Map.of(
-                "diamond", "#forge:gems/diamond", "emerald", "#forge:gems/emerald",
-                "gold", "#forge:ingots/gold", "iron", "#forge:ingots/iron",
-                "obsidian", "#forge:ingots/obsidian", "quartz", "#forge:gems/quartz");
+                "diamond", "#c:gems/diamond", "emerald", "#c:gems/emerald",
+                "gold", "#c:ingots/gold", "iron", "#c:ingots/iron",
+                "obsidian", "#c:ingots/obsidian", "quartz", "#c:gems/quartz");
         Map<String, String> blocks = Map.of(
-                "diamond", "#forge:storage_blocks/diamond", "emerald", "#forge:storage_blocks/emerald",
-                "gold", "#forge:storage_blocks/gold", "iron", "#forge:storage_blocks/iron",
-                "obsidian", "#forge:storage_blocks/obsidian", "quartz", "#forge:storage_blocks/quartz");
+                "diamond", "#c:storage_blocks/diamond", "emerald", "#c:storage_blocks/emerald",
+                "gold", "#c:storage_blocks/gold", "iron", "#c:storage_blocks/iron",
+                "obsidian", "#c:storage_blocks/obsidian", "quartz", "#c:storage_blocks/quartz");
         for (Map.Entry<String, String> entry : materials.entrySet()) {
             String name = entry.getKey();
             String material = entry.getValue();
@@ -574,7 +574,7 @@ final class GeneratedData implements DataProvider {
                         "basemetals:" + name + "_rod", 4);
             }
             if (hasItem(name + "_gear")) {
-                String gearRod = name.equals("emerald") ? "#forge:rods/iron" : "#forge:rods/" + name;
+                String gearRod = name.equals("emerald") ? "#c:rods/iron" : "#c:rods/" + name;
                 shaped(cache, name + "_gear", List.of(" X ", "XRX", " X "),
                         Map.of('X', material, 'R', gearRod),
                         "basemetals:" + name + "_gear", 4);
@@ -582,9 +582,9 @@ final class GeneratedData implements DataProvider {
             vanillaEquipmentRecipes(cache, name, material);
             vanillaDecorativeRecipes(cache, name, material, blocks.get(name));
         }
-        shaped(cache, "gold_plate", List.of("XXX"), Map.of('X', "#forge:ingots/gold"),
+        shaped(cache, "gold_plate", List.of("XXX"), Map.of('X', "#c:ingots/gold"),
                 "basemetals:gold_plate", 3);
-        shaped(cache, "iron_plate", List.of("XXX"), Map.of('X', "#forge:ingots/iron"),
+        shaped(cache, "iron_plate", List.of("XXX"), Map.of('X', "#c:ingots/iron"),
                 "basemetals:iron_plate", 3);
         for (String name : List.of("stone", "wood")) {
             String material = name.equals("stone") ? "minecraft:cobblestone" : "#minecraft:planks";
@@ -595,7 +595,7 @@ final class GeneratedData implements DataProvider {
                         "basemetals:" + name + "_crackhammer", 1);
             }
             if (hasItem(name + "_scythe")) {
-                String scytheMaterial = name.equals("stone") ? "#forge:stone" : material;
+                String scytheMaterial = name.equals("stone") ? "#c:stone" : material;
                 shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "),
                         Map.of('X', scytheMaterial, 'S', WOODEN_ROD),
                         "basemetals:" + name + "_scythe", 1);
@@ -603,7 +603,7 @@ final class GeneratedData implements DataProvider {
         }
         // Vanilla Bits also allowed three Base Metals iron rods to make four
         // vanilla iron bars.
-        shaped(cache, "iron_bars_2", List.of("XXX"), Map.of('X', "#forge:rods/iron"),
+        shaped(cache, "iron_bars_2", List.of("XXX"), Map.of('X', "#c:rods/iron"),
                 "minecraft:iron_bars", 4);
         vanillaPowderRecipes(cache);
         vanillaCrushingRecipes(cache);
@@ -613,56 +613,56 @@ final class GeneratedData implements DataProvider {
         // Default MMDLib 1.12 ore-dictionary behaviour, extended through
         // Forge's 1.18 ore tags so normal and deepslate ores share a recipe.
         for (String name : List.of("coal", "diamond", "emerald", "gold", "iron")) {
-            crushing(cache, name + "_ore_crushing", "#forge:ores/" + name,
+            crushing(cache, name + "_ore_crushing", "#c:ores/" + name,
                     "basemetals:" + name + "_powder", 2);
         }
 
         crushing(cache, "coal_crushing", "minecraft:coal", "basemetals:coal_powder", 1);
-        crushing(cache, "coal_block_crushing", "#forge:storage_blocks/coal",
+        crushing(cache, "coal_block_crushing", "#c:storage_blocks/coal",
                 "basemetals:coal_powder", 9);
-        crushing(cache, "coal_nugget_crushing", "#forge:nuggets/coal",
+        crushing(cache, "coal_nugget_crushing", "#c:nuggets/coal",
                 "basemetals:coal_smallpowder", 1);
         crushing(cache, "charcoal_crushing", "minecraft:charcoal", "basemetals:charcoal_powder", 1);
-        crushing(cache, "charcoal_block_crushing", "#forge:storage_blocks/charcoal",
+        crushing(cache, "charcoal_block_crushing", "#c:storage_blocks/charcoal",
                 "basemetals:charcoal_powder", 9);
-        crushing(cache, "charcoal_nugget_crushing", "#forge:nuggets/charcoal",
+        crushing(cache, "charcoal_nugget_crushing", "#c:nuggets/charcoal",
                 "basemetals:charcoal_smallpowder", 1);
 
         for (String name : List.of("diamond", "emerald")) {
             crushing(cache, name + "_crushing", "minecraft:" + name,
                     "basemetals:" + name + "_powder", 1);
-            crushing(cache, name + "_block_crushing", "#forge:storage_blocks/" + name,
+            crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
                     "basemetals:" + name + "_powder", 9);
-            crushing(cache, name + "_nugget_crushing", "#forge:nuggets/" + name,
+            crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
                     "basemetals:" + name + "_smallpowder", 1);
         }
         for (String name : List.of("gold", "iron")) {
-            crushing(cache, name + "_ingot_crushing", "#forge:ingots/" + name,
+            crushing(cache, name + "_ingot_crushing", "#c:ingots/" + name,
                     "basemetals:" + name + "_powder", 1);
-            crushing(cache, name + "_block_crushing", "#forge:storage_blocks/" + name,
+            crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
                     "basemetals:" + name + "_powder", 9);
-            crushing(cache, name + "_nugget_crushing", "#forge:nuggets/" + name,
+            crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
                     "basemetals:" + name + "_smallpowder", 1);
         }
-        crushing(cache, "obsidian_ingot_crushing", "#forge:ingots/obsidian",
+        crushing(cache, "obsidian_ingot_crushing", "#c:ingots/obsidian",
                 "basemetals:obsidian_powder", 1);
-        crushing(cache, "obsidian_nugget_crushing", "#forge:nuggets/obsidian",
+        crushing(cache, "obsidian_nugget_crushing", "#c:nuggets/obsidian",
                 "basemetals:obsidian_smallpowder", 1);
         crushing(cache, "quartz_crushing", "minecraft:quartz", "basemetals:quartz_powder", 1);
-        crushing(cache, "quartz_nugget_crushing", "#forge:nuggets/quartz",
+        crushing(cache, "quartz_nugget_crushing", "#c:nuggets/quartz",
                 "basemetals:quartz_smallpowder", 1);
 
-        crushing(cache, "stone_crushing", "#forge:stone", "minecraft:cobblestone", 1);
+        crushing(cache, "stone_crushing", "#c:stone", "minecraft:cobblestone", 1);
         crushing(cache, "stone_bricks_crushing", "minecraft:stone_bricks", "minecraft:cobblestone", 1);
         crushing(cache, "stone_slab_crushing", "minecraft:stone_slab", "minecraft:cobblestone_slab", 1);
         crushing(cache, "stone_brick_slab_crushing", "minecraft:stone_brick_slab",
                 "minecraft:cobblestone_slab", 1);
-        crushing(cache, "cobblestone_crushing", "#forge:cobblestone", "minecraft:gravel", 1);
+        crushing(cache, "cobblestone_crushing", "#c:cobblestone", "minecraft:gravel", 1);
         crushing(cache, "mossy_cobblestone_crushing", "minecraft:mossy_cobblestone", "minecraft:gravel", 1);
         crushing(cache, "cobblestone_wall_crushing", "minecraft:cobblestone_wall", "minecraft:gravel", 1);
         crushing(cache, "mossy_cobblestone_wall_crushing", "minecraft:mossy_cobblestone_wall",
                 "minecraft:gravel", 1);
-        crushing(cache, "gravel_crushing", "#forge:gravel", "minecraft:sand", 1);
+        crushing(cache, "gravel_crushing", "#c:gravel", "minecraft:sand", 1);
         crushing(cache, "sandstone_crushing", "minecraft:sandstone", "minecraft:sand", 4);
         crushing(cache, "sandstone_slab_crushing", "minecraft:sandstone_slab", "minecraft:sand", 2);
         crushing(cache, "glass_crushing", "minecraft:glass", "minecraft:sand", 1);
@@ -670,21 +670,21 @@ final class GeneratedData implements DataProvider {
         crushing(cache, "red_sandstone_slab_crushing", "minecraft:red_sandstone_slab",
                 "minecraft:red_sand", 2);
         crushing(cache, "glowstone_crushing", "minecraft:glowstone", "minecraft:glowstone_dust", 4);
-        crushing(cache, "lapis_ore_crushing", "#forge:ores/lapis", "minecraft:lapis_lazuli", 8);
-        crushing(cache, "lapis_block_crushing", "#forge:storage_blocks/lapis",
+        crushing(cache, "lapis_ore_crushing", "#c:ores/lapis", "minecraft:lapis_lazuli", 8);
+        crushing(cache, "lapis_block_crushing", "#c:storage_blocks/lapis",
                 "minecraft:lapis_lazuli", 9);
-        crushing(cache, "redstone_ore_crushing", "#forge:ores/redstone", "minecraft:redstone", 8);
-        crushing(cache, "redstone_block_crushing", "#forge:storage_blocks/redstone",
+        crushing(cache, "redstone_ore_crushing", "#c:ores/redstone", "minecraft:redstone", 8);
+        crushing(cache, "redstone_block_crushing", "#c:storage_blocks/redstone",
                 "minecraft:redstone", 9);
         crushing(cache, "obsidian_crushing", "minecraft:obsidian", "basemetals:obsidian_powder", 4);
         crushing(cache, "sugar_cane_crushing", "minecraft:sugar_cane", "minecraft:sugar", 2);
         crushing(cache, "bone_block_crushing", "minecraft:bone_block", "minecraft:bone_meal", 9);
         crushing(cache, "bone_crushing", "minecraft:bone", "minecraft:bone_meal", 3);
         crushing(cache, "blaze_rod_crushing", "minecraft:blaze_rod", "minecraft:blaze_powder", 2);
-        crushing(cache, "quartz_ore_crushing", "#forge:ores/quartz", "minecraft:quartz", 2);
+        crushing(cache, "quartz_ore_crushing", "#c:ores/quartz", "minecraft:quartz", 2);
         crushing(cache, "quartz_block_crushing", "minecraft:quartz_block", "minecraft:quartz", 4);
         crushing(cache, "quartz_slab_crushing", "minecraft:quartz_slab", "minecraft:quartz", 2);
-        crushing(cache, "ancient_debris_crushing", "#forge:ores/netherite_scrap",
+        crushing(cache, "ancient_debris_crushing", "#c:ores/netherite_scrap",
                 "minecraft:netherite_scrap", 2);
         crushing(cache, "prismarine_crushing", "minecraft:prismarine", "minecraft:prismarine_shard", 4);
         crushing(cache, "prismarine_bricks_crushing", "minecraft:prismarine_bricks",
@@ -698,13 +698,13 @@ final class GeneratedData implements DataProvider {
 
     private void vanillaEquipmentRecipes(CachedOutput cache, String name, String material) throws IOException {
         if (hasItem(name + "_crackhammer")) shaped(cache, name + "_crackhammer", List.of("X", "S", "S"),
-                Map.of('X', "#forge:storage_blocks/" + name, 'S', WOODEN_ROD),
+                Map.of('X', "#c:storage_blocks/" + name, 'S', WOODEN_ROD),
                 "basemetals:" + name + "_crackhammer", 1);
         if (hasItem(name + "_scythe")) {
             // Vanilla Bits' Obsidian scythe uniquely used the 1.12 "obsidian"
             // Ore Dictionary entry (blocks), rather than ingotObsidian.
             String scytheMaterial = name.equals("obsidian")
-                    ? "#forge:storage_blocks/obsidian"
+                    ? "#c:storage_blocks/obsidian"
                     : material;
             shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "),
                     Map.of('X', scytheMaterial, 'S', WOODEN_ROD),
@@ -713,19 +713,19 @@ final class GeneratedData implements DataProvider {
         if (hasItem(name + "_shears")) shaped(cache, name + "_shears", List.of(" X", "X "),
                 Map.of('X', material), "basemetals:" + name + "_shears", 1);
         if (hasItem(name + "_fishing_rod")) shaped(cache, name + "_fishingrod", List.of("  R", " RS", "R S"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"),
                 "basemetals:" + name + "_fishing_rod", 1);
         if (hasItem(name + "_arrow")) shaped(cache, name + "_arrow", List.of("N", "R", "F"),
-                Map.of('N', "#forge:nuggets/" + name, 'R', "#forge:rods/" + name, 'F', "minecraft:feather"),
+                Map.of('N', "#c:nuggets/" + name, 'R', "#c:rods/" + name, 'F', "minecraft:feather"),
                 "basemetals:" + name + "_arrow", 4);
         if (hasItem(name + "_bolt")) shaped(cache, name + "_bolt", List.of("R", "R", "F"),
-                Map.of('R', "#forge:rods/" + name, 'F', "minecraft:feather"),
+                Map.of('R', "#c:rods/" + name, 'F', "minecraft:feather"),
                 "basemetals:" + name + "_bolt", 4);
         if (hasItem(name + "_bow")) shaped(cache, name + "_bow", List.of(" RS", "R S", " RS"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"),
                 "basemetals:" + name + "_bow", 1);
         if (hasItem(name + "_crossbow")) shaped(cache, name + "_crossbow", List.of("GRR", " SR", "R G"),
-                Map.of('R', "#forge:rods/" + name, 'S', "minecraft:string", 'G', "#forge:gears/" + name),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string", 'G', "#c:gears/" + name),
                 "basemetals:" + name + "_crossbow", 1);
         if (hasItem(name + "_shield")) shaped(cache, name + "_shield", List.of("XWX", "XXX", " X "),
                 Map.of('X', material, 'W', "#minecraft:planks"), "basemetals:" + name + "_shield", 1);
@@ -753,7 +753,7 @@ final class GeneratedData implements DataProvider {
             String block) throws IOException {
         if (hasItem(name + "_bars")) shaped(cache, name + "_bars", List.of("XXX", "XXX"), Map.of('X', material), "basemetals:" + name + "_bars", 16);
         if (hasItem(name + "_bars") && hasItem(name + "_rod")) {
-            shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#forge:rods/" + name),
+            shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#c:rods/" + name),
                     "basemetals:" + name + "_bars", 4);
         }
         if (hasItem(name + "_door")) {
@@ -764,20 +764,20 @@ final class GeneratedData implements DataProvider {
         if (hasItem(name + "_trapdoor")) shaped(cache, name + "_trapdoor", List.of("XX", "XX"),
                 Map.of('X', material), "basemetals:" + name + "_trapdoor", 1);
         if (hasItem(name + "_button")) shaped(cache, name + "_button", List.of("X", "X"),
-                Map.of('X', "#forge:nuggets/" + name), "basemetals:" + name + "_button", 1);
+                Map.of('X', "#c:nuggets/" + name), "basemetals:" + name + "_button", 1);
         if (hasItem(name + "_slab")) shaped(cache, name + "_slab", List.of("XXX"), Map.of('X', block), "basemetals:" + name + "_slab", 6);
         if (hasItem(name + "_pressure_plate")) shaped(cache, name + "_pressure_plate", List.of("XX"), Map.of('X', material), "basemetals:" + name + "_pressure_plate", 1);
         if (hasItem(name + "_stairs")) shaped(cache, name + "_stairs", List.of("X  ", "XX ", "XXX"), Map.of('X', block), "basemetals:" + name + "_stairs", 4);
         if (hasItem(name + "_wall")) shaped(cache, name + "_wall", List.of("XXX", "XXX"), Map.of('X', block), "basemetals:" + name + "_wall", 6);
         if (hasItem(name + "_lever")) shaped(cache, name + "_lever", List.of("R", "X"),
-                Map.of('R', "#forge:rods/" + name, 'X', material), "basemetals:" + name + "_lever", 1);
+                Map.of('R', "#c:rods/" + name, 'X', material), "basemetals:" + name + "_lever", 1);
     }
 
     private void vanillaPowderRecipes(CachedOutput cache) throws IOException {
         for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
-                    Map.of('X', "#forge:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
-            shapeless(cache, name + "_smallpowder", List.of("#forge:dusts/" + name),
+                    Map.of('X', "#c:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
+            shapeless(cache, name + "_smallpowder", List.of("#c:dusts/" + name),
                     "basemetals:" + name + "_smallpowder", 9);
         }
         Map<String, String> ingots = Map.of(
@@ -804,21 +804,21 @@ final class GeneratedData implements DataProvider {
         for (String name : ingots.keySet().stream().sorted().toList()) {
             float baseExperience = vanillaBaseSmeltingExperience(name);
             float ingotExperience = vanillaIngotSmeltingExperience(name);
-            smelting(cache, name + "_powder_smelting", "#forge:dusts/" + name,
+            smelting(cache, name + "_powder_smelting", "#c:dusts/" + name,
                     ingots.get(name), ingotExperience, 200, "minecraft:smelting");
-            smelting(cache, name + "_smallpowder_smelting", "#forge:tiny_dusts/" + name,
+            smelting(cache, name + "_smallpowder_smelting", "#c:tiny_dusts/" + name,
                     nuggets.get(name), legacyNuggetExperience(baseExperience), 200, "minecraft:smelting");
             legacyRecyclingRecipes(cache, name, ingots.get(name), nuggets.get(name), blocks.get(name),
                     ingotExperience, legacyNuggetExperience(baseExperience));
         }
         for (String name : List.of("diamond", "gold", "iron")) {
-            smelting(cache, name + "_smallblend_smelting", "#forge:small_blends/" + name,
+            smelting(cache, name + "_smallblend_smelting", "#c:small_blends/" + name,
                     nuggets.get(name), legacyNuggetExperience(vanillaBaseSmeltingExperience(name)),
                     200, "minecraft:smelting");
         }
         shaped(cache, "redstone_from_smallpowder", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:tiny_dusts/redstone"), "minecraft:redstone", 1);
-        shapeless(cache, "redstone_smallpowder", List.of("#forge:dusts/redstone"),
+                Map.of('X', "#c:tiny_dusts/redstone"), "minecraft:redstone", 1);
+        shapeless(cache, "redstone_smallpowder", List.of("#c:dusts/redstone"),
                 "basemetals:redstone_smallpowder", 9);
     }
 
@@ -899,13 +899,13 @@ final class GeneratedData implements DataProvider {
                         ? "golden" : material;
                 plateRepair(cache, material + "_" + form + "_plate_repair",
                         namespace + ":" + targetMaterial + "_" + form,
-                        "#forge:plates/" + material);
+                        "#c:plates/" + material);
             }
         }
     }
 
     private void legacySpecialRecipes(CachedOutput cache) throws IOException {
-        String steel = "#forge:ingots/steel";
+        String steel = "#c:ingots/steel";
         shaped(cache, "activator_rail", List.of("XSX", "XRX", "XSX"),
                 Map.of('X', steel, 'S', WOODEN_ROD, 'R', "minecraft:redstone_torch"),
                 "minecraft:activator_rail", 1);
@@ -917,8 +917,8 @@ final class GeneratedData implements DataProvider {
         shaped(cache, "minecart", List.of("X X", "XXX"),
                 Map.of('X', steel), "minecraft:minecart", 1);
         shaped(cache, "piston", List.of("WWW", "CXC", "CRC"),
-                Map.of('W', "#minecraft:planks", 'C', "#forge:cobblestone",
-                        'X', steel, 'R', "#forge:dusts/redstone"),
+                Map.of('W', "#minecraft:planks", 'C', "#c:cobblestone",
+                        'X', steel, 'R', "#c:dusts/redstone"),
                 "minecraft:piston", 1);
         shaped(cache, "tripwire_hook", List.of("X", "S", "W"),
                 Map.of('X', steel, 'S', WOODEN_ROD, 'W', "#minecraft:planks"),
@@ -926,42 +926,42 @@ final class GeneratedData implements DataProvider {
         shapeless(cache, "flint_and_steel", List.of(steel, "minecraft:flint"),
                 "minecraft:flint_and_steel", 1);
         shaped(cache, "human_detector", List.of("XX", "GG"),
-                Map.of('X', "minecraft:brick", 'G', "#forge:gears"),
+                Map.of('X', "minecraft:brick", 'G', "#c:gears"),
                 "basemetals:human_detector", 1);
 
         shaped(cache, "charcoal_block", List.of("XXX", "XXX", "XXX"),
                 Map.of('X', "minecraft:charcoal"), "basemetals:charcoal_block", 1);
         shaped(cache, "charcoal_block_dust", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:dusts/charcoal"), "basemetals:charcoal_block", 1);
+                Map.of('X', "#c:dusts/charcoal"), "basemetals:charcoal_block", 1);
         shaped(cache, "charcoal_ingot", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:nuggets/charcoal"), "minecraft:charcoal", 1);
+                Map.of('X', "#c:nuggets/charcoal"), "minecraft:charcoal", 1);
         shapeless(cache, "charcoal_nugget", List.of("minecraft:charcoal"),
                 "basemetals:charcoal_nugget", 9);
         shaped(cache, "coal_block_dust", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:dusts/coal"), "minecraft:coal_block", 1);
+                Map.of('X', "#c:dusts/coal"), "minecraft:coal_block", 1);
         shaped(cache, "coal_ingot", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:nuggets/coal"), "minecraft:coal", 1);
+                Map.of('X', "#c:nuggets/coal"), "minecraft:coal", 1);
         shapeless(cache, "coal_nugget", List.of("minecraft:coal"),
                 "basemetals:coal_nugget", 9);
         shaped(cache, "obsidian_block", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:ingots/obsidian"), "minecraft:obsidian", 1);
+                Map.of('X', "#c:ingots/obsidian"), "minecraft:obsidian", 1);
         shaped(cache, "obsidian_ingot", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:nuggets/obsidian"), "basemetals:obsidian_ingot", 1);
-        shapeless(cache, "obsidian_nugget", List.of("#forge:ingots/obsidian"),
+                Map.of('X', "#c:nuggets/obsidian"), "basemetals:obsidian_ingot", 1);
+        shapeless(cache, "obsidian_nugget", List.of("#c:ingots/obsidian"),
                 "basemetals:obsidian_nugget", 9);
         shaped(cache, "quartz_ingot", List.of("XXX", "XXX", "XXX"),
-                Map.of('X', "#forge:nuggets/quartz"), "minecraft:quartz", 1);
-        shapeless(cache, "quartz_nugget", List.of("#forge:gems/quartz"),
+                Map.of('X', "#c:nuggets/quartz"), "minecraft:quartz", 1);
+        shapeless(cache, "quartz_nugget", List.of("#c:gems/quartz"),
                 "basemetals:quartz_nugget", 9);
     }
 
     private void anvilRecipes(CachedOutput cache) throws IOException {
         shaped(cache, "stone_anvil", List.of("BBB", " C ", "SSS"),
-                Map.of('B', "minecraft:stone_bricks", 'C', "#forge:stone", 'S', "minecraft:stone_slab"),
+                Map.of('B', "minecraft:stone_bricks", 'C', "#c:stone", 'S', "minecraft:stone_slab"),
                 "basemetals:stone_anvil", 1);
         for (String material : List.of("steel", "adamantine")) {
             shaped(cache, material + "_anvil", List.of("BBB", " B ", "III"),
-                    Map.of('B', "#forge:storage_blocks/" + material, 'I', "#forge:ingots/" + material),
+                    Map.of('B', "#c:storage_blocks/" + material, 'I', "#c:ingots/" + material),
                     "basemetals:" + material + "_anvil", 1);
         }
     }
@@ -971,17 +971,17 @@ final class GeneratedData implements DataProvider {
     }
 
     private void alloyRecipes(CachedOutput cache) throws IOException {
-        alloy(cache, "aquarium", 3, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/zinc", "#forge:dusts/prismarine");
-        alloy(cache, "brass", 4, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/zinc");
-        alloy(cache, "bronze", 4, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/tin");
-        alloy(cache, "cupronickel", 4, "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/copper", "#forge:dusts/nickel");
-        alloy(cache, "electrum", 2, "#forge:dusts/gold", "#forge:dusts/silver");
-        alloy(cache, "invar", 3, "#forge:dusts/iron", "#forge:dusts/iron", "#forge:dusts/nickel");
-        alloy(cache, "mithril", 3, "#forge:dusts/silver", "#forge:dusts/silver", "#forge:dusts/coldiron", "#forge:ingots/mercury");
-        alloy(cache, "pewter", 3, "#forge:dusts/tin", "#forge:dusts/copper", "#forge:dusts/lead");
+        alloy(cache, "aquarium", 3, "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/zinc", "#c:dusts/prismarine");
+        alloy(cache, "brass", 4, "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/zinc");
+        alloy(cache, "bronze", 4, "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/tin");
+        alloy(cache, "cupronickel", 4, "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/copper", "#c:dusts/nickel");
+        alloy(cache, "electrum", 2, "#c:dusts/gold", "#c:dusts/silver");
+        alloy(cache, "invar", 3, "#c:dusts/iron", "#c:dusts/iron", "#c:dusts/nickel");
+        alloy(cache, "mithril", 3, "#c:dusts/silver", "#c:dusts/silver", "#c:dusts/coldiron", "#c:ingots/mercury");
+        alloy(cache, "pewter", 3, "#c:dusts/tin", "#c:dusts/copper", "#c:dusts/lead");
         List<String> steel = new ArrayList<>();
-        for (int i = 0; i < 8; i++) steel.add("#forge:dusts/iron");
-        steel.add("#forge:dusts/coal");
+        for (int i = 0; i < 8; i++) steel.add("#c:dusts/iron");
+        steel.add("#c:dusts/coal");
         alloy(cache, "steel", 8, steel.toArray(String[]::new));
     }
 
@@ -1000,29 +1000,29 @@ final class GeneratedData implements DataProvider {
         for (String name : PROCESSING_MATERIALS) {
             String root = "compat/mekanism/" + name + "/";
             mekanismItemToItem(cache, root + "dirty_dust_to_dust", "mekanism:enriching",
-                    "#forge:dirty_dusts/" + name, "basemetals:" + name + "_powder", 1);
+                    "#c:dirty_dusts/" + name, "basemetals:" + name + "_powder", 1);
             mekanismItemToItem(cache, root + "clump_to_dirty_dust", "mekanism:crushing",
-                    "#forge:clumps/" + name, "basemetals:" + name + "_powder_dirty", 1);
+                    "#c:clumps/" + name, "basemetals:" + name + "_powder_dirty", 1);
             mekanismItemChemicalToItem(cache, root + "shard_to_clump", "mekanism:purifying",
-                    "#forge:shards/" + name, "mekanism:oxygen", 1,
+                    "#c:shards/" + name, "mekanism:oxygen", 1,
                     "basemetals:" + name + "_clump", 1);
             mekanismItemChemicalToItem(cache, root + "crystal_to_shard", "mekanism:injecting",
-                    "#forge:crystals/" + name, "mekanism:hydrogen_chloride", 1,
+                    "#c:crystals/" + name, "mekanism:hydrogen_chloride", 1,
                     "basemetals:" + name + "_shard", 1);
             mekanismCrystallizing(cache, root + "clean_slurry_to_crystal", name);
             mekanismWashing(cache, root + "dirty_slurry_to_clean_slurry", name);
 
             mekanismItemToItem(cache, root + "ore_to_dust", "mekanism:enriching",
-                    "#forge:ores/" + name, "basemetals:" + name + "_powder", 2);
+                    "#c:ores/" + name, "basemetals:" + name + "_powder", 2);
             mekanismItemChemicalToItem(cache, root + "ore_to_clump", "mekanism:purifying",
-                    "#forge:ores/" + name, "mekanism:oxygen", 1,
+                    "#c:ores/" + name, "mekanism:oxygen", 1,
                     "basemetals:" + name + "_clump", 3);
             mekanismItemChemicalToItem(cache, root + "ore_to_shard", "mekanism:injecting",
-                    "#forge:ores/" + name, "mekanism:hydrogen_chloride", 1,
+                    "#c:ores/" + name, "mekanism:hydrogen_chloride", 1,
                     "basemetals:" + name + "_shard", 4);
             mekanismDissolution(cache, root + "ore_to_dirty_slurry", name);
             mekanismItemToItem(cache, root + "ingot_to_dust", "mekanism:crushing",
-                    "#forge:ingots/" + name, "basemetals:" + name + "_powder", 1);
+                    "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
         }
     }
 
@@ -1060,7 +1060,7 @@ final class GeneratedData implements DataProvider {
 
     private void mekanismDissolution(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "mekanism:dissolution");
-        root.add("itemInput", object("ingredient", ingredient("#forge:ores/" + material)));
+        root.add("itemInput", object("ingredient", ingredient("#c:ores/" + material)));
         root.add("gasInput", object("amount", 1, "gas", "mekanism:sulfuric_acid"));
         root.add("output", object("amount", 1000, "slurry", "basemetals:dirty_" + material,
                 "chemicalType", "slurry"));
@@ -1072,18 +1072,18 @@ final class GeneratedData implements DataProvider {
             String name = material.name();
             String root = "compat/thermal/" + name + "/";
             thermalItemMachine(cache, root + "ingot_pulverizing", "thermal:pulverizer",
-                    "#forge:ingots/" + name, "basemetals:" + name + "_powder", 1, 4000);
+                    "#c:ingots/" + name, "basemetals:" + name + "_powder", 1, 4000);
             thermalItemMachine(cache, root + "dust_furnace", "thermal:furnace",
-                    "#forge:dusts/" + name, "basemetals:" + name + "_ingot", 1, 2000);
+                    "#c:dusts/" + name, "basemetals:" + name + "_ingot", 1, 2000);
             thermalCrucible(cache, root + "ingot_crucible", name);
             if (material.hasOre()) {
                 thermalItemMachine(cache, root + "ore_pulverizing", "thermal:pulverizer",
-                        "#forge:ores/" + name, "basemetals:" + name + "_powder", 2, 4000);
+                        "#c:ores/" + name, "basemetals:" + name + "_powder", 2, 4000);
             }
             if (material.hasEquipment()) {
-                thermalPress(cache, root + "plate_press", "#forge:ingots/" + name,
+                thermalPress(cache, root + "plate_press", "#c:ingots/" + name,
                         null, 1, "basemetals:" + name + "_plate");
-                thermalPress(cache, root + "gear_press", "#forge:ingots/" + name,
+                thermalPress(cache, root + "gear_press", "#c:ingots/" + name,
                         "thermal:press_gear_die", 4, "basemetals:" + name + "_gear");
             }
         }
@@ -1109,7 +1109,7 @@ final class GeneratedData implements DataProvider {
 
     private void thermalCrucible(CachedOutput cache, String id, String material) throws IOException {
         JsonObject root = object("type", "thermal:crucible", "energy", 2000);
-        root.add("ingredient", ingredient("#forge:ingots/" + material));
+        root.add("ingredient", ingredient("#c:ingots/" + material));
         JsonArray results = new JsonArray();
         results.add(object("fluid", "basemetals:" + material, "amount", 90));
         root.add("result", results);
@@ -1148,10 +1148,10 @@ final class GeneratedData implements DataProvider {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             String name = material.name();
             enderSag(cache, "compat/enderio/" + name + "/ingot_sag_milling",
-                    "#forge:ingots/" + name, "basemetals:" + name + "_powder", 1);
+                    "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
             if (material.hasOre()) {
                 enderSag(cache, "compat/enderio/" + name + "/ore_sag_milling",
-                        "#forge:ores/" + name, "basemetals:" + name + "_powder", 2);
+                        "#c:ores/" + name, "basemetals:" + name + "_powder", 2);
             }
         }
         for (Map.Entry<String, List<AlloyComponent>> alloy : ALLOYS.entrySet()) {
@@ -1201,7 +1201,7 @@ final class GeneratedData implements DataProvider {
             JsonArray inputs = new JsonArray();
             for (AlloyComponent component : ALLOYS.get(name)) {
                 String fluidTag;
-                if (component.ingredient().equals("#forge:dusts/prismarine")) {
+                if (component.ingredient().equals("#c:dusts/prismarine")) {
                     fluidTag = "tconstruct:molten_glass";
                 } else {
                     String material = component.ingredient().substring(component.ingredient().lastIndexOf('/') + 1);
@@ -1227,7 +1227,7 @@ final class GeneratedData implements DataProvider {
         };
         JsonObject root = object("type", "tconstruct:melting", "temperature", temperature,
                 "time", Math.max(16, (int) Math.sqrt(amount) * 5));
-        root.add("ingredient", ingredient("#forge:" + tagFamily + "/" + material));
+        root.add("ingredient", ingredient("#c:" + tagFamily + "/" + material));
         root.add("result", object("fluid", "basemetals:" + material, "amount", amount));
         saveConditionalRecipe(cache, root, "compat/tconstruct/melting/" + material + "/" + form, "tconstruct");
     }
@@ -1305,7 +1305,7 @@ final class GeneratedData implements DataProvider {
         String normalized = family.equals("ingot") || family.equals("nugget") ? family + "s" : family;
         JsonObject root = object("type", "tconstruct:material", "value", value, "needed", needed,
                 "material", "basemetals:" + material);
-        root.add("ingredient", ingredient("#forge:" + normalized + "/" + material));
+        root.add("ingredient", ingredient("#c:" + normalized + "/" + material));
         saveConditionalRecipe(cache, root, "compat/tconstruct/materials/" + material + "/" + family, "tconstruct");
     }
 
@@ -1330,7 +1330,7 @@ final class GeneratedData implements DataProvider {
         outputs.stream().filter(item -> item.startsWith("basemetals:"))
                 .forEach(item -> conditions.add(object("type", "basemetals:content_mode", "item", item)));
         recipe.add("conditions", conditions);
-        save(cache, recipe, "data/basemetals/recipes/" + id + ".json");
+        save(cache, recipe, "data/basemetals/recipe/" + id + ".json");
     }
 
     private static void collectItemOutputs(com.google.gson.JsonElement value, java.util.Set<String> outputs) {
@@ -1343,7 +1343,7 @@ final class GeneratedData implements DataProvider {
     }
 
     private static AlloyComponent component(String material, int count) {
-        return new AlloyComponent("#forge:dusts/" + material, count);
+        return new AlloyComponent("#c:dusts/" + material, count);
     }
 
     private record AlloyComponent(String ingredient, int count) {}
@@ -1618,13 +1618,13 @@ final class GeneratedData implements DataProvider {
         keys.entrySet().stream().sorted(Map.Entry.comparingByKey())
                 .forEach(entry -> key.add(entry.getKey().toString(), ingredient(entry.getValue())));
         root.add("key", key); root.add("result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void shapeless(CachedOutput cache, String id, List<String> ingredients, String result, int count) throws IOException {
         JsonObject root = object("type", "minecraft:crafting_shapeless");
         JsonArray values = new JsonArray(); ingredients.forEach(value -> values.add(ingredient(value)));
         root.add("ingredients", values); root.add("result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void smelting(CachedOutput cache, String id, String input, String result, float xp, int time,
             String type) throws IOException {
@@ -1634,24 +1634,24 @@ final class GeneratedData implements DataProvider {
         }
         JsonObject root = object("type", type, "ingredient", ingredient(input), "result", result,
                 "experience", xp, "cookingtime", time);
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void legacySmelting(CachedOutput cache, String id, String input, String result, int count,
             float xp, int time) throws IOException {
         JsonObject root = object("type", "basemetals:legacy_smelting",
                 "ingredient", ingredient(input), "result", result(result, count),
                 "experience", xp, "cookingtime", time);
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void crushing(CachedOutput cache, String id, String input, String result, int count) throws IOException {
         JsonObject root = object("type", "basemetals:crushing", "ingredient", ingredient(input),
                 "result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void plateRepair(CachedOutput cache, String id, String target, String plate) throws IOException {
         JsonObject root = object("type", "basemetals:plate_repair", "target", target,
                 "plate", ingredient(plate));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private static JsonObject ingredient(String value) {
         return value.startsWith("#") ? object("tag", value.substring(1)) : object("item", value);
@@ -1716,12 +1716,12 @@ final class GeneratedData implements DataProvider {
         return result.toString();
     }
     private void save(CachedOutput cache, JsonObject value, String relative) throws IOException {
-        if (relative.startsWith("data/basemetals/recipes/") && value.has("type")
+        if (relative.startsWith("data/basemetals/recipe/") && value.has("type")
                 && value.get("type").getAsString().startsWith("minecraft:crafting_")) {
-            String id = relative.substring("data/basemetals/recipes/".length(), relative.length() - 5);
+            String id = relative.substring("data/basemetals/recipe/".length(), relative.length() - 5);
             String result = value.getAsJsonObject("result").get("item").getAsString();
-            net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS
-                    .getValue(new ResourceLocation(result));
+            net.minecraft.world.item.Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                    .get(ResourceLocation.parse(result));
             String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
                 case "blocks" -> "building";
                 case "tools", "combat" -> "equipment";
@@ -1778,22 +1778,22 @@ final class GeneratedData implements DataProvider {
             boolean vanilla = List.of("iron", "gold", "copper").contains(material);
             String raw = vanilla ? "minecraft:raw_" + material : "basemetals:" + material + "_raw";
             tag(cache, "forge", "items/raw_materials/" + material, List.of(raw));
-            crushing(cache, material + "_raw_crushing", "#forge:raw_materials/" + material,
+            crushing(cache, material + "_raw_crushing", "#c:raw_materials/" + material,
                     "basemetals:" + material + "_powder", 1);
             if (vanilla) continue;
 
             for (String method : List.of("smelting", "blasting")) {
                 String id = material + "_raw_" + method;
-                smelting(cache, id, "#forge:raw_materials/" + material, "basemetals:" + material + "_ingot",
+                smelting(cache, id, "#c:raw_materials/" + material, "basemetals:" + material + "_ingot",
                         MaterialCatalogue.get(material).oreSmeltingExperience(), method.equals("smelting") ? 200 : 100,
                         "minecraft:" + method);
-                JsonObject criteria = object("has_raw", inventoryCriterion(ingredient("#forge:raw_materials/" + material)),
+                JsonObject criteria = object("has_raw", inventoryCriterion(ingredient("#c:raw_materials/" + material)),
                         "has_recipe", object("trigger", "minecraft:recipe_unlocked",
                                 "conditions", object("recipe", "basemetals:" + id)));
                 writeUnlock(cache, id, criteria);
             }
         }
-        tag(cache, "forge", "items/raw_materials", rawMaterials.stream().map(name -> "#forge:raw_materials/" + name).toList());
+        tag(cache, "forge", "items/raw_materials", rawMaterials.stream().map(name -> "#c:raw_materials/" + name).toList());
     }
 
     private void writeCraftingUnlock(CachedOutput cache, String id, JsonObject recipe) throws IOException {
@@ -1801,12 +1801,12 @@ final class GeneratedData implements DataProvider {
         if (List.of("activator_rail", "detector_rail", "flint_and_steel", "human_detector", "minecart",
                 "piston", "rail", "tripwire_hook").contains(id)) material = "steel";
         String discovery = switch (material) {
-            case "diamond", "emerald", "quartz" -> "#forge:gems/" + material;
+            case "diamond", "emerald", "quartz" -> "#c:gems/" + material;
             case "coal", "charcoal" -> "minecraft:" + material;
-            case "stone" -> "#forge:stone";
+            case "stone" -> "#c:stone";
             case "wood" -> "#minecraft:logs";
-            case "redstone" -> "#forge:dusts/redstone";
-            default -> "#forge:ingots/" + material;
+            case "redstone" -> "#c:dusts/redstone";
+            default -> "#c:ingots/" + material;
         };
         JsonObject criteria = object("has_material", inventoryCriterion(ingredient(discovery)),
                 "has_recipe", object("trigger", "minecraft:recipe_unlocked", "conditions", object("recipe", "basemetals:" + id)));
@@ -1837,9 +1837,9 @@ final class GeneratedData implements DataProvider {
     private void writeUnlock(CachedOutput cache, String id, JsonObject criteria) throws IOException {
         JsonArray requirements = new JsonArray();
         requirements.add(array(criteria.keySet()));
-        save(cache, object("parent", "minecraft:recipes/root", "criteria", criteria,
-                "requirements", requirements, "rewards", object("recipes", array("basemetals:" + id))),
-                "data/basemetals/advancements/recipes/" + id + ".json");
+        save(cache, object("parent", "minecraft:recipe/root", "criteria", criteria,
+                "requirements", requirements, "rewards", object("recipe", array("basemetals:" + id))),
+                "data/basemetals/advancements/recipe/" + id + ".json");
     }
 
     private static JsonObject inventoryCriterion(JsonObject ingredient) {

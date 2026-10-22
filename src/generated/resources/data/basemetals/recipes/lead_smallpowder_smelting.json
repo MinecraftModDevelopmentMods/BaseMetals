@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.01,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/lead"
-  },
-  "result": "basemetals:lead_nugget"
-}
