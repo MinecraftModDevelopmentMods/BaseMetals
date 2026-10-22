@@ -20,7 +20,7 @@ out
 /.vscode/
 /.vscode
 .vscode/*
-.vscode
+.vscode/
 
 # gradle
 build
