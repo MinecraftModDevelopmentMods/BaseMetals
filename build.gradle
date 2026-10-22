@@ -48,15 +48,15 @@ runs {
 repositories {
     mavenCentral()
     maven {
-        name = 'CurseMaven'
-        url = uri('https://www.cursemaven.com')
-        content { includeGroup 'curse.maven' }
+        name = 'ModDevZone'
+        url = uri('https://maven.moddev.zone/releases')
+        content { includeGroup 'zone.moddev.mc.orespawn' }
     }
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-    implementation 'curse.maven:mmd-orespawn-245586:8807135'
+    implementation 'zone.moddev.mc.orespawn:OreSpawn:4.0.+'
 }
 
 tasks.named('processResources', ProcessResources) {
