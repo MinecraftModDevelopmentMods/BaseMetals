@@ -8,7 +8,7 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 import zone.moddev.mc.basemetals.loot.ModLoot;
-import zone.moddev.mc.basemetals.compat.MekanismCompat;
+//import zone.moddev.mc.basemetals.compat.MekanismCompat;
 
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.IEventBus;

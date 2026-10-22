@@ -38,10 +38,8 @@ public final class ClientSetup {
     public static void clientSetup(FMLClientSetupEvent event) {
         ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow()
                 .registerExtensionPoint(IConfigScreenFactory.class,
-                        () -> (container, parent) -> new BaseMetalsConfigScreen(parent));
+                        (container, parent) -> new BaseMetalsConfigScreen(parent));
         event.enqueueWork(() -> {
-            zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(
-                    BaseMetals.MOD_ID, BaseMetalsConfigScreen::new);
             ModContent.blocksById().forEach((id, block) -> {
                 if (id.endsWith("_ore")) ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
             });
