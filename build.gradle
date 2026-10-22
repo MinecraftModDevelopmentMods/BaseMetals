@@ -56,7 +56,7 @@ repositories {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-    implementation 'zone.moddev.mc.orespawn:OreSpawn:4.0.+'
+    implementation 'zone.moddev.mc.orespawn:OreSpawn:4.0.16.121012'
 }
 
 tasks.named('processResources', ProcessResources) {

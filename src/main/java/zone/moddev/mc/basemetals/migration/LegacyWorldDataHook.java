@@ -30,7 +30,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.Dynamic;
 
-import cpw.mods.modlauncher.api.INameMappingService;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.MissingMappings;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
@@ -65,8 +64,8 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.fixes.BlockStateData;
-import net.neoforged.fml.util.ObfuscationReflectionHelper;
-import net.neoforged.registries.ForgeRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.NbtAccounter;
 
 /**
  * Restores old modded block IDs before Minecraft's 1.13 world conversion can
@@ -74,7 +73,7 @@ import net.neoforged.registries.ForgeRegistries;
  * durability data before Minecraft reads the items.
  */
 public final class LegacyWorldDataHook {
-    private static final ResourceLocation BLOCK_REGISTRY = new ResourceLocation("minecraft", "blocks");
+    private static final ResourceLocation BLOCK_REGISTRY = ResourceLocation.fromNamespaceAndPath("minecraft", "blocks");
     private static final Map<String, CompoundTag> LEGACY_WORLD_DATA = new ConcurrentHashMap<String, CompoundTag>();
     private static final BitSet LEGACY_BASE_METALS_BLOCK_IDS = new BitSet();
     private static volatile Map<ResourceLocation, LongSet> legacyTerrainChunks = Collections.emptyMap();
@@ -96,7 +95,7 @@ public final class LegacyWorldDataHook {
         File source = legacyRegistrySource(levelDat);
         if (source == null) return;
         try (FileInputStream input = new FileInputStream(source)) {
-            CompoundTag root = NbtIo.readCompressed(input);
+            CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
             if (root.getCompound("Data").getInt("DataVersion") < 2834) {
                 legacyWorldActive = true;
                 indexLegacyChunks(levelDat.getParentFile());
@@ -115,7 +114,7 @@ public final class LegacyWorldDataHook {
         try {
             CompoundTag root;
             try (FileInputStream input = new FileInputStream(levelDat)) {
-                root = NbtIo.readCompressed(input);
+                root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
             }
             boolean changed = removeRetiredVanillaProfessionRegistry(root);
             changed |= removeObsoleteVanillaBiomeSnapshot(root);
@@ -387,7 +386,7 @@ public final class LegacyWorldDataHook {
             if (separator < 0) continue;
             String namespace = normalized.substring(0, separator);
             if (!BaseMetals.MOD_ID.equals(namespace) && !"mmdlib".equals(namespace)) continue;
-            ResourceLocation id = new ResourceLocation(normalized);
+            ResourceLocation id = ResourceLocation.parse(normalized);
             int numeric = entry.getInt("V");
             ids.put(id, Integer.valueOf(numeric));
             LEGACY_BASE_METALS_BLOCK_IDS.set(numeric);
@@ -410,7 +409,8 @@ public final class LegacyWorldDataHook {
 
     private static Block resolveCurrentBlock(ResourceLocation oldId) {
         String path = MissingMappings.blockTargetPath(oldId.getPath());
-        Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(BaseMetals.MOD_ID, path));
+        Block block = BuiltInRegistries.BLOCK.getOptional(
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path)).orElse(null);
         if (block == null) throw new IllegalStateException("No Base Metals replacement for legacy block " + oldId);
         return block;
     }
@@ -502,7 +502,7 @@ public final class LegacyWorldDataHook {
         File source = legacyRegistrySource(root.resolve("level.dat").toFile());
         if (source != null) {
             try (FileInputStream input = new FileInputStream(source)) {
-                Map<Integer, String> result = idsFromRoot(NbtIo.readCompressed(input));
+                Map<Integer, String> result = idsFromRoot(NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap()));
                 if (!result.isEmpty()) return result;
             }
         }
@@ -525,7 +525,7 @@ public final class LegacyWorldDataHook {
                 "/data/basemetals/migration/legacy_block_ids_1_12.json");
         if (input == null) throw new IOException("Missing packaged legacy registry map");
         try (java.io.Reader reader = new java.io.InputStreamReader(input, StandardCharsets.UTF_8)) {
-            JsonObject ids = new JsonParser().parse(reader).getAsJsonObject().getAsJsonObject("ids");
+            JsonObject ids = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonObject("ids");
             List<Integer> keys = new ArrayList<Integer>();
             for (Map.Entry<String, JsonElement> entry : ids.entrySet()) keys.add(Integer.valueOf(entry.getKey()));
             Collections.sort(keys);
@@ -542,7 +542,7 @@ public final class LegacyWorldDataHook {
     }
 
     private static void migrateLoosePlayerData(File levelDat, CompoundTag root) throws IOException {
-        CompoundTag current = levelDat.isFile() ? NbtIo.readCompressed(levelDat) : root;
+        CompoundTag current = levelDat.isFile() ? NbtIo.readCompressed(levelDat.toPath(), NbtAccounter.unlimitedHeap()) : root;
         if (migrateLegacyItems(current) > 0 && levelDat.isFile()) writeWithBackup(levelDat, current);
         File playerData = new File(levelDat.getParentFile(), "playerdata");
         File[] files = playerData.listFiles((directory, name) -> name.endsWith(".dat"));
@@ -550,7 +550,7 @@ public final class LegacyWorldDataHook {
         Arrays.sort(files);
         for (File file : files) {
             try (FileInputStream input = new FileInputStream(file)) {
-                CompoundTag player = NbtIo.readCompressed(input);
+                CompoundTag player = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
                 if (migrateLegacyItems(player) > 0) writeWithBackup(file, player);
             }
         }
@@ -637,7 +637,7 @@ public final class LegacyWorldDataHook {
     }
 
     private static ResourceLocation safeId(String value) {
-        try { return value == null || value.isEmpty() ? null : new ResourceLocation(value.toLowerCase(Locale.ROOT)); }
+        try { return value == null || value.isEmpty() ? null : ResourceLocation.parse(value.toLowerCase(Locale.ROOT)); }
         catch (RuntimeException ignored) { return null; }
     }
 
@@ -661,7 +661,7 @@ public final class LegacyWorldDataHook {
                 new File(levelDat.getParentFile(), REGISTRY_SIDECAR) }) {
             if (!candidate.isFile()) continue;
             try (FileInputStream input = new FileInputStream(candidate)) {
-                CompoundTag root = NbtIo.readCompressed(input);
+                CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
                 if ((root.contains("FML", 10) && containsLegacyBaseMetalsRegistryEntry(root))
                         || (root.contains("Data", 10) && root.getCompound("Data").getInt("DataVersion") < 2834)) return candidate;
             } catch (IOException ignored) {}
@@ -701,9 +701,9 @@ public final class LegacyWorldDataHook {
 
     static int indexLegacyChunks(File worldDirectory) {
         Map<ResourceLocation, LongSet> indexed = new LinkedHashMap<>();
-        indexRegionDirectory(indexed, new ResourceLocation("minecraft:overworld"), new File(worldDirectory, "region"));
-        indexRegionDirectory(indexed, new ResourceLocation("minecraft:the_nether"), new File(worldDirectory, "DIM-1/region"));
-        indexRegionDirectory(indexed, new ResourceLocation("minecraft:the_end"), new File(worldDirectory, "DIM1/region"));
+        indexRegionDirectory(indexed, ResourceLocation.withDefaultNamespace("overworld"), new File(worldDirectory, "region"));
+        indexRegionDirectory(indexed, ResourceLocation.withDefaultNamespace("the_nether"), new File(worldDirectory, "DIM-1/region"));
+        indexRegionDirectory(indexed, ResourceLocation.withDefaultNamespace("the_end"), new File(worldDirectory, "DIM1/region"));
 
         Path dimensions = worldDirectory.toPath().resolve("dimensions");
         if (Files.isDirectory(dimensions)) {
@@ -714,7 +714,7 @@ public final class LegacyWorldDataHook {
                             if (relative.getNameCount() < 2) return;
                             String namespace = relative.getName(0).toString();
                             String name = relative.subpath(1, relative.getNameCount()).toString().replace(File.separatorChar, '/');
-                            indexRegionDirectory(indexed, new ResourceLocation(namespace, name), path.toFile());
+                            indexRegionDirectory(indexed, ResourceLocation.fromNamespaceAndPath(namespace, name), path.toFile());
                         });
             } catch (IOException exception) {
                 throw new IllegalStateException("Could not inspect saved dimensions in " + dimensions, exception);
@@ -762,8 +762,8 @@ public final class LegacyWorldDataHook {
     @SuppressWarnings("unchecked")
     private static Dynamic<?>[] expandFlatteningTable(int requiredLength) {
         try {
-            String fieldName = ObfuscationReflectionHelper.remapName(INameMappingService.Domain.FIELD, "f_14934_");
-            Field valuesField = BlockStateData.class.getDeclaredField(fieldName);
+            // NeoForge 1.21.1 uses Mojang names at runtime as well as in development.
+            Field valuesField = BlockStateData.class.getDeclaredField("MAP");
             valuesField.setAccessible(true);
             if (Modifier.isFinal(valuesField.getModifiers())) {
                 throw new IllegalStateException("The Base Metals flattening-table hook did not run");

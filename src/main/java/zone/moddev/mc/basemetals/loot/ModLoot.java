@@ -2,17 +2,18 @@ package zone.moddev.mc.basemetals.loot;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import com.mojang.serialization.Codec;
-import net.neoforged.common.loot.IGlobalLootModifier;
-import net.neoforged.eventbus.api.IEventBus;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.ForgeRegistries;
-import net.neoforged.registries.RegistryObject;
+import com.mojang.serialization.MapCodec;
+
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public final class ModLoot {
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(
-            ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BaseMetals.MOD_ID);
-    public static final RegistryObject<Codec<AppendLootTableModifier>> ADD_TABLE =
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(
+            NeoForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BaseMetals.MOD_ID);
+    public static final DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<AppendLootTableModifier>> ADD_TABLE =
             SERIALIZERS.register("add_table", () -> AppendLootTableModifier.CODEC);
 
     private ModLoot() {}

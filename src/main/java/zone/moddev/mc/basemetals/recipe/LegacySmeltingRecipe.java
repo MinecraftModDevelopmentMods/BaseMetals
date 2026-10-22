@@ -1,74 +1,70 @@
 package zone.moddev.mc.basemetals.recipe;
 
-import com.google.gson.JsonObject;
-
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
-import net.neoforged.common.crafting.CraftingHelper;
+import net.minecraft.world.level.Level;
+import zone.moddev.mc.basemetals.config.ContentPolicy;
 
-/**
- * Furnace recipe serializer which retains the counted outputs supported by the
- * 1.12 furnace registry. Vanilla's 1.18 JSON serializer only accepts a result
- * item ID and therefore cannot express the old multi-ingot recycling recipes.
- */
+/** Retains counted furnace outputs and content-mode restrictions. */
 public final class LegacySmeltingRecipe extends SmeltingRecipe {
-    public LegacySmeltingRecipe(ResourceLocation id, String group, Ingredient ingredient,
-            ItemStack result, float experience, int cookingTime) {
-        super(id, group, net.minecraft.world.item.crafting.CookingBookCategory.MISC, ingredient, result, experience, cookingTime);
+    private final Ingredient input;
+    private final ItemStack output;
+
+    public LegacySmeltingRecipe(String group, Ingredient ingredient, ItemStack result,
+            float experience, int cookingTime) {
+        super(group, CookingBookCategory.MISC, ingredient, result.copy(), experience, cookingTime);
+        this.input = ingredient;
+        this.output = result.copy();
     }
 
-    @Override
-    public boolean matches(net.minecraft.world.Container inventory, net.minecraft.world.level.Level world) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
-                && super.matches(inventory, world);
+    private boolean allowed() {
+        return ContentPolicy.active().allows(BuiltInRegistries.ITEM.getKey(output.getItem()).toString());
     }
 
-    @Override
-    public ItemStack assemble(net.minecraft.world.Container inventory, net.minecraft.core.RegistryAccess registries) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
-                ? super.assemble(inventory, registries) : ItemStack.EMPTY;
+    @Override public boolean matches(SingleRecipeInput inventory, Level world) {
+        return allowed() && super.matches(inventory, world);
     }
 
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    @Override public ItemStack assemble(SingleRecipeInput inventory, HolderLookup.Provider registries) {
+        return allowed() ? output.copy() : ItemStack.EMPTY;
+    }
+
+    @Override public RecipeSerializer<?> getSerializer() {
         return CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
     }
 
-    public static final class Serializer
-            implements RecipeSerializer<LegacySmeltingRecipe> {
-        @Override
-        public LegacySmeltingRecipe fromJson(ResourceLocation id, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
-            ItemStack result = CraftingHelper.getItemStack(
-                    GsonHelper.getAsJsonObject(json, "result"), true);
-            float experience = GsonHelper.getAsFloat(json, "experience", 0.0F);
-            int cookingTime = GsonHelper.getAsInt(json, "cookingtime", 200);
-            return new LegacySmeltingRecipe(id, group, ingredient, result, experience, cookingTime);
-        }
+    public static final class Serializer implements RecipeSerializer<LegacySmeltingRecipe> {
+        private static final MapCodec<LegacySmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
+                instance.group(
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(LegacySmeltingRecipe::getGroup),
+                        Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
+                        CrushingRecipe.Serializer.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(LegacySmeltingRecipe::getExperience),
+                        Codec.intRange(1, Integer.MAX_VALUE).optionalFieldOf("cookingtime", 200)
+                                .forGetter(LegacySmeltingRecipe::getCookingTime)
+                ).apply(instance, LegacySmeltingRecipe::new));
+        private static final StreamCodec<RegistryFriendlyByteBuf, LegacySmeltingRecipe> STREAM_CODEC =
+                StreamCodec.composite(
+                        ByteBufCodecs.STRING_UTF8, LegacySmeltingRecipe::getGroup,
+                        Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.input,
+                        ItemStack.STREAM_CODEC, recipe -> recipe.output,
+                        ByteBufCodecs.FLOAT, LegacySmeltingRecipe::getExperience,
+                        ByteBufCodecs.VAR_INT, LegacySmeltingRecipe::getCookingTime,
+                        LegacySmeltingRecipe::new);
 
-        @Override
-        public LegacySmeltingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            String group = buffer.readUtf();
-            Ingredient ingredient = Ingredient.fromNetwork(buffer);
-            ItemStack result = buffer.readItem();
-            float experience = buffer.readFloat();
-            int cookingTime = buffer.readVarInt();
-            return new LegacySmeltingRecipe(id, group, ingredient, result, experience, cookingTime);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, LegacySmeltingRecipe recipe) {
-            buffer.writeUtf(recipe.getGroup());
-            recipe.getIngredients().get(0).toNetwork(buffer);
-            buffer.writeItem(recipe.getResultItem(net.minecraft.core.RegistryAccess.EMPTY));
-            buffer.writeFloat(recipe.getExperience());
-            buffer.writeVarInt(recipe.getCookingTime());
-        }
+        @Override public MapCodec<LegacySmeltingRecipe> codec() { return CODEC; }
+        @Override public StreamCodec<RegistryFriendlyByteBuf, LegacySmeltingRecipe> streamCodec() { return STREAM_CODEC; }
     }
 }

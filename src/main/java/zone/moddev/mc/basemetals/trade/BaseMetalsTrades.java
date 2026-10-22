@@ -14,7 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.neoforged.event.village.VillagerTradesEvent;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.core.registries.BuiltInRegistries;
+
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
 public final class BaseMetalsTrades {
     private BaseMetalsTrades() {}
@@ -59,7 +62,7 @@ public final class BaseMetalsTrades {
             MaterialDefinition material, String... forms) {
         for (String form : forms) {
             Item item = ModContent.item(material.name() + "_" + form).get();
-            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.neoforged.registries.ForgeRegistries.ITEMS.getKey(item).toString())) continue;
+            if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(BuiltInRegistries.ITEM.getKey(item).toString())) continue;
             event.getTrades().get(level).add(selling(item, cost));
         }
     }
@@ -99,15 +102,16 @@ public final class BaseMetalsTrades {
     }
 
     private static ItemListing selling(Item item, int count, int emeralds) {
-        return (trader, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, Math.max(1, emeralds)),
+        return (trader, random) -> new MerchantOffer(new ItemCost(Items.EMERALD, Math.max(1, emeralds)),
                 new ItemStack(item, count), 6, 5, 0.2F);
     }
 
     private static ItemListing enchanted(Item item, int baseCost) {
         return (trader, random) -> {
             int enchantmentLevel = 5 + random.nextInt(15);
-            ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel, false);
-            return new MerchantOffer(new ItemStack(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
+            // RandomSource, ItemStack, int, Stream
+            ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel, null);
+            return new MerchantOffer(new ItemCost(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
                     result, 3, 15, 0.2F);
         };
     }

@@ -1,40 +1,28 @@
 package zone.moddev.mc.basemetals.recipe;
 
-import com.google.gson.JsonObject;
-
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.neoforged.common.crafting.conditions.ICondition;
-import net.neoforged.common.crafting.conditions.IConditionSerializer;
+import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
-/** Applies the selected mode to Base Metals outputs made by optional machines. */
+/** Applies the selected mode to outputs made by optional machines. */
+@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public record ContentRecipeCondition(String item) implements ICondition {
-    private static final ResourceLocation ID = new ResourceLocation("basemetals", "content_mode");
+    public static final MapCodec<ContentRecipeCondition> CODEC = Codec.STRING.fieldOf("item")
+            .xmap(ContentRecipeCondition::new, ContentRecipeCondition::item);
 
-    @Override
-    public ResourceLocation getID() {
-        return ID;
-    }
+    @Override public boolean test(IContext context) { return ContentPolicy.active().allows(item); }
+    @Override public MapCodec<? extends ICondition> codec() { return CODEC; }
 
-    @Override
-    public boolean test(ICondition.IContext context) {
-        return ContentPolicy.active().allows(item);
-    }
-
-    public static final class Serializer implements IConditionSerializer<ContentRecipeCondition> {
-        @Override
-        public ResourceLocation getID() {
-            return ID;
-        }
-
-        @Override
-        public void write(JsonObject json, ContentRecipeCondition condition) {
-            json.addProperty("item", condition.item());
-        }
-        @Override
-        public ContentRecipeCondition read(JsonObject json) {
-            return new ContentRecipeCondition(GsonHelper.getAsString(json, "item"));
-        }
+    @SubscribeEvent
+    public static void register(RegisterEvent event) {
+        event.register(NeoForgeRegistries.Keys.CONDITION_CODECS,
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "content_mode"), () -> CODEC);
     }
 }

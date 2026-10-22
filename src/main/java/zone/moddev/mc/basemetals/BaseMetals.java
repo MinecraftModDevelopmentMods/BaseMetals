@@ -31,7 +31,6 @@ public final class BaseMetals {
         modBus.addListener(ModTabs::register);
         modBus.addListener(BaseMetalsConfig::onConfigLoading);
         modBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
-            zone.moddev.mc.basemetals.network.ContentModeNetwork.register();
             event.enqueueWork(() -> net.neoforged.common.crafting.CraftingHelper.register(
                     new zone.moddev.mc.basemetals.recipe.ContentRecipeCondition.Serializer()));
         });

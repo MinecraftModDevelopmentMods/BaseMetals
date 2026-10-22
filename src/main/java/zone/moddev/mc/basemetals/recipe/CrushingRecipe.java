@@ -70,10 +70,12 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
                         Codec.intRange(1, 99).optionalFieldOf("count", 1).forGetter(ItemStack::getCount)
                 ).apply(instance, ItemStack::new));
 
+        static final Codec<ItemStack> RESULT_CODEC = Codec.withAlternative(ItemStack.CODEC, LEGACY_RESULT_CODEC);
+
         private static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
                         Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-                        Codec.withAlternative(ItemStack.CODEC, LEGACY_RESULT_CODEC)
+                        RESULT_CODEC
                                 .fieldOf("result").forGetter(recipe -> recipe.result)
                 ).apply(instance, CrushingRecipe::new));
 
