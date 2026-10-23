@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:metallurgy",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.bronze_maker.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "basemetals:bronze_blend"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.bronze_maker.title"
+    }
+  }
+}

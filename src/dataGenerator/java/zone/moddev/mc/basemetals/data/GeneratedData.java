@@ -1537,15 +1537,18 @@ final class GeneratedData implements DataProvider {
             JsonObject modifier = new JsonObject();
             modifier.addProperty("type", "basemetals:add_table");
             JsonArray conditions = new JsonArray();
-            conditions.add(object("condition", "forge:loot_table_id", "loot_table_id", target.getValue()));
+            conditions.add(object("condition", "neoforge:loot_table_id", "loot_table_id", target.getValue()));
             modifier.add("conditions", conditions);
             modifier.addProperty("table", "basemetals:chests/inject/" + target.getKey());
             save(cache, modifier, "data/basemetals/loot_modifiers/" + target.getKey() + ".json");
             save(cache, legacyChestTable(templates.get(target.getKey())),
                     "data/basemetals/loot_table/chests/inject/" + target.getKey() + ".json");
         }
-        JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("entries", global);
-        save(cache, root, "data/forge/loot_modifiers/global_loot_modifiers.json");
+        JsonObject root = new JsonObject();
+        root.addProperty("replace", false);
+        root.add("entries", global);
+
+        save(cache, root, "data/neoforge/loot_modifiers/global_loot_modifiers.json");
     }
 
     private JsonObject legacyChestTable(String template) throws IOException {

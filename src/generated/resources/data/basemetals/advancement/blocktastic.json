@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:this_is_new",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.blocktastic.description"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "basemetals:copper_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.blocktastic.title"
+    }
+  }
+}

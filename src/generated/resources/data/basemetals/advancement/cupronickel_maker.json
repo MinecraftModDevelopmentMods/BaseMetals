@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:metallurgy",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.cupronickel_maker.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "basemetals:cupronickel_blend"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.cupronickel_maker.title"
+    }
+  }
+}

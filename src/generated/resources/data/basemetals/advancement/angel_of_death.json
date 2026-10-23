@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:mithril_maker",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.angel_of_death.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "basemetals:mithril_sword"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.angel_of_death.title"
+    }
+  }
+}

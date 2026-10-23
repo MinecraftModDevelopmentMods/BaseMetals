@@ -1,7 +1,6 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.19.4)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.19.4)
 
 # Base Metals
 
@@ -12,21 +11,20 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.19.4 Forge version, `3.1.0.119041`. It brings over the
-fixes and features from 1.18, including raw metals, ore texture
-overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
+This is the Minecraft 1.21.1 NeoForge port, `3.1.0.121012`. It includes raw
+metals, ore texture overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
 Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `1.19.4`
-- Forge `45.4.0` or newer in the Minecraft 1.19.4 Forge 45 line
-- Java 17
-- OreSpawn `[4.1.0.119041,5.0.0)` on both client and server
+- Minecraft `1.21.1`
+- NeoForge `21.1.247` or newer in the Minecraft 1.21.1 line
+- Java 21
+- OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 
-This version uses OreSpawn `4.1.0.119041`. Put
-`BaseMetals-3.1.0.119041.jar` and a compatible OreSpawn JAR in the `mods`
+This version builds against OreSpawn `4.0.16.121012`. Put
+`BaseMetals-3.1.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -40,7 +38,7 @@ Base Metals provides 22 materials:
 - Fantasy materials: Adamantine, Aquarium, Cold Iron, Mithril, and Starsteel.
 
 All existing items and blocks stay registered, including when Low Fantasy
-limits which items you can make. Recipes use Forge tags, so compatible ores,
+limits which items you can make. Recipes use the shared `c:` tags, so compatible ores,
 ingots, powders, plates, rods, gears and other components from different mods
 can be used together.
 
@@ -79,9 +77,11 @@ also avoid overlapping faces that caused their vertical edges to flicker.
 
 ## Configuration
 
-Open **Mods → Base Metals → Config** from the main menu, or use the Base Metals
-cog in OreSpawn's world-creation screen. You can also edit
+Open **Mods → Base Metals → Config** from the main menu. You can also edit
 `config/basemetals-common.toml`.
+
+The OreSpawn 4.0 dependency used by this port does not have the configuration
+cog API from OreSpawn 4.1. Use the Mods-list button for Base Metals settings.
 
 High Fantasy is the default and keeps all of the usual crafting options.
 Low Fantasy limits equipment to suitable materials and removes Base Metals
@@ -132,12 +132,13 @@ original. Read [Migration](docs/MIGRATION.md) before starting an upgraded world.
 
 ## Mod and data-pack compatibility
 
-Forge item, block, and fluid tags are Base Metals' public compatibility API.
+Shared `c:` item, block and fluid tags are Base Metals' public compatibility API.
 
-The integration data from 1.18 is retained, but Mekanism, Thermal Expansion,
-Tinkers' Construct and Ender IO do not currently publish Forge 1.19.4 builds.
-Those integrations are not qualified for this version. Use mods built for
-Minecraft 1.19.4; jars for 1.19.2 or 1.20.1 cannot be substituted.
+Mekanism's optional API integration targets its Minecraft 1.21.1 release.
+The retained Thermal, Tinkers' Construct and Ender IO data is not a promise of
+compatibility with this port. Those integrations still need testing with
+matching NeoForge releases. Do not substitute jars built for Forge or another
+Minecraft version.
 
 See [Compatibility](docs/COMPATIBILITY.md) for the supported processing chains,
 tag aliases, copper rules, and intentionally retired legacy integrations. See
@@ -146,38 +147,45 @@ contracts.
 
 ## Building and contributing
 
-Base Metals uses ForgeGradle `7.0.34`, Gradle `9.6.1`, official Minecraft
-mappings, and the Java 17 toolchain. A normal command-line build resolves the
-qualified OreSpawn release from CurseMaven:
+This branch uses NeoGradle `7.1.38`, Gradle `9.6.1` and Java 21. OreSpawn
+is resolved from MMD's Maven repository. Build with:
 
 ```text
-./gradlew clean check build javadoc
+./gradlew build
 ```
 
-Generate and verify Eclipse launches with:
+Generate Eclipse project files with:
 
 ```text
-./gradlew genEclipseRuns eclipse isolateEclipseProductionRuns verifyEclipseProductionClasspath
+./gradlew eclipse
 ```
 
-Use **runClient** for normal testing with Base Metals and OreSpawn only.
-**runClientOptionalMods** uses a separate `run-optional-mods` folder for
-compatibility testing. No optional mods are added automatically on 1.19.4.
-Both profiles are available in Eclipse and through Gradle tasks.
+Make sure Eclipse and the command line use the same Gradle user home and
+Java 21. If your workspace uses a different cache, override it in this project's
+Gradle settings and run configuration. Mixing caches can make the launcher
+reject duplicate modules even when the jars are identical.
 
-Use the Gradle **generateResources** task when changing recipes, models or
-translations. It updates the checked-in data; ordinary builds only check for
-drift. Ore models use KiriCattus' transparent overlays over vanilla textures,
+Use the Gradle **runClient** task for normal testing with Base Metals and
+OreSpawn. Mekanism is a compile-only dependency, not an extra mod in this launch.
+
+Use **runData** when changing recipes, models or translations, then include
+the generated resources with the source changes. Ore models use KiriCattus'
+transparent overlays over vanilla textures,
 so resource packs can replace the surrounding stone, netherrack or end stone.
 
-The CI workflow also runs all required GameTests, generated-data drift checks,
-packaged client and dedicated-server smokes, release-JAR audits, dependency
-identity checks, and a second clean build to prove byte-identical release
-artifacts. GameTests, smoke probes, migration fixtures, and reference sources
-are isolated from the published JAR.
+The port regression checks are separate from the normal build. Run them with:
+
+```text
+./gradlew -I tools/verification/port-checks.init.gradle portTest runPortGameTestServer
+```
+
+These checks cover generated recipe unlocks, translations, chest additions,
+shield upgrades, old projectile data, smith trades and recipe network encoding.
+They do not change the build or deployment workflow. See
+[Port regression checks](tools/verification/README.md) for details.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.119041`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.0.121012`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

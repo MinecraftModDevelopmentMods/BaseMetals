@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:metallurgy",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.brass_maker.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "basemetals:brass_blend"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.brass_maker.title"
+    }
+  }
+}

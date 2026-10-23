@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
-issueTrackerURL="https://github.com/SkyBlade1978/BaseMetals/issues"
+issueTrackerURL="https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues"
 
 [[mods]]
 modId="${mod_id}"
@@ -14,7 +14,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
 modId="orespawn"
 type="required"
-versionRange="[4.0,)"
+versionRange="[4.0.16.121012,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 

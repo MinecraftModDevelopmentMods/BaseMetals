@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:geologist",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.metallurgy.description"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "basemetals:bronze_blend"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.metallurgy.title"
+    }
+  }
+}

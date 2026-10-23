@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:end/root",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.moon_boots.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "basemetals:starsteel_boots"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.moon_boots.title"
+    }
+  }
+}
