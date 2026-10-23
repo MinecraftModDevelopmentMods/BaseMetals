@@ -6,6 +6,6 @@
     "item": "basemetals:bismuth_arrow"
   },
   "result": {
-    "item": "basemetals:bismuth_nugget"
+    "id": "basemetals:bismuth_nugget"
   }
 }

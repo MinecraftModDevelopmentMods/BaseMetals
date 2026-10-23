@@ -20,7 +20,7 @@ class ForwardPortRegressionTest {
     @Test
     void obsidianNuggetsProduceAnIngotNotAWholeBlock() throws Exception {
         assertEquals("basemetals:obsidian_ingot",
-                recipe("obsidian_ingot").getAsJsonObject("result").get("item").getAsString());
+                recipe("obsidian_ingot").getAsJsonObject("result").get("id").getAsString());
     }
 
     @Test

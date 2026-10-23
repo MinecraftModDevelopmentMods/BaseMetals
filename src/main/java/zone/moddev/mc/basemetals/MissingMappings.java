@@ -66,11 +66,11 @@ public final class MissingMappings {
         // Vanilla converts the saved blocks and items, but Forge's registry
         // snapshot still needs aliases for names retired in 1.14.
         switch (oldName.getPath()) {
-            case "sign": return new ResourceLocation("minecraft", "oak_sign");
-            case "wall_sign": return new ResourceLocation("minecraft", "oak_wall_sign");
-            case "rose_red": return new ResourceLocation("minecraft", "red_dye");
-            case "cactus_green": return new ResourceLocation("minecraft", "green_dye");
-            case "dandelion_yellow": return new ResourceLocation("minecraft", "yellow_dye");
+            case "sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_sign");
+            case "wall_sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_wall_sign");
+            case "rose_red": return ResourceLocation.fromNamespaceAndPath("minecraft", "red_dye");
+            case "cactus_green": return ResourceLocation.fromNamespaceAndPath("minecraft", "green_dye");
+            case "dandelion_yellow": return ResourceLocation.fromNamespaceAndPath("minecraft", "yellow_dye");
             default: return null;
         }
     }
@@ -87,8 +87,8 @@ public final class MissingMappings {
 
     public static ResourceLocation itemTargetId(String path) {
         return "iron_nugget".equals(path)
-                ? new ResourceLocation("minecraft", "iron_nugget")
-                : new ResourceLocation(BaseMetals.MOD_ID, itemTargetPath(path));
+                ? ResourceLocation.fromNamespaceAndPath("minecraft", "iron_nugget")
+                : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));
     }
 
     public static String fluidTargetPath(String name) {

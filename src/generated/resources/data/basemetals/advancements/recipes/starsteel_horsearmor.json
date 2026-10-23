@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:wool"
+            "items": "#minecraft:wool"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/starsteel"
+            "items": "#forge:ingots/starsteel"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/starsteel"
+            "items": "#forge:ingots/starsteel"
           }
         ]
       },

@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/adamantine"
   },
   "result": {
-    "item": "basemetals:adamantine_powder"
+    "id": "basemetals:adamantine_powder"
   }
 }

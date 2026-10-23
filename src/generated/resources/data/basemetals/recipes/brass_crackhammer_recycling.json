@@ -6,6 +6,6 @@
     "item": "basemetals:brass_crackhammer"
   },
   "result": {
-    "item": "basemetals:brass_block"
+    "id": "basemetals:brass_block"
   }
 }

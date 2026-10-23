@@ -4,6 +4,6 @@
     "tag": "forge:ingots/electrum"
   },
   "result": {
-    "item": "basemetals:electrum_powder"
+    "id": "basemetals:electrum_powder"
   }
 }

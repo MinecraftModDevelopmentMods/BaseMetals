@@ -1,37 +1,54 @@
 package zone.moddev.mc.basemetals.content;
 
-import java.util.function.Supplier;
+import java.util.EnumMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import zone.moddev.mc.basemetals.material.MaterialDefinition;
-
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
+import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-public final class MaterialArmor implements ArmorMaterial {
-    private static final int[] DURABILITY = {13, 15, 16, 11};
-    private final MaterialDefinition material;
-    private final Supplier<Ingredient> repair;
+/** Registered armour materials shared by worn armour and horse armour. */
+public final class MaterialArmor {
+    private static final DeferredRegister<ArmorMaterial> MATERIALS =
+            DeferredRegister.create(Registries.ARMOR_MATERIAL, BaseMetals.MOD_ID);
+    private static final Map<String, RegistryObject<ArmorMaterial>> BY_NAME = new LinkedHashMap<>();
 
-    public MaterialArmor(MaterialDefinition material) {
-        this.material = material;
-        this.repair = () -> Ingredient.of(ItemTags.create(
-                new ResourceLocation(material.repairIngredientTag())));
+    private MaterialArmor() {}
+
+    public static void register(MaterialDefinition material) {
+        BY_NAME.computeIfAbsent(material.name(), name -> MATERIALS.register(name, () -> create(material)));
     }
 
-    public MaterialDefinition material() { return material; }
-    @Override public int getDurabilityForType(net.minecraft.world.item.ArmorItem.Type type) {
-        return DURABILITY[type.getSlot().getIndex()] * material.armorDurabilityFactor();
+    public static void register(IEventBus bus) {
+        MATERIALS.register(bus);
     }
-    @Override public int getDefenseForType(net.minecraft.world.item.ArmorItem.Type type) { return material.armorProtection(type.getSlot()); }
-    @Override public int getEnchantmentValue() { return material.enchantability(); }
-    @Override public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_IRON; }
-    @Override public Ingredient getRepairIngredient() { return repair.get(); }
-    @Override public String getName() { return "basemetals:" + material.name(); }
-    @Override public float getToughness() { return material.armorToughness(); }
-    @Override public float getKnockbackResistance() { return 0.0F; }
+
+    public static Holder<ArmorMaterial> get(MaterialDefinition material) {
+        return BY_NAME.get(material.name()).getHolder().orElseThrow();
+    }
+
+    private static ArmorMaterial create(MaterialDefinition material) {
+        Map<ArmorItem.Type, Integer> defense = new EnumMap<>(ArmorItem.Type.class);
+        for (ArmorItem.Type type : ArmorItem.Type.values()) {
+            defense.put(type, type == ArmorItem.Type.BODY
+                    ? material.horseArmorProtection() : material.armorProtection(type.getSlot()));
+        }
+
+        return new ArmorMaterial(defense, material.enchantability(), SoundEvents.ARMOR_EQUIP_IRON,
+                () -> Ingredient.of(ItemTags.create(ResourceLocation.parse(material.repairIngredientTag()))),
+                List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, material.name()))),
+                material.armorToughness(), 0.0F);
+    }
 }

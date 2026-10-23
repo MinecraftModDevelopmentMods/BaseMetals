@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:small_blends/electrum"
+            "items": "#forge:small_blends/electrum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/electrum"
+            "items": "#forge:ingots/electrum"
           }
         ]
       },

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/quartz"
+            "items": "#forge:rods/quartz"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/quartz"
+            "items": "#forge:gems/quartz"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/quartz"
+            "items": "#forge:gems/quartz"
           }
         ]
       },

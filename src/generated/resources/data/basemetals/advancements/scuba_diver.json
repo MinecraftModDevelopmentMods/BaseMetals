@@ -12,7 +12,7 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "basemetals:aquarium_helmet"
+      "id": "basemetals:aquarium_helmet"
     },
     "show_toast": true,
     "title": {

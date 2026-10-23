@@ -6,6 +6,6 @@
     "item": "basemetals:platinum_arrow"
   },
   "result": {
-    "item": "basemetals:platinum_nugget"
+    "id": "basemetals:platinum_nugget"
   }
 }

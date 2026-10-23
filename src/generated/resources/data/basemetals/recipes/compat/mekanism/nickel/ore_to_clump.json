@@ -4,16 +4,19 @@
     "amount": 1,
     "gas": "mekanism:oxygen"
   },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:nickel_clump"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:nickel_clump"
+      }
+    ]
+  },
   "itemInput": {
     "ingredient": {
       "tag": "forge:ores/nickel"

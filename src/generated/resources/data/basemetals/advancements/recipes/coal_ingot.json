@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/coal"
+            "items": "#forge:nuggets/coal"
           }
         ]
       },

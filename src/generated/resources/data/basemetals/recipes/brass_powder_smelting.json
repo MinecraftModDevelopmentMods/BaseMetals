@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/brass"
   },
-  "result": "basemetals:brass_ingot"
+  "result": {
+    "id": "basemetals:brass_ingot"
+  }
 }

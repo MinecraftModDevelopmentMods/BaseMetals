@@ -1,104 +1,93 @@
 package zone.moddev.mc.basemetals.network;
 
-import java.util.Collections;
-import java.util.function.IntSupplier;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-
-import net.minecraftforge.network.HandshakeHandler;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.network.ConfigurationTask;
+import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.network.GatherLoginConfigurationTasksEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.SimpleChannel;
+import net.minecraftforge.network.config.ConfigurationTaskContext;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
-/** Checks the content mode before Forge lets a player join the world. */
+/** Checks the content mode during configuration, before a player can enter the world. */
 public final class ContentModeNetwork {
+    private static final ConfigurationTask.Type TASK = new ConfigurationTask.Type("basemetals:content_mode");
     private static SimpleChannel channel;
 
     private ContentModeNetwork() {}
 
     public static void register() {
-        channel = NetworkRegistry.newSimpleChannel(new ResourceLocation("basemetals", "content_mode"),
-                () -> "1", "1"::equals, "1"::equals);
+        channel = ChannelBuilder.named("basemetals:content_mode").networkProtocolVersion(1).simpleChannel();
 
-        // Forge updates login state on the main thread, including acknowledgements.
-        channel.messageBuilder(ModeMessage.class, 0)
+        channel.messageBuilder(ModeMessage.class, 0, NetworkDirection.CONFIGURATION_TO_CLIENT)
                 .encoder((message, buffer) -> buffer.writeUtf(message.mode.serializedName()))
-                .decoder(ModeMessage::read)
-                .loginIndex(message -> message.loginIndex, (message, index) -> message.loginIndex = index)
-                .buildLoginPacketList(local -> Collections.singletonList(
-                        Pair.of("Base Metals content mode", new ModeMessage(BaseMetalsConfig.activeMode()))))
-                .consumerMainThread(ContentModeNetwork::receive)
-                .add();
+                .decoder(buffer -> new ModeMessage(readMode(buffer.readUtf(32))))
+                .consumerMainThread((message, context) -> {
+                    ContentMode clientMode = BaseMetalsConfig.activeMode();
+                    if (message.mode != clientMode) {
+                        context.getConnection().disconnect(Component.translatable(
+                                "config.basemetals.connection.mismatch",
+                                Component.translatable(message.mode.translationKey()),
+                                Component.translatable(clientMode.translationKey())));
+                    } else {
+                        channel.send(new Acknowledgement(), context.getConnection());
+                    }
+                    context.setPacketHandled(true);
+                }).add();
 
-        channel.messageBuilder(Acknowledgement.class, 1)
+        channel.messageBuilder(Acknowledgement.class, 1, NetworkDirection.CONFIGURATION_TO_SERVER)
                 .encoder((message, buffer) -> {})
                 .decoder(buffer -> new Acknowledgement())
-                .loginIndex(message -> message.loginIndex, (message, index) -> message.loginIndex = index)
-                .consumerMainThread(HandshakeHandler.indexFirst((handshake, message, context) ->
-                        context.get().setPacketHandled(true)))
-                .add();
+                .consumerMainThread((message, context) -> {
+                    if (!(context.getConnection().getPacketListener()
+                            instanceof ServerConfigurationPacketListenerImpl listener)) {
+                        throw new IllegalStateException("Base Metals acknowledgement outside configuration");
+                    }
+                    listener.finishCurrentTask(TASK);
+                    context.setPacketHandled(true);
+                }).add();
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ContentModeNetwork::gatherTasks);
     }
 
     public static boolean modesMatch(String server, String client) {
         return ContentMode.parse(server) == ContentMode.parse(client);
     }
 
-    private static void receive(ModeMessage message, Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context context = supplier.get();
-        context.setPacketHandled(true);
-        if (context.getDirection() != NetworkDirection.LOGIN_TO_CLIENT) {
-            throw new IllegalStateException("Content mode received outside the client login handshake");
-        }
-
-        ContentMode clientMode = BaseMetalsConfig.activeMode();
-        if (message.mode != clientMode) {
-            context.getNetworkManager().disconnect(net.minecraft.network.chat.Component.translatable(
-                    "config.basemetals.connection.mismatch",
-                    net.minecraft.network.chat.Component.translatable(message.mode.translationKey()),
-                    net.minecraft.network.chat.Component.translatable(clientMode.translationKey())));
-            return;
-        }
-
-        channel.reply(new Acknowledgement(), context);
+    private static ContentMode readMode(String value) {
+        if (!ContentMode.isValid(value)) throw new IllegalArgumentException("Unknown server content mode " + value);
+        return ContentMode.parse(value);
     }
 
-    private static final class ModeMessage implements IntSupplier {
-        private final ContentMode mode;
-        private int loginIndex;
+    private static void gatherTasks(GatherLoginConfigurationTasksEvent event) {
+        event.addTask(new ModeTask());
+    }
 
-        private ModeMessage(ContentMode mode) {
-            this.mode = mode;
-        }
-
-        private static ModeMessage read(FriendlyByteBuf buffer) {
-            String value = buffer.readUtf(32);
-
-            if (!ContentMode.isValid(value)) {
-                throw new IllegalArgumentException("Unknown server content mode " + value);
-            }
-
-            return new ModeMessage(ContentMode.parse(value));
+    private static final class ModeTask implements ConfigurationTask {
+        @Override
+        public void start(ConfigurationTaskContext context) {
+            channel.send(new ModeMessage(BaseMetalsConfig.activeMode()), context.getConnection());
+            // Only the client's acknowledgement completes this task.
         }
 
         @Override
-        public int getAsInt() {
-            return loginIndex;
+        public void start(Consumer<Packet<?>> sender) {
+            throw new IllegalStateException("Base Metals requires Forge's configuration task context");
         }
-    }
-
-    private static final class Acknowledgement implements IntSupplier {
-        private int loginIndex;
 
         @Override
-        public int getAsInt() {
-            return loginIndex;
+        public Type type() {
+            return TASK;
         }
     }
+
+    private record ModeMessage(ContentMode mode) {}
+    private record Acknowledgement() {}
 }

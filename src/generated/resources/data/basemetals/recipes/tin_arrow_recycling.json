@@ -6,6 +6,6 @@
     "item": "basemetals:tin_arrow"
   },
   "result": {
-    "item": "basemetals:tin_nugget"
+    "id": "basemetals:tin_nugget"
   }
 }

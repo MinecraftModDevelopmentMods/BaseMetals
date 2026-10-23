@@ -6,6 +6,6 @@
     "item": "basemetals:pewter_wall"
   },
   "result": {
-    "item": "basemetals:pewter_block"
+    "id": "basemetals:pewter_block"
   }
 }

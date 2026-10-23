@@ -6,6 +6,6 @@
     "item": "basemetals:mithril_crackhammer"
   },
   "result": {
-    "item": "basemetals:mithril_block"
+    "id": "basemetals:mithril_block"
   }
 }

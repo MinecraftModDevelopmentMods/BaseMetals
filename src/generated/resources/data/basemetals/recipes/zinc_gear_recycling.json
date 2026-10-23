@@ -6,6 +6,6 @@
     "item": "basemetals:zinc_gear"
   },
   "result": {
-    "item": "basemetals:zinc_ingot"
+    "id": "basemetals:zinc_ingot"
   }
 }

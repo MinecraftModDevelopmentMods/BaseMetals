@@ -71,7 +71,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -79,21 +78,28 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /** Server-lifecycle checks which cannot safely run in a plain JUnit JVM. */
-@GameTestHolder(BaseMetals.MOD_ID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(value = BaseMetals.MOD_ID, namespace = BaseMetals.MOD_ID)
+@GameTestDontPrefix
 public final class BaseMetalsGameTests {
     private static final String EMPTY = "empty";
 
     private BaseMetalsGameTests() {}
 
-    @GameTest(template = EMPTY)
+    @net.minecraft.gametest.framework.BeforeBatch(batch = BaseMetals.MOD_ID)
+    public static void loadServerConfiguration(net.minecraft.server.level.ServerLevel level) {
+        net.minecraftforge.fml.config.ConfigTracker.INSTANCE.loadConfigs(
+                net.minecraftforge.fml.config.ModConfig.Type.SERVER,
+                level.getServer().getWorldPath(new net.minecraft.world.level.storage.LevelResource("serverconfig")));
+    }
+
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void platesUseTheClickedFaceAndEdge(GameTestHelper helper) {
         PlateBlock plate = (PlateBlock) ModContent.blocksById().get("copper_plate").get();
-        Player player = helper.makeMockPlayer();
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
 
         Map<Direction, Vec3> faceCentres = Map.of(
@@ -136,7 +142,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void humanDetectorIgnoresNonPlayers(GameTestHelper helper) {
         HumanDetectorBlock detector = (HumanDetectorBlock) ModContent.HUMAN_DETECTOR.get();
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
@@ -144,7 +150,7 @@ public final class BaseMetalsGameTests {
         require(helper, detector.getSignalStrength(helper.getLevel(), position) == 0,
                 "Human detector responded to a non-player entity");
 
-        Player player = helper.makeMockPlayer();
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         player.moveTo(position.getX() + 0.5D, position.getY() + 0.1D, position.getZ() + 0.5D);
         helper.getLevel().addFreshEntity(player);
         require(helper, detector.getSignalStrength(helper.getLevel(), position) == 15,
@@ -153,30 +159,30 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void compatibilitySlabsStayDoubleAndHidden(GameTestHelper helper) {
         for (String id : ModContent.hiddenBlocks()) {
             BlockState state = ModContent.blocksById().get(id).get().defaultBlockState();
             require(helper, state.getValue(CompatibilityDoubleSlabBlock.TYPE) == SlabType.DOUBLE,
                     id + " did not default to a double slab");
-            require(helper, !ForgeRegistries.ITEMS.containsKey(new ResourceLocation(BaseMetals.MOD_ID, id)),
+            require(helper, !ForgeRegistries.ITEMS.containsKey(ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id)),
                     id + " unexpectedly has a block item");
         }
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void everyFluidHasSourceFlowingBlockAndBucket(GameTestHelper helper) {
         BlockPos position = helper.absolutePos(new BlockPos(2, 1, 2));
         ModContent.fluids().forEach((id, fluid) -> {
             require(helper, ForgeRegistries.FLUIDS.getKey(fluid.source().get()).equals(
-                    new ResourceLocation(BaseMetals.MOD_ID, id)), id + " source fluid is not registered correctly");
+                    ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id)), id + " source fluid is not registered correctly");
             require(helper, ForgeRegistries.FLUIDS.getKey(fluid.flowing().get()).equals(
-                    new ResourceLocation(BaseMetals.MOD_ID, "flowing_" + id)), id + " flowing fluid is not registered correctly");
+                    ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "flowing_" + id)), id + " flowing fluid is not registered correctly");
             require(helper, ForgeRegistries.BLOCKS.getKey(fluid.block().get()).equals(
-                    new ResourceLocation(BaseMetals.MOD_ID, id)), id + " fluid block is not registered correctly");
+                    ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id)), id + " fluid block is not registered correctly");
             require(helper, ForgeRegistries.ITEMS.getKey(fluid.bucket().get()).equals(
-                    new ResourceLocation(BaseMetals.MOD_ID, id + "_bucket")), id + " bucket is not registered correctly");
+                    ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id + "_bucket")), id + " bucket is not registered correctly");
             require(helper, fluid.bucket().get() instanceof BaseMetalBucketItem,
                     id + " does not use the visible functional bucket implementation");
 
@@ -197,7 +203,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void crushingRecipesLoadAndMatchOre(GameTestHelper helper) {
         MaterialCatalogue.ALL.stream().filter(material -> material.hasOre()).forEach(material ->
                 assertCrushingRecipe(helper, ModContent.item(material.name() + "_ore").get().getDefaultInstance(),
@@ -225,7 +231,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void legacyFurnaceRecipesLoadAndRetainCountedOutputs(GameTestHelper helper) {
         MaterialCatalogue.ALL.forEach(material -> {
             assertSmeltingRecipeInTag(helper,
@@ -261,7 +267,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void stoneCrackhammerCraftsFromTheLegacyMiddleColumnPattern(GameTestHelper helper) {
         CraftingContainer crafting = craftingContainer(3, 3);
         crafting.setItem(1, new ItemStack(Blocks.STONE_BRICKS));
@@ -272,16 +278,16 @@ public final class BaseMetalsGameTests {
                 RecipeType.CRAFTING, crafting, helper.getLevel());
         require(helper, recipe.isPresent(), "Stone bricks above two sticks matched no crafting recipe");
         if (recipe.isEmpty()) return;
-        require(helper, recipe.orElseThrow().getId().equals(
-                new ResourceLocation(BaseMetals.MOD_ID, "stone_crackhammer")),
+        require(helper, recipe.orElseThrow().id().equals(
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "stone_crackhammer")),
                 "The legacy stone crackhammer pattern matched the wrong recipe");
-        ItemStack output = recipe.orElseThrow().assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack output = recipe.orElseThrow().value().assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
         require(helper, output.is(ModContent.item("stone_crackhammer").get()),
                 "The legacy middle-column pattern returned the wrong item");
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY, timeoutTicks = 250)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY, timeoutTicks = 250)
     public static void furnaceProcessesDustAndCountedLegacyRecovery(GameTestHelper helper) {
         BlockPos ironFurnacePosition = new BlockPos(1, 1, 1);
         BlockPos recoveryFurnacePosition = new BlockPos(2, 1, 1);
@@ -307,7 +313,7 @@ public final class BaseMetalsGameTests {
         });
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void crackhammerBreaksOreIntoFixedOutput(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack hammer = ModContent.item("stone_crackhammer").get().getDefaultInstance();
@@ -327,7 +333,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void crackhammerGroundCrushingUsesOneItemPerNormalUse(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack hammer = ModContent.item("stone_crackhammer").get().getDefaultInstance();
@@ -351,7 +357,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void groundHammeringRawMetalsProducesOnePowder(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
@@ -384,7 +390,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void scytheHarvestsHorizontalThreeByThreeAndPaysDurability(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack scythe = ModContent.item("iron_scythe").get().getDefaultInstance();
@@ -414,7 +420,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void legacyToolAttributesAndFuelValuesSurviveThePort(GameTestHelper helper) {
         var bronze = MaterialCatalogue.get("bronze");
         ItemStack hoe = ModContent.item("bronze_hoe").get().getDefaultInstance();
@@ -460,7 +466,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void crackhammerUsesLegacySpeedForEveryHarvestableCrushingInput(GameTestHelper helper) {
         ItemStack stoneHammer = ModContent.item("stone_crackhammer").get().getDefaultInstance();
         float expected = ((MaterialBacked) stoneHammer.getItem()).baseMetalsMaterial()
@@ -476,7 +482,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void legacyBlockCapabilitiesSoundsAndQuartzInteractionSurvive(GameTestHelper helper) {
         MaterialCatalogue.ALL.stream().filter(material -> material.hasEquipment()).forEach(material ->
                 require(helper, ModContent.blocksById().get(material.name() + "_block").get()
@@ -500,13 +506,13 @@ public final class BaseMetalsGameTests {
         require(helper, ModContent.blocksById().get("stone_anvil").get().defaultBlockState()
                 .getSoundType() == SoundType.STONE, "Stone anvil uses the wrong sound");
 
-        Player player = helper.makeMockPlayer();
+        Player player = helper.makeMockPlayer(GameType.SURVIVAL);
         for (String form : List.of("door", "trapdoor")) {
             BlockPos relative = form.equals("door") ? new BlockPos(1, 1, 1) : new BlockPos(2, 1, 1);
             BlockPos position = helper.absolutePos(relative);
             helper.setBlock(relative, ModContent.blocksById().get("quartz_" + form).get());
             BlockState state = helper.getLevel().getBlockState(position);
-            InteractionResult result = state.use(helper.getLevel(), player, InteractionHand.MAIN_HAND,
+            InteractionResult result = state.useWithoutItem(helper.getLevel(), player,
                     new BlockHitResult(Vec3.atCenterOf(position), Direction.UP, position, false));
             require(helper, result.consumesAction(), "Quartz " + form + " cannot be opened by hand");
         }
@@ -514,13 +520,13 @@ public final class BaseMetalsGameTests {
         BlockPos diamondPosition = helper.absolutePos(diamondRelative);
         helper.setBlock(diamondRelative, ModContent.blocksById().get("diamond_door").get());
         BlockState diamond = helper.getLevel().getBlockState(diamondPosition);
-        require(helper, diamond.use(helper.getLevel(), player, InteractionHand.MAIN_HAND,
+        require(helper, diamond.useWithoutItem(helper.getLevel(), player,
                 new BlockHitResult(Vec3.atCenterOf(diamondPosition), Direction.UP, diamondPosition, false))
                 == InteractionResult.PASS, "Diamond door became hand-openable");
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void customAnvilMenusRemainValidWithoutTheVanillaAnvilTag(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         BlockPos relative = new BlockPos(1, 1, 3);
@@ -554,13 +560,14 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void smithsRetainTheLegacyMercuryIngotSale(GameTestHelper helper) {
         Int2ObjectOpenHashMap<List<ItemListing>> trades = new Int2ObjectOpenHashMap<>();
         for (int level = 1; level <= 5; level++) trades.put(level, new ArrayList<>());
         BaseMetalsTrades.add(new VillagerTradesEvent(trades, VillagerProfession.ARMORER));
+        var trader = EntityType.VILLAGER.create(helper.getLevel());
         boolean found = trades.values().stream().flatMap(List::stream)
-                .map(listing -> listing.getOffer(null, net.minecraft.util.RandomSource.create(0L)))
+                .map(listing -> listing.getOffer(trader, net.minecraft.util.RandomSource.create(0L)))
                 .anyMatch(offer -> offer != null
                         && offer.getResult().is(ModContent.item("mercury_ingot").get())
                         && offer.getResult().getCount() == 12);
@@ -568,7 +575,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void creativeTabsRetainTheirLegacyStarsteelIcons(GameTestHelper helper) {
         require(helper, ModTabs.BLOCKS.get().getIconItem().is(ModContent.item("starsteel_block").get()),
                 "Blocks tab did not retain the Starsteel block icon");
@@ -581,25 +588,26 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void plateRepairKeepsAllItemDataAndResetsDamage(GameTestHelper helper) {
         var recipe = helper.getLevel().getRecipeManager().byKey(
-                new ResourceLocation(BaseMetals.MOD_ID, "adamantine_chestplate_plate_repair"));
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "adamantine_chestplate_plate_repair"));
         require(helper, recipe.isPresent(), "Adamantine chestplate plate-repair recipe did not load");
         if (recipe.isEmpty()) return;
 
         CraftingContainer crafting = craftingContainer(2, 1);
         ItemStack damaged = ModContent.item("adamantine_chestplate").get().getDefaultInstance();
         damaged.setDamageValue(20);
-        damaged.enchant(Enchantments.ALL_DAMAGE_PROTECTION, 2);
-        damaged.setHoverName(net.minecraft.network.chat.Component.literal("Old name"));
-        damaged.getOrCreateTag().putBoolean("LegacyCustomData", true);
+        damaged.enchant(Enchantments.PROTECTION, 2);
+        damaged.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Old name"));
+        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                damaged, tag -> tag.putBoolean("LegacyCustomData", true));
         crafting.setItem(0, damaged);
         crafting.setItem(1, ModContent.item("adamantine_plate").get().getDefaultInstance());
 
-        require(helper, recipe.orElseThrow() instanceof PlateRepairRecipe,
+        require(helper, recipe.orElseThrow().value() instanceof PlateRepairRecipe,
                 "Plate-repair recipe loaded with the wrong implementation");
-        if (!(recipe.orElseThrow() instanceof PlateRepairRecipe repair)) return;
+        if (!(recipe.orElseThrow().value() instanceof PlateRepairRecipe repair)) return;
         require(helper, repair.matches(crafting, helper.getLevel()),
                 "Plate-repair recipe rejected a damaged item and matching plate");
         ItemStack output = repair.assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
@@ -607,22 +615,23 @@ public final class BaseMetalsGameTests {
                 "Plate repair returned the wrong armor item");
         require(helper, output.getDamageValue() == 0, "Plate repair did not fully restore durability");
         require(helper, EnchantmentHelper.getItemEnchantmentLevel(
-                Enchantments.ALL_DAMAGE_PROTECTION, output) == 2,
+                Enchantments.PROTECTION, output) == 2,
                 "Plate repair lost enchantments");
-        require(helper, output.hasCustomHoverName(), "Plate repair lost the custom name");
-        require(helper, output.getOrCreateTag().getBoolean("LegacyCustomData"),
+        require(helper, output.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME), "Plate repair lost the custom name");
+        require(helper, output.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getBoolean("LegacyCustomData"),
                 "Plate repair lost custom item data");
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
-    public static void shieldUpgradeSupportsVanillaBitsPlatesAndKeepsOnlyEnchantments(GameTestHelper helper) {
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
+    public static void shieldUpgradeSupportsVanillaBitsPlatesAndKeepsItemData(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack shield = ModContent.item("copper_shield").get().getDefaultInstance();
         shield.setDamageValue(10);
         shield.enchant(Enchantments.UNBREAKING, 2);
-        shield.setHoverName(net.minecraft.network.chat.Component.literal("Old shield"));
-        shield.getOrCreateTag().putBoolean("LegacyCustomData", true);
+        shield.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Old shield"));
+        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                shield, tag -> tag.putBoolean("LegacyCustomData", true));
         AnvilUpdateEvent event = new AnvilUpdateEvent(shield,
                 ModContent.item("iron_plate").get().getDefaultInstance(), "", 0, player);
 
@@ -634,15 +643,16 @@ public final class BaseMetalsGameTests {
                 "Shield upgrade did not produce a fresh shield");
         require(helper, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING,
                 event.getOutput()) == 2, "Shield upgrade lost enchantments");
-        require(helper, !event.getOutput().hasCustomHoverName(),
-                "Shield upgrade retained unrelated custom-name NBT");
-        require(helper, !event.getOutput().getOrCreateTag().contains("LegacyCustomData"),
-                "Shield upgrade retained unrelated custom data");
+        require(helper, event.getOutput().has(net.minecraft.core.component.DataComponents.CUSTOM_NAME),
+                "Shield upgrade lost the custom name");
+        require(helper, event.getOutput().getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().contains("LegacyCustomData"),
+                "Shield upgrade lost its custom data");
         require(helper, event.getMaterialCost() == 1, "Shield upgrade did not consume exactly one plate");
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void bowsAndLegacyCrossbowsUseOnlyTheirOwnAmmunition(GameTestHelper helper) {
         MaterialItems.Bow bow = (MaterialItems.Bow) ModContent.item("tin_bow").get();
         MaterialItems.Crossbow crossbow = (MaterialItems.Crossbow) ModContent.item("tin_crossbow").get();
@@ -692,7 +702,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void vanillaBitsEquipmentUsesItsActualMaterialForAnvilRepair(GameTestHelper helper) {
         ItemStack diamondBow = ModContent.item("diamond_bow").get().getDefaultInstance();
         ItemStack emeraldSword = ModContent.item("emerald_sword").get().getDefaultInstance();
@@ -715,7 +725,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void armorToolEffectsAndStarsteelRegenerationAreServerAuthoritative(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         equip(player, "adamantine");
@@ -751,7 +761,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void remainingLegacyArmorEffectsUseTheCorrectPieceCounts(GameTestHelper helper) {
         BaseMetalsEvents events = new BaseMetalsEvents();
 
@@ -791,7 +801,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void remainingLegacyMeleeEffectsUseTargetIdentity(GameTestHelper helper) {
         BaseMetalsEvents events = new BaseMetalsEvents();
         ServerPlayer player = survivalPlayer(helper);
@@ -827,10 +837,11 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void eventBackedAdvancementsAwardForActualLegacyActions(GameTestHelper helper) {
         ServerPlayer player = new ServerPlayer(helper.getLevel().getServer(), helper.getLevel(),
-                new GameProfile(UUID.randomUUID(), "basemetals-advancement-test"));
+                new GameProfile(UUID.randomUUID(), "basemetals-advancement-test"),
+                net.minecraft.server.level.ClientInformation.createDefault());
         player.setGameMode(GameType.SURVIVAL);
         BaseMetalsEvents events = new BaseMetalsEvents();
         events.onItemCrafted(new PlayerEvent.ItemCraftedEvent(player,
@@ -841,8 +852,8 @@ public final class BaseMetalsGameTests {
                 ModContent.item("bronze_ingot").get().getDefaultInstance()));
 
         for (String advancement : new String[] {"geologist", "metallurgy", "this_is_new", "bronze_maker"}) {
-            var definition = player.getServer().getAdvancements().getAdvancement(
-                    new ResourceLocation(BaseMetals.MOD_ID, advancement));
+            var definition = player.getServer().getAdvancements().get(
+                    ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, advancement));
             require(helper, definition != null
                     && player.getAdvancements().getOrStartProgress(definition).isDone(),
                     "Legacy action did not award advancement " + advancement);
@@ -855,11 +866,11 @@ public final class BaseMetalsGameTests {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
                 CrushingRecipe.TYPE.get(), new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No crushing recipe loaded for " + input);
-        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         ResourceLocation expectedId = expectedItem.contains(":")
-                ? new ResourceLocation(expectedItem)
-                : new ResourceLocation(BaseMetals.MOD_ID, expectedItem);
-        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getItem()).equals(
+                ? ResourceLocation.parse(expectedItem)
+                : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, expectedItem);
+        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getItem()).equals(
                 expectedId), input + " crushed to the wrong output");
         require(helper, result.getCount() == expectedCount,
                 input + " crushed to " + result.getCount() + " items instead of " + expectedCount);
@@ -870,7 +881,7 @@ public final class BaseMetalsGameTests {
         events.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
     }
 
-    private static int effectAmplifier(LivingEntity entity, net.minecraft.world.effect.MobEffect effect) {
+    private static int effectAmplifier(LivingEntity entity, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
         MobEffectInstance instance = entity.getEffect(effect);
         return instance == null ? -1 : instance.getAmplifier();
     }
@@ -881,9 +892,9 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         ResourceLocation actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());
-        require(helper, actualItem.equals(new ResourceLocation(expectedItem)),
+        require(helper, actualItem.equals(ResourceLocation.parse(expectedItem)),
                 input + " smelted to " + actualItem + " instead of " + expectedItem);
         require(helper, result.getCount() == expectedCount,
                 input + " smelted to " + result.getCount() + " items instead of " + expectedCount);
@@ -895,9 +906,9 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         TagKey<net.minecraft.world.item.Item> tag = TagKey.create(
-                net.minecraft.core.registries.Registries.ITEM, new ResourceLocation(expectedTag));
+                net.minecraft.core.registries.Registries.ITEM, ResourceLocation.parse(expectedTag));
         ResourceLocation actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());
         require(helper, result.is(tag),
                 input + " smelted to " + actualItem + ", which is outside #" + expectedTag);
@@ -914,7 +925,7 @@ public final class BaseMetalsGameTests {
     private static void assertItemStack(GameTestHelper helper, ItemStack stack, String expectedItem,
             int expectedCount, String description) {
         require(helper, ForgeRegistries.ITEMS.getKey(stack.getItem()).equals(
-                new ResourceLocation(expectedItem)), description + " used the wrong item");
+                ResourceLocation.parse(expectedItem)), description + " used the wrong item");
         require(helper, stack.getCount() == expectedCount,
                 description + " contained " + stack.getCount() + " items instead of " + expectedCount);
     }
@@ -927,21 +938,26 @@ public final class BaseMetalsGameTests {
         if (drops.size() != 1) return;
         ItemStack output = drops.get(0).getItem();
         require(helper, ForgeRegistries.ITEMS.getKey(output.getItem()).equals(
-                new ResourceLocation(BaseMetals.MOD_ID, expectedItem)), "Crushing produced the wrong item");
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, expectedItem)), "Crushing produced the wrong item");
         require(helper, output.getCount() == expectedCount,
                 "Crushing produced " + output.getCount() + " items instead of " + expectedCount);
     }
 
     private static ServerPlayer survivalPlayer(GameTestHelper helper) {
-        ServerPlayer player = FakePlayerFactory.get(helper.getLevel(),
-                new GameProfile(UUID.randomUUID(), "basemetals-crushing-test"));
+        var cookie = net.minecraft.server.network.CommonListenerCookie.createInitial(
+                new GameProfile(UUID.randomUUID(), "BMTest"), false);
+        ServerPlayer player = new ServerPlayer(helper.getLevel().getServer(), helper.getLevel(),
+                cookie.gameProfile(), cookie.clientInformation());
+        var connection = new net.minecraft.network.Connection(net.minecraft.network.protocol.PacketFlow.SERVERBOUND);
+        new io.netty.channel.embedded.EmbeddedChannel(connection);
+        helper.getLevel().getServer().getPlayerList().placeNewPlayer(connection, player, cookie);
         player.setGameMode(GameType.SURVIVAL);
         return player;
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void projectilesRetainAmmunitionAcrossSaveAndSpawnData(GameTestHelper helper) {
-        Player shooter = helper.makeMockPlayer();
+        Player shooter = helper.makeMockPlayer(GameType.SURVIVAL);
         ItemStack ammunition = ModContent.item("starsteel_bolt").get().getDefaultInstance();
         MaterialProjectile original = new MaterialProjectile(ModEntities.CUSTOM_BOLT.get(), helper.getLevel(), shooter, ammunition);
         require(helper, original.getAddEntityPacket().getClass().getName().contains("CustomPayload"),
@@ -951,7 +967,7 @@ public final class BaseMetalsGameTests {
         original.addAdditionalSaveData(saved);
         MaterialProjectile loaded = new MaterialProjectile(ModEntities.CUSTOM_BOLT.get(), helper.getLevel());
         loaded.readAdditionalSaveData(saved);
-        require(helper, ItemStack.isSameItemSameTags(ammunition, loaded.getItem()),
+        require(helper, ItemStack.isSameItemSameComponents(ammunition, loaded.getItem()),
                 "Projectile ammunition was not retained through save/load");
 
         FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
@@ -959,7 +975,7 @@ public final class BaseMetalsGameTests {
             original.writeSpawnData(buffer);
             MaterialProjectile spawned = new MaterialProjectile(ModEntities.CUSTOM_BOLT.get(), helper.getLevel());
             spawned.readSpawnData(buffer);
-            require(helper, ItemStack.isSameItemSameTags(ammunition, spawned.getItem()),
+            require(helper, ItemStack.isSameItemSameComponents(ammunition, spawned.getItem()),
                     "Projectile ammunition was not retained through spawn data");
         } finally {
             buffer.release();
@@ -978,14 +994,14 @@ public final class BaseMetalsGameTests {
         }, width, height);
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void oreLootSupportsRawFortuneSilkTouchAndHammering(GameTestHelper helper) {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack pickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
         ItemStack silk = pickaxe.copy();
         silk.enchant(Enchantments.SILK_TOUCH, 1);
         ItemStack fortune = pickaxe.copy();
-        fortune.enchant(Enchantments.BLOCK_FORTUNE, 3);
+        fortune.enchant(Enchantments.FORTUNE, 3);
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
         for (var entry : ModContent.blocksById().entrySet()) {
             if (!entry.getKey().endsWith("_ore")) continue;
@@ -1023,7 +1039,7 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = EMPTY)
+    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
     public static void fullyDrawnWeaponsApplyMaterialDamageBeforePower(GameTestHelper helper) {
         for (String material : List.of("gold", "steel", "adamantine")) {
             for (boolean crossbow : List.of(false, true)) {
@@ -1033,7 +1049,7 @@ public final class BaseMetalsGameTests {
                     String launcher = material + (crossbow ? "_crossbow" : "_bow");
                     String ammo = material + (crossbow ? "_bolt" : "_arrow");
                     ItemStack weapon = ModContent.item(launcher).get().getDefaultInstance();
-                    if (power > 0) weapon.enchant(Enchantments.POWER_ARROWS, power);
+                    if (power > 0) weapon.enchant(Enchantments.POWER, power);
                     player.setItemInHand(InteractionHand.MAIN_HAND, weapon);
                     player.getInventory().setItem(1, ModContent.item(ammo).get().getDefaultInstance());
                     player.startUsingItem(InteractionHand.MAIN_HAND);
@@ -1055,9 +1071,11 @@ public final class BaseMetalsGameTests {
         helper.succeed();
     }
 
-    private static double attribute(ItemStack stack, Attribute attribute) {
-        return stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(attribute).stream()
-                .mapToDouble(AttributeModifier::getAmount).sum();
+    private static double attribute(ItemStack stack, net.minecraft.core.Holder<Attribute> attribute) {
+        return stack.getOrDefault(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,
+                net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY).modifiers().stream()
+                .filter(entry -> entry.slot().test(EquipmentSlot.MAINHAND) && entry.attribute().equals(attribute))
+                .mapToDouble(entry -> entry.modifier().amount()).sum();
     }
 
     private static int burnTime(String item) {

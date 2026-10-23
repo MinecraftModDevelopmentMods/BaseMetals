@@ -1,4 +1,4 @@
-From 10279f8ab1adadb87b56f36c85dbda3cf64e62b3 Mon Sep 17 00:00:00 2001
+From 96468d9931e7f1448d9fb00f13ec0a6559ee0054 Mon Sep 17 00:00:00 2001
 From: OreSpawn Build Fixture <orespawn-fixture@invalid.local>
 Date: Fri, 28 Aug 2026 15:21:10 +0100
 Subject: [PATCH] Add target-aware source compatibility rules
@@ -8,9 +8,9 @@ Subject: [PATCH] Add target-aware source compatibility rules
  .../net/minecraftforge/mcmaven/cli/Main.java  |  18 +-
  .../minecraftforge/mcmaven/cli/MavenTask.java |   3 +
  .../mcmaven/impl/util/ProcessUtils.java       |   2 +
- .../impl/util/SourceCompatibilityPatcher.java | 241 ++++++++++++++++++
- .../minecraft-source-compatibility.json       |  58 +++++
- 6 files changed, 322 insertions(+), 2 deletions(-)
+ .../impl/util/SourceCompatibilityPatcher.java | 247 ++++++++++++++++++
+ .../minecraft-source-compatibility.json       |   9 +
+ 6 files changed, 279 insertions(+), 2 deletions(-)
  create mode 100644 src/main/java/net/minecraftforge/mcmaven/impl/util/SourceCompatibilityPatcher.java
  create mode 100644 src/main/resources/META-INF/orespawn/minecraft-source-compatibility.json
 
@@ -111,10 +111,10 @@ index 9fa2888..d8c14fd 100644
          var nonSourceFiles = new ArrayList<File>();
 diff --git a/src/main/java/net/minecraftforge/mcmaven/impl/util/SourceCompatibilityPatcher.java b/src/main/java/net/minecraftforge/mcmaven/impl/util/SourceCompatibilityPatcher.java
 new file mode 100644
-index 0000000..2cb07e0
+index 0000000..4d72d34
 --- /dev/null
 +++ b/src/main/java/net/minecraftforge/mcmaven/impl/util/SourceCompatibilityPatcher.java
-@@ -0,0 +1,241 @@
+@@ -0,0 +1,247 @@
 +/*
 + * Copyright (c) Forge Development LLC and contributors
 + * SPDX-License-Identifier: LGPL-2.1-only
@@ -169,6 +169,12 @@ index 0000000..2cb07e0
 +        }
 +
 +        validateTarget(target);
++        if (target.expectedApplications == 0) {
++            writeMarker(outputJar, artifact, manifestHash, target.rules);
++            LOGGER.info("OreSpawn Mavenizer compatibility: applied 0 rule(s) for " + artifact
++                + " (explicit no-op) manifest SHA-256 " + manifestHash);
++            return;
++        }
 +        var sourceByFile = new LinkedHashMap<Path, String>();
 +        var present = 0;
 +        var absent = 0;
@@ -215,7 +221,7 @@ index 0000000..2cb07e0
 +    }
 +
 +    private static void validateTarget(TargetRuleSet target) {
-+        if (target.expectedApplications <= 0 || target.rules == null
++        if (target.expectedApplications < 0 || target.rules == null
 +            || target.rules.size() != target.expectedApplications) {
 +            throw new IllegalStateException("Compatibility target has an invalid expected application count");
 +        }
@@ -358,65 +364,16 @@ index 0000000..2cb07e0
 +}
 diff --git a/src/main/resources/META-INF/orespawn/minecraft-source-compatibility.json b/src/main/resources/META-INF/orespawn/minecraft-source-compatibility.json
 new file mode 100644
-index 0000000..462d571
+index 0000000..702d759
 --- /dev/null
 +++ b/src/main/resources/META-INF/orespawn/minecraft-source-compatibility.json
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,9 @@
 +{
 +  "schema": 1,
 +  "targets": {
-+    "net.minecraftforge:forge:1.19.4-45.4.0": {
-+      "expectedApplications": 8,
-+      "rules": [
-+        {
-+          "id": "forge-1.19.4-holder-direct-value",
-+          "file": "net/minecraft/core/Holder.java",
-+          "recordDeclaration": "public static record Direct<T>(T value) implements Holder<T>",
-+          "accessor": "\n      public T value() {\n         return this.value;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-option-alt-enum-value-setter",
-+          "file": "net/minecraft/client/OptionInstance.java",
-+          "recordDeclaration": "public static record AltEnum<T>(List<T> values, List<T> altValues, BooleanSupplier altCondition, OptionInstance.CycleableValueSet.ValueSetter<T> valueSetter, Codec<T> codec)",
-+          "accessor": "\n      public OptionInstance.CycleableValueSet.ValueSetter<T> valueSetter() {\n         return this.valueSetter;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-option-alt-enum-codec",
-+          "file": "net/minecraft/client/OptionInstance.java",
-+          "recordDeclaration": "public static record AltEnum<T>(List<T> values, List<T> altValues, BooleanSupplier altCondition, OptionInstance.CycleableValueSet.ValueSetter<T> valueSetter, Codec<T> codec)",
-+          "accessor": "\n      public Codec<T> codec() {\n         return this.codec;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-option-enum-codec",
-+          "file": "net/minecraft/client/OptionInstance.java",
-+          "recordDeclaration": "public static record Enum<T>(List<T> values, Codec<T> codec)",
-+          "accessor": "\n      public Codec<T> codec() {\n         return this.codec;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-option-lazy-enum-codec",
-+          "file": "net/minecraft/client/OptionInstance.java",
-+          "recordDeclaration": "public static record LazyEnum<T>(Supplier<List<T>> values, Function<T, Optional<T>> validateValue, Codec<T> codec)",
-+          "accessor": "\n      public Codec<T> codec() {\n         return this.codec;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-memory-absent-memory",
-+          "file": "net/minecraft/world/entity/ai/behavior/declarative/MemoryCondition.java",
-+          "recordDeclaration": "public static record Absent<Value>(MemoryModuleType<Value> memory)",
-+          "accessor": "\n      public MemoryModuleType<Value> memory() {\n         return this.memory;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-memory-present-memory",
-+          "file": "net/minecraft/world/entity/ai/behavior/declarative/MemoryCondition.java",
-+          "recordDeclaration": "public static record Present<Value>(MemoryModuleType<Value> memory)",
-+          "accessor": "\n      public MemoryModuleType<Value> memory() {\n         return this.memory;\n      }\n"
-+        },
-+        {
-+          "id": "forge-1.19.4-memory-registered-memory",
-+          "file": "net/minecraft/world/entity/ai/behavior/declarative/MemoryCondition.java",
-+          "recordDeclaration": "public static record Registered<Value>(MemoryModuleType<Value> memory)",
-+          "accessor": "\n      public MemoryModuleType<Value> memory() {\n         return this.memory;\n      }\n"
-+        }
-+      ]
++    "net.minecraftforge:forge:1.20.6-50.2.0": {
++      "expectedApplications": 0,
++      "rules": []
 +    }
 +  }
 +}

@@ -6,6 +6,6 @@
     "item": "basemetals:aquarium_arrow"
   },
   "result": {
-    "item": "basemetals:aquarium_nugget"
+    "id": "basemetals:aquarium_nugget"
   }
 }

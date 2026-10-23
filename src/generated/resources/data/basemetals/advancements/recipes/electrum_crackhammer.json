@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/electrum"
+            "items": "#forge:storage_blocks/electrum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/electrum"
+            "items": "#forge:ingots/electrum"
           }
         ]
       },

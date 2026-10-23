@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/zinc"
   },
   "result": {
-    "item": "basemetals:zinc_smallpowder"
+    "id": "basemetals:zinc_smallpowder"
   }
 }

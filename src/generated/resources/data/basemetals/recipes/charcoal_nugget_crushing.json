@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/charcoal"
   },
   "result": {
-    "item": "basemetals:charcoal_smallpowder"
+    "id": "basemetals:charcoal_smallpowder"
   }
 }

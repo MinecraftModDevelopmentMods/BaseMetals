@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/adamantine"
   },
   "result": {
-    "item": "basemetals:adamantine_smallpowder"
+    "id": "basemetals:adamantine_smallpowder"
   }
 }

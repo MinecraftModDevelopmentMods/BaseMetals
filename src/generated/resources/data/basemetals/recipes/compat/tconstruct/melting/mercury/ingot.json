@@ -1,11 +1,14 @@
 {
   "type": "tconstruct:melting",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      }
+    ]
+  },
   "ingredient": {
     "tag": "forge:ingots/mercury"
   },

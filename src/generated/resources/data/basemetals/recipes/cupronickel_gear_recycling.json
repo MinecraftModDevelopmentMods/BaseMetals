@@ -6,6 +6,6 @@
     "item": "basemetals:cupronickel_gear"
   },
   "result": {
-    "item": "basemetals:cupronickel_ingot"
+    "id": "basemetals:cupronickel_ingot"
   }
 }

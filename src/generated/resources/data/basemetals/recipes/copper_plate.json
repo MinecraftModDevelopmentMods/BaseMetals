@@ -14,7 +14,7 @@
     ],
     "result": {
       "count": 3,
-      "item": "basemetals:copper_plate"
+      "id": "basemetals:copper_plate"
     }
   }
 }

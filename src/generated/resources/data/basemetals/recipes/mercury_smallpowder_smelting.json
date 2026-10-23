@@ -6,6 +6,6 @@
     "tag": "forge:tiny_dusts/mercury"
   },
   "result": {
-    "item": "basemetals:mercury_nugget"
+    "id": "basemetals:mercury_nugget"
   }
 }

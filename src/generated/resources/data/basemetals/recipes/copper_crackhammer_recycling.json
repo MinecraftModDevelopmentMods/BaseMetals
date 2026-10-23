@@ -6,6 +6,6 @@
     "item": "basemetals:copper_crackhammer"
   },
   "result": {
-    "item": "basemetals:copper_block"
+    "id": "basemetals:copper_block"
   }
 }

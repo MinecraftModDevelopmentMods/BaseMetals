@@ -12,7 +12,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "basemetals:electrum_blend"
+      "id": "basemetals:electrum_blend"
     },
     "show_toast": true,
     "title": {

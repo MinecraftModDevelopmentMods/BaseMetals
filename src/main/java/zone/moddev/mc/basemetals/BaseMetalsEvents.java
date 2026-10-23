@@ -22,7 +22,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
@@ -54,13 +53,13 @@ public final class BaseMetalsEvents {
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        var recipes = new ArrayList<net.minecraft.world.item.crafting.Recipe<?>>();
+        var recipes = new ArrayList<net.minecraft.world.item.crafting.RecipeHolder<?>>();
 
         for (var recipe : player.server.getRecipeManager().getRecipes()) {
-            if (!recipe.getId().getNamespace().equals(BaseMetals.MOD_ID) || recipe.isSpecial()) continue;
+            if (!recipe.id().getNamespace().equals(BaseMetals.MOD_ID) || recipe.value().isSpecial()) continue;
 
-            var unlock = player.server.getAdvancements().getAdvancement(new ResourceLocation(
-                    BaseMetals.MOD_ID, "recipes/" + recipe.getId().getPath()));
+            var unlock = player.server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(
+                    BaseMetals.MOD_ID, "recipes/" + recipe.id().getPath()));
             if (unlock != null && player.getAdvancements().getOrStartProgress(unlock).isDone()) recipes.add(recipe);
         }
 
@@ -87,7 +86,7 @@ public final class BaseMetalsEvents {
         ItemStack held = player.getMainHandItem();
         if (held.getItem() instanceof CrackhammerItem && !player.isCreative()
                 && event.getState().canHarvestBlock(level, event.getPos(), player)) {
-            Optional<CrushingRecipe> recipe = level.getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
+            Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = level.getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SimpleContainer(new ItemStack(event.getState().getBlock())), level);
             if (recipe.isPresent()) {
                 event.setCanceled(true);
@@ -96,14 +95,14 @@ public final class BaseMetalsEvents {
                         true, level.getFluidState(event.getPos()));
                 if (!removed) return;
                 event.getState().getBlock().destroy(level, event.getPos(), event.getState());
-                ItemStack result = recipe.get().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
+                ItemStack result = recipe.get().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
                 ItemEntity entity = new ItemEntity(level, event.getPos().getX() + 0.5D,
                         event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D, result);
                 entity.setDefaultPickUpDelay();
                 level.addFreshEntity(entity);
                 player.awardStat(net.minecraft.stats.Stats.BLOCK_MINED.get(event.getState().getBlock()));
                 player.causeFoodExhaustion(0.005F);
-                held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+                held.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 return;
             }
         }
@@ -163,7 +162,7 @@ public final class BaseMetalsEvents {
         }
         if (count(armor, "mithril") == 4) {
             for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
-                if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL) {
+                if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
                     player.removeEffect(effect.getEffect());
                 }
             }
@@ -173,7 +172,7 @@ public final class BaseMetalsEvents {
         if (starsteel >= 2) add(player, MobEffects.MOVEMENT_SPEED, Math.min(2, starsteel - 2));
     }
 
-    private static void add(Player player, net.minecraft.world.effect.MobEffect effect, int amplifier) {
+    private static void add(Player player, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect, int amplifier) {
         player.addEffect(new MobEffectInstance(effect, 45, amplifier, false, false, true));
     }
 
@@ -195,7 +194,7 @@ public final class BaseMetalsEvents {
                 if (target.fireImmune()) event.setAmount(event.getAmount() + 3.0F);
             }
             case "mithril" -> {
-                if (target.getMobType() == MobType.UNDEAD) {
+                if (target.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
                     target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 3));
                     target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 1));
                 }
@@ -212,15 +211,17 @@ public final class BaseMetalsEvents {
         MaterialDefinition upgrade = shieldMaterials().values().stream()
                 .filter(candidate -> candidate.hardness() > current.hardness())
                 .filter(candidate -> event.getRight().is(ItemTags.create(
-                        new ResourceLocation("forge", "plates/" + candidate.name()))))
+                        ResourceLocation.fromNamespaceAndPath("forge", "plates/" + candidate.name()))))
                 .sorted(Comparator.comparingDouble(MaterialDefinition::hardness)
                         .thenComparing(MaterialDefinition::name))
                 .findFirst().orElse(null);
         if (upgrade == null) return;
         if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + upgrade.name() + "_shield")) return;
         ItemStack output = ModContent.item(upgrade.name() + "_shield").get().getDefaultInstance();
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(event.getLeft()), output);
-        int enchantments = EnchantmentHelper.getEnchantments(event.getLeft()).size();
+        output.applyComponents(event.getLeft().getComponentsPatch());
+        output.setDamageValue(0);
+        int enchantments = event.getLeft().getOrDefault(net.minecraft.core.component.DataComponents.ENCHANTMENTS,
+                net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY).size();
         int cost = shieldUpgradeCost(current, upgrade, enchantments);
         event.setOutput(output);
         event.setCost(cost);

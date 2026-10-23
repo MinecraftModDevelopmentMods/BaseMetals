@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/zinc"
   },
   "result": {
-    "item": "basemetals:zinc_powder"
+    "id": "basemetals:zinc_powder"
   }
 }

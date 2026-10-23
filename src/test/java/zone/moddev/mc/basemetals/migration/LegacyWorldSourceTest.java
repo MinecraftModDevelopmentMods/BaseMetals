@@ -54,6 +54,6 @@ class LegacyWorldSourceTest {
         level.put("FML", fml);
         level.put("Data", data);
 
-        NbtIo.writeCompressed(level, temporaryWorld.resolve(name).toFile());
+        NbtIo.writeCompressed(level, temporaryWorld.resolve(name));
     }
 }

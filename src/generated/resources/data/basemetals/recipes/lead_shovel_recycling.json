@@ -6,6 +6,6 @@
     "item": "basemetals:lead_shovel"
   },
   "result": {
-    "item": "basemetals:lead_ingot"
+    "id": "basemetals:lead_ingot"
   }
 }

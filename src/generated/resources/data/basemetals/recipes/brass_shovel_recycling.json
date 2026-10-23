@@ -6,6 +6,6 @@
     "item": "basemetals:brass_shovel"
   },
   "result": {
-    "item": "basemetals:brass_ingot"
+    "id": "basemetals:brass_ingot"
   }
 }

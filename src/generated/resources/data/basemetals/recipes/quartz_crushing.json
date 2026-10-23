@@ -4,6 +4,6 @@
     "item": "minecraft:quartz"
   },
   "result": {
-    "item": "basemetals:quartz_powder"
+    "id": "basemetals:quartz_powder"
   }
 }

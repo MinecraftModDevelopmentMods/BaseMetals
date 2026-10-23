@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/zinc"
   },
-  "result": "basemetals:zinc_nugget"
+  "result": {
+    "id": "basemetals:zinc_nugget"
+  }
 }

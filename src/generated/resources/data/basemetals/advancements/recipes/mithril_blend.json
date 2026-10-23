@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/silver"
+            "items": "#forge:dusts/silver"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/coldiron"
+            "items": "#forge:dusts/coldiron"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mercury"
+            "items": "#forge:ingots/mercury"
           }
         ]
       },
@@ -35,7 +35,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mithril"
+            "items": "#forge:ingots/mithril"
           }
         ]
       },

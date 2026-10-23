@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/mercury"
   },
   "result": {
-    "item": "basemetals:mercury_powder"
+    "id": "basemetals:mercury_powder"
   }
 }

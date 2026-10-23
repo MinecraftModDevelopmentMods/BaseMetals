@@ -6,6 +6,6 @@
     "item": "basemetals:bismuth_crackhammer"
   },
   "result": {
-    "item": "basemetals:bismuth_block"
+    "id": "basemetals:bismuth_block"
   }
 }

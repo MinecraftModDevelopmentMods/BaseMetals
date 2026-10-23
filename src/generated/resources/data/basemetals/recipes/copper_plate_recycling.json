@@ -6,6 +6,6 @@
     "item": "basemetals:copper_plate"
   },
   "result": {
-    "item": "basemetals:copper_ingot"
+    "id": "basemetals:copper_ingot"
   }
 }

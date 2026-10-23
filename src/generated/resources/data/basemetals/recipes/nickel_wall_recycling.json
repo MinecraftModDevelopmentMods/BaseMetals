@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_wall"
   },
   "result": {
-    "item": "basemetals:nickel_block"
+    "id": "basemetals:nickel_block"
   }
 }

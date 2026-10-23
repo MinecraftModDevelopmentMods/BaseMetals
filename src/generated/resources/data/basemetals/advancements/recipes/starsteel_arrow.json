@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/starsteel"
+            "items": "#forge:nuggets/starsteel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/starsteel"
+            "items": "#forge:rods/starsteel"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/starsteel"
+            "items": "#forge:ingots/starsteel"
           }
         ]
       },

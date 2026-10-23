@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/aquarium"
   },
-  "result": "basemetals:aquarium_nugget"
+  "result": {
+    "id": "basemetals:aquarium_nugget"
+  }
 }

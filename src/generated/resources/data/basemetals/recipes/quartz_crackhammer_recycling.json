@@ -6,6 +6,6 @@
     "item": "basemetals:quartz_crackhammer"
   },
   "result": {
-    "item": "minecraft:quartz_block"
+    "id": "minecraft:quartz_block"
   }
 }

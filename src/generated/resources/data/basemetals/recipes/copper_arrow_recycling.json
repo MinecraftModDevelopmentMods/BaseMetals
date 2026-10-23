@@ -6,6 +6,6 @@
     "item": "basemetals:copper_arrow"
   },
   "result": {
-    "item": "basemetals:copper_nugget"
+    "id": "basemetals:copper_nugget"
   }
 }

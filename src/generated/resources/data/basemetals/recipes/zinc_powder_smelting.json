@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/zinc"
   },
-  "result": "basemetals:zinc_ingot"
+  "result": {
+    "id": "basemetals:zinc_ingot"
+  }
 }

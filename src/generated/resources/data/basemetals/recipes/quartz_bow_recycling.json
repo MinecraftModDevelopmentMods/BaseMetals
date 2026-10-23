@@ -6,6 +6,6 @@
     "item": "basemetals:quartz_bow"
   },
   "result": {
-    "item": "minecraft:quartz"
+    "id": "minecraft:quartz"
   }
 }

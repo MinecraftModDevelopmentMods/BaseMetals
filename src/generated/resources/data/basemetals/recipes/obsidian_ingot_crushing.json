@@ -4,6 +4,6 @@
     "tag": "forge:ingots/obsidian"
   },
   "result": {
-    "item": "basemetals:obsidian_powder"
+    "id": "basemetals:obsidian_powder"
   }
 }

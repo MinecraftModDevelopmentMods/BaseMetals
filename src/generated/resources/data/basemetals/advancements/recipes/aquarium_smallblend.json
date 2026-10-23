@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:blends/aquarium"
+            "items": "#forge:blends/aquarium"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/aquarium"
+            "items": "#forge:ingots/aquarium"
           }
         ]
       },

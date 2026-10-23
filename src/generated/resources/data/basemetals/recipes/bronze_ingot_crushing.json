@@ -4,6 +4,6 @@
     "tag": "forge:ingots/bronze"
   },
   "result": {
-    "item": "basemetals:bronze_powder"
+    "id": "basemetals:bronze_powder"
   }
 }

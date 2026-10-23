@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/emerald"
   },
   "result": {
-    "item": "basemetals:emerald_smallpowder"
+    "id": "basemetals:emerald_smallpowder"
   }
 }

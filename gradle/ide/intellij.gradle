@@ -1,0 +1,43 @@
+import groovy.xml.XmlSlurper
+
+// Gradle owns the Forge bootstrap, assets and production classpath in these runs.
+def generateIntelliJRuns = tasks.register('genIntellijRuns') {
+    group = 'ide'
+    description = 'Creates IntelliJ Gradle run configurations for the ordinary client and server.'
+    doLast {
+        File directory = file('.run')
+        directory.mkdirs()
+        ['Client': 'runClient', 'Server': 'runServer'].each { label, task ->
+            new File(directory, "Base Metals ${label}.run.xml").setText('''\
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Base Metals LABEL" type="GradleRunConfiguration" factoryName="Gradle">
+    <ExternalSystemSettings>
+      <option name="externalProjectPath" value="$PROJECT_DIR$" />
+      <option name="externalSystemIdString" value="GRADLE" />
+      <option name="scriptParameters" value="--no-daemon" />
+      <option name="taskNames"><list><option value="TASK" /></list></option>
+    </ExternalSystemSettings>
+    <method v="2" />
+  </configuration>
+</component>
+'''.replace('LABEL', label).replace('TASK', task), 'UTF-8')
+        }
+    }
+}
+
+tasks.register('prepareIntelliJ') {
+    group = 'ide'
+    description = 'Creates and checks production-only IntelliJ launches.'
+    dependsOn generateIntelliJRuns
+    doLast {
+        ['Client': 'runClient', 'Server': 'runServer'].each { label, task ->
+            def run = new XmlSlurper().parse(file(".run/Base Metals ${label}.run.xml"))
+            def settings = run.configuration.ExternalSystemSettings
+            String projectPath = settings.option.find { it.@name == 'externalProjectPath' }.@value.text()
+            String taskName = settings.option.find { it.@name == 'taskNames' }.list.option.@value.text()
+            if (projectPath != '$PROJECT_DIR$' || taskName != task) {
+                throw new GradleException("IntelliJ ${label} must use the ordinary Gradle launch")
+            }
+        }
+    }
+}

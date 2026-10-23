@@ -1,12 +1,15 @@
 {
   "type": "thermal:crucible",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    }
-  ],
   "energy": 2000,
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "thermal_expansion"
+      }
+    ]
+  },
   "ingredient": {
     "tag": "forge:ingots/brass"
   },

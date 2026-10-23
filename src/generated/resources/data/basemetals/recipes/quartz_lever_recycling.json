@@ -6,6 +6,6 @@
     "item": "basemetals:quartz_lever"
   },
   "result": {
-    "item": "minecraft:quartz"
+    "id": "minecraft:quartz"
   }
 }

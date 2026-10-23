@@ -4,20 +4,23 @@
     "tag": "tconstruct:casts/single_use/plate"
   },
   "cast_consumed": true,
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:adamantine_plate"
-    }
-  ],
   "cooling_time": 45,
   "fluid": {
     "amount": 90,
     "tag": "forge:molten_adamantine"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:adamantine_plate"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:adamantine_plate"

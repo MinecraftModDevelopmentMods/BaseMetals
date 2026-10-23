@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/coldiron"
   },
   "result": {
-    "item": "basemetals:coldiron_smallpowder"
+    "id": "basemetals:coldiron_smallpowder"
   }
 }

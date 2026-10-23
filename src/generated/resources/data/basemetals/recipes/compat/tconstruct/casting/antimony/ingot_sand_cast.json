@@ -4,20 +4,23 @@
     "tag": "tconstruct:casts/single_use/ingot"
   },
   "cast_consumed": true,
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:antimony_ingot"
-    }
-  ],
   "cooling_time": 45,
   "fluid": {
     "amount": 90,
     "tag": "forge:molten_antimony"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:antimony_ingot"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:antimony_ingot"

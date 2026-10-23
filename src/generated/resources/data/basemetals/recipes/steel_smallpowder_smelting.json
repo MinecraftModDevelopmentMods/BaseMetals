@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/steel"
   },
-  "result": "basemetals:steel_nugget"
+  "result": {
+    "id": "basemetals:steel_nugget"
+  }
 }

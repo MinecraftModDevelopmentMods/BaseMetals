@@ -112,12 +112,34 @@ tasks.named('check').configure {
     dependsOn tasks.named('verifyReleaseConfiguration')
 }
 
-def prepareGameTestStructures = tasks.register('prepareGameTestStructures', Copy) {
+def gameTestResources = layout.buildDirectory.dir('gametest-resources')
+
+def prepareGameTestStructures = tasks.register('prepareGameTestStructures') {
     group = 'verification'
-    description = 'Copies the tracked SNBT fixtures into the GameTest working directory.'
-    from layout.projectDirectory.dir('src/gametest/resources/gameteststructures')
-    into layout.projectDirectory.dir('run-gametest/gameteststructures')
+    description = 'Creates the empty structure used by the isolated GameTests.'
+    outputs.dir gameTestResources
+    doLast {
+        File structure = new File(gameTestResources.get().asFile, 'data/basemetals/structures/empty.nbt')
+        structure.parentFile.mkdirs()
+        structure.withOutputStream { fileStream ->
+            new DataOutputStream(new java.util.zip.GZIPOutputStream(fileStream)).withCloseable { nbt ->
+                nbt.writeByte(10); nbt.writeUTF('')
+                nbt.writeByte(3); nbt.writeUTF('DataVersion'); nbt.writeInt(3839)
+                nbt.writeByte(9); nbt.writeUTF('size'); nbt.writeByte(3); nbt.writeInt(3)
+                [3, 3, 3].each { nbt.writeInt(it) }
+                nbt.writeByte(9); nbt.writeUTF('palette'); nbt.writeByte(10); nbt.writeInt(1)
+                nbt.writeByte(8); nbt.writeUTF('Name'); nbt.writeUTF('minecraft:air'); nbt.writeByte(0)
+                ['blocks', 'entities'].each { name ->
+                    nbt.writeByte(9); nbt.writeUTF(name); nbt.writeByte(10); nbt.writeInt(0)
+                }
+                nbt.writeByte(0)
+            }
+        }
+    }
 }
+
+sourceSets.gameTestValidation.resources.srcDir gameTestResources
+tasks.named('processGameTestValidationResources').configure { dependsOn prepareGameTestStructures }
 
 tasks.matching { it.name == 'prepareRunGameTestServer' }.configureEach {
     dependsOn prepareGameTestStructures
@@ -125,4 +147,27 @@ tasks.matching { it.name == 'prepareRunGameTestServer' }.configureEach {
 
 tasks.matching { it.name == 'runGameTestServer' }.configureEach {
     dependsOn prepareGameTestStructures
+    doFirst {
+        File runDirectory = layout.projectDirectory.dir('run-gametest').asFile
+        runDirectory.mkdirs()
+
+        new File(runDirectory, 'server.properties').setText('online-mode=false\nmax-tick-time=-1\n', 'UTF-8')
+        File previousLog = new File(runDirectory, 'logs/latest.log')
+        if (previousLog.isFile()) {
+            File evidence = layout.buildDirectory.file("gametest-history/${System.currentTimeMillis()}.log").get().asFile
+            evidence.parentFile.mkdirs()
+            evidence.bytes = previousLog.bytes
+            previousLog.delete()
+        }
+    }
+    doLast {
+        File log = layout.projectDirectory.file('run-gametest/logs/latest.log').asFile
+        String text = log.isFile() ? log.getText('UTF-8') : ''
+        if (!(text =~ /All [1-9][0-9]* required tests passed/).find()) {
+            throw new GradleException('GameTests did not report a completed, passing suite. See run-gametest/logs/latest.log.')
+        }
+        if (text =~ /(?i)(ERROR|FATAL)\]/) {
+            throw new GradleException('GameTests logged an error. See run-gametest/logs/latest.log.')
+        }
+    }
 }

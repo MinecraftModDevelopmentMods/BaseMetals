@@ -6,6 +6,6 @@
     "item": "basemetals:mithril_bow"
   },
   "result": {
-    "item": "basemetals:mithril_ingot"
+    "id": "basemetals:mithril_ingot"
   }
 }

@@ -89,7 +89,7 @@ class RecipeRegressionTest {
                         .get(0).getAsJsonObject();
                 String actual = expected[0].equals("item")
                         ? predicate.getAsJsonArray("items").get(0).getAsString()
-                        : predicate.get(expected[0]).getAsString();
+                        : predicate.get("items").getAsString().substring(1);
                 assertEquals(expected[1], actual, name);
                 assertEquals(1, advancement.getAsJsonArray("requirements").size(), name);
                 assertTrue(advancement.getAsJsonArray("requirements").get(0).getAsJsonArray().toString()
@@ -106,8 +106,8 @@ class RecipeRegressionTest {
         JsonObject criteria = read(DATA.resolve("advancements/recipes/adamantine_bow.json"))
                 .getAsJsonObject("criteria");
         assertEquals("minecraft:recipe_unlocked", criteria.getAsJsonObject("has_recipe").get("trigger").getAsString());
-        assertEquals("forge:rods/adamantine", criteria.getAsJsonObject("has_ingredient_1")
-                .getAsJsonObject("conditions").getAsJsonArray("items").get(0).getAsJsonObject().get("tag").getAsString());
+        assertEquals("#forge:rods/adamantine", criteria.getAsJsonObject("has_ingredient_1")
+                .getAsJsonObject("conditions").getAsJsonArray("items").get(0).getAsJsonObject().get("items").getAsString());
     }
 
     @Test
@@ -122,7 +122,7 @@ class RecipeRegressionTest {
         assertEquals("forge:ingots/obsidian", block.getAsJsonObject("key").getAsJsonObject("X")
                 .get("tag").getAsString());
         assertEquals("basemetals:obsidian_ingot", read(DATA.resolve("recipes/obsidian_ingot.json"))
-                .getAsJsonObject("result").get("item").getAsString());
+                .getAsJsonObject("result").get("id").getAsString());
         assertFalse(block.get("pattern").equals(read(DATA.resolve("recipes/obsidian_bars.json"))
                 .get("pattern")), "Obsidian blocks must not collide with bars");
     }
@@ -143,7 +143,7 @@ class RecipeRegressionTest {
             if (craft == null || !craft.has("pattern")) continue;
 
             JsonObject result = entry.getValue().getAsJsonObject("result");
-            String output = result.get("item").getAsString().split(":")[1];
+            String output = result.get("id").getAsString().split(":")[1];
             String material = output.contains("_") ? output.substring(0, output.indexOf('_')) : output;
             double spent = 0;
             for (com.google.gson.JsonElement row : craft.getAsJsonArray("pattern")) {

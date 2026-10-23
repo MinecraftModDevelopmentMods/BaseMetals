@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/obsidian"
   },
-  "result": "basemetals:obsidian_nugget"
+  "result": {
+    "id": "basemetals:obsidian_nugget"
+  }
 }

@@ -12,7 +12,7 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "basemetals:coldiron_sword"
+      "id": "basemetals:coldiron_sword"
     },
     "show_toast": true,
     "title": {

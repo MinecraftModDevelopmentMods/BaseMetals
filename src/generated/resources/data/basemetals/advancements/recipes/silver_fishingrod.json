@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/silver"
+            "items": "#forge:rods/silver"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/silver"
+            "items": "#forge:ingots/silver"
           }
         ]
       },

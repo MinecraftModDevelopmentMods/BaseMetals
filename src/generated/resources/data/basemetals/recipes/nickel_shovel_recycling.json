@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_shovel"
   },
   "result": {
-    "item": "basemetals:nickel_ingot"
+    "id": "basemetals:nickel_ingot"
   }
 }

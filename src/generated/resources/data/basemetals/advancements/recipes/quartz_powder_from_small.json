@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/quartz"
+            "items": "#forge:tiny_dusts/quartz"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/quartz"
+            "items": "#forge:gems/quartz"
           }
         ]
       },

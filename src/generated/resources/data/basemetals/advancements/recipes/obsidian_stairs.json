@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/obsidian"
+            "items": "#forge:storage_blocks/obsidian"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/obsidian"
+            "items": "#forge:ingots/obsidian"
           }
         ]
       },

@@ -6,6 +6,6 @@
     "item": "basemetals:adamantine_lever"
   },
   "result": {
-    "item": "basemetals:adamantine_ingot"
+    "id": "basemetals:adamantine_ingot"
   }
 }

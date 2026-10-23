@@ -4,6 +4,6 @@
     "tag": "forge:ingots/lead"
   },
   "result": {
-    "item": "basemetals:lead_powder"
+    "id": "basemetals:lead_powder"
   }
 }

@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/gold"
   },
-  "result": "minecraft:gold_nugget"
+  "result": {
+    "id": "minecraft:gold_nugget"
+  }
 }

@@ -1,16 +1,19 @@
 {
   "type": "thermal:smelter",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:brass_ingot"
-    }
-  ],
   "energy": 6400,
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "thermal_expansion"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:brass_ingot"
+      }
+    ]
+  },
   "ingredients": [
     {
       "count": 3,

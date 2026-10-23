@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/nickel"
   },
   "result": {
-    "item": "basemetals:nickel_powder"
+    "id": "basemetals:nickel_powder"
   }
 }

@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/platinum"
   },
   "result": {
-    "item": "basemetals:platinum_powder"
+    "id": "basemetals:platinum_powder"
   }
 }

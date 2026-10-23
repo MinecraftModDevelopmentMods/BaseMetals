@@ -1,6 +1,9 @@
 package zone.moddev.mc.basemetals.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraft.core.NonNullList;
@@ -35,21 +38,18 @@ public final class CrushingRecipe implements Recipe<Container> {
     public static final RegistryObject<RecipeSerializer<Recipe<?>>> CONTENT_CRAFTING_SERIALIZER =
             SERIALIZERS.register("content_crafting", () -> ContentCraftingRecipe.SERIALIZER);
 
-    private final ResourceLocation id;
     private final Ingredient ingredient;
     private final ItemStack result;
 
-    public CrushingRecipe(ResourceLocation id, Ingredient ingredient, ItemStack result) {
-        this.id = id;
+    public CrushingRecipe(Ingredient ingredient, ItemStack result) {
         this.ingredient = ingredient;
         this.result = result.copy();
     }
 
     @Override public boolean matches(Container container, Level level) { return ingredient.test(container.getItem(0)); }
-    @Override public ItemStack assemble(Container container, net.minecraft.core.RegistryAccess registries) { return result.copy(); }
+    @Override public ItemStack assemble(Container container, net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
-    @Override public ItemStack getResultItem(net.minecraft.core.RegistryAccess registries) { return result.copy(); }
-    @Override public ResourceLocation getId() { return id; }
+    @Override public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER.get(); }
     @Override public RecipeType<?> getType() { return TYPE.get(); }
     @Override public NonNullList<Ingredient> getIngredients() { return NonNullList.of(Ingredient.EMPTY, ingredient); }
@@ -62,25 +62,20 @@ public final class CrushingRecipe implements Recipe<Container> {
         }
     }
 
-    public static final class Serializer
-            implements RecipeSerializer<CrushingRecipe> {
-        @Override
-        public CrushingRecipe fromJson(ResourceLocation id, JsonObject json) {
-            Ingredient ingredient = Ingredient.fromJson(json.get("ingredient"));
-            JsonObject resultJson = GsonHelper.getAsJsonObject(json, "result");
-            ItemStack result = net.minecraftforge.common.crafting.CraftingHelper.getItemStack(resultJson, true);
-            return new CrushingRecipe(id, ingredient, result);
-        }
+    public static final class Serializer implements RecipeSerializer<CrushingRecipe> {
+        private static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
+                instance.group(
+                        Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+                        ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result))
+                        .apply(instance, CrushingRecipe::new));
 
-        @Override
-        public CrushingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            return new CrushingRecipe(id, Ingredient.fromNetwork(buffer), buffer.readItem());
-        }
+        private static final StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> STREAM_CODEC =
+                StreamCodec.composite(
+                        Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.ingredient,
+                        ItemStack.STREAM_CODEC, recipe -> recipe.result,
+                        CrushingRecipe::new);
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, CrushingRecipe recipe) {
-            recipe.ingredient.toNetwork(buffer);
-            buffer.writeItem(recipe.result);
-        }
+        @Override public MapCodec<CrushingRecipe> codec() { return CODEC; }
+        @Override public StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> streamCodec() { return STREAM_CODEC; }
     }
 }

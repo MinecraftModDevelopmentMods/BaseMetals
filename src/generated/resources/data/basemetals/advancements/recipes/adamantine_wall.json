@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/adamantine"
+            "items": "#forge:storage_blocks/adamantine"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/adamantine"
+            "items": "#forge:ingots/adamantine"
           }
         ]
       },

@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.20.1 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 1.20.6 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -85,6 +85,16 @@ silently skipping these protections.
 Old inventories remain valid in either content mode. A configuration without
 `contentMode` starts in High Fantasy; Low Fantasy only restricts new acquisition.
 The mode is a server or modpack setting, not a setting stored in each world.
+
+## Moving from 1.20.1
+
+Minecraft 1.20.6 stores item properties as components rather than the older item
+tag. Base Metals keeps names, enchantments, durability and custom data during
+that conversion. Saved arrows and bolts also retain their ammunition.
+
+Make the first upgrade on a copy, then check stored equipment and inventories
+before using the upgraded world normally. Keep the original: a converted world
+must not be opened in an older Minecraft version.
 
 ## OreSpawn 3 configuration
 

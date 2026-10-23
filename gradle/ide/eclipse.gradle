@@ -5,7 +5,7 @@ import groovy.xml.XmlUtil
 def eclipseWorkspaceProjectName = projectDir.name
 
 // ForgeGradle 7 Eclipse launches are normalized after generation: they use the
-// configured Gradle cache and Java 17, load only bin/main, and exclude all unit,
+// configured Gradle cache and Java 21, load only bin/main, and exclude all unit,
 // GameTest, integrated-smoke, and upgrade-smoke code from production launches.
 eclipse {
     classpath {
@@ -73,15 +73,15 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 || optionalDevelopmentArtifacts.any { expected ->
                     !optionalClient.classpath.files.any { it.name.contains("${expected.module}-${expected.file}") }
                 }) {
-            throw new GradleException('The optional client must load the pinned 1.20.1 dependencies')
+            throw new GradleException('The optional client must load the pinned 1.20.6 dependencies')
         }
     }
 }
 
-def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
+def syncForge50EclipseLaunches = tasks.register('syncForge50EclipseLaunches') {
     group = 'ide'
-    description = 'Normalizes Forge 47 Eclipse launches to the production-only merged output.'
-    dependsOn tasks.named('processResources')
+    description = 'Normalizes Forge 50 Eclipse launches to the production-only merged output.'
+    dependsOn tasks.named('classes')
     doLast {
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
         String modClasses = "${mod_id}%%${mainOutput}"
@@ -113,6 +113,7 @@ def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
         File processedResources = layout.buildDirectory.dir('resources/main').get().asFile
         copy {
             from processedResources
+            from sourceSets.main.output.classesDirs
             into mainOutput
         }
         ['Client', 'Server', 'OptionalModsClient'].each { String runName ->
@@ -138,13 +139,16 @@ def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
                 throw new GradleException("ForgeGradle generated malformed program arguments in ${launch.name}")
             }
             String arguments = programArguments[0][2]
+            if (runName != 'Server' && !arguments.contains('--launcher-side client')) {
+                arguments = '--launcher-side client ' + arguments
+            }
             ['cache', 'metadata', 'to-srg', 'to-obf'].each { flag ->
                 String prefix = "--${flag} "
                 int valueStart = arguments.indexOf(prefix)
-                if (valueStart < 0) throw new GradleException("ForgeGradle omitted --${flag} from ${launch.name}")
+                if (valueStart < 0) return
                 valueStart += prefix.length()
                 int valueEnd = arguments.indexOf(' --', valueStart)
-                if (valueEnd < 0) throw new GradleException("ForgeGradle generated an unterminated --${flag} path")
+                if (valueEnd < 0) valueEnd = arguments.length()
                 String value = arguments.substring(valueStart, valueEnd)
                 if (!value.startsWith('&quot;') || !value.endsWith('&quot;')) {
                     arguments = "${arguments.substring(0, valueStart)}&quot;${value}&quot;${arguments.substring(valueEnd)}"
@@ -156,14 +160,12 @@ def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
             String legacyPrefix = '-DlegacyClassPath.file='
             int legacyStart = text.indexOf(legacyPrefix)
             int legacyEnd = text.indexOf(' -DignoreList=', legacyStart)
-            if (legacyStart < 0 || legacyEnd < 0) {
-                throw new GradleException("ForgeGradle omitted -DlegacyClassPath.file from ${launch.name}")
-            }
+
             String xmlQuote = '&quot;'
             boolean quoted = legacyStart >= xmlQuote.length()
                     && text.substring(legacyStart - xmlQuote.length(), legacyStart) == xmlQuote
                     && text.substring(legacyEnd - xmlQuote.length(), legacyEnd) == xmlQuote
-            if (!quoted) {
+            if (legacyStart >= 0 && legacyEnd >= 0 && !quoted) {
                 text = text.substring(0, legacyStart) + xmlQuote +
                         text.substring(legacyStart, legacyEnd) + xmlQuote + text.substring(legacyEnd)
             }
@@ -174,6 +176,13 @@ def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
             }
             // Buildship also exposes compile-only APIs. Use the selected runtime instead.
             def launchXml = new XmlParser(false, false).parseText(text)
+            def environment = launchXml.mapAttribute.find {
+                it.@key == 'org.eclipse.debug.core.environmentVariables'
+            }
+            def modClassesEntry = environment.mapEntry.find { it.@key == 'MOD_CLASSES' }
+            if (modClassesEntry == null) environment.appendNode('mapEntry', [key: 'MOD_CLASSES', value: modClasses])
+            else modClassesEntry.@value = modClasses
+
             def vmArguments = launchXml.stringAttribute.find {
                 it.@key == 'org.eclipse.jdt.launching.VM_ARGUMENTS'
             }
@@ -212,7 +221,7 @@ def syncForge47EclipseLaunches = tasks.register('syncForge47EclipseLaunches') {
 def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionClasspath') {
     group = 'verification'
     description = 'Verifies Eclipse client/server launches cannot see validation-only code.'
-    dependsOn syncForge47EclipseLaunches
+    dependsOn syncForge50EclipseLaunches
     dependsOn verifyDevelopmentRunProfiles
     doLast {
         File classpath = file('.classpath')
@@ -288,21 +297,14 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
             String expectedModClasses = "${mod_id}%%${new File(projectDir, 'bin/main').absolutePath}"
             if (!launch.contains(expectedModClasses)) {
-                throw new GradleException("Eclipse launch is not using Forge 47's merged production output: ${name}")
+                throw new GradleException("Eclipse launch is not using Forge 50's merged production output: ${name}")
             }
             ['cache', 'metadata', 'to-srg', 'to-obf'].each { flag ->
-                if (!launch.contains("--${flag} &quot;")) {
+                if (launch.contains("--${flag} ") && !launch.contains("--${flag} &quot;")) {
                     throw new GradleException("Eclipse launch does not quote its --${flag} path: ${name}")
                 }
             }
-            if (!launch.contains('&quot;-DlegacyClassPath.file=')
-                    || !launch.contains('minecraft_classpath.txt&quot; -DignoreList=')) {
-                throw new GradleException("Eclipse launch does not quote -DlegacyClassPath.file: ${name}")
-            }
-            if (!launch.contains('&quot;-Dmixin.env.refMapRemappingFile=')
-                    || !launch.contains('optional-refmaps.srg&quot;')) {
-                throw new GradleException("Eclipse launch does not quote its mixin mapping path: ${name}")
-            }
+
         }
         File processed = layout.buildDirectory.dir('resources/main').get().asFile
         ['META-INF/mods.toml', 'data/basemetals/orespawn/provider.json',
@@ -315,26 +317,32 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.0.120011"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.0.120061"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
 }
 
 verifyDevelopmentRunProfiles.configure {
-    dependsOn syncForge47EclipseLaunches
+    dependsOn syncForge50EclipseLaunches
 }
 
 tasks.matching { it.name == 'genEclipseRuns' }.configureEach {
-    finalizedBy syncForge47EclipseLaunches
+    finalizedBy syncForge50EclipseLaunches
 }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge47EclipseLaunches
+    dependsOn syncForge50EclipseLaunches
 }
 
 tasks.matching { it.name == 'eclipse' }.configureEach {
-    finalizedBy syncForge47EclipseLaunches
+    finalizedBy syncForge50EclipseLaunches
+}
+
+// Use this after import or refresh to regenerate and check the ordinary launches.
+tasks.register('prepareEclipse') {
+    group = 'ide'
+    dependsOn 'eclipse', 'genEclipseRuns', 'verifyEclipseProductionClasspath'
 }

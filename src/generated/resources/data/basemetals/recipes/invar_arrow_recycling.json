@@ -6,6 +6,6 @@
     "item": "basemetals:invar_arrow"
   },
   "result": {
-    "item": "basemetals:invar_nugget"
+    "id": "basemetals:invar_nugget"
   }
 }

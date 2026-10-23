@@ -6,6 +6,6 @@
     "item": "basemetals:bronze_gear"
   },
   "result": {
-    "item": "basemetals:bronze_ingot"
+    "id": "basemetals:bronze_ingot"
   }
 }

@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.20.1)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.20.1)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.20.6)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.20.6)
 
 # Base Metals
 
@@ -12,21 +12,21 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.20.1 Forge version, `3.1.0.120011`. It keeps the
-fixes and features from 1.19.4, including raw metals, ore texture
+This is the Minecraft 1.20.6 Forge version, `3.1.0.120061`. It keeps the
+fixes and features from the released 1.20.1 version, including raw metals, ore texture
 overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
 Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `1.20.1`
-- Forge `47.4.10` or newer in the Minecraft 1.20.1 Forge 47 line
-- A current Java 17 runtime
-- OreSpawn `[4.1.0.120011,5.0.0)` on both client and server
+- Minecraft `1.20.6`
+- Forge `50.2.0` or newer in the Minecraft 1.20.6 Forge 50 line
+- A current Java 21 runtime
+- OreSpawn `[4.1.0.120061,5.0.0)` on both client and server
 
-This version uses OreSpawn `4.1.0.120011`. Put
-`BaseMetals-3.1.0.120011.jar` and a compatible OreSpawn JAR in the `mods`
+This version uses OreSpawn `4.1.0.120061`. Put
+`BaseMetals-3.1.0.120061.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -58,7 +58,7 @@ Notable mechanics include:
 - Scythes harvest a horizontal 3x3 area while respecting normal Forge block
   break and protection events, drops, enchantments, and durability.
 - Material shields can be upgraded at an anvil with one strictly harder tagged
-  plate while retaining their enchantments.
+  plate while retaining their enchantments, name and other item data.
 - Bows fire arrows, while Base Metals' draw-and-release crossbows fire bolts.
   Both the weapon and ammunition material contribute to the damage, before
   enchantment bonuses. Picked-up projectiles keep their material and item data.
@@ -134,13 +134,13 @@ original. Read [Migration](docs/MIGRATION.md) before starting an upgraded world.
 
 Forge item, block, and fluid tags are Base Metals' public compatibility API.
 
-Integration data is included for Mekanism, Thermal Expansion, Tinkers' Construct
-and Ender IO. These mods are optional. Use their Minecraft 1.20.1 builds; jars
-for other Minecraft versions cannot be substituted.
+Compatible tags and the existing recipe data for Mekanism, Thermal, Tinkers'
+Construct and Ender IO are retained, but these integrations are not supported
+on this target: those mods do not publish Forge 1.20.6 builds. Their older jars
+must not be added to this instance. No optional integration API is required to
+compile or launch Base Metals.
 
-The normal development client loads only Base Metals and OreSpawn. Use the
-separate optional-mod client profile when working on integrations. Its exact
-dependencies and checksums are listed in `gradle/optional-mods.json`.
+The normal development client loads only Base Metals and OreSpawn.
 
 See [Compatibility](docs/COMPATIBILITY.md) for the supported processing chains,
 tag aliases, copper rules, and intentionally retired legacy integrations. See
@@ -150,8 +150,9 @@ contracts.
 ## Building and contributing
 
 Base Metals uses ForgeGradle `7.0.34`, Gradle `9.6.1`, official Minecraft
-mappings, and the Java 17 toolchain. Initial Minecraft setup also uses Java 25
-for Mavenizer; Minecraft and the mod still run on Java 17. A normal command-line
+mappings, and the Java 21 toolchain. Initial Minecraft setup also uses Java 25
+for Mavenizer. ForgeGradle also needs Java 8 for its setup helper; it does not
+compile the mod or run Minecraft with Java 8. A normal command-line
 build resolves the published OreSpawn release from CurseMaven:
 
 ```text
@@ -161,15 +162,16 @@ build resolves the published OreSpawn release from CurseMaven:
 Generate and verify Eclipse launches with:
 
 ```text
-./gradlew genEclipseRuns eclipse isolateEclipseProductionRuns verifyEclipseProductionClasspath
+./gradlew prepareEclipse
 ```
 
+IntelliJ users can import the Gradle project with Java 21 and run
+`./gradlew prepareIntelliJ` to add client and server configurations. Both IDEs
+use the same Gradle-managed Forge bootstrap and assets.
+
 Use **runClient** for normal testing with Base Metals and OreSpawn only.
-**runClientOptionalMods** uses a separate `run-optional-mods` folder for
-compatibility testing with Mekanism, Mantle, Tinkers' Construct and CoFH Core.
-Thermal and Ender IO are tested with packaged jars instead: their embedded
-dependencies cannot be remapped by the development launcher.
-Both profiles are available in Eclipse and through Gradle tasks.
+The optional-mod profile uses a separate folder, but currently has no additional
+mods on this target. Both profiles are available in Eclipse and through Gradle tasks.
 
 Use the Gradle **generateResources** task when changing recipes, models or
 translations. It updates the checked-in data; ordinary builds only check for
@@ -183,7 +185,7 @@ artifacts. GameTests, smoke probes, migration fixtures, and reference sources
 are isolated from the published JAR.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.120011`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.0.120061`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

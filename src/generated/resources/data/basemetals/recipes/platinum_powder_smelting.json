@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/platinum"
   },
-  "result": "basemetals:platinum_ingot"
+  "result": {
+    "id": "basemetals:platinum_ingot"
+  }
 }

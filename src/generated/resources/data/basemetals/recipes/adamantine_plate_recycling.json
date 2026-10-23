@@ -6,6 +6,6 @@
     "item": "basemetals:adamantine_plate"
   },
   "result": {
-    "item": "basemetals:adamantine_ingot"
+    "id": "basemetals:adamantine_ingot"
   }
 }

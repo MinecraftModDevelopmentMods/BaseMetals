@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/antimony"
   },
   "result": {
-    "item": "basemetals:antimony_smallpowder"
+    "id": "basemetals:antimony_smallpowder"
   }
 }

@@ -99,15 +99,15 @@ public final class BaseMetalsTrades {
     }
 
     private static ItemListing selling(Item item, int count, int emeralds) {
-        return (trader, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, Math.max(1, emeralds)),
+        return (trader, random) -> new MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, Math.max(1, emeralds)),
                 new ItemStack(item, count), 6, 5, 0.2F);
     }
 
     private static ItemListing enchanted(Item item, int baseCost) {
         return (trader, random) -> {
             int enchantmentLevel = 5 + random.nextInt(15);
-            ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel, false);
-            return new MerchantOffer(new ItemStack(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
+            ItemStack result = EnchantmentHelper.enchantItem(trader.level().enabledFeatures(), random, new ItemStack(item), enchantmentLevel, false);
+            return new MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
                     result, 3, 15, 0.2F);
         };
     }

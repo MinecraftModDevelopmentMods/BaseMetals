@@ -1,3 +1,15 @@
+Base Metals 3.1.0.120061
+
+- Port the released 1.20.1 version to Minecraft 1.20.6, Forge 50.2.0 and Java 21.
+- Keep raw metals, Kiri's ore overlays, filled buckets, High/Low Fantasy and the existing gameplay fixes.
+- Update equipment, item data, recipes, trades and loot for the new component and codec APIs.
+- Check client and server content modes during Forge's configuration phase before joining a world.
+- Keep names, enchantments and custom data when repairing or upgrading equipment.
+- Retain saved arrow and bolt ammunition through the item-data conversion.
+- Use the published OreSpawn 4.1.0.120061 release with the same provider rules and copper defaults.
+- Retain compatible integration data without loading unsupported optional-mod jars.
+- Keep the port's worlds, test probes and development output separate from public jars.
+
 Base Metals 3.1.0.120011
 
 - Port the 1.19.4 version to Minecraft 1.20.1 and Forge 47.4.10.

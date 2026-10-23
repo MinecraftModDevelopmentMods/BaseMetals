@@ -23,7 +23,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.HorseArmorItem;
+import net.minecraft.world.item.AnimalArmorItem;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShearsItem;
@@ -62,91 +64,94 @@ public final class MaterialItems {
     public static final class Pickaxe extends PickaxeItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Pickaxe(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material), 1, -2.8F, properties); this.material = material;
+            super(new MaterialTier(material), properties.attributes(
+                    toolAttributes(material, 1, -2.8F)));
+            this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
+        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static final class Axe extends AxeItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Axe(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material), 4.0F + material.baseAttackDamage(),
-                    material.axeAttackSpeed(), properties);
+            super(new MaterialTier(material), properties.attributes(
+                    toolAttributes(material, 4.0F + material.baseAttackDamage(), material.axeAttackSpeed())));
             this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
+        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static final class Shovel extends ShovelItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Shovel(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material), 1.5F, -3.0F, properties); this.material = material;
+            super(new MaterialTier(material), properties.attributes(toolAttributes(material, 1.5F, -3.0F)));
+            this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
+        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static final class Hoe extends HoeItem implements MaterialBacked {
         private final MaterialDefinition material;
-        private final Multimap<Attribute, AttributeModifier> modifiers;
         public Hoe(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material), 0, material.baseAttackDamage() - 3.0F, properties);
-            this.material = material;
-            this.modifiers = ImmutableMultimap.<Attribute, AttributeModifier>builder()
-                    // ItemHoe in 1.12 contributed no attack-damage modifier;
-                    // the player's normal one point of unarmed damage remains.
-                    .put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID,
-                            "Tool modifier", 0.0D, AttributeModifier.Operation.ADDITION))
-                    .put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,
+            super(new MaterialTier(material), properties.attributes(ItemAttributeModifiers.builder()
+                    .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID,
+                            "Tool modifier", 0.0D, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,
                             "Tool modifier", material.baseAttackDamage() - 3.0D,
-                            AttributeModifier.Operation.ADDITION))
-                    .build();
+                            AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()));
+            this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public float getAttackDamage() { return 0.0F; }
-        @Override public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
-            return slot == EquipmentSlot.MAINHAND ? modifiers : super.getDefaultAttributeModifiers(slot);
-        }
-        @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
+
+        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static class Sword extends SwordItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Sword(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material), 3, -2.4F, properties); this.material = material;
+            super(new MaterialTier(material), properties.attributes(
+                    SwordItem.createAttributes(new MaterialTier(material), 3, -2.4F)));
+            this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, @Nullable Level level,
+        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
     public static final class Armor extends ArmorItem implements MaterialBacked {
         private final MaterialDefinition material;
         public Armor(MaterialDefinition material, EquipmentSlot slot, Properties properties) {
-            super(new MaterialArmor(material), armorType(slot), properties); this.material = material;
+            super(MaterialArmor.get(material), armorType(slot),
+                    properties.durability(armorType(slot).getDurability(material.armorDurabilityFactor())));
+            this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addArmorTooltip(material, tooltip);
         }
     }
 
-    public static final class HorseArmor extends HorseArmorItem implements MaterialBacked {
+    public static final class HorseArmor extends AnimalArmorItem implements MaterialBacked {
         private final MaterialDefinition material;
         public HorseArmor(MaterialDefinition material, Properties properties) {
-            super(material.horseArmorProtection(), new ResourceLocation(BaseMetals.MOD_ID,
-                    "textures/entity/horse/armor/horse_armor_" + material.name() + ".png"), properties);
+            super(MaterialArmor.get(material), BodyType.EQUESTRIAN, false, properties.stacksTo(1));
             this.material = material;
         }
         @Override public MaterialDefinition baseMetalsMaterial() { return material; }
+    }
+
+    private static ItemAttributeModifiers toolAttributes(MaterialDefinition material, float damage, float speed) {
+        return net.minecraft.world.item.DiggerItem.createAttributes(new MaterialTier(material), damage, speed);
     }
 
     private static ArmorItem.Type armorType(EquipmentSlot slot) {
@@ -179,7 +184,7 @@ public final class MaterialItems {
             return isMaterialRepairIngredient(repair) || super.isValidRepairItem(toRepair, repair);
         }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addToolTooltip(material, tooltip);
         }
@@ -193,7 +198,7 @@ public final class MaterialItems {
             return isMaterialRepairIngredient(repair) || super.isValidRepairItem(toRepair, repair);
         }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addToolTooltip(material, tooltip);
         }
@@ -221,7 +226,7 @@ public final class MaterialItems {
             return isMaterialRepairIngredient(repair) || super.isValidRepairItem(toRepair, repair);
         }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addToolTooltip(material, tooltip);
         }
@@ -242,7 +247,7 @@ public final class MaterialItems {
         public void releaseUsing(ItemStack bow, Level level, LivingEntity user, int timeLeft) {
             if (!(user instanceof Player player)) return;
             boolean hasInfiniteAmmo = player.getAbilities().instabuild
-                    || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow) > 0;
+                    || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bow) > 0;
             ItemStack ammunition = findBolt(player);
             int charge = getUseDuration(bow) - timeLeft;
             charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(
@@ -267,16 +272,16 @@ public final class MaterialItems {
                 bolt.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F,
                         power * 3.0F, 1.0F);
                 if (power == 1.0F) bolt.setCritArrow(true);
-                int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bow);
+                int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow);
                 if (powerLevel > 0) {
                     bolt.setBaseDamage(bolt.getBaseDamage() + powerLevel * 0.5D + 0.5D);
                 }
-                int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, bow);
+                int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow);
                 if (punchLevel > 0) bolt.setKnockback(punchLevel);
-                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, bow) > 0) {
-                    bolt.setSecondsOnFire(100);
+                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow) > 0) {
+                    bolt.igniteForSeconds(100);
                 }
-                bow.hurtAndBreak(1, player, entity -> entity.broadcastBreakEvent(player.getUsedItemHand()));
+                bow.hurtAndBreak(1, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
                 if (infiniteShot) bolt.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                 level.addFreshEntity(bolt);
             }
@@ -303,7 +308,7 @@ public final class MaterialItems {
         }
 
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addToolTooltip(material, tooltip);
         }
@@ -317,7 +322,7 @@ public final class MaterialItems {
             return isMaterialRepairIngredient(repair) || super.isValidRepairItem(toRepair, repair);
         }
         @Override
-        public void appendHoverText(ItemStack stack, @Nullable Level level,
+        public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
                 List<Component> tooltip, TooltipFlag flag) {
             addToolTooltip(material, tooltip);
         }

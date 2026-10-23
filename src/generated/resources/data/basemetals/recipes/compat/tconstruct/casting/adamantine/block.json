@@ -1,19 +1,22 @@
 {
   "type": "tconstruct:casting_basin",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:adamantine_block"
-    }
-  ],
   "cooling_time": 141,
   "fluid": {
     "amount": 810,
     "tag": "forge:molten_adamantine"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:adamantine_block"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:adamantine_block"

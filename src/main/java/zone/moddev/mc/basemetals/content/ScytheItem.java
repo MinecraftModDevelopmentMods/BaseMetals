@@ -25,7 +25,8 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
     private final MaterialDefinition material;
 
     public ScytheItem(MaterialDefinition material, Properties properties) {
-        super(0.0F, 0.0F, new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE, properties);
+        super(new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE,
+                properties.attributes(DiggerItem.createAttributes(new MaterialTier(material), 0.0F, 0.0F)));
         this.material = material;
     }
 
@@ -60,7 +61,7 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level,
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
             List<Component> tooltip, TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);
     }

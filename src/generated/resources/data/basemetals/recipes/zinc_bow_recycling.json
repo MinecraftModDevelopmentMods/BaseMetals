@@ -6,6 +6,6 @@
     "item": "basemetals:zinc_bow"
   },
   "result": {
-    "item": "basemetals:zinc_ingot"
+    "id": "basemetals:zinc_ingot"
   }
 }

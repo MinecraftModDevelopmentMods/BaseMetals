@@ -6,7 +6,7 @@ import zone.moddev.mc.basemetals.content.CrackhammerItem;
 import zone.moddev.mc.basemetals.content.MaterialBacked;
 import zone.moddev.mc.basemetals.content.MaterialItems;
 
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,7 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 final class BaseMetalsAdvancements {
     private static final String CRITERION = "event";
     private static final TagKey<Block> STORAGE_BLOCKS = BlockTags.create(
-            new ResourceLocation("forge", "storage_blocks"));
+            ResourceLocation.fromNamespaceAndPath("forge", "storage_blocks"));
     private static final Map<String, String> ALLOY_ADVANCEMENTS = Map.ofEntries(
             Map.entry("aquarium", "aquarium_maker"),
             Map.entry("brass", "brass_maker"),
@@ -107,8 +107,8 @@ final class BaseMetalsAdvancements {
     }
 
     static boolean award(ServerPlayer player, String id) {
-        Advancement advancement = player.getServer().getAdvancements().getAdvancement(
-                new ResourceLocation(BaseMetals.MOD_ID, id));
+        AdvancementHolder advancement = player.getServer().getAdvancements().get(
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id));
         if (advancement == null) return false;
         AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
         if (progress.isDone()) return false;

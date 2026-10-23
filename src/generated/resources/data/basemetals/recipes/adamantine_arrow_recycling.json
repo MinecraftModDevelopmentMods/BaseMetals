@@ -6,6 +6,6 @@
     "item": "basemetals:adamantine_arrow"
   },
   "result": {
-    "item": "basemetals:adamantine_nugget"
+    "id": "basemetals:adamantine_nugget"
   }
 }

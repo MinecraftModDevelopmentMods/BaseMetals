@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/mithril"
   },
-  "result": "basemetals:mithril_nugget"
+  "result": {
+    "id": "basemetals:mithril_nugget"
+  }
 }

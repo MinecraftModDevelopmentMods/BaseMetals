@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:ores/lead"
   },
-  "result": "basemetals:lead_ingot"
+  "result": {
+    "id": "basemetals:lead_ingot"
+  }
 }

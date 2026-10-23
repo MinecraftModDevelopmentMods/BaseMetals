@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/invar"
+            "items": "#forge:nuggets/invar"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/invar"
+            "items": "#forge:rods/invar"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/invar"
+            "items": "#forge:ingots/invar"
           }
         ]
       },

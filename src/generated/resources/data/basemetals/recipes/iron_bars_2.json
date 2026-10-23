@@ -14,7 +14,7 @@
     ],
     "result": {
       "count": 4,
-      "item": "minecraft:iron_bars"
+      "id": "minecraft:iron_bars"
     }
   }
 }

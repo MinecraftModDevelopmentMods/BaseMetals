@@ -6,6 +6,6 @@
     "item": "basemetals:adamantine_wall"
   },
   "result": {
-    "item": "basemetals:adamantine_block"
+    "id": "basemetals:adamantine_block"
   }
 }

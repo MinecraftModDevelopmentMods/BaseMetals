@@ -6,6 +6,6 @@
     "item": "basemetals:aquarium_gear"
   },
   "result": {
-    "item": "basemetals:aquarium_ingot"
+    "id": "basemetals:aquarium_ingot"
   }
 }

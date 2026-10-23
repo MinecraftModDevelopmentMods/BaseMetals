@@ -6,6 +6,6 @@
     "item": "basemetals:silver_wall"
   },
   "result": {
-    "item": "basemetals:silver_block"
+    "id": "basemetals:silver_block"
   }
 }

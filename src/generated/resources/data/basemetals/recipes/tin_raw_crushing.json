@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/tin"
   },
   "result": {
-    "item": "basemetals:tin_powder"
+    "id": "basemetals:tin_powder"
   }
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/coldiron"
+            "items": "#forge:rods/coldiron"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/coldiron"
+            "items": "#forge:ingots/coldiron"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/coldiron"
+            "items": "#forge:ingots/coldiron"
           }
         ]
       },

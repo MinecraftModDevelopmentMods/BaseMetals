@@ -6,6 +6,6 @@
     "item": "basemetals:obsidian_crackhammer"
   },
   "result": {
-    "item": "minecraft:obsidian"
+    "id": "minecraft:obsidian"
   }
 }

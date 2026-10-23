@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/tin"
+            "items": "#forge:tiny_dusts/tin"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/tin"
+            "items": "#forge:ingots/tin"
           }
         ]
       },

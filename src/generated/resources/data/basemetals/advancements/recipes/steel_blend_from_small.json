@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:small_blends/steel"
+            "items": "#forge:small_blends/steel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/steel"
+            "items": "#forge:ingots/steel"
           }
         ]
       },

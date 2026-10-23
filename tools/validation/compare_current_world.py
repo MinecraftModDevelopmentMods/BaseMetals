@@ -39,6 +39,62 @@ def ordered(tag):
     return tag
 
 
+def canonical_text(value):
+    text = str(value)
+    try:
+        parsed = json.loads(text)
+    except (ValueError, TypeError):
+        parsed = text
+    if isinstance(parsed, str):
+        parsed = {"text": parsed}
+    return nbtlib.String(json.dumps(parsed, sort_keys=True, separators=(",", ":")))
+
+
+def canonical_stack(stack):
+    """Compare saved item data across the 1.20.5 component conversion."""
+    result = nbtlib.Compound(copy.deepcopy(stack))
+    result["count"] = nbtlib.Int(int(result.pop("Count", result.get("count", 1))))
+    components = result.pop("components", nbtlib.Compound())
+    legacy = result.pop("tag", nbtlib.Compound())
+
+    for old, new in (("Damage", "minecraft:damage"), ("RepairCost", "minecraft:repair_cost")):
+        if old in legacy:
+            components[new] = nbtlib.Int(int(legacy.pop(old)))
+        if new in components and not int(components[new]):
+            components.pop(new)
+
+    display = legacy.pop("display", nbtlib.Compound())
+    if "Name" in display:
+        components["minecraft:custom_name"] = display.pop("Name")
+    if "Lore" in display:
+        components["minecraft:lore"] = display.pop("Lore")
+    if display:
+        legacy["display"] = display
+    if "minecraft:custom_name" in components:
+        components["minecraft:custom_name"] = canonical_text(components["minecraft:custom_name"])
+    if "minecraft:lore" in components:
+        components["minecraft:lore"] = nbtlib.List[nbtlib.String](
+            canonical_text(line) for line in components["minecraft:lore"])
+
+    for old, new in (("Enchantments", "minecraft:enchantments"),
+                     ("StoredEnchantments", "minecraft:stored_enchantments")):
+        if old in legacy:
+            levels = nbtlib.Compound({str(entry["id"]): nbtlib.Int(int(entry["lvl"])) for entry in legacy.pop(old)})
+            components[new] = nbtlib.Compound({"levels": levels})
+        if new in components:
+            enchantments = components[new]
+            if bool(enchantments.get("show_in_tooltip", False)):
+                enchantments.pop("show_in_tooltip")
+            if not enchantments.get("levels"):
+                components.pop(new)
+
+    if legacy:
+        components["minecraft:custom_data"] = legacy
+    if components:
+        result["components"] = components
+    return ordered(result).snbt()
+
+
 def snapshot(world):
     blocks = {}
     stacks = Counter()
@@ -50,8 +106,8 @@ def snapshot(world):
             # round-trip is covered separately; saved inventories must stay intact.
             if identifier in ('basemetals:custom_arrow', 'basemetals:custom_bolt') and not value.get('inGround', False):
                 return
-            if str(value.get("id", "")).startswith("basemetals:") and "Count" in value:
-                stacks[ordered(value).snbt()] += 1
+            if str(value.get("id", "")).startswith("basemetals:") and ("Count" in value or "count" in value):
+                stacks[canonical_stack(value)] += 1
                 return
             for child in value.values():
                 items(child)

@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_lever"
   },
   "result": {
-    "item": "basemetals:nickel_ingot"
+    "id": "basemetals:nickel_ingot"
   }
 }

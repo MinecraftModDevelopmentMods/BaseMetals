@@ -6,6 +6,6 @@
     "item": "basemetals:iron_wall"
   },
   "result": {
-    "item": "minecraft:iron_block"
+    "id": "minecraft:iron_block"
   }
 }

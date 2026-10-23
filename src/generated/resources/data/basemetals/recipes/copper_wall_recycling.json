@@ -6,6 +6,6 @@
     "item": "basemetals:copper_wall"
   },
   "result": {
-    "item": "basemetals:copper_block"
+    "id": "basemetals:copper_block"
   }
 }

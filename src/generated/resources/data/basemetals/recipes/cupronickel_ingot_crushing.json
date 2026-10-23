@@ -4,6 +4,6 @@
     "tag": "forge:ingots/cupronickel"
   },
   "result": {
-    "item": "basemetals:cupronickel_powder"
+    "id": "basemetals:cupronickel_powder"
   }
 }

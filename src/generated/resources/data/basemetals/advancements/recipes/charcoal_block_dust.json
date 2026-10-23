@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/charcoal"
+            "items": "#forge:dusts/charcoal"
           }
         ]
       },

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/aquarium"
+            "items": "#forge:storage_blocks/aquarium"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/aquarium"
+            "items": "#forge:ingots/aquarium"
           }
         ]
       },

@@ -12,6 +12,7 @@ the remaining build concerns small enough to review independently.
   packaged client and dedicated-server installations.
 - `ide/eclipse.gradle` normalizes ForgeGradle's Eclipse launches and checks
   that production runs cannot see validation-only code.
+- `ide/intellij.gradle` generates Gradle-backed client and server configurations.
 
 Applied-script order is intentional. Artifact setup publishes an immutable
 `baseMetalsRelease` map consumed by publishing and packaged-runtime checks.
@@ -27,19 +28,13 @@ The scythe's harvestable-block tag lives in `src/main/resources`. Its explicit
 block list preserves the older harvesting behaviour, while vanilla crop,
 flower, sapling and leaf tags include suitable new plants.
 
-Normal client and server launches use an explicit runtime classpath, not
-Buildship's full dependency container. Compile-only integration APIs therefore
-remain available in the editor without loading extra mods into the game.
+Normal client and server launches load only Base Metals and OreSpawn. The
+optional-mod profile has its own run folder, but no optional integration mods
+are pinned for Forge 1.20.6. Mekanism, Tinkers, Thermal and Ender IO have no
+compatible releases for this target; their dormant data remains available for
+future integration work.
 
-`runClientOptionalMods` uses a separate folder and loads the pinned 1.20.1
-integration mods marked `development` in `gradle/optional-mods.json`. Their downloaded jars
-are checked by `verifyOptionalRuntimeDependencies`. Ordinary client and server
-launches still load only essential mods.
-
-Use `compatSmoke` for development-runtime integration tests or
-`packagedCompatSmoke` for the packaged server tests. Neither switch is needed
-for ordinary development.
-
-Thermal and Ender IO are covered by packaged client/server tests. Their embedded
-dependencies still use SRG names after development remapping, so they are not
-included in the IDE profile.
+Run `prepareEclipse` after importing the project or refreshing Gradle. It
+generates the launches, copies processed resources and checks that ordinary
+runs cannot see tests or probes. Client launches explicitly select the client
+side of ForgeGradle's launcher so it resolves assets and native libraries.

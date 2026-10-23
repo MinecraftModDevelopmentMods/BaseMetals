@@ -24,12 +24,12 @@ class RawMaterialResourceTest {
     void allRawMetalsHaveOneToOneProcessingAndDistinctTags() throws Exception {
         for (String metal : METALS) {
             JsonObject crushing = read("data/basemetals/recipes/" + metal + "_raw_crushing.json");
-            assertEquals("basemetals:" + metal + "_powder", crushing.getAsJsonObject("result").get("item").getAsString());
+            assertEquals("basemetals:" + metal + "_powder", crushing.getAsJsonObject("result").get("id").getAsString());
             assertEquals(1, (crushing.getAsJsonObject("result").has("count") ? crushing.getAsJsonObject("result").get("count").getAsInt() : 1));
 
             for (String cooking : List.of("smelting", "blasting")) {
                 JsonObject recipe = read("data/basemetals/recipes/" + metal + "_raw_" + cooking + ".json");
-                assertEquals("basemetals:" + metal + "_ingot", recipe.get("result").getAsString());
+                assertEquals("basemetals:" + metal + "_ingot", recipe.getAsJsonObject("result").get("id").getAsString());
             }
 
             String rawTag = Files.readString(GENERATED.resolve("data/forge/tags/items/raw_materials/" + metal + ".json"));

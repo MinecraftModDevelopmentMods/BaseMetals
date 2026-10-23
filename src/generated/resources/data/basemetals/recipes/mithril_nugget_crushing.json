@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/mithril"
   },
   "result": {
-    "item": "basemetals:mithril_smallpowder"
+    "id": "basemetals:mithril_smallpowder"
   }
 }

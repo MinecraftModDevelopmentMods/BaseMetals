@@ -6,6 +6,6 @@
     "item": "basemetals:emerald_arrow"
   },
   "result": {
-    "item": "basemetals:emerald_nugget"
+    "id": "basemetals:emerald_nugget"
   }
 }

@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/emerald"
   },
-  "result": "basemetals:emerald_nugget"
+  "result": {
+    "id": "basemetals:emerald_nugget"
+  }
 }

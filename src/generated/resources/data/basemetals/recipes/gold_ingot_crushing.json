@@ -4,6 +4,6 @@
     "tag": "forge:ingots/gold"
   },
   "result": {
-    "item": "basemetals:gold_powder"
+    "id": "basemetals:gold_powder"
   }
 }

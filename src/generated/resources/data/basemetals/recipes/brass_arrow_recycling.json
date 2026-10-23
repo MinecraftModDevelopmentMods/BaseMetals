@@ -6,6 +6,6 @@
     "item": "basemetals:brass_arrow"
   },
   "result": {
-    "item": "basemetals:brass_nugget"
+    "id": "basemetals:brass_nugget"
   }
 }

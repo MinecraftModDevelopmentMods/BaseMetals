@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/tin"
+            "items": "#forge:nuggets/tin"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/tin"
+            "items": "#forge:ingots/tin"
           }
         ]
       },

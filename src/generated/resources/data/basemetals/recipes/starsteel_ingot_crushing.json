@@ -4,6 +4,6 @@
     "tag": "forge:ingots/starsteel"
   },
   "result": {
-    "item": "basemetals:starsteel_powder"
+    "id": "basemetals:starsteel_powder"
   }
 }

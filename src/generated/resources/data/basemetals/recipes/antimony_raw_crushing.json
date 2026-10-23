@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/antimony"
   },
   "result": {
-    "item": "basemetals:antimony_powder"
+    "id": "basemetals:antimony_powder"
   }
 }

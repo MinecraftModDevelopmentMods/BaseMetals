@@ -4,6 +4,6 @@
     "tag": "forge:ingots/invar"
   },
   "result": {
-    "item": "basemetals:invar_powder"
+    "id": "basemetals:invar_powder"
   }
 }

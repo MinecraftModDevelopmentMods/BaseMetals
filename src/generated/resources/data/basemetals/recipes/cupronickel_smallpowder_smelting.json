@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/cupronickel"
   },
-  "result": "basemetals:cupronickel_nugget"
+  "result": {
+    "id": "basemetals:cupronickel_nugget"
+  }
 }

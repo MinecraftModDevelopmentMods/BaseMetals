@@ -120,9 +120,9 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(graphics);
-        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
+        renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
+        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
 
         for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
             if (child instanceof OptionButton && ((OptionButton) child).isHoveredOrFocused()) {

@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_arrow"
   },
   "result": {
-    "item": "basemetals:nickel_nugget"
+    "id": "basemetals:nickel_nugget"
   }
 }

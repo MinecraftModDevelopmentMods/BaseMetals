@@ -6,6 +6,6 @@
     "item": "basemetals:emerald_wall"
   },
   "result": {
-    "item": "minecraft:emerald_block"
+    "id": "minecraft:emerald_block"
   }
 }

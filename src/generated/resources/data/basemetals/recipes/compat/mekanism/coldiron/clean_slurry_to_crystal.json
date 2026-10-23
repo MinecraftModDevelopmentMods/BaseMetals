@@ -1,16 +1,19 @@
 {
   "type": "mekanism:crystallizing",
   "chemicalType": "slurry",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:coldiron_crystal"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:coldiron_crystal"
+      }
+    ]
+  },
   "input": {
     "amount": 200,
     "slurry": "basemetals:clean_coldiron"

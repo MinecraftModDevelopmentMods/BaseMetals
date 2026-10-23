@@ -6,6 +6,6 @@
     "item": "basemetals:emerald_gear"
   },
   "result": {
-    "item": "minecraft:emerald"
+    "id": "minecraft:emerald"
   }
 }

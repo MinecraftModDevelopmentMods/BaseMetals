@@ -18,7 +18,7 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < node.fields.size(); ++i) {
                     var field = node.fields.get(i);
-                    if (field.name !== ASMAPI.mapField('f_14934_')
+                    if (field.name !== 'MAP'
                             || field.desc !== '[Lcom/mojang/serialization/Dynamic;') continue;
                     // Modded numeric IDs need more room than vanilla's 4096-entry table.
                     field.access &= ~Opcodes.ACC_FINAL;
@@ -34,14 +34,11 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
-                    if (method.desc !== '(Lcom/mojang/serialization/DynamicOps;' +
-                            'Lnet/minecraft/world/level/WorldDataConfiguration;' +
-                            'Lnet/minecraft/core/Registry;' +
-                            'Lcom/mojang/serialization/Lifecycle;' +
-                            'Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;)' +
-                            'Lcom/mojang/datafixers/util/Pair;') continue;
+                    if (method.name !== 'readLevelDataTagFixed'
+                            || method.desc !== '(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;)Lcom/mojang/serialization/Dynamic;') continue;
+                    // Keep legacy IDs and item damage intact before Mojang updates level.dat.
                     var prefix = new InsnList();
-                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 4));
+                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     prefix.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, 'java/nio/file/Path',
                             'toFile', '()Ljava/io/File;', true));
                     prefix.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HOOK,
@@ -50,36 +47,6 @@ function initializeCoreMod() {
                     patched = true;
                 }
                 if (!patched) throw new Error('Base Metals could not attach its legacy level.dat reader');
-                return node;
-            }
-        },
-        'basemetals_legacy_forge_snapshot': {
-            'target': { 'type': 'CLASS', 'name': 'net.minecraft.world.level.storage.LevelStorageSource$LevelStorageAccess' },
-            'transformer': function(node) {
-                var patched = false;
-                for (var i = 0; i < node.methods.size(); ++i) {
-                    var method = node.methods.get(i);
-                    if (method.desc !== '(Ljava/nio/file/Path;Lcom/mojang/datafixers/DataFixer;)Ljava/lang/String;') continue;
-                    var readsSnapshot = false;
-                    for (var instruction = method.instructions.getFirst(); instruction !== null;
-                            instruction = instruction.getNext()) {
-                        if (instruction instanceof MethodInsnNode
-                                && instruction.owner === 'net/minecraftforge/common/ForgeHooks'
-                                && instruction.name === 'readAdditionalLevelSaveData') readsSnapshot = true;
-                    }
-                    if (!readsSnapshot) continue;
-
-                    // Forge reads its saved registry index before vanilla converts level.dat.
-                    var prefix = new InsnList();
-                    prefix.add(new VarInsnNode(Opcodes.ALOAD, 1));
-                    prefix.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE, 'java/nio/file/Path',
-                            'toFile', '()Ljava/io/File;', true));
-                    prefix.add(new MethodInsnNode(Opcodes.INVOKESTATIC, HOOK,
-                            'prepareLegacyWorld', '(Ljava/io/File;)V', false));
-                    method.instructions.insert(prefix);
-                    patched = true;
-                }
-                if (!patched) throw new Error('Base Metals could not prepare the saved Forge registry snapshot');
                 return node;
             }
         },
@@ -119,7 +86,7 @@ function initializeCoreMod() {
                 for (var i = 0; i < node.methods.size(); ++i) {
                     var method = node.methods.get(i);
                     // Both setBlock and direct ore-section writes use this permission check.
-                    if (method.name !== ASMAPI.mapMethod('m_180807_')
+                    if (method.name !== 'ensureCanWrite'
                             || method.desc !== '(Lnet/minecraft/core/BlockPos;)Z') continue;
                     var allowed = new LabelNode();
                     var prefix = new InsnList();

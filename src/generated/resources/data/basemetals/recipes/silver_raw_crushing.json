@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/silver"
   },
   "result": {
-    "item": "basemetals:silver_powder"
+    "id": "basemetals:silver_powder"
   }
 }

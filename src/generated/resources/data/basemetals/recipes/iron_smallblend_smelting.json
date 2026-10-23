@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/iron"
   },
-  "result": "minecraft:iron_nugget"
+  "result": {
+    "id": "minecraft:iron_nugget"
+  }
 }

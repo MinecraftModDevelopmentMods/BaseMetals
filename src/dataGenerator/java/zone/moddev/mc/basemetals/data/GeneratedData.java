@@ -1306,7 +1306,7 @@ final class GeneratedData implements DataProvider {
         }
         outputs.stream().filter(item -> item.startsWith("basemetals:"))
                 .forEach(item -> conditions.add(object("type", "basemetals:content_mode", "item", item)));
-        recipe.add("conditions", conditions);
+        recipe.add("forge:condition", object("type", "forge:and", "values", conditions));
         save(cache, recipe, "data/basemetals/recipes/" + id + ".json");
     }
 
@@ -1335,7 +1335,7 @@ final class GeneratedData implements DataProvider {
                 root.addProperty("parent", parent.contains(":") ? parent : "basemetals:" + parent);
             }
             JsonObject display = new JsonObject();
-            display.add("icon", object("item", advancementIcon(id)));
+            display.add("icon", object("id", advancementIcon(id)));
             display.add("title", object("translate", "advancements.basemetals." + id + ".title"));
             display.add("description", object("translate", "advancements.basemetals." + id + ".description"));
             display.addProperty("frame", advancementFrame(id));
@@ -1538,7 +1538,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.20.1 catalogue");
+        root.addProperty("source", "Base Metals 1.20.6 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
@@ -1700,7 +1700,7 @@ final class GeneratedData implements DataProvider {
             String id = relative.substring("data/basemetals/recipes/".length(), relative.length() - 5);
             String result = value.getAsJsonObject("result").get("item").getAsString();
             net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS
-                    .getValue(new ResourceLocation(result));
+                    .getValue(ResourceLocation.parse(result));
             String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
                 case "blocks" -> "building";
                 case "tools", "combat" -> "equipment";
@@ -1711,7 +1711,44 @@ final class GeneratedData implements DataProvider {
             writeCraftingUnlock(cache, id, value);
             value = object("type", "basemetals:content_crafting", "recipe", value);
         }
+        if (relative.contains("/recipes/")) normalizeRecipeResults(value);
+        if (relative.contains("/advancements/") || relative.contains("/loot_tables/")) normalizePredicates(value);
         pendingWrites.add(DataProvider.saveStable(cache, value, output.resolve(relative)));
+    }
+
+    private static void normalizeRecipeResults(JsonObject json) {
+        if (json.has("recipe") && json.get("recipe").isJsonObject()) {
+            normalizeRecipeResults(json.getAsJsonObject("recipe"));
+        }
+        String type = json.has("type") ? json.get("type").getAsString() : "";
+        if (!type.startsWith("minecraft:") && !type.startsWith("basemetals:")) return;
+        if (!json.has("result")) return;
+
+        JsonElement result = json.get("result");
+        if (result.isJsonPrimitive()) {
+            json.add("result", object("id", result.getAsString()));
+        } else if (result.isJsonObject() && result.getAsJsonObject().has("item")) {
+            JsonObject stack = result.getAsJsonObject();
+            stack.add("id", stack.remove("item"));
+        }
+    }
+
+    private static void normalizePredicates(JsonElement value) {
+        if (value.isJsonArray()) {
+            value.getAsJsonArray().forEach(GeneratedData::normalizePredicates);
+        } else if (value.isJsonObject()) {
+            JsonObject object = value.getAsJsonObject();
+            if (object.has("tag") && !object.has("type")) {
+                object.addProperty("items", "#" + object.remove("tag").getAsString());
+            }
+            if (object.has("enchantments")) {
+                JsonObject predicates = object.has("predicates")
+                        ? object.getAsJsonObject("predicates") : new JsonObject();
+                predicates.add("minecraft:enchantments", object.remove("enchantments"));
+                object.add("predicates", predicates);
+            }
+            object.entrySet().forEach(entry -> normalizePredicates(entry.getValue()));
+        }
     }
 
     private static String materialName(JsonObject language, String material) {

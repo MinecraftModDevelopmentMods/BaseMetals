@@ -6,6 +6,6 @@
     "item": "basemetals:invar_shovel"
   },
   "result": {
-    "item": "basemetals:invar_ingot"
+    "id": "basemetals:invar_ingot"
   }
 }

@@ -6,6 +6,6 @@
     "item": "basemetals:antimony_bow"
   },
   "result": {
-    "item": "basemetals:antimony_ingot"
+    "id": "basemetals:antimony_ingot"
   }
 }

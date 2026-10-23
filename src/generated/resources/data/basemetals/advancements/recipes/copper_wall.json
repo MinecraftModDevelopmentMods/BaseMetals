@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/copper"
+            "items": "#forge:storage_blocks/copper"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/copper"
+            "items": "#forge:ingots/copper"
           }
         ]
       },

@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/steel"
   },
   "result": {
-    "item": "basemetals:steel_smallpowder"
+    "id": "basemetals:steel_smallpowder"
   }
 }

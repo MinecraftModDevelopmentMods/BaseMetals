@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/bronze"
   },
   "result": {
-    "item": "basemetals:bronze_smallpowder"
+    "id": "basemetals:bronze_smallpowder"
   }
 }

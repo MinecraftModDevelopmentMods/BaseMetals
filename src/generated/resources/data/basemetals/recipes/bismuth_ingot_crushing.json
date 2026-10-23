@@ -4,6 +4,6 @@
     "tag": "forge:ingots/bismuth"
   },
   "result": {
-    "item": "basemetals:bismuth_powder"
+    "id": "basemetals:bismuth_powder"
   }
 }

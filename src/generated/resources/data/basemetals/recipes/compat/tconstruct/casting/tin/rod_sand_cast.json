@@ -4,20 +4,23 @@
     "tag": "tconstruct:casts/single_use/rod"
   },
   "cast_consumed": true,
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:tin_rod"
-    }
-  ],
   "cooling_time": 30,
   "fluid": {
     "amount": 45,
     "tag": "forge:molten_tin"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:tin_rod"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:tin_rod"

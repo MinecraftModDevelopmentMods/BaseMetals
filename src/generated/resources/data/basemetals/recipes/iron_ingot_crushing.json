@@ -4,6 +4,6 @@
     "tag": "forge:ingots/iron"
   },
   "result": {
-    "item": "basemetals:iron_powder"
+    "id": "basemetals:iron_powder"
   }
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/coldiron"
+            "items": "#forge:storage_blocks/coldiron"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/coldiron"
+            "items": "#forge:ingots/coldiron"
           }
         ]
       },

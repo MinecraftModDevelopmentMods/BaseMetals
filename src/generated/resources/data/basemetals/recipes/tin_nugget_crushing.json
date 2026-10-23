@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/tin"
   },
   "result": {
-    "item": "basemetals:tin_smallpowder"
+    "id": "basemetals:tin_smallpowder"
   }
 }

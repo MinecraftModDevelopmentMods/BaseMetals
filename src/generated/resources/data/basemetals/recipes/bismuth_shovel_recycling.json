@@ -6,6 +6,6 @@
     "item": "basemetals:bismuth_shovel"
   },
   "result": {
-    "item": "basemetals:bismuth_ingot"
+    "id": "basemetals:bismuth_ingot"
   }
 }

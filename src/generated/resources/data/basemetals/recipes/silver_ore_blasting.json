@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:ores/silver"
   },
-  "result": "basemetals:silver_ingot"
+  "result": {
+    "id": "basemetals:silver_ingot"
+  }
 }

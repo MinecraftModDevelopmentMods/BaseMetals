@@ -6,6 +6,6 @@
     "item": "basemetals:lead_wall"
   },
   "result": {
-    "item": "basemetals:lead_block"
+    "id": "basemetals:lead_block"
   }
 }

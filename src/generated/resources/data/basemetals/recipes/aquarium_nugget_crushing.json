@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/aquarium"
   },
   "result": {
-    "item": "basemetals:aquarium_smallpowder"
+    "id": "basemetals:aquarium_smallpowder"
   }
 }

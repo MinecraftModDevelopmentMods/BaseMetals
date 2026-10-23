@@ -6,6 +6,6 @@
     "item": "basemetals:invar_wall"
   },
   "result": {
-    "item": "basemetals:invar_block"
+    "id": "basemetals:invar_block"
   }
 }

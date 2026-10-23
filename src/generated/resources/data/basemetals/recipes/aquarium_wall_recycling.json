@@ -6,6 +6,6 @@
     "item": "basemetals:aquarium_wall"
   },
   "result": {
-    "item": "basemetals:aquarium_block"
+    "id": "basemetals:aquarium_block"
   }
 }

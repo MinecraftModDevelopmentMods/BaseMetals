@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/mercury"
   },
   "result": {
-    "item": "basemetals:mercury_smallpowder"
+    "id": "basemetals:mercury_smallpowder"
   }
 }

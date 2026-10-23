@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/copper"
   },
-  "result": "basemetals:copper_ingot"
+  "result": {
+    "id": "basemetals:copper_ingot"
+  }
 }

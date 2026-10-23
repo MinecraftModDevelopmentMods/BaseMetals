@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:raw_materials/platinum"
   },
-  "result": "basemetals:platinum_ingot"
+  "result": {
+    "id": "basemetals:platinum_ingot"
+  }
 }

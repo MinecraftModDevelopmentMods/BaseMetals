@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:small_blends/brass"
+            "items": "#forge:small_blends/brass"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/brass"
+            "items": "#forge:ingots/brass"
           }
         ]
       },

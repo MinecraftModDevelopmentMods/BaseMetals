@@ -203,7 +203,11 @@ def compare(original, upgraded):
             original_sections[int(section["Y"])] = list(block_names(section))
         for height in original_sections.keys() | sections.keys():
             actual = sections.get(height, [None] * 4096)
-            for index, expected in enumerate(original_sections.get(height, [None] * 4096)):
+            expected_section = original_sections.get(height, [None] * 4096)
+            if actual == expected_section:
+                checked += sum(name in TERRAIN_NAMES for name in expected_section)
+                continue
+            for index, expected in enumerate(expected_section):
                 x = key[1] * 16 + (index & 15) + 0.5
                 y = height * 16 + (index >> 8)
                 z = key[2] * 16 + ((index >> 4) & 15) + 0.5

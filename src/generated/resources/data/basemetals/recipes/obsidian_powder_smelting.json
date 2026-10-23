@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/obsidian"
   },
-  "result": "basemetals:obsidian_ingot"
+  "result": {
+    "id": "basemetals:obsidian_ingot"
+  }
 }
