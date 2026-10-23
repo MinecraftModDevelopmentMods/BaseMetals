@@ -149,6 +149,8 @@ tasks.matching { it.name == 'runGameTestServer' }.configureEach {
     dependsOn prepareGameTestStructures
     doFirst {
         File runDirectory = layout.projectDirectory.dir('run-gametest').asFile
+        runDirectory.mkdirs()
+
         new File(runDirectory, 'server.properties').setText('online-mode=false\nmax-tick-time=-1\n', 'UTF-8')
         File previousLog = new File(runDirectory, 'logs/latest.log')
         if (previousLog.isFile()) {
