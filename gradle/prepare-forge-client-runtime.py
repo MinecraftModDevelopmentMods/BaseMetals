@@ -18,12 +18,19 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-MINECRAFT_VERSION = "1.20.6"
-FORGE_VERSION = "50.2.0"
-FORGE_INSTALLER_SHA256 = "1912760b4cb6b803d8a826de603c9076b1da71ec2765e9a1f8c1ca78f65278e3"
+PROJECT_PROPERTIES = dict(
+    line.split("=", 1)
+    for line in (Path(__file__).resolve().parents[1] / "gradle.properties")
+    .read_text(encoding="utf-8").splitlines()
+    if line and not line.startswith("#") and "=" in line
+)
+
+MINECRAFT_VERSION = PROJECT_PROPERTIES["minecraft_version"]
+FORGE_VERSION = PROJECT_PROPERTIES["forge_version"]
+FORGE_INSTALLER_SHA256 = PROJECT_PROPERTIES["forge_installer_sha256"].lower()
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 ASSET_OBJECT_URL = "https://resources.download.minecraft.net/{prefix}/{digest}"
-USER_AGENT = "BaseMetals-release-validation/3.1.0.120061"
+USER_AGENT = f"BaseMetals-release-validation/{PROJECT_PROPERTIES['mod_version']}"
 
 
 def digest_file(path: Path, algorithm: str) -> str:
