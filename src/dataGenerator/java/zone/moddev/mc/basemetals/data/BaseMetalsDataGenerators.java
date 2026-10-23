@@ -14,7 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
+//import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
 import zone.moddev.mc.basemetals.content.HumanDetectorBlock;
 import zone.moddev.mc.basemetals.content.ModContent;

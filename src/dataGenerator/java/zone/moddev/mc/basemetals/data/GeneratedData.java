@@ -1391,7 +1391,7 @@ final class GeneratedData implements DataProvider {
                 root.addProperty("parent", parent.contains(":") ? parent : "basemetals:" + parent);
             }
             JsonObject display = new JsonObject();
-            display.add("icon", object("item", advancementIcon(id)));
+            display.add("icon", object("id", advancementIcon(id)));
             display.add("title", object("translate", "advancements.basemetals." + id + ".title"));
             display.add("description", object("translate", "advancements.basemetals." + id + ".description"));
             display.addProperty("frame", advancementFrame(id));
@@ -1400,7 +1400,7 @@ final class GeneratedData implements DataProvider {
             JsonObject criterion = new JsonObject();
             criterion.addProperty("trigger", "minecraft:impossible");
             JsonObject criteria = new JsonObject(); criteria.add("event", criterion); root.add("criteria", criteria);
-            save(cache, root, "data/basemetals/advancements/" + id + ".json");
+            save(cache, root, "data/basemetals/advancement/" + id + ".json");
         }
     }
 
@@ -1765,6 +1765,18 @@ final class GeneratedData implements DataProvider {
         return result.toString();
     }
     private void save(CachedOutput cache, JsonObject value, String relative) throws IOException {
+        if (relative.startsWith("data/basemetals/advancement/")) {
+            // Use Minecraft's codec so obsolete fields cannot silently break generated advancements.
+            var registries = net.minecraft.core.HolderLookup.Provider.create(java.util.stream.Stream.of(
+                    net.minecraft.core.registries.BuiltInRegistries.ITEM.asTagAddingLookup()));
+            var ops = registries.createSerializationContext(com.mojang.serialization.JsonOps.INSTANCE);
+            var advancement = net.minecraft.advancements.Advancement.CODEC.parse(ops, value)
+                    .getOrThrow(error -> new IllegalStateException(relative + ": " + error));
+            if (relative.startsWith("data/basemetals/advancement/recipes/")
+                    && advancement.rewards().recipes().isEmpty()) {
+                throw new IllegalStateException("Recipe unlock has no recipe reward: " + relative);
+            }
+        }
         if (relative.startsWith("data/basemetals/recipe/") && value.has("result")
                 && value.get("result").isJsonObject()) {
             String type = value.get("type").getAsString();
@@ -1882,7 +1894,7 @@ final class GeneratedData implements DataProvider {
             JsonObject value = input.getAsJsonObject();
             String tag = value.has("tag") ? value.get("tag").getAsString() : "";
             String item = value.has("item") ? value.get("item").getAsString() : "";
-            return !tag.equals("forge:rods/wooden")
+            return !tag.equals("c:rods/wooden")
                     && !List.of("minecraft:stick", "minecraft:string", "minecraft:feather").contains(item);
         }).toList();
         for (JsonElement input : materialChoices.isEmpty() ? choices : materialChoices) {
@@ -1895,13 +1907,16 @@ final class GeneratedData implements DataProvider {
     private void writeUnlock(CachedOutput cache, String id, JsonObject criteria) throws IOException {
         JsonArray requirements = new JsonArray();
         requirements.add(array(criteria.keySet()));
-        save(cache, object("parent", "minecraft:recipe/root", "criteria", criteria,
-                "requirements", requirements, "rewards", object("recipe", array("basemetals:" + id))),
-                "data/basemetals/advancements/recipe/" + id + ".json");
+        save(cache, object("parent", "minecraft:recipes/root", "criteria", criteria,
+                "requirements", requirements, "rewards", object("recipes", array("basemetals:" + id))),
+                "data/basemetals/advancement/recipes/" + id + ".json");
     }
 
     private static JsonObject inventoryCriterion(JsonObject ingredient) {
-        JsonObject predicate = ingredient.has("tag") ? ingredient.deepCopy() : object("items", array(ingredient.get("item").getAsString()));
+        // Item predicates use a holder set in 1.21: a tag is encoded as "#namespace:path".
+        JsonObject predicate = ingredient.has("tag")
+                ? object("items", "#" + ingredient.get("tag").getAsString())
+                : object("items", array(ingredient.get("item").getAsString()));
         JsonArray items = new JsonArray();
         items.add(predicate);
         return object("trigger", "minecraft:inventory_changed", "conditions", object("items", items));

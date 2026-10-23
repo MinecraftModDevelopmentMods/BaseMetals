@@ -27,7 +27,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 final class BaseMetalsAdvancements {
     private static final String CRITERION = "event";
     private static final TagKey<Block> STORAGE_BLOCKS = BlockTags.create(
-            ResourceLocation.fromNamespaceAndPath("forge", "storage_blocks"));
+            ResourceLocation.fromNamespaceAndPath("c", "storage_blocks"));
     private static final Map<String, String> ALLOY_ADVANCEMENTS = Map.ofEntries(
             Map.entry("aquarium", "aquarium_maker"),
             Map.entry("brass", "brass_maker"),

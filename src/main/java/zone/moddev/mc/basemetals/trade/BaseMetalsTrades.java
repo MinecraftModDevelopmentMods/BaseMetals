@@ -16,6 +16,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.EnchantmentTags;
 
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 
@@ -109,8 +111,12 @@ public final class BaseMetalsTrades {
     private static ItemListing enchanted(Item item, int baseCost) {
         return (trader, random) -> {
             int enchantmentLevel = 5 + random.nextInt(15);
-            // RandomSource, ItemStack, int, Stream
-            ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel, null);
+            // Resolve data-driven enchantments from the trader's world, as vanilla trades do.
+            var registries = trader.level().registryAccess();
+            var enchantments = registries.registryOrThrow(Registries.ENCHANTMENT)
+                    .getTag(EnchantmentTags.ON_TRADED_EQUIPMENT);
+            ItemStack result = EnchantmentHelper.enchantItem(
+                    random, new ItemStack(item), enchantmentLevel, registries, enchantments);
             return new MerchantOffer(new ItemCost(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
                     result, 3, 15, 0.2F);
         };
