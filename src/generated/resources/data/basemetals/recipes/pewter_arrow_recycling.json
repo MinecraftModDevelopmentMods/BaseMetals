@@ -6,6 +6,6 @@
     "item": "basemetals:pewter_arrow"
   },
   "result": {
-    "item": "basemetals:pewter_nugget"
+    "id": "basemetals:pewter_nugget"
   }
 }

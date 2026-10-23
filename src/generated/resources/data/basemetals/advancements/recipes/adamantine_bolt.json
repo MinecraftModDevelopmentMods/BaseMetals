@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/adamantine"
+            "items": "#forge:rods/adamantine"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/adamantine"
+            "items": "#forge:ingots/adamantine"
           }
         ]
       },

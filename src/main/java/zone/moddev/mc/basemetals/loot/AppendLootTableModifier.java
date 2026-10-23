@@ -1,6 +1,6 @@
 package zone.moddev.mc.basemetals.loot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
@@ -12,7 +12,7 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 public final class AppendLootTableModifier extends LootModifier {
-    public static final Codec<AppendLootTableModifier> CODEC = RecordCodecBuilder.create(instance ->
+    public static final MapCodec<AppendLootTableModifier> CODEC = RecordCodecBuilder.mapCodec(instance ->
             codecStart(instance).and(ResourceLocation.CODEC.fieldOf("table").forGetter(modifier -> modifier.table))
                     .apply(instance, AppendLootTableModifier::new));
     private final ResourceLocation table;
@@ -24,7 +24,8 @@ public final class AppendLootTableModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        context.getResolver().getLootTable(table).getRandomItemsRaw(context, item -> {
+        context.getResolver().get(net.minecraft.core.registries.Registries.LOOT_TABLE, net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.LOOT_TABLE, table)).orElseThrow().value().getRandomItemsRaw(context, item -> {
             if (zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item.getItem()).toString())) {
                 generatedLoot.add(item);
             }
@@ -33,5 +34,5 @@ public final class AppendLootTableModifier extends LootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() { return CODEC; }
+    public MapCodec<? extends IGlobalLootModifier> codec() { return CODEC; }
 }

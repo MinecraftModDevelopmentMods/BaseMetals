@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/gold"
+            "items": "#forge:tiny_dusts/gold"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/gold"
+            "items": "#forge:ingots/gold"
           }
         ]
       },

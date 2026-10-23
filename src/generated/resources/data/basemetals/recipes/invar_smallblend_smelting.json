@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/invar"
   },
-  "result": "basemetals:invar_nugget"
+  "result": {
+    "id": "basemetals:invar_nugget"
+  }
 }

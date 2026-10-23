@@ -6,6 +6,6 @@
     "item": "basemetals:starsteel_wall"
   },
   "result": {
-    "item": "basemetals:starsteel_block"
+    "id": "basemetals:starsteel_block"
   }
 }

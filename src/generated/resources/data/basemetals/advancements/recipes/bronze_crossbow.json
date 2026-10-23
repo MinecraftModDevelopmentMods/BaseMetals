@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gears/bronze"
+            "items": "#forge:gears/bronze"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/bronze"
+            "items": "#forge:rods/bronze"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/bronze"
+            "items": "#forge:ingots/bronze"
           }
         ]
       },

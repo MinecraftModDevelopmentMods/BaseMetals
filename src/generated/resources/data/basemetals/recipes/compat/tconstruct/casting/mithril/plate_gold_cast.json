@@ -3,20 +3,23 @@
   "cast": {
     "tag": "tconstruct:casts/multi_use/plate"
   },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:mithril_plate"
-    }
-  ],
   "cooling_time": 45,
   "fluid": {
     "amount": 90,
     "tag": "forge:molten_mithril"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:mithril_plate"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:mithril_plate"

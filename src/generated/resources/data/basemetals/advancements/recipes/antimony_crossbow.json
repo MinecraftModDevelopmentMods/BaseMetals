@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gears/antimony"
+            "items": "#forge:gears/antimony"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/antimony"
+            "items": "#forge:rods/antimony"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/antimony"
+            "items": "#forge:ingots/antimony"
           }
         ]
       },

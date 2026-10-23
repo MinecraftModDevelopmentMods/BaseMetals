@@ -68,6 +68,11 @@ function checkUpgradeLog(log) {
     // Forge reports these removed vanilla names when it reads an older registry snapshot.
     const retiredVanillaEntries = new Set([
         'minecraft:grass_path',
+        // These names were changed by vanilla's 1.20.5 data fixes.
+        'minecraft:grass', 'minecraft:scute', 'minecraft:sweeping', 'minecraft:empty',
+        'minecraft:entity.parrot.imitate.enderman', 'minecraft:entity.parrot.imitate.panda',
+        'minecraft:entity.parrot.imitate.polar_bear', 'minecraft:entity.parrot.imitate.wolf',
+        'minecraft:entity.parrot.imitate.zombie_pigman',
         'minecraft:zombie_pigman', 'minecraft:zombie_pigman_spawn_egg',
         'minecraft:golem_last_seen_time', 'minecraft:opened_doors',
         'minecraft:nitwit', 'minecraft:unemployed',
@@ -125,9 +130,9 @@ function checkUpgradeLog(log) {
 async function run(directory, launcher, label, marker, properties = []) {
     console.log('Starting ' + label);
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
-    const executable = phase === 'capture' ? spec.java8 : spec.java17;
+    const executable = phase === 'capture' ? spec.java8 : (spec.java || spec.java17);
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.serverRuntime, directory, '1.20.1', '47.4.10');
+        : serverArguments(spec.serverRuntime, directory, '1.20.6', '50.2.0');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });
@@ -178,6 +183,17 @@ async function run(directory, launcher, label, marker, properties = []) {
             prepare(directory, spec.serverRuntime, launcher,
                 [spec.modJar, spec.probeJar, spec.oreSpawn, ...(profile.extraMods || [])]);
             if (!profile.fresh) fs.cpSync(source, path.join(directory, 'world'), { recursive: true });
+            let expectedOreRules;
+            const oreProfileFile = path.join(directory, 'world/serverconfig/orespawn-worldgen.json');
+            if (profile.oreOverrides) {
+                const geology = JSON.parse(fs.readFileSync(oreProfileFile, 'utf8'));
+                for (const [id, values] of Object.entries(profile.oreOverrides)) {
+                    if (!id.startsWith('basemetals:') || !geology.ores[id]) throw new Error('Unknown fixture ore: ' + id);
+                    Object.assign(geology.ores[id], values);
+                }
+                expectedOreRules = JSON.stringify(geology.ores);
+                fs.writeFileSync(oreProfileFile, JSON.stringify(geology, null, 2) + '\n');
+            }
             if (profile.contentMode) {
                 if (!['high_fantasy', 'low_fantasy'].includes(profile.contentMode)) {
                     throw new Error('Invalid fixture content mode: ' + profile.contentMode);
@@ -198,10 +214,34 @@ async function run(directory, launcher, label, marker, properties = []) {
                 fs.copyFileSync(profile.advancementFixture,
                     path.join(world, 'basemetals_advancement_upgrade_fixture.json'));
             }
+            const manifestFile = path.join(directory, 'world/legacy_registry_manifest_runtime.json');
+            let fullManifest;
+            if (profile.lateChunks && fs.existsSync(manifestFile)) {
+                fullManifest = fs.readFileSync(manifestFile);
+                const early = JSON.parse(fullManifest);
+                let deferred = 0;
+                for (const block of early.blocks) {
+                    const states = block.states.filter(state => (state.dimension || 0) === 0);
+                    deferred += block.states.length - states.length;
+                    block.states = states;
+                }
+                if (!deferred) throw new Error('The late-chunk fixture has no saved Nether or End blocks');
+                fs.writeFileSync(manifestFile, JSON.stringify(early, null, 2) + '\n');
+                results.push(profile.id + ' deferred_dimension_states=' + deferred);
+            }
             const properties = profile.fixture === false ? [] : ['-Dbasemetals.upgradeWorldSmoke=true'];
             properties.push(...(profile.properties || []));
             results.push(...await run(directory, launcher, 'upgrade-first', profile.marker, properties));
             results.push(...await run(directory, launcher, 'upgrade-reload', profile.marker, properties));
+            if (fullManifest) {
+                fs.writeFileSync(manifestFile, fullManifest);
+                results.push(...await run(directory, launcher, 'upgrade-later-chunks', profile.marker, properties));
+            }
+            if (expectedOreRules) {
+                const actual = JSON.stringify(JSON.parse(fs.readFileSync(oreProfileFile, 'utf8')).ores);
+                if (actual !== expectedOreRules) throw new Error('The explicit ore-rule overrides changed');
+                results.push(profile.id + ' explicit_ore_overrides=unchanged');
+            }
             const after = profile.fresh ? null : treeDigest(source);
             if (before !== after) throw new Error('Source fixture changed: ' + source);
             if (!profile.fresh) results.push(profile.id + ' source_sha256=' + before + ' unchanged=true');

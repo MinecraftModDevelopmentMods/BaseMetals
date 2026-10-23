@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/cupronickel"
   },
   "result": {
-    "item": "basemetals:cupronickel_smallpowder"
+    "id": "basemetals:cupronickel_smallpowder"
   }
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/platinum"
+            "items": "#forge:dusts/platinum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/platinum"
+            "items": "#forge:ingots/platinum"
           }
         ]
       },

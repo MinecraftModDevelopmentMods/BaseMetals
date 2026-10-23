@@ -6,6 +6,6 @@
     "item": "basemetals:quartz_arrow"
   },
   "result": {
-    "item": "basemetals:quartz_nugget"
+    "id": "basemetals:quartz_nugget"
   }
 }

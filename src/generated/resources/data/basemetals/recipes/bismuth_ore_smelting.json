@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:ores/bismuth"
   },
-  "result": "basemetals:bismuth_ingot"
+  "result": {
+    "id": "basemetals:bismuth_ingot"
+  }
 }

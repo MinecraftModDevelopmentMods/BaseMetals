@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/coldiron"
   },
   "result": {
-    "item": "basemetals:coldiron_powder"
+    "id": "basemetals:coldiron_powder"
   }
 }

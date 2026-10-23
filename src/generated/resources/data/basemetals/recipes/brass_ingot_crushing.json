@@ -4,6 +4,6 @@
     "tag": "forge:ingots/brass"
   },
   "result": {
-    "item": "basemetals:brass_powder"
+    "id": "basemetals:brass_powder"
   }
 }

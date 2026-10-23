@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/pewter"
   },
-  "result": "basemetals:pewter_nugget"
+  "result": {
+    "id": "basemetals:pewter_nugget"
+  }
 }

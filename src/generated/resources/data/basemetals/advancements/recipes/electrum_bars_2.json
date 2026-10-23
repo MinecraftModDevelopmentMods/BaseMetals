@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/electrum"
+            "items": "#forge:rods/electrum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/electrum"
+            "items": "#forge:ingots/electrum"
           }
         ]
       },

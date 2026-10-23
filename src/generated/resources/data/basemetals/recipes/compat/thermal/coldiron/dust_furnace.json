@@ -1,16 +1,19 @@
 {
   "type": "thermal:furnace",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:coldiron_ingot"
-    }
-  ],
   "energy": 2000,
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "thermal_expansion"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:coldiron_ingot"
+      }
+    ]
+  },
   "ingredient": {
     "tag": "forge:dusts/coldiron"
   },

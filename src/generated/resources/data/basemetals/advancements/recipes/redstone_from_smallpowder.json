@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/redstone"
+            "items": "#forge:tiny_dusts/redstone"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/redstone"
+            "items": "#forge:dusts/redstone"
           }
         ]
       },

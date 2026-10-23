@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/invar"
   },
   "result": {
-    "item": "basemetals:invar_smallpowder"
+    "id": "basemetals:invar_smallpowder"
   }
 }

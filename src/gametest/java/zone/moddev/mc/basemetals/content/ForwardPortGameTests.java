@@ -11,22 +11,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.gametest.GameTestDontPrefix;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
-@GameTestHolder(BaseMetals.MOD_ID)
-@PrefixGameTestTemplate(false)
+@GameTestHolder(value = BaseMetals.MOD_ID, namespace = BaseMetals.MOD_ID)
+@GameTestDontPrefix
 public final class ForwardPortGameTests {
     private ForwardPortGameTests() {}
 
-    @GameTest(template = "empty")
+    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
     public static void everyRangedMaterialContributesItsDamage(GameTestHelper helper) {
-        var player = FakePlayerFactory.get(helper.getLevel(),
-                new GameProfile(UUID.randomUUID(), "ranged-material-test"));
+        var player = helper.makeMockServerPlayerInLevel();
         int checked = 0;
         for (var entry : ModContent.itemsById().entrySet()) {
             if (!entry.getKey().endsWith("_bow")) continue;
@@ -51,7 +49,7 @@ public final class ForwardPortGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty")
+    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
     public static void rawCrushingAndSilkTouchInventoriesRemainSeparate(GameTestHelper helper) {
         int checked = 0;
         for (var material : MaterialCatalogue.ALL) {
@@ -60,18 +58,18 @@ public final class ForwardPortGameTests {
                     : ModContent.item(material.name() + "_raw").get().getDefaultInstance();
             var crushed = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SimpleContainer(raw), helper.getLevel()).orElseThrow();
-            require(helper, crushed.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 1, material.name() + " raw material was doubled");
+            require(helper, crushed.value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 1, material.name() + " raw material was doubled");
             var ore = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SimpleContainer(ModContent.item(material.name() + "_ore").get().getDefaultInstance()),
                     helper.getLevel()).orElseThrow();
-            require(helper, ore.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 2, material.name() + " ore hammer yield changed");
+            require(helper, ore.value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 2, material.name() + " ore hammer yield changed");
             checked++;
         }
         require(helper, checked == 13, "Expected all 13 ore-bearing materials");
         helper.succeed();
     }
 
-    @GameTest(template = "empty")
+    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
     public static void thinTransparentBlocksDoNotHideTheirNeighbours(GameTestHelper helper) {
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
         for (var entry : ModContent.blocksById().entrySet()) {

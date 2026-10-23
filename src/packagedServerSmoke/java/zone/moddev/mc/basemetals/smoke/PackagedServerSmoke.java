@@ -38,7 +38,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) throws IOException {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.0.120011".equals(baseMetals) || !"4.1.0.120011".equals(oreSpawn)) {
+        if (!"3.1.0.120061".equals(baseMetals) || !"4.1.0.120061".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -83,7 +83,7 @@ public final class PackagedServerSmoke {
         }
         var bow = server.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("basemetals:adamantine_bow"))
                 .orElseThrow();
-        boolean enabled = !bow.isSpecial();
+        boolean enabled = !bow.value().isSpecial();
         if (enabled != policy.allows("basemetals:adamantine_bow")) {
             throw new IllegalStateException("The recipe book does not follow the active content mode");
         }
@@ -158,24 +158,6 @@ public final class PackagedServerSmoke {
     }
 
     private static void verifyTinkers() {
-        var mode = zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode();
-        var registry = slimeknights.tconstruct.library.materials.MaterialRegistry.getInstance();
-        for (String material : zone.moddev.mc.basemetals.material.MaterialCatalogue.BY_NAME.keySet()) {
-            var id = new slimeknights.tconstruct.library.materials.definition.MaterialId("basemetals:" + material);
-            for (String stat : new String[] {"head", "handle", "limb", "grip"}) {
-                boolean expected = zone.moddev.mc.basemetals.material.MaterialCatalogue.get(material).hasEquipment()
-                        && zone.moddev.mc.basemetals.compat.TinkersContentPolicy.allows(mode, material,
-                                "tconstruct:" + stat);
-                if ("steel".equals(material) && Boolean.getBoolean("basemetals.tinkersOverrideSmoke")) expected = true;
-                boolean present = registry.getMaterialStats(id,
-                        new slimeknights.tconstruct.library.materials.stats.MaterialStatsId("tconstruct:" + stat)).isPresent();
-                if (present != expected) throw new IllegalStateException("Tinkers " + id + "/" + stat
-                        + " is present=" + present + " in " + mode);
-            }
-        }
-        LOGGER.info("BASEMETALS_PACKAGED_TINKERS_POLICY PASS mode={}", mode.serializedName());
-        if (Boolean.getBoolean("basemetals.tinkersOverrideSmoke")) {
-            LOGGER.info("BASEMETALS_TINKERS_OVERRIDE PASS material=steel mode={}", mode.serializedName());
-        }
+        throw new IllegalStateException("Tinkers has no supported Forge 1.20.6 release");
     }
 }

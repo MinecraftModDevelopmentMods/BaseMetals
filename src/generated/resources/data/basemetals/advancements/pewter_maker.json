@@ -12,7 +12,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "basemetals:pewter_blend"
+      "id": "basemetals:pewter_blend"
     },
     "show_toast": true,
     "title": {

@@ -6,6 +6,6 @@
     "item": "basemetals:quartz_shovel"
   },
   "result": {
-    "item": "minecraft:quartz"
+    "id": "minecraft:quartz"
   }
 }

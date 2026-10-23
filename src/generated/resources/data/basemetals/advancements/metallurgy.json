@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "icon": {
-      "item": "basemetals:bronze_blend"
+      "id": "basemetals:bronze_blend"
     },
     "show_toast": true,
     "title": {

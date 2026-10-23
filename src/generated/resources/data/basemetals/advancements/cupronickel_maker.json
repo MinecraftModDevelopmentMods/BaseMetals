@@ -12,7 +12,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "basemetals:cupronickel_blend"
+      "id": "basemetals:cupronickel_blend"
     },
     "show_toast": true,
     "title": {

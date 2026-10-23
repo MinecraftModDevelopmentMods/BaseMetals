@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/diamond"
   },
   "result": {
-    "item": "basemetals:diamond_smallpowder"
+    "id": "basemetals:diamond_smallpowder"
   }
 }

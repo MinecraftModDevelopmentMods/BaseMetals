@@ -4,6 +4,6 @@
     "tag": "forge:gravel"
   },
   "result": {
-    "item": "minecraft:sand"
+    "id": "minecraft:sand"
   }
 }

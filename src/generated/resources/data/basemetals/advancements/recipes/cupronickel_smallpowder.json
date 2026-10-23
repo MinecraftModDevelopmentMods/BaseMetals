@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/cupronickel"
+            "items": "#forge:dusts/cupronickel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/cupronickel"
+            "items": "#forge:ingots/cupronickel"
           }
         ]
       },

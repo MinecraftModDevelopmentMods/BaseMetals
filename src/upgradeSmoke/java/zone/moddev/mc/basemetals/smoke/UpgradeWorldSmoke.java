@@ -140,7 +140,8 @@ public final class UpgradeWorldSmoke {
                 String actual = String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem()));
                 int expectedCount = oldItem.has("count") ? oldItem.get("count").getAsInt() : 1;
                 int expectedDamage = oldItem.has("damage") ? oldItem.get("damage").getAsInt() : 0;
-                boolean proofMatches = format < 2 || stack.getOrCreateTagElement("basemetals_fixture")
+                boolean proofMatches = format < 2 || stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture")
                         .getString("proof").equals(oldItem.get("id").getAsString());
                 boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
                         || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
@@ -170,7 +171,8 @@ public final class UpgradeWorldSmoke {
                         ItemStack worn = stand.getItemBySlot(equipmentSlot);
                         return expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(worn.getItem())))
                                 && worn.getDamageValue() == expectedDamage
-                                && worn.getOrCreateTagElement("basemetals_fixture").getString("proof")
+                                && worn.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture").getString("proof")
                                         .equals(oldItem.get("id").getAsString())
                                 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, worn) == 2;
                     });
@@ -210,8 +212,9 @@ public final class UpgradeWorldSmoke {
                     String name = savedPlayer.has("name") ? savedPlayer.get("name").getAsString()
                             : "BaseMetalsFixture";
                     ServerPlayer player = new ServerPlayer(event.getServer(), overworld,
-                            new GameProfile(UUID.fromString(savedPlayer.get("uuid").getAsString()), name));
-                    CompoundTag loaded = event.getServer().getPlayerList().load(player);
+                            new GameProfile(UUID.fromString(savedPlayer.get("uuid").getAsString()), name),
+                            net.minecraft.server.level.ClientInformation.createDefault());
+                    CompoundTag loaded = event.getServer().getPlayerList().load(player).orElse(null);
                     if (loaded == null) {
                         failures.add("fixture playerdata did not load");
                         continue;
@@ -221,7 +224,8 @@ public final class UpgradeWorldSmoke {
                         int slot = expectedItem.get("slot").getAsInt();
                         ItemStack stack = player.getInventory().getItem(slot);
                         String expected = currentItemId(expectedItem.get("id").getAsString());
-                        boolean proof = stack.getOrCreateTagElement("basemetals_fixture")
+                        boolean proof = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture")
                                 .getString("player_proof").equals(expectedItem.get("id").getAsString());
                         if (!expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem())))
                                 || !proof) {
@@ -304,12 +308,13 @@ public final class UpgradeWorldSmoke {
         Path fixtureFile = root.resolve("basemetals_advancement_upgrade_fixture.json");
         if (!Files.isRegularFile(fixtureFile)) return;
         JsonObject fixture = JsonParser.parseString(Files.readString(fixtureFile)).getAsJsonObject();
-        var player = net.minecraftforge.common.util.FakePlayerFactory.get(world,
-                new GameProfile(UUID.fromString(fixture.get("uuid").getAsString()), "UpgradeProgress"));
+        var player = new ServerPlayer(server, world,
+                new GameProfile(UUID.fromString(fixture.get("uuid").getAsString()), "UpgradeProgress"),
+                net.minecraft.server.level.ClientInformation.createDefault());
         int retained = 0;
         for (var entry : fixture.getAsJsonObject("progress").entrySet()) {
             if ("DataVersion".equals(entry.getKey())) continue;
-            var advancement = server.getAdvancements().getAdvancement(new ResourceLocation(entry.getKey()));
+            var advancement = server.getAdvancements().get(ResourceLocation.parse(entry.getKey()));
             if (advancement == null) throw new IllegalStateException("Saved advancement missing: " + entry.getKey());
             var progress = player.getAdvancements().getOrStartProgress(advancement);
             if (!progress.isDone()) throw new IllegalStateException("Saved advancement is incomplete: " + entry.getKey());
@@ -360,7 +365,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentBlockId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
+        ResourceLocation id = ResourceLocation.parse(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return BaseMetals.MOD_ID + ":" + MissingMappings.blockTargetPath(id.getPath());
         }
@@ -368,7 +373,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentItemId(String legacy) {
-        ResourceLocation id = new ResourceLocation(legacy.toLowerCase(java.util.Locale.ROOT));
+        ResourceLocation id = ResourceLocation.parse(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return MissingMappings.itemTargetId(id.getPath()).toString();
         }

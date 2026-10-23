@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/platinum"
   },
   "result": {
-    "item": "basemetals:platinum_smallpowder"
+    "id": "basemetals:platinum_smallpowder"
   }
 }

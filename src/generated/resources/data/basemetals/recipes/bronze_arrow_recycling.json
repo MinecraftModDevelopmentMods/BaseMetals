@@ -6,6 +6,6 @@
     "item": "basemetals:bronze_arrow"
   },
   "result": {
-    "item": "basemetals:bronze_nugget"
+    "id": "basemetals:bronze_nugget"
   }
 }

@@ -6,6 +6,6 @@
     "item": "basemetals:invar_lever"
   },
   "result": {
-    "item": "basemetals:invar_ingot"
+    "id": "basemetals:invar_ingot"
   }
 }

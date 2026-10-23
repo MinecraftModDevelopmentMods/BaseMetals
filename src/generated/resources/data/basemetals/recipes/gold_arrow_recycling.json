@@ -6,6 +6,6 @@
     "item": "basemetals:gold_arrow"
   },
   "result": {
-    "item": "minecraft:gold_nugget"
+    "id": "minecraft:gold_nugget"
   }
 }

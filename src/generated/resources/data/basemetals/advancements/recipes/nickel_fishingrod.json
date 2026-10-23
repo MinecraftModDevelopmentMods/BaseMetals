@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/nickel"
+            "items": "#forge:rods/nickel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/nickel"
+            "items": "#forge:ingots/nickel"
           }
         ]
       },

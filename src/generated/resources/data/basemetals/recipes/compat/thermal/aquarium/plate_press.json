@@ -1,15 +1,18 @@
 {
   "type": "thermal:press",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "thermal_expansion"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:aquarium_plate"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "thermal_expansion"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:aquarium_plate"
+      }
+    ]
+  },
   "ingredient": {
     "tag": "forge:ingots/aquarium"
   },

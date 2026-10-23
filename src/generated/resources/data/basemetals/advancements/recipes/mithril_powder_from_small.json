@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/mithril"
+            "items": "#forge:tiny_dusts/mithril"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mithril"
+            "items": "#forge:ingots/mithril"
           }
         ]
       },

@@ -6,6 +6,6 @@
     "item": "basemetals:bronze_crackhammer"
   },
   "result": {
-    "item": "basemetals:bronze_block"
+    "id": "basemetals:bronze_block"
   }
 }

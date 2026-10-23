@@ -12,7 +12,7 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "basemetals:starsteel_boots"
+      "id": "basemetals:starsteel_boots"
     },
     "show_toast": true,
     "title": {

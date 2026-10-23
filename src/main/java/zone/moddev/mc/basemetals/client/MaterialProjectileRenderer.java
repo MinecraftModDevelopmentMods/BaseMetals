@@ -35,7 +35,7 @@ public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProj
     }
 
     @Override
-    public void vertex(Matrix4f pose, Matrix3f normal, VertexConsumer vertices,
+    public void vertex(PoseStack.Pose pose, VertexConsumer vertices,
             int x, int y, int z, float u, float v, int normalX, int normalY,
             int normalZ, int packedLight) {
         vertices.vertex(pose, x, y, z)
@@ -43,7 +43,7 @@ public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProj
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)
-                .normal(normal, normalX, normalZ, normalY)
+                .normal(pose, normalX, normalZ, normalY)
                 .endVertex();
     }
 

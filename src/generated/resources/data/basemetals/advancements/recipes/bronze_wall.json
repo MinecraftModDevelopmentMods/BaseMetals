@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/bronze"
+            "items": "#forge:storage_blocks/bronze"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/bronze"
+            "items": "#forge:ingots/bronze"
           }
         ]
       },

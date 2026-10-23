@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
-issueTrackerURL="https://github.com/SkyBlade1978/BaseMetals/issues"
+issueTrackerURL="https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues"
 
 [[mods]]
 modId="${mod_id}"
@@ -14,7 +14,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.1.0.120011,5.0.0)"
+versionRange="[4.1.0.120061,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 
@@ -30,33 +30,4 @@ modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="mekanism"
-mandatory=false
-versionRange="[10.2,11)"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="thermal_expansion"
-mandatory=false
-versionRange="[11,12)"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="tconstruct"
-mandatory=false
-versionRange="[3.7,4)"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="enderio"
-mandatory=false
-# Ender IO 6 uses prerelease version suffixes, including its supported beta builds.
-versionRange="(5,7)"
-ordering="AFTER"
 side="BOTH"

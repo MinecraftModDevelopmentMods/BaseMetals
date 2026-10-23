@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/coldiron"
   },
-  "result": "basemetals:coldiron_ingot"
+  "result": {
+    "id": "basemetals:coldiron_ingot"
+  }
 }

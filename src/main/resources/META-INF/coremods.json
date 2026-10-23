@@ -1,4 +1,3 @@
 {
-  "basemetals_118_compatibility": "coremods/basemetals_118_compatibility.js",
-  "basemetals_connection_read_interest": "coremods/connection_read_interest.js"
+  "basemetals_118_compatibility": "coremods/basemetals_118_compatibility.js"
 }

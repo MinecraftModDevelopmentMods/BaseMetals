@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/coldiron"
   },
-  "result": "basemetals:coldiron_nugget"
+  "result": {
+    "id": "basemetals:coldiron_nugget"
+  }
 }

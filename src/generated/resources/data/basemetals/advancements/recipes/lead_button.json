@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/lead"
+            "items": "#forge:nuggets/lead"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/lead"
+            "items": "#forge:ingots/lead"
           }
         ]
       },

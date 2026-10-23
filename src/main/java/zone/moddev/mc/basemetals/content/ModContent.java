@@ -68,6 +68,8 @@ public final class ModContent {
             "casing", "dense_plate", "crushed", "crushed_purified", "crystal", "shard", "clump", "powder_dirty");
 
     static {
+        MaterialCatalogue.ALL.forEach(MaterialArmor::register);
+        vanillaDefinitions().values().forEach(MaterialArmor::register);
         MaterialCatalogue.ALL.forEach(ModContent::registerMaterial);
         registerAnvil("stone_anvil", BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                 .sound(SoundType.STONE).strength(5.0F, 10.0F));
@@ -90,6 +92,7 @@ public final class ModContent {
     private ModContent() {}
 
     public static void register(IEventBus bus) {
+        MaterialArmor.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
         FLUIDS.register(bus);
@@ -179,14 +182,14 @@ public final class ModContent {
         Supplier<Block> factory = switch (form) {
             case "plate" -> () -> new PlateBlock(properties.get().noOcclusion());
             case "bars" -> () -> new IronBarsBlock(properties.get().noOcclusion().dynamicShape());
-            case "door" -> () -> new DoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
-            case "trapdoor" -> () -> new TrapDoorBlock(properties.get().noOcclusion().dynamicShape(), doorType(material));
-            case "button" -> () -> new ButtonBlock(properties.get().noCollission(), BlockSetType.STONE, 20, false);
+            case "door" -> () -> new DoorBlock(doorType(material), properties.get().noOcclusion().dynamicShape());
+            case "trapdoor" -> () -> new TrapDoorBlock(doorType(material), properties.get().noOcclusion().dynamicShape());
+            case "button" -> () -> new ButtonBlock(BlockSetType.STONE, 20, properties.get().noCollission());
             case "slab" -> () -> new SlabBlock(properties.get());
             case "lever" -> () -> new LeverBlock(properties.get().noCollission());
             case "pressure_plate" -> () -> new PressurePlateBlock(
-                    PressurePlateBlock.Sensitivity.MOBS, properties.get(), BlockSetType.STONE);
-            case "stairs" -> () -> new StairBlock(stairBase, properties.get());
+                    BlockSetType.STONE, properties.get());
+            case "stairs" -> () -> new StairBlock(stairBase.get(), properties.get());
             case "wall" -> () -> new WallBlock(properties.get());
             default -> () -> new Block(properties.get());
         };
@@ -270,8 +273,8 @@ public final class ModContent {
                 List.of("button", "slab", "lever", "stairs", "wall"));
         registerVanillaDecorative("quartz", vanilla.get("quartz"),
                 List.of("bars", "door", "trapdoor", "button", "lever", "pressure_plate", "wall"));
-        registerBlock("gold_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.GOLD_BLOCK).noOcclusion()), true);
-        registerBlock("iron_plate", () -> new PlateBlock(BlockBehaviour.Properties.copy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion()), true);
+        registerBlock("gold_plate", () -> new PlateBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.GOLD_BLOCK).noOcclusion()), true);
+        registerBlock("iron_plate", () -> new PlateBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.IRON_BLOCK).noOcclusion()), true);
 
         for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             registerVanillaCombatAndUtility(vanilla.get(name));
@@ -412,9 +415,9 @@ public final class ModContent {
         RegistryObject<ForgeFlowingFluid.Flowing>[] flowing = new RegistryObject[1];
         RegistryObject<LiquidBlock>[] block = new RegistryObject[1];
         RegistryObject<Item>[] bucket = new RegistryObject[1];
-        ResourceLocation still = new ResourceLocation(BaseMetals.MOD_ID,
+        ResourceLocation still = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_still" : "block/molten_metal_still");
-        ResourceLocation flow = new ResourceLocation(BaseMetals.MOD_ID,
+        ResourceLocation flow = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID,
                 mercury ? "block/mercury_flow" : "block/molten_metal_flow");
         RegistryObject<FluidType> type = FLUID_TYPES.register(name, () -> new MetalFluidType(
                 FluidType.Properties.create().density(mercury ? 13594 : 2000)

@@ -6,6 +6,6 @@
     "item": "basemetals:coldiron_plate"
   },
   "result": {
-    "item": "basemetals:coldiron_ingot"
+    "id": "basemetals:coldiron_ingot"
   }
 }

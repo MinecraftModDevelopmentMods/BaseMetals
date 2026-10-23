@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/zinc"
+            "items": "#forge:nuggets/zinc"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/zinc"
+            "items": "#forge:rods/zinc"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/zinc"
+            "items": "#forge:ingots/zinc"
           }
         ]
       },

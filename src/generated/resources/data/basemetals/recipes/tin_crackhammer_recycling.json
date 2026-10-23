@@ -6,6 +6,6 @@
     "item": "basemetals:tin_crackhammer"
   },
   "result": {
-    "item": "basemetals:tin_block"
+    "id": "basemetals:tin_block"
   }
 }

@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/mercury"
   },
-  "result": "basemetals:mercury_ingot"
+  "result": {
+    "id": "basemetals:mercury_ingot"
+  }
 }

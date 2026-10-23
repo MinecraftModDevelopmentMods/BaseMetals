@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:dusts/pewter"
   },
-  "result": "basemetals:pewter_ingot"
+  "result": {
+    "id": "basemetals:pewter_ingot"
+  }
 }

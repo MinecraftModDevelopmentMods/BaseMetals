@@ -6,6 +6,6 @@
     "item": "basemetals:platinum_wall"
   },
   "result": {
-    "item": "basemetals:platinum_block"
+    "id": "basemetals:platinum_block"
   }
 }

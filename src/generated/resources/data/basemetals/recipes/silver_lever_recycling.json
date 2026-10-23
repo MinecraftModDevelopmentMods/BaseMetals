@@ -6,6 +6,6 @@
     "item": "basemetals:silver_lever"
   },
   "result": {
-    "item": "basemetals:silver_ingot"
+    "id": "basemetals:silver_ingot"
   }
 }

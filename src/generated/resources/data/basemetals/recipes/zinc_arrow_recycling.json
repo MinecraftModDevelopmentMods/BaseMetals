@@ -6,6 +6,6 @@
     "item": "basemetals:zinc_arrow"
   },
   "result": {
-    "item": "basemetals:zinc_nugget"
+    "id": "basemetals:zinc_nugget"
   }
 }

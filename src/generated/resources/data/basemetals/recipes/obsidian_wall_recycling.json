@@ -6,6 +6,6 @@
     "item": "basemetals:obsidian_wall"
   },
   "result": {
-    "item": "minecraft:obsidian"
+    "id": "minecraft:obsidian"
   }
 }

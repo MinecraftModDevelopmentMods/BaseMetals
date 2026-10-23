@@ -6,6 +6,6 @@
     "item": "basemetals:brass_wall"
   },
   "result": {
-    "item": "basemetals:brass_block"
+    "id": "basemetals:brass_block"
   }
 }

@@ -20,6 +20,7 @@ public final class RemoteLoginSmoke {
     private static int ticks;
     private static int titleTicks;
     private static int joinedTicks;
+    private static int connections;
 
     private RemoteLoginSmoke() {}
 
@@ -37,17 +38,28 @@ public final class RemoteLoginSmoke {
             connecting = true;
             String address = System.getProperty("basemetals.remoteAddress");
             ConnectScreen.startConnecting(minecraft.screen, minecraft, ServerAddress.parseString(address),
-                    new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address, false), false);
+                    new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address,
+                            net.minecraft.client.multiplayer.ServerData.Type.OTHER), false, null);
         }
         if (minecraft.player != null && minecraft.level != null) {
             if (reject) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: mismatched modes entered gameplay");
             if (++joinedTicks < 40) return;
-            var recipe = minecraft.level.getRecipeManager().byKey(new ResourceLocation("basemetals:adamantine_bow"))
+            var recipe = minecraft.level.getRecipeManager().byKey(ResourceLocation.parse("basemetals:adamantine_bow"))
                     .orElseThrow();
-            if (recipe.isSpecial() != (BaseMetalsConfig.activeMode() == ContentMode.LOW_FANTASY)) {
+            if (recipe.value().isSpecial() != (BaseMetalsConfig.activeMode() == ContentMode.LOW_FANTASY)) {
                 throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: recipe policy was not synchronized");
             }
-            finish(minecraft, "connected");
+            connections++;
+            if (connections < Integer.getInteger("basemetals.loginSmokeConnections", 1)) {
+                BaseMetals.LOGGER.info("BASEMETALS_MODE_RECONNECT connection={}", connections);
+                minecraft.level.disconnect();
+                minecraft.disconnect(new TitleScreen());
+                connecting = false;
+                titleTicks = 0;
+                joinedTicks = 0;
+            } else {
+                finish(minecraft, "connected");
+            }
         } else if (minecraft.screen instanceof DisconnectedScreen) {
             StringBuilder reason = new StringBuilder();
             try {

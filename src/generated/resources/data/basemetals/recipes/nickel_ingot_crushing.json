@@ -4,6 +4,6 @@
     "tag": "forge:ingots/nickel"
   },
   "result": {
-    "item": "basemetals:nickel_powder"
+    "id": "basemetals:nickel_powder"
   }
 }

@@ -6,6 +6,6 @@
     "item": "basemetals:coldiron_gear"
   },
   "result": {
-    "item": "basemetals:coldiron_ingot"
+    "id": "basemetals:coldiron_ingot"
   }
 }

@@ -2,7 +2,7 @@ package zone.moddev.mc.basemetals.loot;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -10,9 +10,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public final class ModLoot {
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> SERIALIZERS = DeferredRegister.create(
             ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BaseMetals.MOD_ID);
-    public static final RegistryObject<Codec<AppendLootTableModifier>> ADD_TABLE =
+    public static final RegistryObject<MapCodec<AppendLootTableModifier>> ADD_TABLE =
             SERIALIZERS.register("add_table", () -> AppendLootTableModifier.CODEC);
 
     private ModLoot() {}

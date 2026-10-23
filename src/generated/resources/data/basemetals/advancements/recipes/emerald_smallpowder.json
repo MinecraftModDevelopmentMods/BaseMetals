@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/emerald"
+            "items": "#forge:dusts/emerald"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:gems/emerald"
+            "items": "#forge:gems/emerald"
           }
         ]
       },

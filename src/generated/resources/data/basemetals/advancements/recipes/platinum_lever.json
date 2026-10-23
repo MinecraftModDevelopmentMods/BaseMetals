@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/platinum"
+            "items": "#forge:rods/platinum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/platinum"
+            "items": "#forge:ingots/platinum"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/platinum"
+            "items": "#forge:ingots/platinum"
           }
         ]
       },

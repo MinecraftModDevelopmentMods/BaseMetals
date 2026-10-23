@@ -12,7 +12,7 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.common.ForgeHooks;
 
 public final class MaterialProjectile extends AbstractArrow implements IEntityAdditionalSpawnData, ItemSupplier {
     private ItemStack ammunition = ItemStack.EMPTY;
@@ -28,11 +28,18 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
         setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
         this.ammunition = ammunition.copy();
         this.ammunition.setCount(1);
+        setPickupItemStack(this.ammunition);
+    }
+
+    @Override
+    protected ItemStack getDefaultPickupItem() {
+        String form = getType() == zone.moddev.mc.basemetals.entity.ModEntities.CUSTOM_BOLT.get() ? "bolt" : "arrow";
+        return ModContent.item("copper_" + form).get().getDefaultInstance();
     }
 
     @Override
     protected ItemStack getPickupItem() {
-        return ammunition.isEmpty() ? ModContent.item("copper_arrow").get().getDefaultInstance() : ammunition.copy();
+        return ammunition.isEmpty() ? getDefaultPickupItem() : ammunition.copy();
     }
 
     /** Used by the renderer so arrows and bolts retain their actual ammunition appearance. */
@@ -44,17 +51,25 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(new CompoundTag()));
+        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(registryAccess()));
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        ammunition = tag.contains("Ammunition") ? ItemStack.of(tag.getCompound("Ammunition")) : ItemStack.EMPTY;
+        CompoundTag saved = tag.getCompound("Ammunition");
+        if (saved.contains("Count")) {
+            saved = (CompoundTag) net.minecraft.util.datafix.DataFixers.getDataFixer().update(
+                    net.minecraft.util.datafix.fixes.References.ITEM_STACK,
+                    new com.mojang.serialization.Dynamic<>(net.minecraft.nbt.NbtOps.INSTANCE, saved),
+                    3465, net.minecraft.SharedConstants.getCurrentVersion().getDataVersion().getVersion()).getValue();
+        }
+        ammunition = ItemStack.parseOptional(registryAccess(), saved);
+        if (!ammunition.isEmpty()) setPickupItemStack(ammunition);
     }
 
-    @Override public void writeSpawnData(FriendlyByteBuf buffer) { buffer.writeItem(ammunition); }
-    @Override public void readSpawnData(FriendlyByteBuf additionalData) { ammunition = additionalData.readItem(); }
+    @Override public void writeSpawnData(FriendlyByteBuf buffer) { buffer.writeNbt((CompoundTag) ammunition.saveOptional(registryAccess())); }
+    @Override public void readSpawnData(FriendlyByteBuf additionalData) { ammunition = ItemStack.parseOptional(registryAccess(), additionalData.readNbt()); }
 
     /**
      * AbstractArrow's vanilla packet omits Forge additional spawn data. The
@@ -63,6 +78,6 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
      */
     @Override
     public Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return ForgeHooks.getEntitySpawnPacket(this);
     }
 }

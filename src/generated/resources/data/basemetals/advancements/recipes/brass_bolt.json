@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/brass"
+            "items": "#forge:rods/brass"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/brass"
+            "items": "#forge:ingots/brass"
           }
         ]
       },

@@ -4,6 +4,6 @@
     "tag": "forge:ingots/mithril"
   },
   "result": {
-    "item": "basemetals:mithril_powder"
+    "id": "basemetals:mithril_powder"
   }
 }

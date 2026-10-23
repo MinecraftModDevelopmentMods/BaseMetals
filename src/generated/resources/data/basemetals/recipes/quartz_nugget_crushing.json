@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/quartz"
   },
   "result": {
-    "item": "basemetals:quartz_smallpowder"
+    "id": "basemetals:quartz_smallpowder"
   }
 }

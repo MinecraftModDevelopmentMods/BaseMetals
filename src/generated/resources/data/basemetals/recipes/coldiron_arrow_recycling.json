@@ -6,6 +6,6 @@
     "item": "basemetals:coldiron_arrow"
   },
   "result": {
-    "item": "basemetals:coldiron_nugget"
+    "id": "basemetals:coldiron_nugget"
   }
 }

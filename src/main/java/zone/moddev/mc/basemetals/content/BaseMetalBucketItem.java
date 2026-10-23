@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import zone.moddev.mc.basemetals.ModTabs;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -88,17 +86,11 @@ public final class BaseMetalBucketItem extends BucketItem {
         ItemStack bucket = container == null ? getDefaultInstance() : container;
         FluidStack contents = new FluidStack(getFluid(), net.minecraftforge.fluids.FluidType.BUCKET_VOLUME);
         return FluidUtil.tryPlaceFluid(player, level, hand,
-                position, bucket, contents).isSuccess();
-    }
-
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack,
-            @Nullable net.minecraft.nbt.CompoundTag nbt) {
-        return new FluidBucketWrapper(stack);
+                position, new FluidBucketWrapper(bucket.copyWithCount(1)), contents);
     }
 
     private boolean canContainFluid(Level level, BlockPos position, BlockState state) {
         return state.getBlock() instanceof LiquidBlockContainer container
-                && container.canPlaceLiquid(level, position, state, getFluid());
+                && container.canPlaceLiquid(null, level, position, state, getFluid());
     }
 }

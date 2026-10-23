@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/bismuth"
+            "items": "#forge:nuggets/bismuth"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/bismuth"
+            "items": "#forge:ingots/bismuth"
           }
         ]
       },

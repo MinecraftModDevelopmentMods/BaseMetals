@@ -15,6 +15,18 @@ class LegacyWorldDataHookTest {
     @TempDir Path world;
 
     @Test
+    void levelHookPassesTheFileBeforeComponentConversion() throws IOException {
+        String hook = Files.readString(Path.of("src/main/resources/coremods/basemetals_118_compatibility.js"));
+        int start = hook.indexOf("'basemetals_legacy_world_info'");
+        int end = hook.indexOf("'basemetals_legacy_chunk_status'");
+        String levelHook = hook.substring(start, end);
+        assertTrue(levelHook.contains("'readLevelDataTagFixed'"));
+        assertTrue(levelHook.contains("'toFile', '()Ljava/io/File;'"));
+        assertFalse(levelHook.contains("'getParent'"));
+        assertTrue(levelHook.contains("'prepareLegacyWorld'"));
+    }
+
+    @Test
     void obsoleteVanillaBiomeSnapshotIsRemovedWithoutChangingSavedBiomesOrOtherRegistries() {
         CompoundTag root = biomeSnapshot("minecraft:plains", "minecraft:mountains");
         CompoundTag data = new CompoundTag();
@@ -177,14 +189,14 @@ class LegacyWorldDataHookTest {
         locations[3] = 1;
         Files.write(region, locations);
         assertEquals(1, LegacyWorldDataHook.indexLegacyChunks(world.toFile()));
-        ResourceLocation overworld = new ResourceLocation("minecraft:overworld");
+        ResourceLocation overworld = ResourceLocation.parse("minecraft:overworld");
 
         assertTrue(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 0, 1)));
         assertTrue(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 255, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, -1, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 256, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(17, 64, 1)));
-        assertFalse(LegacyWorldDataHook.isProtectedChunk(new ResourceLocation("minecraft:the_nether"),
+        assertFalse(LegacyWorldDataHook.isProtectedChunk(ResourceLocation.parse("minecraft:the_nether"),
                 new BlockPos(1, 64, 1)));
     }
 

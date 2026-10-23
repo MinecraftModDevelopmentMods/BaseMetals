@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:raw_materials/starsteel"
   },
-  "result": "basemetals:starsteel_ingot"
+  "result": {
+    "id": "basemetals:starsteel_ingot"
+  }
 }

@@ -1,6 +1,8 @@
 package zone.moddev.mc.basemetals.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -29,15 +31,17 @@ public final class ContentCraftingRecipe {
         // Recipe-book placement needs the shaped recipe's width and height, not just its ingredients.
         if (recipe instanceof ShapedRecipe) return new Shaped((ShapedRecipe) recipe);
         if (recipe instanceof ShapelessRecipe) return new Shapeless((ShapelessRecipe) recipe);
-        throw new IllegalArgumentException("Not an ordinary crafting recipe: " + recipe.getId());
+        throw new IllegalArgumentException("Not an ordinary crafting recipe: " + recipe.getSerializer());
     }
 
     private static final class Shaped extends ShapedRecipe {
         private final ShapedRecipe plain;
 
         private Shaped(ShapedRecipe plain) {
-            super(plain.getId(), plain.getGroup(), plain.category(), plain.getWidth(), plain.getHeight(),
-                    plain.getIngredients(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.showNotification());
+            super(plain.getGroup(), plain.category(),
+                    new net.minecraft.world.item.crafting.ShapedRecipePattern(plain.getWidth(), plain.getHeight(),
+                            plain.getIngredients(), java.util.Optional.empty()),
+                    plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.showNotification());
             this.plain = plain;
         }
 
@@ -47,7 +51,7 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.RegistryAccess registries) {
+        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.HolderLookup.Provider registries) {
             return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 
@@ -66,7 +70,7 @@ public final class ContentCraftingRecipe {
         private final ShapelessRecipe plain;
 
         private Shapeless(ShapelessRecipe plain) {
-            super(plain.getId(), plain.getGroup(), plain.category(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.getIngredients());
+            super(plain.getGroup(), plain.category(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.getIngredients());
             this.plain = plain;
         }
 
@@ -76,7 +80,7 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.RegistryAccess registries) {
+        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.HolderLookup.Provider registries) {
             return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 
@@ -91,47 +95,17 @@ public final class ContentCraftingRecipe {
         }
     }
 
-    private static final class Serializer
-            implements RecipeSerializer<Recipe<?>> {
-        private Serializer() {}
+    private static Recipe<?> plain(Recipe<?> recipe) {
+        return recipe instanceof Shaped shaped ? shaped.plain : ((Shapeless) recipe).plain;
+    }
 
-        @Override
-        public Recipe fromJson(ResourceLocation id, JsonObject json) {
-            JsonObject nested = GsonHelper.getAsJsonObject(json, "recipe");
-            String type = GsonHelper.getAsString(nested, "type");
-            if (!"minecraft:crafting_shaped".equals(type) && !"minecraft:crafting_shapeless".equals(type)) {
-                throw new JsonSyntaxException("Content-mode crafting requires an ordinary shaped or shapeless recipe");
-            }
+    private static final class Serializer implements RecipeSerializer<Recipe<?>> {
+        private static final MapCodec<Recipe<?>> CODEC = Recipe.CODEC.fieldOf("recipe")
+                .xmap(ContentCraftingRecipe::wrap, ContentCraftingRecipe::plain);
+        private static final StreamCodec<RegistryFriendlyByteBuf, Recipe<?>> STREAM_CODEC =
+                Recipe.STREAM_CODEC.map(ContentCraftingRecipe::wrap, ContentCraftingRecipe::plain);
 
-            return wrap(RecipeManager.fromJson(id, nested));
-        }
-
-        @Override
-        public Recipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            ResourceLocation serializerId = buffer.readResourceLocation();
-            ResourceLocation recipeId = buffer.readResourceLocation();
-            RecipeSerializer<?> serializer = ForgeRegistries.RECIPE_SERIALIZERS.getValue(serializerId);
-            if (serializer == null || serializer == SERIALIZER) {
-                throw new IllegalArgumentException("Invalid nested recipe serializer " + serializerId);
-            }
-            Recipe<?> nested = serializer.fromNetwork(recipeId, buffer);
-            if (!nested.getId().equals(id) || nested.getSerializer() == SERIALIZER) {
-                throw new IllegalArgumentException("Invalid nested content-mode recipe " + id);
-            }
-            return wrap(nested);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buffer, Recipe value) {
-            Recipe plain = value instanceof Shaped ? ((Shaped) value).plain : ((Shapeless) value).plain;
-            buffer.writeResourceLocation(ForgeRegistries.RECIPE_SERIALIZERS.getKey(plain.getSerializer()));
-            buffer.writeResourceLocation(plain.getId());
-            writePlain(buffer, plain);
-        }
-
-        @SuppressWarnings({"rawtypes", "unchecked"})
-        private static void writePlain(FriendlyByteBuf buffer, Recipe plain) {
-            ((RecipeSerializer) plain.getSerializer()).toNetwork(buffer, plain);
-        }
+        @Override public MapCodec<Recipe<?>> codec() { return CODEC; }
+        @Override public StreamCodec<RegistryFriendlyByteBuf, Recipe<?>> streamCodec() { return STREAM_CODEC; }
     }
 }

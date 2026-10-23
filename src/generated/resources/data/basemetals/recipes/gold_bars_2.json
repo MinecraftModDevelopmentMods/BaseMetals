@@ -14,7 +14,7 @@
     ],
     "result": {
       "count": 4,
-      "item": "basemetals:gold_bars"
+      "id": "basemetals:gold_bars"
     }
   }
 }

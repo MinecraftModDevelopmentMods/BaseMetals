@@ -6,6 +6,6 @@
     "item": "basemetals:antimony_arrow"
   },
   "result": {
-    "item": "basemetals:antimony_nugget"
+    "id": "basemetals:antimony_nugget"
   }
 }

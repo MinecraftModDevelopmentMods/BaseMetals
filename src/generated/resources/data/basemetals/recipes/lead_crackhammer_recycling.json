@@ -6,6 +6,6 @@
     "item": "basemetals:lead_crackhammer"
   },
   "result": {
-    "item": "basemetals:lead_block"
+    "id": "basemetals:lead_block"
   }
 }

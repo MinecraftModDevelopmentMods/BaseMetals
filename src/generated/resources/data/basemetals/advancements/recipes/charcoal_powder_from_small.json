@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/charcoal"
+            "items": "#forge:tiny_dusts/charcoal"
           }
         ]
       },

@@ -41,6 +41,16 @@ def gravel(x=0.5, y=35, z=0.5, dimension=""):
 
 
 class FallingTerrainTest(unittest.TestCase):
+    def test_identical_sections_still_count_every_solid_block(self):
+        chunks = {("", 0, 0): {"Sections": [{"Y": 0, "Palette": [{"Name": "minecraft:stone"}]}]}}
+        with (
+            patch.object(terrain, "chunks", side_effect=[chunks, chunks]),
+            patch.object(terrain, "falling_blocks", return_value={}),
+            patch("builtins.print") as message,
+        ):
+            terrain.compare(Path("source"), Path("copy"))
+        self.assertIn("solid_blocks=4096", message.call_args.args[0])
+
     def test_landed_block_is_recovered(self):
         terrain.match_fallen_blocks([gravel()], [gravel(y=20)])
 

@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/lead"
   },
   "result": {
-    "item": "basemetals:lead_smallpowder"
+    "id": "basemetals:lead_smallpowder"
   }
 }

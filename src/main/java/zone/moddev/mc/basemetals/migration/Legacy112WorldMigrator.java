@@ -148,7 +148,7 @@ public final class Legacy112WorldMigrator {
     public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
         CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
         if (loaded == null) return;
-        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat").toFile());
+        CompoundTag level = LegacyNbt.readCompressed(worldRoot.resolve("level.dat").toFile());
         CompoundTag data = level.getCompound("Data");
         if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
         int version = data.getInt("DataVersion");
@@ -173,7 +173,7 @@ public final class Legacy112WorldMigrator {
         for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag candidate = NbtIo.readCompressed(file.toFile());
+            CompoundTag candidate = LegacyNbt.readCompressed(file.toFile());
             int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
             if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
@@ -346,7 +346,7 @@ public final class Legacy112WorldMigrator {
         ItemMigration converted = ItemMigration.NONE;
         for (Path file : files) {
             if (!Files.isRegularFile(file)) continue;
-            CompoundTag data = NbtIo.readCompressed(file.toFile());
+            CompoundTag data = LegacyNbt.readCompressed(file.toFile());
             ItemMigration changed = convertLegacyItems(data);
             if (changed.isEmpty()) continue;
             Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(file));
@@ -372,14 +372,14 @@ public final class Legacy112WorldMigrator {
             return ItemMigration.NONE;
         }
 
-        CompoundTag current = NbtIo.readCompressed(currentFile.toFile());
+        CompoundTag current = LegacyNbt.readCompressed(currentFile.toFile());
         CompoundTag currentData = current.getCompound("Data");
         if (currentData.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION
                 || !currentData.contains("Player", Tag.TAG_COMPOUND)) {
             return ItemMigration.NONE;
         }
 
-        CompoundTag legacy = NbtIo.readCompressed(legacyFile.toFile());
+        CompoundTag legacy = LegacyNbt.readCompressed(legacyFile.toFile());
         CompoundTag legacyData = legacy.getCompound("Data");
         int legacyVersion = legacyData.getInt("DataVersion");
         if (legacyVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
@@ -429,7 +429,7 @@ public final class Legacy112WorldMigrator {
                         convertedItemAliases++;
                     }
                     int damage = compound.getInt("Damage");
-                    if (item != null && item.canBeDepleted() && damage > 0
+                    if (item != null && item.getDefaultInstance().isDamageableItem() && damage > 0
                             && compound.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
                         CompoundTag itemTag = compound.contains("tag", Tag.TAG_COMPOUND)
                                 ? compound.getCompound("tag") : new CompoundTag();
@@ -463,7 +463,7 @@ public final class Legacy112WorldMigrator {
 
     private static void writeCompressedAtomically(Path file, CompoundTag data) throws IOException {
         Path temporary = file.resolveSibling(file.getFileName() + ".basemetals.tmp");
-        NbtIo.writeCompressed(data, temporary.toFile());
+        LegacyNbt.writeCompressed(data, temporary.toFile());
         try {
             Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
         } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
@@ -641,7 +641,7 @@ public final class Legacy112WorldMigrator {
         if (oldId == null) throw new IOException("Invalid legacy block registry name " + legacy.name());
         if (oldId.getNamespace().equals(BaseMetals.MOD_ID) || oldId.getNamespace().equals("mmdlib")) {
             String path = MissingMappings.blockTargetPath(oldId.getPath());
-            ResourceLocation targetId = new ResourceLocation(BaseMetals.MOD_ID, path);
+            ResourceLocation targetId = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path);
             Block block = ForgeRegistries.BLOCKS.getValue(targetId);
             if (block == null) throw new IOException("No 1.18 block exists for legacy block " + legacy.name());
             BlockState state = stateForLegacyMetadata(block, legacy.metadata());
@@ -801,7 +801,7 @@ public final class Legacy112WorldMigrator {
             default -> throw new IOException("Unsupported region compression type " + compression);
         };
         try (DataInputStream data = new DataInputStream(input)) {
-            return NbtIo.read(data);
+            return LegacyNbt.read(data);
         }
     }
 

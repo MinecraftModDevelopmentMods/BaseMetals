@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/electrum"
   },
-  "result": "basemetals:electrum_nugget"
+  "result": {
+    "id": "basemetals:electrum_nugget"
+  }
 }

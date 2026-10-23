@@ -54,18 +54,18 @@ public final class ClientSetup {
             ModContent.itemsById().values().forEach(entry -> {
                 net.minecraft.world.item.Item item = entry.get();
                 if (item instanceof MaterialItems.Bow || item instanceof MaterialItems.Crossbow) {
-                    ItemProperties.register(item, new ResourceLocation("pull"), (stack, level, user, seed) ->
+                    ItemProperties.register(item, ResourceLocation.parse("pull"), (stack, level, user, seed) ->
                             user == null || user.getUseItem() != stack ? 0.0F
                                     : (float) (stack.getUseDuration() - user.getUseItemRemainingTicks()) / 20.0F);
-                    ItemProperties.register(item, new ResourceLocation("pulling"), (stack, level, user, seed) ->
+                    ItemProperties.register(item, ResourceLocation.parse("pulling"), (stack, level, user, seed) ->
                             user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
                 }
                 if (item instanceof MaterialItems.Shield) {
-                    ItemProperties.register(item, new ResourceLocation("blocking"), (stack, level, user, seed) ->
+                    ItemProperties.register(item, ResourceLocation.parse("blocking"), (stack, level, user, seed) ->
                             user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
                 }
                 if (item instanceof MaterialItems.FishingRod) {
-                    ItemProperties.register(item, new ResourceLocation("cast"), (stack, level, user, seed) -> {
+                    ItemProperties.register(item, ResourceLocation.parse("cast"), (stack, level, user, seed) -> {
                         if (user == null) return 0.0F;
                         boolean main = user.getMainHandItem() == stack;
                         boolean off = user.getOffhandItem() == stack;

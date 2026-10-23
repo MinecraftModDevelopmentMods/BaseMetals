@@ -6,6 +6,6 @@
     "item": "basemetals:lead_gear"
   },
   "result": {
-    "item": "basemetals:lead_ingot"
+    "id": "basemetals:lead_ingot"
   }
 }

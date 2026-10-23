@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:ores/nickel"
   },
-  "result": "basemetals:nickel_ingot"
+  "result": {
+    "id": "basemetals:nickel_ingot"
+  }
 }

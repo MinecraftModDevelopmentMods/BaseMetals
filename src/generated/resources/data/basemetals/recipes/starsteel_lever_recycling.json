@@ -6,6 +6,6 @@
     "item": "basemetals:starsteel_lever"
   },
   "result": {
-    "item": "basemetals:starsteel_ingot"
+    "id": "basemetals:starsteel_ingot"
   }
 }

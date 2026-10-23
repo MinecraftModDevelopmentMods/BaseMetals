@@ -6,6 +6,6 @@
     "item": "basemetals:lead_arrow"
   },
   "result": {
-    "item": "basemetals:lead_nugget"
+    "id": "basemetals:lead_nugget"
   }
 }

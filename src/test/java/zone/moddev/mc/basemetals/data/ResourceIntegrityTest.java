@@ -604,7 +604,7 @@ class ResourceIntegrityTest {
 
     private static void assertConditionalRecipe(String id, String modId) throws Exception {
         JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
-        JsonObject condition = recipe.getAsJsonArray("conditions").get(0).getAsJsonObject();
+        JsonObject condition = recipe.getAsJsonObject("forge:condition").getAsJsonArray("values").get(0).getAsJsonObject();
         assertEquals("forge:mod_loaded", condition.get("type").getAsString(), id);
         assertEquals(modId, condition.get("modid").getAsString(), id);
     }
@@ -614,7 +614,7 @@ class ResourceIntegrityTest {
         JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
         assertEquals("basemetals:crushing", recipe.get("type").getAsString(), id);
         assertEquals(ingredient, recipe.getAsJsonObject("ingredient").get(ingredientKind).getAsString(), id);
-        assertEquals(result, recipe.getAsJsonObject("result").get("item").getAsString(), id);
+        assertEquals(result, recipe.getAsJsonObject("result").get("id").getAsString(), id);
         int actualCount = recipe.getAsJsonObject("result").has("count")
                 ? recipe.getAsJsonObject("result").get("count").getAsInt()
                 : 1;
@@ -631,7 +631,7 @@ class ResourceIntegrityTest {
         int actualCount;
         if (resultElement.isJsonObject()) {
             JsonObject resultObject = resultElement.getAsJsonObject();
-            actualItem = resultObject.get("item").getAsString();
+            actualItem = resultObject.get("id").getAsString();
             actualCount = resultObject.has("count") ? resultObject.get("count").getAsInt() : 1;
         } else {
             actualItem = resultElement.getAsString();
@@ -644,7 +644,7 @@ class ResourceIntegrityTest {
     private static void assertRecipeResult(String id, String item, int count) throws Exception {
         JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
         JsonObject result = recipe.getAsJsonObject("result");
-        assertEquals(item, result.get("item").getAsString(), id);
+        assertEquals(item, result.get("id").getAsString(), id);
         assertEquals(count, result.has("count") ? result.get("count").getAsInt() : 1, id);
     }
 

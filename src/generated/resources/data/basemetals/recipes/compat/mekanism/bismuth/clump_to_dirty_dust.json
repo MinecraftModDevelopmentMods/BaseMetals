@@ -1,15 +1,18 @@
 {
   "type": "mekanism:crushing",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:bismuth_powder_dirty"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:bismuth_powder_dirty"
+      }
+    ]
+  },
   "input": {
     "ingredient": {
       "tag": "forge:clumps/bismuth"

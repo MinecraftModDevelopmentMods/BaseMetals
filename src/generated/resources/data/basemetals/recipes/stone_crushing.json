@@ -4,6 +4,6 @@
     "tag": "forge:stone"
   },
   "result": {
-    "item": "minecraft:cobblestone"
+    "id": "minecraft:cobblestone"
   }
 }

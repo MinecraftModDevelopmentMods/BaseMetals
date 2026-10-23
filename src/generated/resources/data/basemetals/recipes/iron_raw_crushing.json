@@ -4,6 +4,6 @@
     "tag": "forge:raw_materials/iron"
   },
   "result": {
-    "item": "basemetals:iron_powder"
+    "id": "basemetals:iron_powder"
   }
 }

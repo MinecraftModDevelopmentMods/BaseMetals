@@ -26,9 +26,10 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
     private final MaterialDefinition material;
 
     public CrackhammerItem(MaterialDefinition material, Properties properties) {
-        super(5.0F + material.baseAttackDamage(), -3.5F, new MaterialTier(material),
-                BlockTags.MINEABLE_WITH_PICKAXE,
-                properties.durability(material.crackhammerDurability()));
+        super(new MaterialTier(material), BlockTags.MINEABLE_WITH_PICKAXE,
+                properties.durability(material.crackhammerDurability()).attributes(
+                        DiggerItem.createAttributes(new MaterialTier(material),
+                                5.0F + material.baseAttackDamage(), -3.5F)));
         this.material = material;
     }
 
@@ -48,7 +49,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level,
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
             List<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);
@@ -65,7 +66,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
                 entity -> entity.isAlive() && !entity.getItem().isEmpty());
         for (ItemEntity entity : entities) {
             ItemStack input = entity.getItem();
-            Optional<CrushingRecipe> recipe = context.getLevel().getRecipeManager().getRecipeFor(
+            Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = context.getLevel().getRecipeManager().getRecipeFor(
                     CrushingRecipe.TYPE.get(), new SimpleContainer(input), context.getLevel());
             if (recipe.isEmpty() || !canCrushDroppedBlock(context.getItemInHand(), input)) continue;
             // Sneaking is the per-use full-stack control; ordinary use crushes
@@ -77,12 +78,12 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
                     : requested;
             int operations = Math.min(requested, durability);
             if (operations == 0) break;
-            ItemStack output = recipe.get().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
+            ItemStack output = recipe.get().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).copy();
             input.shrink(operations);
             if (input.isEmpty()) entity.discard(); else entity.setItem(input);
             spawnOutputs(context.getLevel(), entity, output, operations);
             hammer.hurtAndBreak(operations, context.getPlayer(),
-                    player -> player.broadcastBreakEvent(context.getHand()));
+                    net.minecraft.world.entity.LivingEntity.getSlotForHand(context.getHand()));
             context.getLevel().playSound(null, context.getClickedPos(),
                     net.minecraft.sounds.SoundEvents.GRAVEL_BREAK,
                     net.minecraft.sounds.SoundSource.BLOCKS, 0.5F,

@@ -6,6 +6,6 @@
     "item": "basemetals:obsidian_arrow"
   },
   "result": {
-    "item": "basemetals:obsidian_nugget"
+    "id": "basemetals:obsidian_nugget"
   }
 }

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/pewter"
+            "items": "#forge:ingots/pewter"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/pewter"
+            "items": "#forge:ingots/pewter"
           }
         ]
       },

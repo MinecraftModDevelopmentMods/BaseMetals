@@ -12,7 +12,7 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "basemetals:adamantine_chestplate"
+      "id": "basemetals:adamantine_chestplate"
     },
     "show_toast": true,
     "title": {

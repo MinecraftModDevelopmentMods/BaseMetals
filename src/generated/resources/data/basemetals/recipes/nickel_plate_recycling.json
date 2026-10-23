@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_plate"
   },
   "result": {
-    "item": "basemetals:nickel_ingot"
+    "id": "basemetals:nickel_ingot"
   }
 }

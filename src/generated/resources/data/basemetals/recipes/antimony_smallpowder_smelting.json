@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/antimony"
   },
-  "result": "basemetals:antimony_nugget"
+  "result": {
+    "id": "basemetals:antimony_nugget"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "pack": {
-    "pack_format": 9,
+    "pack_format": 41,
     "description": "Tests an explicit steel material override in Low Fantasy."
   }
 }

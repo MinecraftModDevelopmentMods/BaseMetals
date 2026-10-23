@@ -4,16 +4,19 @@
     "amount": 1,
     "gas": "mekanism:hydrogen_chloride"
   },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:starsteel_shard"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:starsteel_shard"
+      }
+    ]
+  },
   "itemInput": {
     "ingredient": {
       "tag": "forge:ores/starsteel"

@@ -6,6 +6,6 @@
     "item": "basemetals:nickel_crackhammer"
   },
   "result": {
-    "item": "basemetals:nickel_block"
+    "id": "basemetals:nickel_block"
   }
 }

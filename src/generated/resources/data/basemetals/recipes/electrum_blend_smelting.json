@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:blends/electrum"
   },
-  "result": "basemetals:electrum_ingot"
+  "result": {
+    "id": "basemetals:electrum_ingot"
+  }
 }

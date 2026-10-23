@@ -6,6 +6,6 @@
     "item": "basemetals:diamond_wall"
   },
   "result": {
-    "item": "minecraft:diamond_block"
+    "id": "minecraft:diamond_block"
   }
 }

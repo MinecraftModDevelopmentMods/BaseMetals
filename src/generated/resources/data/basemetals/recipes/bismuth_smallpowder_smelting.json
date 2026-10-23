@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/bismuth"
   },
-  "result": "basemetals:bismuth_nugget"
+  "result": {
+    "id": "basemetals:bismuth_nugget"
+  }
 }

@@ -14,7 +14,7 @@
     ],
     "result": {
       "count": 3,
-      "item": "basemetals:iron_plate"
+      "id": "basemetals:iron_plate"
     }
   }
 }

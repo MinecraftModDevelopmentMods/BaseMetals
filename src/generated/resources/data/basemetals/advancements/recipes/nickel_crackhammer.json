@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:storage_blocks/nickel"
+            "items": "#forge:storage_blocks/nickel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/nickel"
+            "items": "#forge:ingots/nickel"
           }
         ]
       },

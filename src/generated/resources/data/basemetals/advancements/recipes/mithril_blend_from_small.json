@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:small_blends/mithril"
+            "items": "#forge:small_blends/mithril"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mithril"
+            "items": "#forge:ingots/mithril"
           }
         ]
       },

@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/bronze"
   },
-  "result": "basemetals:bronze_nugget"
+  "result": {
+    "id": "basemetals:bronze_nugget"
+  }
 }

@@ -23,7 +23,7 @@ class IntegrationContentPolicyTest {
                 Set<String> outputs = new LinkedHashSet<>();
                 for (String field : new String[] {"result", "output", "outputs"}) collect(recipe.get(field), outputs);
                 Set<String> guarded = new LinkedHashSet<>();
-                for (var condition : recipe.getAsJsonArray("conditions")) {
+                for (var condition : recipe.getAsJsonObject("forge:condition").getAsJsonArray("values")) {
                     var value = condition.getAsJsonObject();
                     if ("basemetals:content_mode".equals(value.get("type").getAsString())) {
                         guarded.add(value.get("item").getAsString());

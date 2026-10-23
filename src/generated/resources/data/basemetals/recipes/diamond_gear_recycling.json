@@ -6,6 +6,6 @@
     "item": "basemetals:diamond_gear"
   },
   "result": {
-    "item": "minecraft:diamond"
+    "id": "minecraft:diamond"
   }
 }

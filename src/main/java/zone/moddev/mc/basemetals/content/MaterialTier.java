@@ -19,7 +19,7 @@ public final class MaterialTier implements Tier {
 
     public MaterialTier(MaterialDefinition material) {
         this.material = material;
-        TagKey<Item> tag = ItemTags.create(new ResourceLocation(material.repairIngredientTag()));
+        TagKey<Item> tag = ItemTags.create(ResourceLocation.parse(material.repairIngredientTag()));
         this.repair = () -> Ingredient.of(tag);
     }
 
@@ -30,7 +30,15 @@ public final class MaterialTier implements Tier {
     @Override public int getUses() { return material.toolDurability(); }
     @Override public float getSpeed() { return material.toolEfficiency(); }
     @Override public float getAttackDamageBonus() { return material.baseAttackDamage(); }
-    @Override public int getLevel() { return material.toolLevel(); }
+    @Override
+    public net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block> getIncorrectBlocksForDrops() {
+        return switch (material.toolLevel()) {
+            case 0 -> net.minecraft.tags.BlockTags.INCORRECT_FOR_WOODEN_TOOL;
+            case 1 -> net.minecraft.tags.BlockTags.INCORRECT_FOR_STONE_TOOL;
+            case 2 -> net.minecraft.tags.BlockTags.INCORRECT_FOR_IRON_TOOL;
+            default -> net.minecraft.tags.BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
+        };
+    }
     @Override public int getEnchantmentValue() { return material.enchantability(); }
     @Override public Ingredient getRepairIngredient() { return repair.get(); }
 }

@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/bismuth"
   },
   "result": {
-    "item": "basemetals:bismuth_smallpowder"
+    "id": "basemetals:bismuth_smallpowder"
   }
 }

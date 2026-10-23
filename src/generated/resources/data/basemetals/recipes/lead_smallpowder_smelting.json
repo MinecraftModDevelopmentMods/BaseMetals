@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/lead"
   },
-  "result": "basemetals:lead_nugget"
+  "result": {
+    "id": "basemetals:lead_nugget"
+  }
 }

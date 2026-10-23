@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/copper"
+            "items": "#forge:dusts/copper"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/zinc"
+            "items": "#forge:dusts/zinc"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/brass"
+            "items": "#forge:ingots/brass"
           }
         ]
       },

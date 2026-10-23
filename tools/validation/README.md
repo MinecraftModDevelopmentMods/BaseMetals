@@ -1,11 +1,11 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.20.1 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 1.20.6 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
 
-Pass a local JSON specification containing `java17`, `serverRuntime`, `output`,
+Pass a local JSON specification containing `java` (the Java 21 executable), `serverRuntime`, `output`,
 `modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
 Each profile needs an `id`, `world` path and expected log `marker`. Captured
 fixtures include a registry manifest so the probe can check each block state,
@@ -14,6 +14,10 @@ Keep machine-specific specifications and test output outside the checkout.
 For fresh-world compatibility checks, set `fresh:true` and `fixture:false`.
 Optional `extraMods`, `contentMode`, `dataPacks` and JVM `properties` let the
 same runner check installed integrations and explicit data-pack overrides.
+Use `lateChunks:true` on captured fixtures to leave Nether and End blocks
+unopened through the first load and reload, then check them on a third start.
+`oreOverrides` edits named Base Metals rules in the disposable world's saved
+OreSpawn profile and verifies that those values survive both starts.
 
 `compare_world_terrain.py` checks fixed vanilla terrain before and after
 conversion. It accepts Minecraft's new underground floor and accounts for
@@ -24,6 +28,8 @@ palette readers and falling-block comparison.
 `compare_current_world.py` compares Base Metals block states, stored items,
 equipment and advancement progress in flattened saves. It reads both older
 chunk entity lists and the separate entity files used by newer Minecraft.
+Item comparisons account for the component conversion while still checking
+damage, enchantments, names, lore and custom data.
 Flying projectiles are excluded from the static item count because they can
 hit targets during the test; their ammunition save/load and pickup behaviour
 are covered by the runtime tests. Run all comparison-tool regressions with
@@ -33,9 +39,10 @@ are covered by the runtime tests. Run all comparison-tool regressions with
 
 `test_content_modes.js` launches a separate client and server for each case.
 It checks unchanged older configs, missing configs, matching Low Fantasy modes,
-and both kinds of mismatch. Existing gameplay switches must keep their values.
+and both kinds of mismatch. Matching clients disconnect and rejoin three times
+to check repeated connections. Existing gameplay switches must keep their values.
 
-Its local specification needs `java17`, `serverRuntime`, `clientRuntime`,
+Its local specification needs `java` (the Java 21 executable), `serverRuntime`, `clientRuntime`,
 `output`, `modJar`, `serverProbe`, `clientProbe`, and the same checksum-pinned
 `oreSpawn` object used by the world tests. The test uses localhost only and
 chooses a free port; no public Minecraft server is involved.

@@ -6,6 +6,6 @@
     "item": "basemetals:gold_bow"
   },
   "result": {
-    "item": "minecraft:gold_ingot"
+    "id": "minecraft:gold_ingot"
   }
 }

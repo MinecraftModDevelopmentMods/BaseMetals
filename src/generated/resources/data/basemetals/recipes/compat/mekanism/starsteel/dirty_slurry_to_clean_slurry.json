@@ -1,14 +1,17 @@
 {
   "type": "mekanism:washing",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    }
-  ],
   "fluidInput": {
     "amount": 5,
     "tag": "minecraft:water"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      }
+    ]
   },
   "output": {
     "amount": 1,

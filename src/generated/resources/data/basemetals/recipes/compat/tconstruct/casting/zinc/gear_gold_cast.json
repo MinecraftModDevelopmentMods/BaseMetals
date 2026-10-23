@@ -3,20 +3,23 @@
   "cast": {
     "tag": "tconstruct:casts/multi_use/gear"
   },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:zinc_gear"
-    }
-  ],
   "cooling_time": 90,
   "fluid": {
     "amount": 360,
     "tag": "forge:molten_zinc"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:zinc_gear"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:zinc_gear"

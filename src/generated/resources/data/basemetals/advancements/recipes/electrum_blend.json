@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/gold"
+            "items": "#forge:dusts/gold"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/silver"
+            "items": "#forge:dusts/silver"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/electrum"
+            "items": "#forge:ingots/electrum"
           }
         ]
       },

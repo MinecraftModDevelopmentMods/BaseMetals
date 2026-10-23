@@ -7,16 +7,7 @@ configurations.create('packagedCompatibilityMods')
 configurations.create('optionalModsRelease')
 ext.optionalModArtifacts = new JsonSlurper().parse(file('gradle/optional-mods.json'))
 ext.optionalDevelopmentArtifacts = optionalModArtifacts.findAll { it.development }
-def optionalDevelopmentDependencies = optionalDevelopmentArtifacts.collectEntries { artifact ->
-    def dependency = renamer.dependency("curse.maven:${artifact.module}:${artifact.file}") {
-        // CoFH uses the valid *() wildcard, which Renamer cannot parse.
-        // Keep its AT file intact; Forge remaps SRG access rules when loading it.
-        if (artifact.modId == 'cofh_core') {
-            accessTransformers.set(false)
-        }
-    }
-    [(artifact.modId): dependency]
-}
+def optionalDevelopmentDependencies = [:]
 repositories {
     minecraft.mavenizer(it)
     maven fg.forgeMaven
@@ -63,52 +54,16 @@ dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
 
     // OreSpawn remains an ordinary hard mod dependency in metadata and is
-    // never shaded into Base Metals. Use the published 1.20.1 release in
+    // never shaded into Base Metals. Use the published 1.20.6 release in
     // development so clean checkouts exercise the same artifact as players.
-    implementation renamer.dependency("curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}")
+    implementation "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
     orespawnRelease "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
 
-    // API only: Mekanism remains optional at runtime. Its public slurry
-    // registry is required to provide the eight historical processing chains.
-    compileOnly 'mekanism:Mekanism:1.20.1-10.4.16.80:api'
-    compileOnly optionalDevelopmentDependencies.mantle
-    compileOnly optionalDevelopmentDependencies.tconstruct
-
-    // Only the separate optional-mod profile and explicit compatibility tests load these mods.
-    optionalModArtifacts.each { artifact ->
-        String coordinate = "curse.maven:${artifact.module}:${artifact.file}"
-        optionalModsRelease coordinate
-        if (artifact.development) {
-            optionalModsRuntimeOnly optionalDevelopmentDependencies[artifact.modId]
-            if (providers.gradleProperty('compatSmoke').isPresent()) {
-                runtimeOnly optionalDevelopmentDependencies[artifact.modId]
-            }
-        }
-        if (providers.gradleProperty('packagedCompatSmoke').isPresent()) {
-            packagedCompatibilityMods coordinate
-        }
-    }
-
+    // No optional integrations currently publish Forge 1.20.6 builds.
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 
-}
-
-renamer.mappings.from minecraft.dependency.toSrgFile
-
-// Optional mods ship SRG mixin references; development runs use official names.
-def developmentMixinMappings = renamer.convert('optionalMixinMappings') {
-    // Mixin 0.8 reads classic SRG entries, not TSRG, from this file.
-    map.from minecraft.dependency.toSrgFile
-    format.set('srg')
-    reverse.set(true)
-    output.set(layout.buildDirectory.file('mappings/optional-refmaps.srg'))
-}
-minecraft.runs.configureEach {
-    systemProperties(developmentMixinMappings.flatMap { it.output }.map { mappings ->
-        ['mixin.env.remapRefMap': 'true', 'mixin.env.refMapRemappingFile': mappings.asFile.absolutePath]
-    })
 }
 
 configurations.named('testRuntimeClasspath') {

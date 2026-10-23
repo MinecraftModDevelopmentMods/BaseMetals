@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/starsteel"
+            "items": "#forge:dusts/starsteel"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/starsteel"
+            "items": "#forge:ingots/starsteel"
           }
         ]
       },

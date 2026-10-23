@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:dusts/antimony"
+            "items": "#forge:dusts/antimony"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/antimony"
+            "items": "#forge:ingots/antimony"
           }
         ]
       },

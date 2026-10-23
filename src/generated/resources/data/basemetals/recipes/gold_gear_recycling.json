@@ -6,6 +6,6 @@
     "item": "basemetals:gold_gear"
   },
   "result": {
-    "item": "minecraft:gold_ingot"
+    "id": "minecraft:gold_ingot"
   }
 }

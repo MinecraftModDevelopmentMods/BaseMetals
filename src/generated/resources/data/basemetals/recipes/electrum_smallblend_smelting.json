@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/electrum"
   },
-  "result": "basemetals:electrum_nugget"
+  "result": {
+    "id": "basemetals:electrum_nugget"
+  }
 }

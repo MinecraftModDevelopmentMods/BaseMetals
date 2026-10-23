@@ -6,6 +6,6 @@
     "item": "basemetals:emerald_shovel"
   },
   "result": {
-    "item": "minecraft:emerald"
+    "id": "minecraft:emerald"
   }
 }

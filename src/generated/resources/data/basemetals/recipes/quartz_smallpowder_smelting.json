@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/quartz"
   },
-  "result": "basemetals:quartz_nugget"
+  "result": {
+    "id": "basemetals:quartz_nugget"
+  }
 }

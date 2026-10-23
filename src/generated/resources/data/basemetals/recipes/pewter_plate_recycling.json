@@ -6,6 +6,6 @@
     "item": "basemetals:pewter_plate"
   },
   "result": {
-    "item": "basemetals:pewter_ingot"
+    "id": "basemetals:pewter_ingot"
   }
 }

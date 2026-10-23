@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "icon": {
-      "item": "basemetals:iron_crackhammer"
+      "id": "basemetals:iron_crackhammer"
     },
     "show_toast": true,
     "title": {

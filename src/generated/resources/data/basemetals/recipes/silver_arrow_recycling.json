@@ -6,6 +6,6 @@
     "item": "basemetals:silver_arrow"
   },
   "result": {
-    "item": "basemetals:silver_nugget"
+    "id": "basemetals:silver_nugget"
   }
 }

@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:blends/invar"
   },
-  "result": "basemetals:invar_ingot"
+  "result": {
+    "id": "basemetals:invar_ingot"
+  }
 }

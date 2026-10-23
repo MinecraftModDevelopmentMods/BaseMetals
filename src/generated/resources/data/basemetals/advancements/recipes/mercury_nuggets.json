@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mercury"
+            "items": "#forge:ingots/mercury"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/mercury"
+            "items": "#forge:ingots/mercury"
           }
         ]
       },

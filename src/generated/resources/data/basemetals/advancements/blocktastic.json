@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "icon": {
-      "item": "basemetals:copper_block"
+      "id": "basemetals:copper_block"
     },
     "show_toast": true,
     "title": {

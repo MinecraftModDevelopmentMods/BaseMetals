@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/coal"
   },
   "result": {
-    "item": "basemetals:coal_smallpowder"
+    "id": "basemetals:coal_smallpowder"
   }
 }

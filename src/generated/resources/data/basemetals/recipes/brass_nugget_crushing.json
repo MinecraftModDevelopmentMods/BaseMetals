@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/brass"
   },
   "result": {
-    "item": "basemetals:brass_smallpowder"
+    "id": "basemetals:brass_smallpowder"
   }
 }

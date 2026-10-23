@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:small_blends/diamond"
   },
-  "result": "basemetals:diamond_nugget"
+  "result": {
+    "id": "basemetals:diamond_nugget"
+  }
 }

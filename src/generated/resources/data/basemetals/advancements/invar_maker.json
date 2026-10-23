@@ -12,7 +12,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "basemetals:invar_blend"
+      "id": "basemetals:invar_blend"
     },
     "show_toast": true,
     "title": {

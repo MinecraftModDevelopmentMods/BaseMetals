@@ -4,6 +4,6 @@
     "item": "minecraft:cobblestone_wall"
   },
   "result": {
-    "item": "minecraft:gravel"
+    "id": "minecraft:gravel"
   }
 }

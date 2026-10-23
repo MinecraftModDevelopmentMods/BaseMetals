@@ -3,20 +3,23 @@
   "cast": {
     "tag": "tconstruct:casts/multi_use/nugget"
   },
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:cupronickel_nugget"
-    }
-  ],
   "cooling_time": 16,
   "fluid": {
     "amount": 10,
     "tag": "forge:molten_cupronickel"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:cupronickel_nugget"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:cupronickel_nugget"

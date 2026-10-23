@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/copper"
   },
-  "result": "basemetals:copper_nugget"
+  "result": {
+    "id": "basemetals:copper_nugget"
+  }
 }

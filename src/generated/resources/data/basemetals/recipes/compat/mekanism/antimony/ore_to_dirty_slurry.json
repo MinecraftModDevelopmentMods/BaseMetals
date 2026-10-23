@@ -1,11 +1,14 @@
 {
   "type": "mekanism:dissolution",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      }
+    ]
+  },
   "gasInput": {
     "amount": 1,
     "gas": "mekanism:sulfuric_acid"

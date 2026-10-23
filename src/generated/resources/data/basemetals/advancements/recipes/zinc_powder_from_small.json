@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:tiny_dusts/zinc"
+            "items": "#forge:tiny_dusts/zinc"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/zinc"
+            "items": "#forge:ingots/zinc"
           }
         ]
       },

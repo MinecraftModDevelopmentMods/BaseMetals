@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "icon": {
-      "item": "basemetals:copper_ingot"
+      "id": "basemetals:copper_ingot"
     },
     "show_toast": true,
     "title": {

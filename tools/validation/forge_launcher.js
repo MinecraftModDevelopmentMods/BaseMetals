@@ -17,6 +17,20 @@ function serverArguments(runtime, directory, version, forge) {
         if (line.startsWith('-D') && line.includes(libraries)) return '"' + line + '"';
         return line;
     }).join('\n');
+    const shim = `forge-${version}-${forge}-shim.jar`;
+    if (fs.existsSync(path.join(runtime, shim))) {
+        fs.copyFileSync(path.join(runtime, shim), path.join(directory, shim));
+        for (const source of fs.readdirSync(path.join(runtime, 'libraries'), { recursive: true, withFileTypes: true })) {
+            if (!source.isFile()) continue;
+            const file = path.join(source.parentPath || source.path, source.name);
+            const target = path.join(directory, 'libraries', path.relative(path.join(runtime, 'libraries'), file));
+            fs.mkdirSync(path.dirname(target), { recursive: true });
+            if (!fs.existsSync(target)) {
+                try { fs.linkSync(file, target); }
+                catch { fs.copyFileSync(file, target); }
+            }
+        }
+    }
     const staged = path.join(directory, 'forge-arguments.txt');
     fs.writeFileSync(staged, contents);
     return ['--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED', '@' + staged, 'nogui'];

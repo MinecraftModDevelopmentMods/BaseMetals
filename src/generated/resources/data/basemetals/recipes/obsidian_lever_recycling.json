@@ -6,6 +6,6 @@
     "item": "basemetals:obsidian_lever"
   },
   "result": {
-    "item": "basemetals:obsidian_ingot"
+    "id": "basemetals:obsidian_ingot"
   }
 }

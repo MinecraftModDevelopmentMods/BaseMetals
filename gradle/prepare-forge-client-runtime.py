@@ -18,12 +18,12 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-MINECRAFT_VERSION = "1.20.1"
-FORGE_VERSION = "47.4.10"
+MINECRAFT_VERSION = "1.20.6"
+FORGE_VERSION = "50.2.0"
 FORGE_INSTALLER_SHA256 = "1912760b4cb6b803d8a826de603c9076b1da71ec2765e9a1f8c1ca78f65278e3"
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 ASSET_OBJECT_URL = "https://resources.download.minecraft.net/{prefix}/{digest}"
-USER_AGENT = "BaseMetals-release-validation/3.1.0.120011"
+USER_AGENT = "BaseMetals-release-validation/3.1.0.120061"
 
 
 def digest_file(path: Path, algorithm: str) -> str:

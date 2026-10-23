@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:tiny_dusts/adamantine"
   },
-  "result": "basemetals:adamantine_nugget"
+  "result": {
+    "id": "basemetals:adamantine_nugget"
+  }
 }

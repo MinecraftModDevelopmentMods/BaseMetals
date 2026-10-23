@@ -6,6 +6,6 @@
     "item": "basemetals:tin_shovel"
   },
   "result": {
-    "item": "basemetals:tin_ingot"
+    "id": "basemetals:tin_ingot"
   }
 }

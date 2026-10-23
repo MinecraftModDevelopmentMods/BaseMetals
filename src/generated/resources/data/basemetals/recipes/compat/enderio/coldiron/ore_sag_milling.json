@@ -1,16 +1,19 @@
 {
   "type": "enderio:sag_milling",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "enderio"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:coldiron_powder"
-    }
-  ],
   "energy": 2400,
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "enderio"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:coldiron_powder"
+      }
+    ]
+  },
   "input": {
     "tag": "forge:ores/coldiron"
   },

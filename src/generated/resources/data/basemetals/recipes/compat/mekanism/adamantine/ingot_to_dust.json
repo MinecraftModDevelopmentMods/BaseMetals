@@ -1,15 +1,18 @@
 {
   "type": "mekanism:crushing",
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "mekanism"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:adamantine_powder"
-    }
-  ],
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:adamantine_powder"
+      }
+    ]
+  },
   "input": {
     "ingredient": {
       "tag": "forge:ingots/adamantine"

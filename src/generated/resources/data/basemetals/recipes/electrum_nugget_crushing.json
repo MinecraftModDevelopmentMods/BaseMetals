@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/electrum"
   },
   "result": {
-    "item": "basemetals:electrum_smallpowder"
+    "id": "basemetals:electrum_smallpowder"
   }
 }

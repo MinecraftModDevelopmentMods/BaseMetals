@@ -6,6 +6,6 @@
     "item": "basemetals:antimony_wall"
   },
   "result": {
-    "item": "basemetals:antimony_block"
+    "id": "basemetals:antimony_block"
   }
 }

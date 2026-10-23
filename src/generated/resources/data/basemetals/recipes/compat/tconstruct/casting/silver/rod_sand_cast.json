@@ -4,20 +4,23 @@
     "tag": "tconstruct:casts/single_use/rod"
   },
   "cast_consumed": true,
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:silver_rod"
-    }
-  ],
   "cooling_time": 30,
   "fluid": {
     "amount": 45,
     "tag": "forge:molten_silver"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:silver_rod"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:silver_rod"

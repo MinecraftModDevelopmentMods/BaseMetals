@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:blends/cupronickel"
   },
-  "result": "basemetals:cupronickel_ingot"
+  "result": {
+    "id": "basemetals:cupronickel_ingot"
+  }
 }

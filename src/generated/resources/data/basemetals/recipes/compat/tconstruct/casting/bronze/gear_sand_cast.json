@@ -4,20 +4,23 @@
     "tag": "tconstruct:casts/single_use/gear"
   },
   "cast_consumed": true,
-  "conditions": [
-    {
-      "type": "forge:mod_loaded",
-      "modid": "tconstruct"
-    },
-    {
-      "type": "basemetals:content_mode",
-      "item": "basemetals:bronze_gear"
-    }
-  ],
   "cooling_time": 90,
   "fluid": {
     "amount": 360,
     "tag": "forge:molten_bronze"
+  },
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "tconstruct"
+      },
+      {
+        "type": "basemetals:content_mode",
+        "item": "basemetals:bronze_gear"
+      }
+    ]
   },
   "result": {
     "item": "basemetals:bronze_gear"

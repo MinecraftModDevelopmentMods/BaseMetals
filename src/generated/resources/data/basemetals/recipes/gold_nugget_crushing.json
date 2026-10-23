@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/gold"
   },
   "result": {
-    "item": "basemetals:gold_smallpowder"
+    "id": "basemetals:gold_smallpowder"
   }
 }

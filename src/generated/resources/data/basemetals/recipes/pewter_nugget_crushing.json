@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/pewter"
   },
   "result": {
-    "item": "basemetals:pewter_smallpowder"
+    "id": "basemetals:pewter_smallpowder"
   }
 }

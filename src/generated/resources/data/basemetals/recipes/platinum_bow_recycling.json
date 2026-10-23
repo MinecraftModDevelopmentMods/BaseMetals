@@ -6,6 +6,6 @@
     "item": "basemetals:platinum_bow"
   },
   "result": {
-    "item": "basemetals:platinum_ingot"
+    "id": "basemetals:platinum_ingot"
   }
 }

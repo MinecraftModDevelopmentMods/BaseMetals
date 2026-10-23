@@ -6,6 +6,6 @@
     "item": "basemetals:electrum_crackhammer"
   },
   "result": {
-    "item": "basemetals:electrum_block"
+    "id": "basemetals:electrum_block"
   }
 }

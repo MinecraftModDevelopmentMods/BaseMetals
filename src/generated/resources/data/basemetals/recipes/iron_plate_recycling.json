@@ -6,6 +6,6 @@
     "item": "basemetals:iron_plate"
   },
   "result": {
-    "item": "minecraft:iron_ingot"
+    "id": "minecraft:iron_ingot"
   }
 }

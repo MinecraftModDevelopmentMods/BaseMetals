@@ -48,8 +48,8 @@ def expectedMavenArtifact = 'BaseMetals'
 def expectedMavenCoordinate = "${expectedMavenGroup}:${expectedMavenArtifact}:${project.version}"
 
 tasks.named('jar', Jar) {
-    archiveClassifier = 'deobf'
-    destinationDirectory = layout.buildDirectory.dir('libs-dev')
+    archiveClassifier = null
+    destinationDirectory = layout.buildDirectory.dir('libs')
     manifest {
         attributes([
                 'Maven-Artifact'        : expectedMavenCoordinate,
@@ -59,19 +59,14 @@ tasks.named('jar', Jar) {
                 'Implementation-Title'  : 'Base Metals',
                 'Implementation-Version': project.version,
                 'Implementation-Vendor' : project.mod_authors,
-                'Built-On-Java'         : '17',
+                'Built-On-Java'         : '21',
                 'Built-On'              : "${project.minecraft_version}-${project.forge_version}",
                 'Build-Target'          : "minecraft-${project.minecraft_version}-${project.loader_name}-${project.forge_version}-java-${project.java_version}"
         ])
     }
 }
 
-def releaseJar = renamer.classes(tasks.named('jar', Jar)) {
-    map.from minecraft.dependency.toSrgFile
-    archiveClassifier = null
-    output = layout.buildDirectory.file(
-            "libs/${base.archivesName.get()}-${project.version}.jar")
-}
+def releaseJar = tasks.named('jar', Jar)
 
 ['apiElements', 'runtimeElements'].each { configurationName ->
     configurations.named(configurationName) { artifacts.clear() }
@@ -92,30 +87,24 @@ def expectedReleaseNames = [mainReleaseName, sourcesReleaseName, javadocReleaseN
 def packagedServerSmokeJar = tasks.register('packagedServerSmokeJar', Jar) {
     dependsOn tasks.named(sourceSets.packagedServerSmoke.classesTaskName)
     dependsOn tasks.named(sourceSets.upgradeSmoke.classesTaskName)
-    archiveFileName = 'basemetals-server-smoke-dev.jar'
+    archiveFileName = 'basemetals-server-smoke.jar'
     destinationDirectory = layout.buildDirectory.dir('packaged-smoke-probes')
     from sourceSets.packagedServerSmoke.output.classesDirs
     from sourceSets.upgradeSmoke.output.classesDirs
     from 'src/packagedServerSmoke/packaged-resources'
 }
-def packagedServerSmokeProbe = renamer.classes(packagedServerSmokeJar) {
-    map.from minecraft.dependency.toSrgFile
-    output = layout.buildDirectory.file('packaged-smoke-probes/basemetals-server-smoke.jar')
-}
+def packagedServerSmokeProbe = packagedServerSmokeJar
 
 def packagedClientSmokeJar = tasks.register('packagedClientSmokeJar', Jar) {
     dependsOn tasks.named(sourceSets.integratedSmoke.classesTaskName)
     dependsOn tasks.named(sourceSets.packagedClientSmoke.classesTaskName)
-    archiveFileName = 'basemetals-client-smoke-dev.jar'
+    archiveFileName = 'basemetals-client-smoke.jar'
     destinationDirectory = layout.buildDirectory.dir('packaged-smoke-probes')
     from sourceSets.integratedSmoke.output.classesDirs
     from sourceSets.packagedClientSmoke.output.classesDirs
     from 'src/packagedClientSmoke/packaged-resources'
 }
-def packagedClientSmokeProbe = renamer.classes(packagedClientSmokeJar) {
-    map.from minecraft.dependency.toSrgFile
-    output = layout.buildDirectory.file('packaged-smoke-probes/basemetals-client-smoke.jar')
-}
+def packagedClientSmokeProbe = packagedClientSmokeJar
 
 def preparedReleaseDir = project.findProperty('preparedReleaseDir')
 project.ext.baseMetalsRelease = [
@@ -160,15 +149,15 @@ def configuredOreSpawnIdentity = [
         sha256: project.orespawn_sha256.toString()
 ]
 
-tasks.register('verifyJava17Toolchain') {
+tasks.register('verifyJava21Toolchain') {
     group = 'verification'
     description = 'Verifies the exact Java product toolchain used for Base Metals compilation.'
     dependsOn tasks.named('compileJava')
     doLast {
         def metadata = tasks.named('compileJava', JavaCompile).get().javaCompiler.get().metadata
-        if (configuredJavaToolchainVersion != '17.0.1+12'
-                || metadata.languageVersion.asInt() != 17
-                || metadata.jvmVersion != configuredJavaToolchainVersion
+        if (configuredJavaToolchainVersion != '21.0.7+6'
+                || metadata.languageVersion.asInt() != 21
+                || !(metadata.jvmVersion in [configuredJavaToolchainVersion, configuredJavaToolchainVersion + '-LTS'])
                 || !metadata.vendor.toString().toLowerCase(Locale.ROOT).contains('temurin')) {
             throw new GradleException("Expected Eclipse Temurin ${configuredJavaToolchainVersion}, found " +
                     "${metadata.vendor} ${metadata.jvmVersion} at ${metadata.installationPath}")
@@ -194,7 +183,7 @@ tasks.register('verifyMavenCoordinates') {
 
 tasks.register('verifyMavenizerCompatibilityFixture') {
     group = 'verification'
-    description = 'Verifies the checksum-sealed Forge 1.20.1 Mavenizer compatibility fixture.'
+    description = 'Verifies the checksum-sealed Forge 1.20.6 Mavenizer compatibility fixture.'
     inputs.file project.ext.mavenizerCompatibilityJar
     doLast {
         File fixture = project.ext.mavenizerCompatibilityJar.asFile
@@ -208,23 +197,23 @@ tasks.register('verifyMavenizerCompatibilityFixture') {
 
 tasks.register('verifyReleaseConfiguration') {
     group = 'verification'
-    description = 'Verifies the exact Base Metals 1.20.1 release identity.'
+    description = 'Verifies the exact Base Metals 1.20.6 release identity.'
     dependsOn tasks.named('verifyMavenizerCompatibilityFixture')
-    dependsOn tasks.named('verifyJava17Toolchain')
+    dependsOn tasks.named('verifyJava21Toolchain')
     doLast {
-        if (configuredReleaseIdentity.modVersion != '3.1.0.120011'
+        if (configuredReleaseIdentity.modVersion != '3.1.0.120061'
                 || configuredReleaseIdentity.modGroup != expectedMavenGroup
-                || configuredReleaseIdentity.minecraftVersion != '1.20.1'
-                || configuredReleaseIdentity.forgeVersion != '47.4.10'
-                || configuredReleaseIdentity.forgeInstallerSha256 != '1912760B4CB6B803D8A826DE603C9076B1DA71EC2765E9A1F8C1CA78F65278E3'
+                || configuredReleaseIdentity.minecraftVersion != '1.20.6'
+                || configuredReleaseIdentity.forgeVersion != '50.2.0'
+                || configuredReleaseIdentity.forgeInstallerSha256 != '8789098B077F5486449311A11DC05E977FEB9430913CB15F30B21A2D8AA213EA'
                 || configuredReleaseIdentity.mappingChannel != 'official'
-                || configuredReleaseIdentity.mappingVersion != '1.20.1'
+                || configuredReleaseIdentity.mappingVersion != '1.20.6'
                 || configuredReleaseIdentity.loaderName != 'forge'
                 || configuredReleaseIdentity.loaderCode != '1'
-                || configuredReleaseIdentity.javaVersion != '17'
-                || configuredReleaseIdentity.gradleJavaVersion != '17'
+                || configuredReleaseIdentity.javaVersion != '21'
+                || configuredReleaseIdentity.gradleJavaVersion != '21'
                 || configuredReleaseIdentity.curseForgeProjectId != '240967') {
-            throw new GradleException('Unexpected Base Metals 1.20.1 release identity')
+            throw new GradleException('Unexpected Base Metals 1.20.6 release identity')
         }
     }
 }
@@ -233,10 +222,10 @@ tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     description = 'Resolves and verifies the exact released OreSpawn qualification dependency.'
     doLast {
-        if (configuredOreSpawnIdentity.version != '4.1.0.120011'
+        if (configuredOreSpawnIdentity.version != '4.1.0.120061'
                 || configuredOreSpawnIdentity.curseProjectId != '245586'
-                || configuredOreSpawnIdentity.curseFileId != '9175609'
-                || configuredOreSpawnIdentity.sha256 != 'E6BDE47C1BB0BF4D08396F1D1FD5B1D2D3F8A5DF09905F279D39E2601D7FE4B0') {
+                || configuredOreSpawnIdentity.curseFileId != '9183384'
+                || configuredOreSpawnIdentity.sha256 != 'FAA7107B9FB84E2C62ED847CAFD880AA3C4238A37799BAD955EA9602A944AA26') {
             throw new GradleException('Unexpected OreSpawn release coordinates')
         }
         File artifact = configurations.orespawnRelease.resolvedConfiguration.resolvedArtifacts
@@ -304,7 +293,7 @@ tasks.register('verifyReleaseArtifacts') {
                 new DataInputStream(zip.getInputStream(entry)).withCloseable { input ->
                     if (input.readInt() != (int) 0xCAFEBABE) throw new GradleException("Invalid class: ${entry.name}")
                     input.readUnsignedShort()
-                    if (input.readUnsignedShort() != 61) throw new GradleException("Class is not Java 17: ${entry.name}")
+                    if (input.readUnsignedShort() != 65) throw new GradleException("Class is not Java 21: ${entry.name}")
                 }
             }
             def names = zip.entries().toList().collect { it.name } as Set
@@ -325,14 +314,14 @@ tasks.register('verifyReleaseArtifacts') {
             if (manifest.mainAttributes.getValue('Maven-Artifact') != expectedMavenCoordinate) {
                 throw new GradleException('Release manifest contains the wrong Maven coordinate')
             }
-            String expectedBuildTarget = 'minecraft-1.20.1-forge-47.4.10-java-17'
+            String expectedBuildTarget = 'minecraft-1.20.6-forge-50.2.0-java-21'
             if (manifest.mainAttributes.getValue('Build-Target') != expectedBuildTarget) {
                 throw new GradleException('Release manifest contains the wrong stable build target')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${')
-                    || !modsToml.contains('version="3.1.0.120011"')
-                    || !modsToml.contains('versionRange="[4.1.0.120011,5.0.0)"')) {
+                    || !modsToml.contains('version="3.1.0.120061"')
+                    || !modsToml.contains('versionRange="[4.1.0.120061,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(

@@ -3,19 +3,18 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.renamer' version '1.1.5'
     id 'net.minecraftforge.gradle' version '7.0.34'
 }
 
 ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
         'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
 ext.mavenizerCompatibilitySha256 =
-        '416DCA4797BC55826F0DDCF03FDC405F1990FC15C2133FA27A1F143BF7976177'
+        '4B14145595E900F178A082F2253A756F63897E6F61C2B8B5E7C819B82CD79E8C'
 
 ext.mavenizerFixtureChecksums = [
         'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
-        'minecraft-source-compatibility.json': '8945511DFF53B8F1A91EE44B14AF9EC7DB34C373617EA37A608C6958BFEEB22E',
-        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': 'D856190DEF5574716C5E4F4379912C451B1F5952B0B111576651A98EECF58544',
+        'minecraft-source-compatibility.json': '931DAB31C238D8C9C38239671A61DA0942ADADF80149D6359197EE80A16380A8',
+        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': 'A140C21312C2A5A8AFC56DC0B037B94D222CA68A7B868512B91684CD3754B650',
         'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331'
 ]
 // Mavenizer runs during configuration, so verify its inputs before configuring Forge.
@@ -27,8 +26,8 @@ mavenizerFixtureChecksums.each { name, expected ->
     }
 }
 
-// OreSpawn's sealed Mavenizer fixture fixes duplicate record accessors in
-// Forge 47's decompiled sources. It is build tooling, not part of the mod.
+// Forge 50 needs no source repairs. The sealed fixture records that result
+// and stays separate from the mod and its runtime dependencies.
 fgtools.configure('mavenizer') {
     classpath.from(mavenizerCompatibilityJar)
     mainClass.set('net.minecraftforge.mcmaven.cli.Main')
@@ -67,7 +66,7 @@ ext.release_tag = project.mod_version
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
     }
     withSourcesJar()
@@ -76,11 +75,11 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = JvmVendorSpec.ADOPTIUM
     }
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
     options.encoding = 'UTF-8'
     options.compilerArgs.addAll(['-Xmaxerrs', '1000'])
 }
@@ -338,6 +337,16 @@ tasks.withType(JavaExec).configureEach { JavaExec runTask ->
     runTask.dependsOn selected.task
     runTask.environment 'MOD_CLASSES', "${mod_id}%%${selected.directory.get().asFile}"
     runTask.doFirst {
+        if (runTask.name in ['runClient', 'runOptionalModsClient']) {
+            runTask.setArgs(['--launcher-side', 'client'] + runTask.args)
+        }
+        Set<String> splitOutputs = sourceSets.collectMany { it.output.files }.collect {
+            it.canonicalFile.absolutePath
+        } as Set
+        runTask.classpath = files(selected.directory.get().asFile, runTask.classpath.files.findAll {
+            !splitOutputs.contains(it.canonicalFile.absolutePath)
+        })
+        runTask.environment 'MOD_CLASSES', "${mod_id}%%${selected.directory.get().asFile}"
         File modsDirectory = new File(runTask.workingDir, 'mods')
         if (!modsDirectory.isDirectory() && !modsDirectory.mkdirs()) {
             throw new GradleException("Could not create development mods directory: ${modsDirectory}")
@@ -364,3 +373,4 @@ apply from: 'gradle/release/publishing.gradle'
 apply from: 'gradle/verification/support.gradle'
 apply from: 'gradle/verification/packaged-runtime.gradle'
 apply from: 'gradle/ide/eclipse.gradle'
+apply from: 'gradle/ide/intellij.gradle'

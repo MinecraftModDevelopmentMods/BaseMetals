@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/nickel"
   },
   "result": {
-    "item": "basemetals:nickel_smallpowder"
+    "id": "basemetals:nickel_smallpowder"
   }
 }

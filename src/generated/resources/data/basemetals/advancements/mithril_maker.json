@@ -12,7 +12,7 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "basemetals:mithril_blend"
+      "id": "basemetals:mithril_blend"
     },
     "show_toast": true,
     "title": {

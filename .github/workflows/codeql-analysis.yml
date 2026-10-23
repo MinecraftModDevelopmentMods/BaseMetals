@@ -3,11 +3,11 @@ name: CodeQL
 on:
   push:
     branches:
-      - master-1.20.1
+      - master-1.20.6
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.20.1
+      - master-1.20.6
 
 permissions:
   actions: read
@@ -24,11 +24,23 @@ jobs:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - name: Install pinned Java 17 runtime and toolchain
+      - name: Install Java 25 for Mavenizer
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
-          java-version: '17.0.1+12'
+          java-version: '25.0.3+9.0.LTS'
+
+      - name: Install Java 8 for the development launcher helper
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '8.0.502+7'
+
+      - name: Install pinned Java 21 runtime and toolchain
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21.0.7+6.0.LTS'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6

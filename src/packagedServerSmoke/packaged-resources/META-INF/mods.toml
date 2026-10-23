@@ -10,13 +10,13 @@ displayName="Base Metals packaged server smoke"
 [[dependencies.basemetals_server_smoke]]
 modId="basemetals"
 mandatory=true
-versionRange="[3.1.0.120011]"
+versionRange="[3.1.0.120061]"
 ordering="AFTER"
 side="SERVER"
 
 [[dependencies.basemetals_server_smoke]]
 modId="orespawn"
 mandatory=true
-versionRange="[4.1.0.120011]"
+versionRange="[4.1.0.120061]"
 ordering="AFTER"
 side="SERVER"

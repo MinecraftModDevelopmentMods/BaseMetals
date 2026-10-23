@@ -4,6 +4,6 @@
     "tag": "forge:nuggets/silver"
   },
   "result": {
-    "item": "basemetals:silver_smallpowder"
+    "id": "basemetals:silver_smallpowder"
   }
 }

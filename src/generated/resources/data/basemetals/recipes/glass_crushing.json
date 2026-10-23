@@ -4,6 +4,6 @@
     "item": "minecraft:glass"
   },
   "result": {
-    "item": "minecraft:sand"
+    "id": "minecraft:sand"
   }
 }

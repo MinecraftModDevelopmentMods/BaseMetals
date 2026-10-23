@@ -36,7 +36,7 @@ import net.minecraftforge.fml.common.Mod;
 
 /**
  * Development-only proof that the real client can create, join, tick, and
- * cleanly stop an integrated 1.18.2 server with Base Metals and OreSpawn.
+ * cleanly stop an integrated server with Base Metals and OreSpawn.
  */
 @Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, value = Dist.CLIENT)
 public final class IntegratedWorldSmoke {
@@ -109,7 +109,7 @@ public final class IntegratedWorldSmoke {
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE creating world={}", worldName);
             minecraft.createWorldOpenFlows().createFreshLevel(worldName, levelSettings,
                     new net.minecraft.world.level.levelgen.WorldOptions(0L, true, false),
-                    net.minecraft.world.level.levelgen.presets.WorldPresets::createNormalWorldDimensions);
+                    net.minecraft.world.level.levelgen.presets.WorldPresets::createNormalWorldDimensions, minecraft.screen);
         }
 
         if (creationStarted && minecraft.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
@@ -322,7 +322,7 @@ public final class IntegratedWorldSmoke {
         NonNullList<ItemStack> searchTab = NonNullList.create();
         net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(
                 net.minecraft.world.flag.FeatureFlags.VANILLA_SET, true,
-                RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY));
+                minecraft.level.registryAccess());
         itemsTab.addAll(ModTabs.ITEMS.get().getDisplayItems());
         searchTab.addAll(net.minecraft.world.item.CreativeModeTabs.searchTab().getDisplayItems());
         var shown = new java.util.HashSet<net.minecraft.world.item.Item>();

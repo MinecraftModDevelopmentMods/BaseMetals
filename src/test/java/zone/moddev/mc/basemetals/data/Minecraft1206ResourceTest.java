@@ -12,12 +12,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.junit.jupiter.api.Test;
 
-class Minecraft1201ResourceTest {
+class Minecraft1206ResourceTest {
     @Test
-    void resourceAndDataPacksUseThe1201Format() throws Exception {
+    void resourceAndDataPacksUseThe1206Formats() throws Exception {
         var pack = read("src/main/resources/pack.mcmeta").getAsJsonObject("pack");
-        assertEquals(15, pack.get("pack_format").getAsInt());
-        assertEquals(15, pack.get("forge:server_data_pack_format").getAsInt());
+        assertEquals(32, pack.get("pack_format").getAsInt());
+        var formats = pack.getAsJsonObject("supported_formats");
+        assertEquals(32, formats.get("min_inclusive").getAsInt());
+        assertEquals(41, formats.get("max_inclusive").getAsInt());
     }
 
     @Test
@@ -38,7 +40,7 @@ class Minecraft1201ResourceTest {
     }
 
     @Test
-    void tinkersStatsUseRegistered1201Types() throws Exception {
+    void dormantTinkersStatsRetainTheirSourceFormat() throws Exception {
         var stats = read("src/generated/resources/data/basemetals/tinkering/materials/stats/steel.json")
                 .getAsJsonObject("stats");
         assertFalse(stats.has("tconstruct:extra"));

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets/obsidian"
+            "items": "#forge:nuggets/obsidian"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/obsidian"
+            "items": "#forge:ingots/obsidian"
           }
         ]
       },

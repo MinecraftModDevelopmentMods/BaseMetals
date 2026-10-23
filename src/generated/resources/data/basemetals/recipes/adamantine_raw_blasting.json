@@ -5,5 +5,7 @@
   "ingredient": {
     "tag": "forge:raw_materials/adamantine"
   },
-  "result": "basemetals:adamantine_ingot"
+  "result": {
+    "id": "basemetals:adamantine_ingot"
+  }
 }

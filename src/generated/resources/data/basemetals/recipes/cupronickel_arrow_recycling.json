@@ -6,6 +6,6 @@
     "item": "basemetals:cupronickel_arrow"
   },
   "result": {
-    "item": "basemetals:cupronickel_nugget"
+    "id": "basemetals:cupronickel_nugget"
   }
 }

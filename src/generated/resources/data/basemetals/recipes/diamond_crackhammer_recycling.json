@@ -6,6 +6,6 @@
     "item": "basemetals:diamond_crackhammer"
   },
   "result": {
-    "item": "minecraft:diamond_block"
+    "id": "minecraft:diamond_block"
   }
 }

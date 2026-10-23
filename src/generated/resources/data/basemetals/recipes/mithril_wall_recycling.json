@@ -6,6 +6,6 @@
     "item": "basemetals:mithril_wall"
   },
   "result": {
-    "item": "basemetals:mithril_block"
+    "id": "basemetals:mithril_block"
   }
 }
