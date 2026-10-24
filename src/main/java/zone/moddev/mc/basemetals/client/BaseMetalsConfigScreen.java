@@ -16,7 +16,7 @@ import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ConfigEdits;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
-/** The same screen is used by NeoForge's Mods list and OreSpawn's configuration cog. */
+/** Base Metals settings, opened from NeoForge's Mods list. */
 public final class BaseMetalsConfigScreen extends Screen {
     private static final String PREFIX = "config.basemetals.";
     private static final String[] OPTIONS = {

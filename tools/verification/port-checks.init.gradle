@@ -1,0 +1,43 @@
+// Run these checks explicitly; the normal build and release tasks are unchanged.
+// ./gradlew -I tools/verification/port-checks.init.gradle portTest runPortGameTestServer
+gradle.afterProject { project ->
+    if (!project.plugins.hasPlugin('net.neoforged.gradle.userdev')) {
+        return
+    }
+
+    def tests = project.sourceSets.create('verificationTest')
+    tests.compileClasspath += project.sourceSets.main.output
+    tests.runtimeClasspath += project.sourceSets.main.output
+
+    project.configurations.verificationTestImplementation.extendsFrom(project.configurations.implementation)
+    project.configurations.verificationTestRuntimeOnly.extendsFrom(project.configurations.runtimeOnly)
+    project.dependencies.add('verificationTestImplementation', 'org.junit.jupiter:junit-jupiter:5.10.3')
+    project.dependencies.add('verificationTestRuntimeOnly', 'org.junit.platform:junit-platform-launcher:1.10.3')
+
+    project.tasks.register('portTest', Test) {
+        group = 'verification'
+        description = 'Run the optional NeoForge port regression tests.'
+        testClassesDirs = tests.output.classesDirs
+        classpath = tests.runtimeClasspath
+        workingDir project.projectDir
+        useJUnitPlatform()
+    }
+
+    def gameTests = project.sourceSets.create('portGameTest')
+    gameTests.java.srcDir('src/gameTest/java')
+    gameTests.compileClasspath += project.sourceSets.main.output
+    gameTests.runtimeClasspath += project.sourceSets.main.output
+
+    project.configurations.portGameTestImplementation.extendsFrom(project.configurations.implementation)
+    project.configurations.portGameTestRuntimeOnly.extendsFrom(project.configurations.runtimeOnly)
+
+    project.runs.create('portGameTestServer') {
+        configureFromTypeWithName false
+        runType 'gameTestServer'
+        modSource project.sourceSets.main
+        modSource gameTests
+        workingDirectory project.layout.projectDirectory.dir('run-port-gametest')
+        systemProperty 'neoforge.enabledGameTestNamespaces', 'basemetals'
+        systemProperty 'basemetals.testStructures', project.file('src/gameTest/resources/gameteststructures').absolutePath
+    }
+}

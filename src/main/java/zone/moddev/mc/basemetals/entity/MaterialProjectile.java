@@ -2,10 +2,17 @@ package zone.moddev.mc.basemetals.entity;
 
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Dynamic;
+
 import zone.moddev.mc.basemetals.content.ModContent;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -31,7 +38,9 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityWi
 
     @Override
     protected ItemStack getDefaultPickupItem() {
-        return ModContent.item("copper_arrow").get().getDefaultInstance();
+        String form = getType() == ModEntities.CUSTOM_BOLT.get() ? "bolt" : "arrow";
+
+        return ModContent.item("copper_" + form).get().getDefaultInstance();
     }
 
     /** Used by the renderer so arrows and bolts retain their actual ammunition appearance. */
@@ -43,13 +52,22 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityWi
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        // New saves use AbstractArrow's "item" field. Accept the former custom
-        // field when it contains a stack in the current component format.
-        if (!tag.contains("item", net.minecraft.nbt.Tag.TAG_COMPOUND)
-                && tag.contains("Ammunition", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
-            ItemStack.parse(registryAccess(), tag.getCompound("Ammunition"))
-                    .ifPresent(this::setPickupItemStack);
+
+        if (tag.contains("item", Tag.TAG_COMPOUND) || !tag.contains("Ammunition", Tag.TAG_COMPOUND)) {
+            return;
         }
+
+        CompoundTag ammunition = tag.getCompound("Ammunition").copy();
+
+        // Older projectiles stored their stack outside vanilla's item conversion.
+        // Convert it here so names, enchantments and custom data survive the upgrade.
+        if (ammunition.contains("Count")) {
+            ammunition = (CompoundTag) DataFixers.getDataFixer().update(References.ITEM_STACK,
+                    new Dynamic<>(NbtOps.INSTANCE, ammunition), 3465,
+                    SharedConstants.getCurrentVersion().getDataVersion().getVersion()).getValue();
+        }
+
+        ItemStack.parse(registryAccess(), ammunition).ifPresent(this::setPickupItemStack);
     }
 
     @Override

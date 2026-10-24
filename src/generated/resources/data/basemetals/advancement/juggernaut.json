@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:story/enter_the_nether",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.juggernaut.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "basemetals:adamantine_chestplate"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.juggernaut.title"
+    }
+  }
+}

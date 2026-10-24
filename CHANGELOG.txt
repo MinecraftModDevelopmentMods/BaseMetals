@@ -1,3 +1,15 @@
+Base Metals 3.1.0.121012 (in development)
+
+- Port Base Metals to Minecraft 1.21.1 and NeoForge.
+- Restore recipe-book unlocks and armour advancements in the new data-pack folders.
+- Fix chest additions using NeoForge's loot-modifier registration and conditions.
+- Use shared plate tags so shield upgrades work again.
+- Keep names, enchantments, lore and custom data when loading older embedded arrows and bolts.
+- Keep the bolt pickup item a bolt when no saved ammunition is available.
+- Resolve enchanted smith trades through the world's enchantment registry.
+- Add optional regression tests without changing the normal build or deployment tasks.
+- Document the Eclipse cache settings needed to avoid duplicate launcher modules.
+
 Base Metals 3.1.0.119041
 
 - Port the 1.18 version to Minecraft 1.19.4 and Forge 45.4.0.

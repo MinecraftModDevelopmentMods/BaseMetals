@@ -216,7 +216,7 @@ public final class BaseMetalsEvents {
         MaterialDefinition upgrade = shieldMaterials().values().stream()
                 .filter(candidate -> candidate.hardness() > current.hardness())
                 .filter(candidate -> event.getRight().is(ItemTags.create(
-                        ResourceLocation.fromNamespaceAndPath("forge", "plates/" + candidate.name()))))
+                        ResourceLocation.fromNamespaceAndPath("c", "plates/" + candidate.name()))))
                 .sorted(Comparator.comparingDouble(MaterialDefinition::hardness)
                         .thenComparing(MaterialDefinition::name))
                 .findFirst().orElse(null);

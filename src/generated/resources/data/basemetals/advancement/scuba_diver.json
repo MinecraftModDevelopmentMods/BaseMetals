@@ -1,0 +1,22 @@
+{
+  "parent": "basemetals:aquarium_maker",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.scuba_diver.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "basemetals:aquarium_helmet"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.scuba_diver.title"
+    }
+  }
+}
