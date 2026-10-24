@@ -85,13 +85,13 @@ public final class Legacy112WorldMigrator {
 
     private Legacy112WorldMigrator() {}
 
-    public static void migrateIfNeeded(Path worldRoot) throws IOException {
+    public static boolean migrateIfNeeded(Path worldRoot) throws IOException {
         Path root = worldRoot.toAbsolutePath().normalize();
-        if (Files.isRegularFile(root.resolve(MARKER))) return;
+        if (Files.isRegularFile(root.resolve(MARKER))) return false;
 
-        if (!Files.isRegularFile(root.resolve("level.dat"))) return;
+        if (!Files.isRegularFile(root.resolve("level.dat"))) return false;
         Map<Integer, String> oldBlockIds = legacyBlockIds(root);
-        if (oldBlockIds.values().stream().noneMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":"))) return;
+        if (oldBlockIds.values().stream().noneMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":"))) return false;
 
         List<Path> regions = findRegionFiles(root);
 
@@ -126,7 +126,7 @@ public final class Legacy112WorldMigrator {
                     "No legacy Forge numeric chunks or filled buckets required Base Metals migration."
                             + System.lineSeparator(),
                     StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
-            return;
+            return false;
         }
 
         String result = "Converted " + convertedChunks + " legacy chunks in " + convertedRegions
@@ -139,6 +139,7 @@ public final class Legacy112WorldMigrator {
         Files.writeString(root.resolve(MARKER), result + System.lineSeparator(), StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE_NEW);
         BaseMetals.LOGGER.info(result);
+        return true;
     }
 
     /**
@@ -172,16 +173,19 @@ public final class Legacy112WorldMigrator {
     }
 
     private static Map<Integer, String> legacyBlockIds(Path root) throws IOException {
+        boolean legacyWorld = false;
         for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
             CompoundTag candidate = NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap());
             int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
             if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
+            legacyWorld |= candidate.contains("Data", Tag.TAG_COMPOUND);
             Map<Integer, String> ids = oldBlockIds(candidate);
             if (!ids.isEmpty()) return ids;
         }
-        return embeddedBlockIds();
+        // Use packaged IDs only when saved metadata confirms an old world.
+        return legacyWorld ? embeddedBlockIds() : Map.of();
     }
 
     static Map<Integer, String> legacyBlockIdsForTest(Path root) throws IOException {
