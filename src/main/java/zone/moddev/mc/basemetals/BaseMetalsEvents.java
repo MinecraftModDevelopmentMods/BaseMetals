@@ -75,8 +75,9 @@ public final class BaseMetalsEvents {
     public void onServerAboutToStart(ServerAboutToStartEvent event) {
         try {
             java.nio.file.Path worldRoot = event.getServer().getWorldPath(LevelResource.ROOT);
-            Legacy112WorldMigrator.migrateIfNeeded(worldRoot);
-            Legacy112WorldMigrator.refreshLoadedSingleplayerPlayer(event.getServer(), worldRoot);
+            if (Legacy112WorldMigrator.migrateIfNeeded(worldRoot)) {
+                Legacy112WorldMigrator.refreshLoadedSingleplayerPlayer(event.getServer(), worldRoot);
+            }
         } catch (java.io.IOException exception) {
             throw new IllegalStateException(
                     "Base Metals could not safely pre-flatten the legacy Forge 1.10/1.12 world", exception);
