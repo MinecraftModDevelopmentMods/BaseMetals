@@ -1,3 +1,9 @@
+Base Metals 3.1.1.120011
+
+- Fix startup failures when Base Metals is added to an existing modern world, including worlds with external chunks or empty region files.
+- Stop old level.dat_old backups from replacing current player data or enabling legacy terrain protection.
+- Keep genuine legacy upgrades, reloads and later-opened chunks supported, including chunks in nested custom dimensions.
+
 Base Metals 3.1.0.120011
 
 - Port the 1.19.4 version to Minecraft 1.20.1 and Forge 47.4.10.
