@@ -10,7 +10,7 @@ displayName="Base Metals packaged client smoke"
 [[dependencies.basemetals_client_smoke]]
 modId="basemetals"
 mandatory=true
-versionRange="[3.1.0.119041]"
+versionRange="[3.1.1.119041]"
 ordering="AFTER"
 side="CLIENT"
 
