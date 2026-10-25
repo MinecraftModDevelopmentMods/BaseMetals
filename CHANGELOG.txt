@@ -10,6 +10,7 @@ Base Metals 3.1.1.121011
 - Update recipes, tags, loot, advancements and enchantments for Minecraft 1.21's data formats.
 - Keep arrows and bolts tied to their firing weapon so native enchantments apply after material damage.
 - Use the published OreSpawn 4.1.0.121011 release with the same eleven ore rules and copper defaults.
+- Keep automated client checks from hanging at Forge's splash screen on virtual displays.
 
 Base Metals 3.1.0.120061
 

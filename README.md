@@ -194,6 +194,10 @@ identity checks, and a second clean build to prove byte-identical release
 artifacts. GameTests, smoke probes, migration fixtures, and reference sources
 are isolated from the published JAR.
 
+Virtual-display client checks use `-PvirtualDisplaySmoke=true` to skip Forge's
+early splash window. Minecraft still opens its game window and runs the full
+world check. Ordinary client launches keep the normal splash screen.
+
 Release artifacts use Maven coordinate
 `zone.moddev.mc.basemetals:BaseMetals:3.1.1.121011`.
 

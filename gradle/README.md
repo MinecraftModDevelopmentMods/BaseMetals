@@ -38,3 +38,9 @@ Run `prepareEclipse` after importing the project or refreshing Gradle. It
 generates the launches, copies processed resources and checks that ordinary
 runs cannot see tests or probes. Client launches explicitly select the client
 side of ForgeGradle's launcher so it resolves assets and native libraries.
+
+The two CI client smokes pass `-PvirtualDisplaySmoke=true`. This disables
+Forge's early splash window only in their disposable run directories; the
+game window and integrated-world assertions still run. Leave this option off
+for ordinary launches. `verifyVirtualDisplaySmokeSetup` checks both paths as
+part of `check`.

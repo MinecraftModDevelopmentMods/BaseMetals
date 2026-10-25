@@ -17,6 +17,56 @@ def packagedClientJavaExecutable = providers.gradleProperty('packagedClientJavaE
 def packagedServerRunDirectory = layout.buildDirectory.dir('packaged-server-run')
 def packagedClientRunDirectory = layout.buildDirectory.dir('packaged-client-run')
 
+def virtualDisplaySmoke = providers.gradleProperty('virtualDisplaySmoke')
+        .map { it.toBoolean() }.getOrElse(false)
+
+def configureVirtualDisplayWindow = { File runDirectory, boolean enabled ->
+    if (!enabled) {
+        return
+    }
+
+    // Skip Forge's splash under Xvfb; Minecraft still opens its normal game window.
+    File config = new File(runDirectory, 'config/fml.toml')
+    config.parentFile.mkdirs()
+    config.setText('earlyWindowControl = false\n', 'UTF-8')
+}
+
+def verifyVirtualDisplaySmokeSetup = tasks.register('verifyVirtualDisplaySmokeSetup') {
+    group = 'verification'
+    description = 'Checks that virtual-display settings stay confined to opted-in smoke runs.'
+
+    doLast {
+        File root = layout.buildDirectory.dir('verification/virtual-display-config').get().asFile
+        File ordinaryRun = new File(root, 'ordinary')
+        File virtualRun = new File(root, 'virtual')
+        delete root
+
+        configureVirtualDisplayWindow(ordinaryRun, false)
+        if (ordinaryRun.exists()) {
+            throw new GradleException('Ordinary launches must not receive the smoke-only Forge config')
+        }
+
+        configureVirtualDisplayWindow(virtualRun, true)
+        File config = new File(virtualRun, 'config/fml.toml')
+        if (config.getText('UTF-8') != 'earlyWindowControl = false\n') {
+            throw new GradleException('Virtual-display smokes must disable only the early splash window')
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn verifyVirtualDisplaySmokeSetup
+}
+
+tasks.matching { it.name == 'runClient' }.configureEach {
+    if (providers.gradleProperty('integratedWorldSmoke').isPresent()) {
+        doFirst {
+            configureVirtualDisplayWindow(layout.projectDirectory.dir('run-integrated-smoke').asFile,
+                    virtualDisplaySmoke)
+        }
+    }
+}
+
 def requireRuntimeDirectory = { Provider<String> configuredPath, String propertyName ->
     if (!configuredPath.isPresent()) {
         throw new GradleException("Pass -P${propertyName}=<official Forge ${project.forge_version} runtime directory>")
@@ -163,6 +213,7 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
             }
         }
         new File(runDirectory, 'options.txt').setText('fullscreen:false\nlang:en_us\nonboardAccessibility:false\n', 'UTF-8')
+        configureVirtualDisplayWindow(runDirectory, virtualDisplaySmoke)
         if (providers.gradleProperty('packagedHostTextureProbe').isPresent()) {
             File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
             File hostPack = new File(runDirectory, 'resourcepacks/basemetals-host-test')
