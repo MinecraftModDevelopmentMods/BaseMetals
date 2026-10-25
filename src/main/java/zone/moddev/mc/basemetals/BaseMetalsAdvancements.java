@@ -51,6 +51,11 @@ final class BaseMetalsAdvancements {
     }
 
     static void onSmelted(ServerPlayer player, ItemStack result) {
+        if (result.is(net.minecraft.world.item.Items.COPPER_INGOT)) {
+            award(player, "this_is_new");
+            return;
+        }
+
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(result.getItem());
         if (id == null || !id.getNamespace().equals(BaseMetals.MOD_ID)
                 || !id.getPath().endsWith("_ingot")) {
@@ -64,7 +69,8 @@ final class BaseMetalsAdvancements {
 
     static void onPlaced(ServerPlayer player, BlockState state) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-        if (id != null && id.getNamespace().equals(BaseMetals.MOD_ID) && state.is(STORAGE_BLOCKS)) {
+        if (id != null && (id.getNamespace().equals(BaseMetals.MOD_ID)
+                || state.is(net.minecraft.world.level.block.Blocks.COPPER_BLOCK)) && state.is(STORAGE_BLOCKS)) {
             award(player, "blocktastic");
         }
     }

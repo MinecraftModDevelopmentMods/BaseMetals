@@ -1,19 +1,19 @@
-name: Base Metals 1.20.6 CI
+name: Base Metals 1.21.1 CI
 
 on:
   push:
     branches:
-      - master-1.20.6
+      - master-1.21.1
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.20.6
+      - master-1.21.1
 
 permissions:
   contents: read
 
 concurrency:
-  group: basemetals-1.20.6-${{ github.workflow }}-${{ github.ref }}
+  group: basemetals-1.21.1-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -60,6 +60,9 @@ jobs:
           "$RUNNER_TEMP/nbt-tests/bin/pip" install nbtlib==2.0.4 numpy==2.4.6
           "$RUNNER_TEMP/nbt-tests/bin/python" -m unittest discover -s tools/validation -p 'test_*.py'
 
+      - name: Test upgrade log boundaries
+        run: node --test tools/validation/test_painting_registry.js
+
       - name: Build, test, and audit first candidate
         run: |
           chmod +x ./gradlew
@@ -68,9 +71,9 @@ jobs:
             --no-daemon --stacktrace
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.1.0.120061.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.120061-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.120061-javadoc.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.121011.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.121011-sources.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.121011-javadoc.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -78,9 +81,9 @@ jobs:
           ./gradlew clean assemble verifyReleaseArtifacts writeReleaseChecksums \
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}" \
             --no-daemon --stacktrace
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061.jar" build/libs/BaseMetals-3.1.0.120061.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061-sources.jar" build/libs/BaseMetals-3.1.0.120061-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061-javadoc.jar" build/libs/BaseMetals-3.1.0.120061-javadoc.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.121011.jar" build/libs/BaseMetals-3.1.1.121011.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.121011-sources.jar" build/libs/BaseMetals-3.1.1.121011-sources.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.121011-javadoc.jar" build/libs/BaseMetals-3.1.1.121011-javadoc.jar
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run all required GameTests
@@ -92,14 +95,14 @@ jobs:
       - name: Install official Forge packaged runtimes
         id: forge-runtimes
         run: |
-          server_runtime="$RUNNER_TEMP/forge-1.20.6-50.2.0-server"
-          client_runtime="$RUNNER_TEMP/forge-1.20.6-50.2.0-client"
-          installer="$RUNNER_TEMP/forge-1.20.6-50.2.0-installer.jar"
+          server_runtime="$RUNNER_TEMP/forge-1.21.1-52.1.0-server"
+          client_runtime="$RUNNER_TEMP/forge-1.21.1-52.1.0-client"
+          installer="$RUNNER_TEMP/forge-1.21.1-52.1.0-installer.jar"
           mkdir -p "$server_runtime" "$client_runtime"
           curl --fail --location --retry 3 \
             --output "$installer" \
-            https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.6-50.2.0/forge-1.20.6-50.2.0-installer.jar
-          echo "8789098B077F5486449311A11DC05E977FEB9430913CB15F30B21A2D8AA213EA  $installer" | sha256sum --check --strict
+            https://maven.minecraftforge.net/net/minecraftforge/forge/1.21.1-52.1.0/forge-1.21.1-52.1.0-installer.jar
+          echo "F1B620F2879AD6A5BBE15DABA4D8F81EAB9F5E08004967604960B98996BDEBC4  $installer" | sha256sum --check --strict
           (
             cd "$server_runtime"
             java -jar "$installer" --installServer
@@ -142,13 +145,13 @@ jobs:
       - name: Upload audited release candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.20.6-${{ github.sha }}
+          name: BaseMetals-1.21.1-${{ github.sha }}
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.1.0.120061.jar
-            build/libs/BaseMetals-3.1.0.120061-sources.jar
-            build/libs/BaseMetals-3.1.0.120061-javadoc.jar
+            build/libs/BaseMetals-3.1.1.121011.jar
+            build/libs/BaseMetals-3.1.1.121011-sources.jar
+            build/libs/BaseMetals-3.1.1.121011-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
@@ -156,7 +159,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.20.6-diagnostics-${{ github.sha }}
+          name: BaseMetals-1.21.1-diagnostics-${{ github.sha }}
           if-no-files-found: ignore
           retention-days: 14
           path: |

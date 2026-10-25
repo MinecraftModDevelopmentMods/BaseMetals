@@ -34,7 +34,7 @@ class ForwardPortRegressionTest {
 
     private static JsonObject recipe(String name) throws Exception {
         JsonObject json = JsonParser.parseString(Files.readString(Path.of(
-                "src/generated/resources/data/basemetals/recipes/" + name + ".json"))).getAsJsonObject();
+                "src/generated/resources/data/basemetals/recipe/" + name + ".json"))).getAsJsonObject();
         return json.has("recipe") ? json.getAsJsonObject("recipe") : json;
     }
 }

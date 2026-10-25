@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_pickaxe",
+    "basemetals:antimony_pickaxe",
+    "basemetals:aquarium_pickaxe",
+    "basemetals:bismuth_pickaxe",
+    "basemetals:brass_pickaxe",
+    "basemetals:bronze_pickaxe",
+    "basemetals:coldiron_pickaxe",
+    "basemetals:copper_pickaxe",
+    "basemetals:cupronickel_pickaxe",
+    "basemetals:electrum_pickaxe",
+    "basemetals:emerald_pickaxe",
+    "basemetals:invar_pickaxe",
+    "basemetals:lead_pickaxe",
+    "basemetals:mithril_pickaxe",
+    "basemetals:nickel_pickaxe",
+    "basemetals:obsidian_pickaxe",
+    "basemetals:pewter_pickaxe",
+    "basemetals:platinum_pickaxe",
+    "basemetals:quartz_pickaxe",
+    "basemetals:silver_pickaxe",
+    "basemetals:starsteel_pickaxe",
+    "basemetals:steel_pickaxe",
+    "basemetals:tin_pickaxe",
+    "basemetals:zinc_pickaxe"
+  ]
+}

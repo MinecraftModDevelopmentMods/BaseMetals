@@ -65,7 +65,7 @@ class ResourceIntegrityTest {
             assertResource("assets/basemetals/blockstates/" + id + ".json");
             assertTrue(language.has("block.basemetals." + id), "Missing block translation for " + block);
             if (!fluids.contains(block)) {
-                assertResource("data/basemetals/loot_tables/blocks/" + id + ".json");
+                assertResource("data/basemetals/loot_table/blocks/" + id + ".json");
             }
         }
         for (String item : items) {
@@ -268,9 +268,9 @@ class ResourceIntegrityTest {
         Set<String> items = strings(manifest.getAsJsonArray("items"));
         Set<String> fluids = strings(manifest.getAsJsonArray("fluids"));
 
-        validateTagTree(GENERATED.resolve("data"), "items", items);
-        validateTagTree(GENERATED.resolve("data"), "blocks", blocks);
-        validateTagTree(GENERATED.resolve("data"), "fluids", fluids);
+        validateTagTree(GENERATED.resolve("data"), "item", items);
+        validateTagTree(GENERATED.resolve("data"), "block", blocks);
+        validateTagTree(GENERATED.resolve("data"), "fluid", fluids);
 
         for (Path root : List.of(MAIN.resolve("data/basemetals"), GENERATED.resolve("data/basemetals"))) {
             if (!Files.isDirectory(root)) continue;
@@ -296,7 +296,7 @@ class ResourceIntegrityTest {
 
     @Test
     void crushingAliasesAndOptionalProcessingContractsAreGenerated() throws Exception {
-        JsonObject crushing = read(resource("data/basemetals/recipes/copper_ore_crushing.json")).getAsJsonObject();
+        JsonObject crushing = read(resource("data/basemetals/recipe/copper_ore_crushing.json")).getAsJsonObject();
         assertEquals("basemetals:crushing", crushing.get("type").getAsString());
         assertEquals("forge:ores/copper", crushing.getAsJsonObject("ingredient").get("tag").getAsString());
         assertEquals(2, crushing.getAsJsonObject("result").get("count").getAsInt());
@@ -314,9 +314,9 @@ class ResourceIntegrityTest {
         assertCrushingRecipe("tin_nugget_crushing", "tag", "forge:nuggets/tin",
                 "basemetals:tin_smallpowder", 1);
 
-        JsonObject adamantAlias = read(resource("data/forge/tags/items/ingots/adamantium.json")).getAsJsonObject();
+        JsonObject adamantAlias = read(resource("data/forge/tags/item/ingots/adamantium.json")).getAsJsonObject();
         assertTrue(strings(adamantAlias.getAsJsonArray("values")).contains("#forge:ingots/adamantine"));
-        JsonObject sprocket = read(resource("data/forge/tags/items/sprockets/steel.json")).getAsJsonObject();
+        JsonObject sprocket = read(resource("data/forge/tags/item/sprockets/steel.json")).getAsJsonObject();
         assertTrue(strings(sprocket.getAsJsonArray("values")).contains("#forge:gears/steel"));
 
         assertConditionalRecipe("compat/mekanism/adamantine/ore_to_dirty_slurry", "mekanism");
@@ -345,9 +345,9 @@ class ResourceIntegrityTest {
         assertCookingRecipe("iron_crackhammer_recycling", "basemetals:legacy_smelting",
                 "item", "basemetals:iron_crackhammer", "minecraft:iron_block", 1);
 
-        assertFalse(Files.exists(resource("data/basemetals/recipes/coal_powder_smelting.json")),
+        assertFalse(Files.exists(resource("data/basemetals/recipe/coal_powder_smelting.json")),
                 "Coal powder must remain a fuel rather than smelting back into coal");
-        assertFalse(Files.exists(resource("data/basemetals/recipes/charcoal_powder_smelting.json")),
+        assertFalse(Files.exists(resource("data/basemetals/recipe/charcoal_powder_smelting.json")),
                 "Charcoal powder must remain a fuel rather than smelting back into charcoal");
 
         JsonObject manifest = read(resource("data/basemetals/registry_manifest.json")).getAsJsonObject();
@@ -380,10 +380,10 @@ class ResourceIntegrityTest {
         assertRecipeKeyTag("emerald_gear", "R", "forge:rods/iron");
         assertRecipeKeyTag("stone_scythe", "X", "forge:stone");
         assertRecipeKeyTag("copper_pickaxe", "X", "forge:ingots/copper");
-        assertRecipeKeyItem("copper_block", "X", "basemetals:copper_ingot");
-        assertRecipeIngredientItem("copper_block_ingot", "basemetals:copper_block");
+        assertRecipeKeyTag("copper_block", "X", "forge:ingots/copper");
+        assertRecipeIngredientTag("copper_block_ingot", "forge:storage_blocks/copper");
         assertRecipeIngredientTag("tin_block_ingot", "forge:storage_blocks/tin");
-        assertRecipeIngredientItem("copper_nuggets", "basemetals:copper_ingot");
+        assertRecipeIngredientTag("copper_nuggets", "forge:ingots/copper");
         assertRecipeKeyItem("copper_ingot_from_nuggets", "X", "basemetals:copper_nugget");
         assertRecipeResult("iron_plate", "basemetals:iron_plate", 3);
         assertRecipeResult("gold_plate", "basemetals:gold_plate", 3);
@@ -398,14 +398,14 @@ class ResourceIntegrityTest {
         assertRecipeResult("quartz_nugget", "basemetals:quartz_nugget", 9);
         assertRecipeIngredientTag("quartz_nugget", "forge:gems/quartz");
         assertRecipeResult("redstone_smallpowder", "basemetals:redstone_smallpowder", 9);
-        assertFalse(Files.exists(resource("data/basemetals/recipes/stone_gear.json")));
-        assertFalse(Files.exists(resource("data/basemetals/recipes/wood_gear.json")));
-        assertFalse(Files.exists(resource("data/basemetals/recipes/lapis_from_smallpowder.json")));
+        assertFalse(Files.exists(resource("data/basemetals/recipe/stone_gear.json")));
+        assertFalse(Files.exists(resource("data/basemetals/recipe/wood_gear.json")));
+        assertFalse(Files.exists(resource("data/basemetals/recipe/lapis_from_smallpowder.json")));
     }
 
     @Test
     void everyHistoricalPlateRepairRecipeUsesTheTypedSerializer() throws Exception {
-        Path recipes = GENERATED.resolve("data/basemetals/recipes");
+        Path recipes = GENERATED.resolve("data/basemetals/recipe");
         long count;
         try (Stream<Path> paths = Files.list(recipes)) {
             count = paths.filter(path -> path.getFileName().toString().endsWith("_plate_repair.json")).count();
@@ -426,24 +426,24 @@ class ResourceIntegrityTest {
 
     @Test
     void harvestAmmoAndWorldgenTagsCoverTheRestoredRuntimeContracts() throws Exception {
-        Set<String> stone = strings(read(resource("data/minecraft/tags/blocks/needs_stone_tool.json"))
+        Set<String> stone = strings(read(resource("data/minecraft/tags/block/needs_stone_tool.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
-        Set<String> iron = strings(read(resource("data/minecraft/tags/blocks/needs_iron_tool.json"))
+        Set<String> iron = strings(read(resource("data/minecraft/tags/block/needs_iron_tool.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
-        Set<String> diamond = strings(read(resource("data/minecraft/tags/blocks/needs_diamond_tool.json"))
+        Set<String> diamond = strings(read(resource("data/minecraft/tags/block/needs_diamond_tool.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
         assertTrue(stone.contains("basemetals:copper_ore"));
         assertTrue(iron.contains("basemetals:bronze_block"));
         assertTrue(diamond.contains("basemetals:adamantine_ore"));
 
-        Set<String> beaconBases = strings(read(resource("data/minecraft/tags/blocks/beacon_base_blocks.json"))
+        Set<String> beaconBases = strings(read(resource("data/minecraft/tags/block/beacon_base_blocks.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
         assertEquals(22, beaconBases.size());
         assertTrue(beaconBases.contains("basemetals:adamantine_block"));
         assertTrue(beaconBases.contains("basemetals:charcoal_block"));
         assertFalse(beaconBases.contains("basemetals:mercury"));
 
-        Set<String> arrows = strings(read(resource("data/minecraft/tags/items/arrows.json"))
+        Set<String> arrows = strings(read(resource("data/minecraft/tags/item/arrows.json"))
                 .getAsJsonObject().getAsJsonArray("values"));
         assertTrue(arrows.contains("basemetals:tin_arrow"));
         assertFalse(arrows.contains("basemetals:tin_bolt"));
@@ -461,7 +461,7 @@ class ResourceIntegrityTest {
     @Test
     void generatedHarvestTierTagsHaveDeterministicOrdering() throws Exception {
         for (String tier : List.of("stone", "iron", "diamond")) {
-            JsonArray values = read(resource("data/minecraft/tags/blocks/needs_" + tier + "_tool.json"))
+            JsonArray values = read(resource("data/minecraft/tags/block/needs_" + tier + "_tool.json"))
                     .getAsJsonObject().getAsJsonArray("values");
             List<String> actual = new ArrayList<>();
             values.forEach(value -> actual.add(value.getAsString()));
@@ -482,7 +482,7 @@ class ResourceIntegrityTest {
                 Map.entry("demon_slayer", "minecraft:story/enter_the_nether"),
                 Map.entry("juggernaut", "minecraft:story/enter_the_nether"),
                 Map.entry("moon_boots", "minecraft:end/root"));
-        Path advancements = GENERATED.resolve("data/basemetals/advancements");
+        Path advancements = GENERATED.resolve("data/basemetals/advancement");
         long count;
         try (Stream<Path> paths = Files.list(advancements)) {
             count = paths.filter(path -> path.toString().endsWith(".json")).count();
@@ -513,9 +513,9 @@ class ResourceIntegrityTest {
 
     @Test
     void customAnvilLootRetainsDamageWithoutUsingTheUnsafeVanillaTag() throws Exception {
-        assertFalse(Files.exists(GENERATED.resolve("data/minecraft/tags/blocks/anvil.json")),
+        assertFalse(Files.exists(GENERATED.resolve("data/minecraft/tags/block/anvil.json")),
                 "Custom anvils trigger vanilla's hard-coded fall deletion when placed in minecraft:anvil");
-        JsonObject loot = read(resource("data/basemetals/loot_tables/blocks/stone_anvil.json"))
+        JsonObject loot = read(resource("data/basemetals/loot_table/blocks/stone_anvil.json"))
                 .getAsJsonObject();
         JsonArray functions = loot.getAsJsonArray("pools").get(0).getAsJsonObject()
                 .getAsJsonArray("entries").get(0).getAsJsonObject().getAsJsonArray("functions");
@@ -525,8 +525,8 @@ class ResourceIntegrityTest {
 
     @Test
     void vanillaCrackhammerHeadsRetainTheirLegacyIngredients() throws Exception {
-        JsonObject stone = read(resource("data/basemetals/recipes/stone_crackhammer.json")).getAsJsonObject();
-        JsonObject wood = read(resource("data/basemetals/recipes/wood_crackhammer.json")).getAsJsonObject();
+        JsonObject stone = read(resource("data/basemetals/recipe/stone_crackhammer.json")).getAsJsonObject();
+        JsonObject wood = read(resource("data/basemetals/recipe/wood_crackhammer.json")).getAsJsonObject();
 
         assertEquals("minecraft:stone_bricks",
                 stone.getAsJsonObject("key").getAsJsonObject("X").get("item").getAsString());
@@ -552,7 +552,7 @@ class ResourceIntegrityTest {
         for (Map.Entry<String, String> target : templates.entrySet()) {
             JsonObject legacy = read(Path.of("reference/1.12/alt/chests/" + target.getValue() + ".json"))
                     .getAsJsonObject();
-            JsonObject generated = read(resource("data/basemetals/loot_tables/chests/inject/"
+            JsonObject generated = read(resource("data/basemetals/loot_table/chests/inject/"
                     + target.getKey() + ".json")).getAsJsonObject();
             assertEquals(legacy.getAsJsonArray("pools").size(), generated.getAsJsonArray("pools").size(), target.getKey());
             for (int pool = 0; pool < legacy.getAsJsonArray("pools").size(); pool++) {
@@ -580,7 +580,8 @@ class ResourceIntegrityTest {
         Set<String> result = new LinkedHashSet<>();
         entries.forEach(value -> {
             JsonObject entry = value.getAsJsonObject();
-            if (entry.has("name")) result.add(entry.get("name").getAsString());
+            if (entry.has("name")) result.add(zone.moddev.mc.basemetals.compat.VanillaCopper.output(
+                    entry.get("name").getAsString()));
         });
         return result;
     }
@@ -603,7 +604,7 @@ class ResourceIntegrityTest {
     }
 
     private static void assertConditionalRecipe(String id, String modId) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         JsonObject condition = recipe.getAsJsonObject("forge:condition").getAsJsonArray("values").get(0).getAsJsonObject();
         assertEquals("forge:mod_loaded", condition.get("type").getAsString(), id);
         assertEquals(modId, condition.get("modid").getAsString(), id);
@@ -611,7 +612,7 @@ class ResourceIntegrityTest {
 
     private static void assertCrushingRecipe(String id, String ingredientKind, String ingredient,
             String result, int count) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals("basemetals:crushing", recipe.get("type").getAsString(), id);
         assertEquals(ingredient, recipe.getAsJsonObject("ingredient").get(ingredientKind).getAsString(), id);
         assertEquals(result, recipe.getAsJsonObject("result").get("id").getAsString(), id);
@@ -623,7 +624,7 @@ class ResourceIntegrityTest {
 
     private static void assertCookingRecipe(String id, String type, String ingredientKind,
             String ingredient, String result, int count) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals(type, recipe.get("type").getAsString(), id);
         assertEquals(ingredient, recipe.getAsJsonObject("ingredient").get(ingredientKind).getAsString(), id);
         JsonElement resultElement = recipe.get("result");
@@ -642,36 +643,36 @@ class ResourceIntegrityTest {
     }
 
     private static void assertRecipeResult(String id, String item, int count) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         JsonObject result = recipe.getAsJsonObject("result");
         assertEquals(item, result.get("id").getAsString(), id);
         assertEquals(count, result.has("count") ? result.get("count").getAsInt() : 1, id);
     }
 
     private static void assertRecipeKeyTag(String id, String key, String tag) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals(tag, recipe.getAsJsonObject("key").getAsJsonObject(key).get("tag").getAsString(), id);
     }
 
     private static void assertRecipeKeyItem(String id, String key, String item) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals(item, recipe.getAsJsonObject("key").getAsJsonObject(key).get("item").getAsString(), id);
     }
 
     private static void assertRecipeIngredientTag(String id, String tag) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals(tag, recipe.getAsJsonArray("ingredients").get(0).getAsJsonObject()
                 .get("tag").getAsString(), id);
     }
 
     private static void assertRecipeIngredientItem(String id, String item) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         assertEquals(item, recipe.getAsJsonArray("ingredients").get(0).getAsJsonObject()
                 .get("item").getAsString(), id);
     }
 
     private static void assertRecipePattern(String id, String... rows) throws Exception {
-        JsonObject recipe = read(resource("data/basemetals/recipes/" + id + ".json")).getAsJsonObject();
+        JsonObject recipe = read(resource("data/basemetals/recipe/" + id + ".json")).getAsJsonObject();
         List<String> actual = new ArrayList<>();
         recipe.getAsJsonArray("pattern").forEach(row -> actual.add(row.getAsString()));
         assertEquals(List.of(rows), actual, id);

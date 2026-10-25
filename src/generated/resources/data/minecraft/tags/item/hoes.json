@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_hoe",
+    "basemetals:antimony_hoe",
+    "basemetals:aquarium_hoe",
+    "basemetals:bismuth_hoe",
+    "basemetals:brass_hoe",
+    "basemetals:bronze_hoe",
+    "basemetals:coldiron_hoe",
+    "basemetals:copper_hoe",
+    "basemetals:cupronickel_hoe",
+    "basemetals:electrum_hoe",
+    "basemetals:emerald_hoe",
+    "basemetals:invar_hoe",
+    "basemetals:lead_hoe",
+    "basemetals:mithril_hoe",
+    "basemetals:nickel_hoe",
+    "basemetals:obsidian_hoe",
+    "basemetals:pewter_hoe",
+    "basemetals:platinum_hoe",
+    "basemetals:quartz_hoe",
+    "basemetals:silver_hoe",
+    "basemetals:starsteel_hoe",
+    "basemetals:steel_hoe",
+    "basemetals:tin_hoe",
+    "basemetals:zinc_hoe"
+  ]
+}

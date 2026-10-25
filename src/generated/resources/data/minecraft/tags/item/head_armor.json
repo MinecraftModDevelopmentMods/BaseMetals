@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_helmet",
+    "basemetals:antimony_helmet",
+    "basemetals:aquarium_helmet",
+    "basemetals:bismuth_helmet",
+    "basemetals:brass_helmet",
+    "basemetals:bronze_helmet",
+    "basemetals:coldiron_helmet",
+    "basemetals:copper_helmet",
+    "basemetals:cupronickel_helmet",
+    "basemetals:electrum_helmet",
+    "basemetals:emerald_helmet",
+    "basemetals:invar_helmet",
+    "basemetals:lead_helmet",
+    "basemetals:mithril_helmet",
+    "basemetals:nickel_helmet",
+    "basemetals:obsidian_helmet",
+    "basemetals:pewter_helmet",
+    "basemetals:platinum_helmet",
+    "basemetals:quartz_helmet",
+    "basemetals:silver_helmet",
+    "basemetals:starsteel_helmet",
+    "basemetals:steel_helmet",
+    "basemetals:tin_helmet",
+    "basemetals:zinc_helmet"
+  ]
+}

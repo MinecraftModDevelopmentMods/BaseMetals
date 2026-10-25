@@ -5,7 +5,6 @@ import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.DisconnectedScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,19 +59,11 @@ public final class RemoteLoginSmoke {
             } else {
                 finish(minecraft, "connected");
             }
-        } else if (minecraft.screen instanceof DisconnectedScreen) {
-            StringBuilder reason = new StringBuilder();
-            try {
-                for (var field : DisconnectedScreen.class.getDeclaredFields()) {
-                    if (!Component.class.isAssignableFrom(field.getType())) continue;
-                    field.setAccessible(true);
-                    reason.append(((Component) field.get(minecraft.screen)).getString());
-                }
-            } catch (ReflectiveOperationException exception) {
-                throw new IllegalStateException("Could not inspect the disconnect screen", exception);
-            }
-            if (!reject || !reason.toString().contains("Base Metals")
-                    || !reason.toString().contains("High Fantasy") || !reason.toString().contains("Low Fantasy")) {
+        } else if (minecraft.screen instanceof DisconnectedScreen disconnected) {
+            String reason = disconnected.getNarrationMessage().getString();
+
+            if (!reject || !reason.contains("Base Metals")
+                    || !reason.contains("High Fantasy") || !reason.contains("Low Fantasy")) {
                 throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: unexpected disconnect: " + reason);
             }
             finish(minecraft, "rejected");

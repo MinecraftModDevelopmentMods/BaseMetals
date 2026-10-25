@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
@@ -202,7 +201,7 @@ public final class IntegratedWorldSmoke {
         if (Boolean.getBoolean("basemetals.hostTextureProbe")) {
             try {
                 var host = minecraft.getResourceManager().getResource(
-                        new net.minecraft.resources.ResourceLocation("minecraft:textures/block/stone.png"));
+                        net.minecraft.resources.ResourceLocation.parse("minecraft:textures/block/stone.png"));
                 if (!host.orElseThrow().sourcePackId().contains("basemetals-host-test")) {
                     throw new IllegalStateException("The ore host texture did not come from the replacement pack");
                 }
@@ -320,26 +319,33 @@ public final class IntegratedWorldSmoke {
     private static void verifyCreativeBuckets(Minecraft minecraft) {
         NonNullList<ItemStack> itemsTab = NonNullList.create();
         NonNullList<ItemStack> searchTab = NonNullList.create();
-        net.minecraft.world.item.CreativeModeTabs.tryRebuildTabContents(
-                net.minecraft.world.flag.FeatureFlags.VANILLA_SET, true,
-                minecraft.level.registryAccess());
+        var previousMenu = minecraft.player.containerMenu;
+        try {
+            // Opening the native inventory also builds this connection's search index.
+            new net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen(
+                    minecraft.player, minecraft.level.enabledFeatures(), true);
+        } finally {
+            minecraft.player.containerMenu = previousMenu;
+        }
         itemsTab.addAll(ModTabs.ITEMS.get().getDisplayItems());
         searchTab.addAll(net.minecraft.world.item.CreativeModeTabs.searchTab().getDisplayItems());
         var shown = new java.util.HashSet<net.minecraft.world.item.Item>();
         for (var tab : java.util.List.of(ModTabs.BLOCKS.get(), ModTabs.ITEMS.get(), ModTabs.TOOLS.get(), ModTabs.COMBAT.get())) {
             tab.getDisplayItems().forEach(stack -> shown.add(stack.getItem()));
         }
-        var indexed = minecraft.getSearchTree(SearchRegistry.CREATIVE_NAMES).search("basemetals:")
+        var indexed = minecraft.getConnection().searchTrees().creativeNameSearch().search("basemetals:")
                 .stream().map(ItemStack::getItem).collect(java.util.stream.Collectors.toSet());
         ModContent.itemsById().forEach((id, item) -> {
             boolean expected = !ModContent.fluids().containsKey(id);
             if (shown.contains(item.get()) != expected || indexed.contains(item.get()) != expected) {
-                throw new IllegalStateException("Creative visibility changed for " + id);
+                throw new IllegalStateException("Creative visibility changed for " + id
+                        + ": tabs=" + shown.contains(item.get()) + ", search=" + indexed.contains(item.get())
+                        + ", expected=" + expected);
             }
         });
         BaseMetals.LOGGER.info("BASEMETALS_CREATIVE_INVENTORY PASS visible={} hidden_fluid_blocks=36", shown.size());
-        java.util.List<ItemStack> bucketSearch = minecraft
-                .getSearchTree(SearchRegistry.CREATIVE_NAMES).search("bucket");
+        java.util.List<ItemStack> bucketSearch = minecraft.getConnection().searchTrees()
+                .creativeNameSearch().search("bucket");
         for (var fluid : ModContent.fluids().entrySet()) {
             net.minecraft.world.item.Item bucket = fluid.getValue().bucket().get();
             ItemStack bucketStack = bucket.getDefaultInstance();

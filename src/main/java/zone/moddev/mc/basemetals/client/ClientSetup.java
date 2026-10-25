@@ -56,7 +56,7 @@ public final class ClientSetup {
                 if (item instanceof MaterialItems.Bow || item instanceof MaterialItems.Crossbow) {
                     ItemProperties.register(item, ResourceLocation.parse("pull"), (stack, level, user, seed) ->
                             user == null || user.getUseItem() != stack ? 0.0F
-                                    : (float) (stack.getUseDuration() - user.getUseItemRemainingTicks()) / 20.0F);
+                                    : (float) (stack.getUseDuration(user) - user.getUseItemRemainingTicks()) / 20.0F);
                     ItemProperties.register(item, ResourceLocation.parse("pulling"), (stack, level, user, seed) ->
                             user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
                 }

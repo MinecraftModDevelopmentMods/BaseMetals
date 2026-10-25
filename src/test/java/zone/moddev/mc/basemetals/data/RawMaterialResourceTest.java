@@ -23,21 +23,21 @@ class RawMaterialResourceTest {
     @Test
     void allRawMetalsHaveOneToOneProcessingAndDistinctTags() throws Exception {
         for (String metal : METALS) {
-            JsonObject crushing = read("data/basemetals/recipes/" + metal + "_raw_crushing.json");
+            JsonObject crushing = read("data/basemetals/recipe/" + metal + "_raw_crushing.json");
             assertEquals("basemetals:" + metal + "_powder", crushing.getAsJsonObject("result").get("id").getAsString());
             assertEquals(1, (crushing.getAsJsonObject("result").has("count") ? crushing.getAsJsonObject("result").get("count").getAsInt() : 1));
 
             for (String cooking : List.of("smelting", "blasting")) {
-                JsonObject recipe = read("data/basemetals/recipes/" + metal + "_raw_" + cooking + ".json");
+                JsonObject recipe = read("data/basemetals/recipe/" + metal + "_raw_" + cooking + ".json");
                 assertEquals("basemetals:" + metal + "_ingot", recipe.getAsJsonObject("result").get("id").getAsString());
             }
 
-            String rawTag = Files.readString(GENERATED.resolve("data/forge/tags/items/raw_materials/" + metal + ".json"));
+            String rawTag = Files.readString(GENERATED.resolve("data/forge/tags/item/raw_materials/" + metal + ".json"));
             assertTrue(rawTag.contains("basemetals:" + metal + "_raw"));
-            assertFalse(Files.readString(GENERATED.resolve("data/forge/tags/items/dusts/" + metal + ".json")).contains("_raw"));
+            assertFalse(Files.readString(GENERATED.resolve("data/forge/tags/item/dusts/" + metal + ".json")).contains("_raw"));
         }
 
-        try (Stream<Path> recipes = Files.list(GENERATED.resolve("data/basemetals/recipes"))) {
+        try (Stream<Path> recipes = Files.list(GENERATED.resolve("data/basemetals/recipe"))) {
             for (Path recipe : recipes.filter(file -> file.getFileName().toString().contains("blend")).toList()) {
                 assertFalse(Files.readString(recipe).contains("raw_materials"), recipe.toString());
                 assertFalse(Files.readString(recipe).contains("_raw"), recipe.toString());

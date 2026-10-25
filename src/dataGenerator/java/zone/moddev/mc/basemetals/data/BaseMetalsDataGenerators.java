@@ -216,7 +216,7 @@ public final class BaseMetalsDataGenerators {
             }
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name + "_bucket")
-                    .parent(getExistingFile(new net.minecraft.resources.ResourceLocation("forge", "item/bucket")))
+                    .parent(getExistingFile(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("forge", "item/bucket")))
                     .customLoader(DynamicFluidContainerModelBuilder::begin)
                     .fluid(fluid.source().get()));
 

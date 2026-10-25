@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "minecraft:copper_ingot",
+    "ingredients": [
+      {
+        "tag": "forge:storage_blocks/copper"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "minecraft:copper_ingot"
+    }
+  }
+}

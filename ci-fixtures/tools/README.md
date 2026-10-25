@@ -2,7 +2,7 @@
 
 This directory contains a build-only derivative of MinecraftForge's
 MinecraftMavenizer `0.5.21`. It is used only while ForgeGradle prepares the
-exact Forge `1.20.6-50.2.0` development dependency and is excluded from every
+exact Forge `1.21.1-52.1.0` development dependency and is excluded from every
 Base Metals publication artifact.
 
 ## Provenance and licence
@@ -21,14 +21,14 @@ declaration and one accessor in that record. Missing, partial, duplicate or
 ambiguous states fail preparation. Targets without an explicit rule set are
 left unchanged.
 
-Forge `1.20.6-50.2.0` compiles without source compatibility edits. Its explicit
+Forge `1.21.1-52.1.0` compiles without source compatibility edits. Its explicit
 zero-rule entry proves that result is intentional and target-qualified rather
 than an accidental fall-through. A marker beside Mavenizer's output records
 the target and manifest SHA-256. Reprocessing the same source is idempotent.
 
 The derivative also propagates Gradle offline mode when the build sets
 `ORESPAWN_MAVENIZER_OFFLINE=true`. Mavenizer itself runs on Java 25; Base Metals
-and Minecraft 1.20.6 continue to compile for Java 21.
+and Minecraft 1.21.1 continue to compile for Java 21.
 
 ## Rebuild
 

@@ -1,3 +1,16 @@
+Base Metals 3.1.1.121011
+
+- Fix startup failures when Base Metals is added to an existing modern world, including worlds with LZ4-compressed chunks, external chunks or empty region files.
+- Stop old level.dat_old backups from replacing current player data or enabling legacy terrain protection.
+- Keep genuine legacy upgrades, reloads and later-opened chunks supported, including chunks in nested custom dimensions.
+- Port the released 1.20.6 version to Minecraft 1.21.1 and Forge 52.1.0, keeping Java 21.
+- Keep raw metals, Kiri's ore overlays, filled buckets, High/Low Fantasy and the existing gameplay fixes.
+- Use vanilla copper forms where they overlap, while keeping old Base Metals items and blocks valid in saves.
+- Accept both copper versions in shared ingredients and keep recycling within the material cost.
+- Update recipes, tags, loot, advancements and enchantments for Minecraft 1.21's data formats.
+- Keep arrows and bolts tied to their firing weapon so native enchantments apply after material damage.
+- Use the published OreSpawn 4.1.0.121011 release with the same eleven ore rules and copper defaults.
+
 Base Metals 3.1.0.120061
 
 - Port the released 1.20.1 version to Minecraft 1.20.6, Forge 50.2.0 and Java 21.

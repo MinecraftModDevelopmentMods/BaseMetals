@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -100,10 +101,10 @@ public final class MaterialItems {
         private final MaterialDefinition material;
         public Hoe(MaterialDefinition material, Properties properties) {
             super(new MaterialTier(material), properties.attributes(ItemAttributeModifiers.builder()
-                    .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID,
-                            "Tool modifier", 0.0D, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID,
-                            "Tool modifier", material.baseAttackDamage() - 3.0D,
+                    .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID,
+                            0.0D, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID,
+                            material.baseAttackDamage() - 3.0D,
                             AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
                     .build()));
             this.material = material;
@@ -247,9 +248,10 @@ public final class MaterialItems {
         public void releaseUsing(ItemStack bow, Level level, LivingEntity user, int timeLeft) {
             if (!(user instanceof Player player)) return;
             boolean hasInfiniteAmmo = player.getAbilities().instabuild
-                    || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY, bow) > 0;
+                    || EnchantmentHelper.getItemEnchantmentLevel(player.registryAccess()
+                            .lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.INFINITY), bow) > 0;
             ItemStack ammunition = findBolt(player);
-            int charge = getUseDuration(bow) - timeLeft;
+            int charge = getUseDuration(bow, user) - timeLeft;
             charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(
                     bow, level, player, charge, !ammunition.isEmpty() || hasInfiniteAmmo);
             if (charge < 0 || ammunition.isEmpty() && !hasInfiniteAmmo) return;
@@ -267,20 +269,12 @@ public final class MaterialItems {
             boolean infiniteShot = player.getAbilities().instabuild
                     || boltItem.isInfinite(ammunition, bow, player);
             if (!level.isClientSide) {
-                AbstractArrow bolt = boltItem.createArrow(level, ammunition, player);
+                AbstractArrow bolt = boltItem.createArrow(level, ammunition, player, bow);
                 bolt.setBaseDamage(bolt.getBaseDamage() + material.baseAttackDamage() - 1.0D);
                 bolt.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F,
                         power * 3.0F, 1.0F);
                 if (power == 1.0F) bolt.setCritArrow(true);
-                int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER, bow);
-                if (powerLevel > 0) {
-                    bolt.setBaseDamage(bolt.getBaseDamage() + powerLevel * 0.5D + 0.5D);
-                }
-                int punchLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH, bow);
-                if (punchLevel > 0) bolt.setKnockback(punchLevel);
-                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAME, bow) > 0) {
-                    bolt.igniteForSeconds(100);
-                }
+                // The saved weapon lets vanilla apply Power, Punch and Flame once.
                 bow.hurtAndBreak(1, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
                 if (infiniteShot) bolt.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
                 level.addFreshEntity(bolt);

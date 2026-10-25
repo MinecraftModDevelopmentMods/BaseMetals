@@ -8,7 +8,7 @@ import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
@@ -67,7 +67,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
         for (ItemEntity entity : entities) {
             ItemStack input = entity.getItem();
             Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = context.getLevel().getRecipeManager().getRecipeFor(
-                    CrushingRecipe.TYPE.get(), new SimpleContainer(input), context.getLevel());
+                    CrushingRecipe.TYPE.get(), new SingleRecipeInput(input), context.getLevel());
             if (recipe.isEmpty() || !canCrushDroppedBlock(context.getItemInHand(), input)) continue;
             // Sneaking is the per-use full-stack control; ordinary use crushes
             // one item and never changes a persistent config contract.

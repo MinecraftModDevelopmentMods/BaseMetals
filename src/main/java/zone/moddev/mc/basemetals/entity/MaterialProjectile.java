@@ -23,9 +23,13 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
 
     public MaterialProjectile(EntityType<? extends MaterialProjectile> type, Level level,
             LivingEntity shooter, ItemStack ammunition) {
-        this(type, level);
-        setOwner(shooter);
-        setPos(shooter.getX(), shooter.getEyeY() - 0.1D, shooter.getZ());
+        this(type, level, shooter, ammunition, null);
+    }
+
+    public MaterialProjectile(EntityType<? extends MaterialProjectile> type, Level level,
+            LivingEntity shooter, ItemStack ammunition, ItemStack weapon) {
+        super(type, shooter, level, ammunition.copyWithCount(1), weapon);
+
         this.ammunition = ammunition.copy();
         this.ammunition.setCount(1);
         setPickupItemStack(this.ammunition);
@@ -77,7 +81,8 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
      * projectile's first render.
      */
     @Override
-    public Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket() {
+    public Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket(
+            net.minecraft.server.level.ServerEntity tracking) {
         return ForgeHooks.getEntitySpawnPacket(this);
     }
 }

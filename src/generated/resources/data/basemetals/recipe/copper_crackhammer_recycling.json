@@ -1,0 +1,11 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "basemetals:copper_crackhammer"
+  },
+  "result": {
+    "id": "minecraft:copper_block"
+  }
+}

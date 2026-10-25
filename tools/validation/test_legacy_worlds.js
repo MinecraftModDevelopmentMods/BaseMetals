@@ -4,6 +4,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
 const { serverArguments } = require('./forge_launcher');
+const { isVanillaPaintingSnapshot } = require('./painting_registry');
 
 const spec = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const phase = process.argv[3] || 'upgrade';
@@ -110,7 +111,17 @@ function checkUpgradeLog(log) {
                 entries.push(entry[1]);
             }
 
-            if (entries.length && entries.every(entry => retiredVanillaEntries.has(entry))) {
+            const registry = line.slice(line.indexOf('Unidentified mapping from registry ')
+                + 'Unidentified mapping from registry '.length).trim();
+            const knownPaintingSnapshot = isVanillaPaintingSnapshot(registry, entries);
+            const renamedTrialSpawnerSounds = registry === 'minecraft:sound_event'
+                && entries.length > 0 && entries.every(entry => [
+                    'minecraft:block.trial_spawner.ambient_charged',
+                    'minecraft:block.trial_spawner.charge_activate'
+                ].includes(entry));
+
+            if (knownPaintingSnapshot || renamedTrialSpawnerSounds
+                || entries.length && entries.every(entry => retiredVanillaEntries.has(entry))) {
                 entries.forEach(entry => acceptedEntries.add(entry));
                 continue;
             }
@@ -132,7 +143,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
     const executable = phase === 'capture' ? spec.java8 : (spec.java || spec.java17);
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.serverRuntime, directory, '1.20.6', '50.2.0');
+        : serverArguments(spec.serverRuntime, directory, '1.21.1', '52.1.0');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });
@@ -156,7 +167,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     }
     const vanillaChanges = checkUpgradeLog(log);
     if (vanillaChanges.length) {
-        console.log(label + ' accepted removed vanilla registry names: ' + vanillaChanges.join(', '));
+        console.log(label + ' accepted historical vanilla registry names: ' + vanillaChanges.join(', '));
     }
     console.log(label + ' PASS');
     return [...new Set(log.split(/\r?\n/)

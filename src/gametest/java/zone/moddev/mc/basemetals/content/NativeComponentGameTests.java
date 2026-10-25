@@ -1,6 +1,7 @@
 package zone.moddev.mc.basemetals.content;
 
 import io.netty.buffer.Unpooled;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -8,8 +9,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.gametest.GameTestHolder;
 import zone.moddev.mc.basemetals.BaseMetals;
@@ -74,6 +79,46 @@ public final class NativeComponentGameTests {
         MaterialProjectile reloaded = new MaterialProjectile(ModEntities.CUSTOM_BOLT.get(), helper.getLevel());
         reloaded.readAdditionalSaveData(saved);
         helper.assertTrue(net.minecraft.world.item.ItemStack.matches(item, reloaded.getItem()), "A converted bolt changed on reload");
+        helper.succeed();
+    }
+
+    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    public static void projectilesKeepWeaponEnchantmentsAfterReload(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+        var shooter = EntityType.ZOMBIE.create(level);
+        var target = EntityType.ZOMBIE.create(level);
+
+        for (boolean bolt : new boolean[] {false, true}) {
+            ItemStack weapon = ModContent.item("steel_" + (bolt ? "crossbow" : "bow")).get().getDefaultInstance();
+            weapon.enchant(enchantments.getOrThrow(Enchantments.POWER), 3);
+            weapon.enchant(enchantments.getOrThrow(Enchantments.PUNCH), 2);
+            weapon.enchant(enchantments.getOrThrow(Enchantments.FLAME), 1);
+
+            ItemStack ammunition = ModContent.item("steel_" + (bolt ? "bolt" : "arrow")).get().getDefaultInstance();
+            var type = bolt ? ModEntities.CUSTOM_BOLT.get() : ModEntities.CUSTOM_ARROW.get();
+            MaterialProjectile projectile = new MaterialProjectile(type, level, shooter, ammunition, weapon);
+
+            helper.assertTrue(projectile.isOnFire(), "Flame did not ignite the material projectile");
+
+            CompoundTag saved = projectile.saveWithoutId(new CompoundTag());
+            MaterialProjectile reloaded = new MaterialProjectile(type, level);
+            reloaded.load(saved);
+
+            helper.assertTrue(ItemStack.matches(weapon, reloaded.getWeaponItem()),
+                    "The saved projectile lost its firing weapon or enchantments");
+            helper.assertTrue(ItemStack.matches(ammunition, reloaded.getItem()),
+                    "The saved projectile lost its ammunition");
+            helper.assertTrue(reloaded.isOnFire(), "The saved projectile lost Flame");
+
+            var source = level.damageSources().arrow(reloaded, shooter);
+            float knockback = EnchantmentHelper.modifyKnockback(level, reloaded.getWeaponItem(), target, source, 0.0F);
+            float damage = EnchantmentHelper.modifyDamage(level, reloaded.getWeaponItem(), target, source, 2.0F);
+
+            helper.assertTrue(knockback > 0.0F, "Punch did not apply after reload");
+            helper.assertTrue(damage > 2.0F, "Power did not apply after reload");
+        }
+
         helper.succeed();
     }
 }

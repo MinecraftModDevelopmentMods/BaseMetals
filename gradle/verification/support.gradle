@@ -119,12 +119,12 @@ def prepareGameTestStructures = tasks.register('prepareGameTestStructures') {
     description = 'Creates the empty structure used by the isolated GameTests.'
     outputs.dir gameTestResources
     doLast {
-        File structure = new File(gameTestResources.get().asFile, 'data/basemetals/structures/empty.nbt')
+        File structure = new File(gameTestResources.get().asFile, 'data/basemetals/structure/empty.nbt')
         structure.parentFile.mkdirs()
         structure.withOutputStream { fileStream ->
             new DataOutputStream(new java.util.zip.GZIPOutputStream(fileStream)).withCloseable { nbt ->
                 nbt.writeByte(10); nbt.writeUTF('')
-                nbt.writeByte(3); nbt.writeUTF('DataVersion'); nbt.writeInt(3839)
+                nbt.writeByte(3); nbt.writeUTF('DataVersion'); nbt.writeInt(3955)
                 nbt.writeByte(9); nbt.writeUTF('size'); nbt.writeByte(3); nbt.writeInt(3)
                 [3, 3, 3].each { nbt.writeInt(it) }
                 nbt.writeByte(9); nbt.writeUTF('palette'); nbt.writeByte(10); nbt.writeInt(1)
@@ -163,7 +163,7 @@ tasks.matching { it.name == 'runGameTestServer' }.configureEach {
     doLast {
         File log = layout.projectDirectory.file('run-gametest/logs/latest.log').asFile
         String text = log.isFile() ? log.getText('UTF-8') : ''
-        if (!(text =~ /All [1-9][0-9]* required tests passed/).find()) {
+        if (!(text =~ /All 43 required tests passed/).find()) {
             throw new GradleException('GameTests did not report a completed, passing suite. See run-gametest/logs/latest.log.')
         }
         if (text =~ /(?i)(ERROR|FATAL)\]/) {

@@ -11,7 +11,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-public final class CrushingRecipe implements Recipe<Container> {
+public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(
             net.minecraft.core.registries.Registries.RECIPE_TYPE, BaseMetals.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(
@@ -46,8 +46,15 @@ public final class CrushingRecipe implements Recipe<Container> {
         this.result = result.copy();
     }
 
-    @Override public boolean matches(Container container, Level level) { return ingredient.test(container.getItem(0)); }
-    @Override public ItemStack assemble(Container container, net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
+    @Override
+    public boolean matches(SingleRecipeInput input, Level level) {
+        return ingredient.test(input.item());
+    }
+
+    @Override
+    public ItemStack assemble(SingleRecipeInput input, net.minecraft.core.HolderLookup.Provider registries) {
+        return result.copy();
+    }
     @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
     @Override public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER.get(); }
