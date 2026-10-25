@@ -10,7 +10,7 @@ Base Metals 3.1.0.121012 (in development)
 - Add optional regression tests without changing the normal build or deployment tasks.
 - Document the Eclipse cache settings needed to avoid duplicate launcher modules.
 
-Base Metals 3.1.0.119041
+### Base Metals 3.1.0.119041
 
 - Port the 1.18 version to Minecraft 1.19.4 and Forge 45.4.0.
 - Keep raw metals, Kiri's ore overlays, High/Low Fantasy modes and the fixes from 1.18.
@@ -22,7 +22,7 @@ Base Metals 3.1.0.119041
 - Require the published OreSpawn 4.1.0.119041 release, keeping the same ore rules and copper defaults.
 - Keep unsupported optional-mod jars out of development launches. Their integration data is retained for future compatibility work.
 
-Base Metals 3.1.0.118021
+### Base Metals 3.1.0.118021
 
 - Bring raw metals, ore overlays and High/Low Fantasy modes to Minecraft 1.18.2, along with the fixes from the earlier ports.
 - Use KiriCattus' ore overlays over vanilla block textures, including resource-pack replacements.
@@ -39,7 +39,7 @@ Base Metals 3.1.0.118021
 - Keep optional mods out of normal development launches. Add a separate client profile for Tinkers, Mantle and compatibility testing.
 - Fix flickering bar textures by using the correct centre-post and end pieces, without changing their collision shapes.
 
-Base Metals 3.0.1.118021
+### Base Metals 3.0.1.118021
 
 - Modernize the Minecraft 1.18.2 build to ForgeGradle 7.0.34 and Gradle 9.6.1.
 - Qualify against the exact OreSpawn 4.0.16.118021 CurseForge release while retaining the supported OreSpawn 4.x runtime range.
@@ -47,4 +47,4 @@ Base Metals 3.0.1.118021
 - Isolate GameTests and smoke fixtures from production artifacts and Eclipse production launches.
 - Add pinned GitHub Actions for build, GameTests, generated-data drift, CodeQL, wrapper validation, and target-qualified releases.
 
-Gameplay, registry IDs, recipes, save migration, and the OreSpawn provider rules are unchanged from Base Metals 3.0.0.
+- Gameplay, registry IDs, recipes, save migration, and the OreSpawn provider rules are unchanged from Base Metals 3.0.0.

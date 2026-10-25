@@ -147,6 +147,10 @@ public final class Legacy112WorldMigrator {
      * integrated server reads it before
      * {@link net.neoforged.neoforge.event.server.ServerAboutToStartEvent}, so it
      * would otherwise keep the old items until the next load.
+     * The integrated server reads the root Player tag before
+     * {@link net.neoforged.neoforge.event.server.ServerAboutToStartEvent}. Reload
+     * that one tag from the corrected level.dat so the first upgraded
+     * single-player session receives the same item migration as playerdata.
      */
     public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
         CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();

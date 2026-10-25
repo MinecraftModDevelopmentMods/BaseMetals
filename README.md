@@ -1,8 +1,24 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+<h1>Base Metals</h1>
+<a href="https://discord.tophatcat.dev">
+    <img src="https://img.shields.io/badge/Discord-16181C?style=for-the-badge&logo=discord&logoColor=5865F2" alt="Discord server invite."/>
+</a>
 
-# Base Metals
+<a href="https://www.curseforge.com/minecraft/mc-mods/base-metals">
+    <img src="https://img.shields.io/badge/CurseForge-16181C?style=for-the-badge&logo=curseforge&logoColor=FF784D" alt="CurseForge Badge.">
+</a>
+
+<a href="https://github.com/minecraftmoddevelopmentmods/basemetals/">
+    <img src="https://img.shields.io/badge/GitHub-16181C?style=for-the-badge&logo=github&logoColor=BBDDE5" alt="Github">
+</a>
+
+<a href="https://mc.moddev.zone">
+    <img src="https://img.shields.io/badge/mc.moddev.zone-16181C?style=for-the-badge&logo=&logoColor=57Z29S" alt="Website link."/>
+</a>
+
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.21.1-neo)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.1-neo)
 
 Base Metals adds historically common metals, useful alloys, and fantasy metals
 to Minecraft. Depending on the material, these are available as ores, storage
@@ -190,5 +206,5 @@ Release artifacts use Maven coordinate
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
 
-Base Metals is licensed under [LGPL-2.1](LICENSE). Bundled or derived third-party
+Base Metals is licensed under [LGPL-2.1](LICENSE.md). Bundled or derived third-party
 art is covered by the accompanying attribution and licence files.
