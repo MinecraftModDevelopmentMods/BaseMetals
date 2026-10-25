@@ -1,6 +1,5 @@
 package zone.moddev.mc.basemetals.migration;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,8 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.InflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
 
 import zone.moddev.mc.basemetals.BaseMetals;
@@ -65,6 +62,10 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.storage.RegionFile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.storage.RegionStorageInfo;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -80,14 +81,57 @@ public final class Legacy112WorldMigrator {
     private static final int SECTOR_BYTES = 4_096;
     private static final String MARKER = "BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt";
     private static final String BACKUP_DIRECTORY = "basemetals-1.12-region-backup";
+    private static Path preparedWorld;
+    private static CompoundTag preparedPlayer;
+    private static int preparedVersion;
 
     private Legacy112WorldMigrator() {}
+
+    static void beginWorldLoad() {
+        preparedWorld = null;
+        preparedPlayer = null;
+        preparedVersion = 0;
+    }
+
+    /** Keep the original player before Forge and vanilla read the old save. */
+    static void prepareWorld(Path levelDat, CompoundTag root) {
+        if (!isLegacyLevel(root)) return;
+
+        CompoundTag data = root.getCompound("Data");
+        preparedWorld = levelDat.toAbsolutePath().normalize().getParent();
+        preparedVersion = data.getInt("DataVersion");
+        preparedPlayer = data.contains("Player", Tag.TAG_COMPOUND) ? data.getCompound("Player").copy() : null;
+    }
+
+    private static boolean isLegacyLevel(CompoundTag root) {
+        CompoundTag data = root.getCompound("Data");
+        return data.contains("DataVersion", Tag.TAG_ANY_NUMERIC)
+                && data.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION;
+    }
+
+    private static boolean hasLegacySource(Path root) throws IOException {
+        if (root.equals(preparedWorld) || isLegacyLevel(LegacyNbt.readCompressed(root.resolve("level.dat").toFile()))) {
+            return true;
+        }
+
+        // This sidecar survives Forge's first rewrite. An old level.dat_old alone
+        // is not evidence that the current world still needs flattening.
+        Path sidecar = root.resolve("basemetals-legacy-registry.dat");
+        if (!Files.isRegularFile(sidecar)) return false;
+
+        CompoundTag source = LegacyNbt.readCompressed(sidecar.toFile());
+        return isLegacyLevel(source) || oldBlockIds(source).values().stream()
+                .map(Legacy112WorldMigrator::normalizeLegacyRegistryName)
+                .anyMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":") || id.startsWith("mmdlib:"));
+    }
 
     public static void migrateIfNeeded(Path worldRoot) throws IOException {
         Path root = worldRoot.toAbsolutePath().normalize();
         if (Files.isRegularFile(root.resolve(MARKER))) return;
 
         if (!Files.isRegularFile(root.resolve("level.dat"))) return;
+        if (!hasLegacySource(root)) return;
+
         Map<Integer, String> oldBlockIds = legacyBlockIds(root);
         if (oldBlockIds.values().stream().noneMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":"))) return;
 
@@ -170,12 +214,13 @@ public final class Legacy112WorldMigrator {
     }
 
     private static Map<Integer, String> legacyBlockIds(Path root) throws IOException {
-        for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
+        for (String fileName : List.of("level.dat", "basemetals-legacy-registry.dat", "level.dat_old")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
             CompoundTag candidate = LegacyNbt.readCompressed(file.toFile());
             int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
-            if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
+            if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
+                    && !fileName.equals("basemetals-legacy-registry.dat")) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
             if (!ids.isEmpty()) return ids;
         }
@@ -202,7 +247,7 @@ public final class Legacy112WorldMigrator {
 
     private static List<Path> findRegionFiles(Path root) throws IOException {
         List<Path> result = new ArrayList<>();
-        try (var paths = Files.walk(root, 4)) {
+        try (var paths = Files.walk(root)) {
             paths.filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().matches("r\\.-?\\d+\\.-?\\d+\\.mca"))
                     .filter(path -> path.getParent() != null && path.getParent().getFileName().toString().equals("region"))
@@ -229,6 +274,7 @@ public final class Legacy112WorldMigrator {
 
     private static RegionConversion convertRegion(Path root, Path region, Map<Integer, String> ids) throws IOException {
         byte[] source = Files.readAllBytes(region);
+        if (source.length == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
         if (source.length < REGION_HEADER_BYTES) throw new IOException("Invalid region header: " + region);
         ByteBuffer locations = ByteBuffer.wrap(source, 0, SECTOR_BYTES).order(ByteOrder.BIG_ENDIAN);
         byte[] timestamps = Arrays.copyOfRange(source, SECTOR_BYTES, REGION_HEADER_BYTES);
@@ -239,44 +285,65 @@ public final class Legacy112WorldMigrator {
         int convertedBuckets = 0;
         int convertedItemAliases = 0;
         int convertedDamageValues = 0;
+        Set<Path> externalFiles = new java.util.LinkedHashSet<>();
+        String[] coordinates = region.getFileName().toString().split("\\.");
+        int regionX = Integer.parseInt(coordinates[1]);
+        int regionZ = Integer.parseInt(coordinates[2]);
 
-        for (int index = 0; index < 1_024; index++) {
-            int location = locations.getInt(index * 4);
-            if (location == 0) continue;
-            int offset = location >>> 8;
-            int position = offset * SECTOR_BYTES;
-            if (position < REGION_HEADER_BYTES || position + 5 > source.length) {
-                throw new IOException("Invalid chunk offset in " + region + " entry " + index);
+        try (RegionFile reader = new RegionFile(new RegionStorageInfo("Base Metals migration", Level.OVERWORLD, "chunk"),
+                region, region.getParent(), false)) {
+            for (int index = 0; index < 1_024; index++) {
+                int location = locations.getInt(index * 4);
+                if (location == 0) continue;
+                int offset = location >>> 8;
+                int position = offset * SECTOR_BYTES;
+                if (position < REGION_HEADER_BYTES || position + 5 > source.length) {
+                    throw new IOException("Invalid chunk offset in " + region + " entry " + index);
+                }
+                int length = intAt(source, position);
+                if (length < 1 || position + 4 + length > source.length) {
+                    throw new IOException("Invalid chunk length in " + region + " entry " + index);
+                }
+                int compression = source[position + 4] & 0xff;
+                ChunkPos chunkPos = new ChunkPos(regionX * 32 + (index & 31), regionZ * 32 + (index >>> 5));
+                if ((compression & 128) != 0) {
+                    externalFiles.add(region.getParent().resolve("c." + chunkPos.x + "." + chunkPos.z + ".mcc"));
+                }
+
+                CompoundTag chunk;
+                try (DataInputStream input = reader.getChunkDataInputStream(chunkPos)) {
+                    if (input == null) throw new IOException("Could not read chunk " + chunkPos + " in " + region);
+                    chunk = LegacyNbt.read(input);
+                }
+
+                ChunkConversion conversion = convertChunk(chunk, ids);
+                byte[] record;
+                if (conversion.converted()) {
+                    record = writeChunk(conversion.chunk());
+                    converted++;
+                    externalStates += conversion.externalStates();
+                    preservedBlockEntities += conversion.preservedBlockEntities();
+                    convertedBuckets += conversion.convertedBuckets();
+                    convertedItemAliases += conversion.convertedItemAliases();
+                    convertedDamageValues += conversion.convertedDamageValues();
+                } else {
+                    record = Arrays.copyOfRange(source, position, position + 4 + length);
+                }
+                chunks.add(new RegionChunk(index, record));
             }
-            int length = intAt(source, position);
-            if (length < 1 || position + 4 + length > source.length) {
-                throw new IOException("Invalid chunk length in " + region + " entry " + index);
-            }
-            int compression = source[position + 4] & 0xff;
-            byte[] payload = Arrays.copyOfRange(source, position + 5, position + 4 + length);
-            CompoundTag chunk = readChunk(payload, compression);
-            ChunkConversion conversion = convertChunk(chunk, ids);
-            byte[] record;
-            if (conversion.converted()) {
-                record = writeChunk(conversion.chunk());
-                converted++;
-                externalStates += conversion.externalStates();
-                preservedBlockEntities += conversion.preservedBlockEntities();
-                convertedBuckets += conversion.convertedBuckets();
-                convertedItemAliases += conversion.convertedItemAliases();
-                convertedDamageValues += conversion.convertedDamageValues();
-            } else {
-                record = Arrays.copyOfRange(source, position, position + 4 + length);
-            }
-            chunks.add(new RegionChunk(index, record));
         }
 
         if (converted == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
-        ensureBackupCapacity(root, List.of(region));
+        List<Path> originals = new ArrayList<>(externalFiles);
+        originals.add(region);
+        ensureBackupCapacity(root, originals);
         byte[] output = buildRegion(chunks, timestamps);
-        Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(region));
-        Files.createDirectories(backup.getParent());
-        if (!Files.exists(backup)) Files.copy(region, backup, StandardCopyOption.COPY_ATTRIBUTES);
+
+        for (Path original : originals) {
+            Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(original));
+            Files.createDirectories(backup.getParent());
+            if (!Files.exists(backup)) Files.copy(original, backup, StandardCopyOption.COPY_ATTRIBUTES);
+        }
 
         Path temporary = region.resolveSibling(region.getFileName() + ".basemetals.tmp");
         Files.write(temporary, output, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -358,17 +425,10 @@ public final class Legacy112WorldMigrator {
         return converted;
     }
 
-    /**
-     * Forge can rewrite level.dat before ServerAboutToStartEvent, which means
-     * Mojang has already interpreted a legacy mod tool's Damage field as
-     * flattening metadata. The untouched legacy player remains in
-     * level.dat_old, so rebuild only that player record through the normal
-     * player data fixer after first protecting mod durability and aliases.
-     */
+    /** Restore only the player captured from this load's original legacy save. */
     private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root) throws IOException {
         Path currentFile = root.resolve("level.dat");
-        Path legacyFile = root.resolve("level.dat_old");
-        if (!Files.isRegularFile(currentFile) || !Files.isRegularFile(legacyFile)) {
+        if (!root.equals(preparedWorld) || preparedPlayer == null || !Files.isRegularFile(currentFile)) {
             return ItemMigration.NONE;
         }
 
@@ -379,18 +439,10 @@ public final class Legacy112WorldMigrator {
             return ItemMigration.NONE;
         }
 
-        CompoundTag legacy = LegacyNbt.readCompressed(legacyFile.toFile());
-        CompoundTag legacyData = legacy.getCompound("Data");
-        int legacyVersion = legacyData.getInt("DataVersion");
-        if (legacyVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
-                || !legacyData.contains("Player", Tag.TAG_COMPOUND)) {
-            return ItemMigration.NONE;
-        }
-
-        CompoundTag player = legacyData.getCompound("Player").copy();
+        CompoundTag player = preparedPlayer.copy();
         ItemMigration migration = convertLegacyItems(player);
         CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                player, legacyVersion);
+                player, preparedVersion);
         currentData.put("Player", fixedPlayer);
 
         Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(currentFile));
@@ -791,18 +843,6 @@ public final class Legacy112WorldMigrator {
         if (values.length == 0) return 0;
         int value = Byte.toUnsignedInt(values[index >>> 1]);
         return value >>> ((index & 1) * 4) & 15;
-    }
-
-    private static CompoundTag readChunk(byte[] payload, int compression) throws IOException {
-        InputStream input = switch (compression) {
-            case 1 -> new GZIPInputStream(new ByteArrayInputStream(payload));
-            case 2 -> new InflaterInputStream(new ByteArrayInputStream(payload));
-            case 3 -> new ByteArrayInputStream(payload);
-            default -> throw new IOException("Unsupported region compression type " + compression);
-        };
-        try (DataInputStream data = new DataInputStream(input)) {
-            return LegacyNbt.read(data);
-        }
     }
 
     private static byte[] writeChunk(CompoundTag chunk) throws IOException {

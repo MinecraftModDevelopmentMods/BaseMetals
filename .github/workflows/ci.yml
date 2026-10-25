@@ -68,9 +68,9 @@ jobs:
             --no-daemon --stacktrace
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.1.0.120061.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.120061-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.120061-javadoc.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.120061.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.120061-sources.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.120061-javadoc.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -78,9 +78,9 @@ jobs:
           ./gradlew clean assemble verifyReleaseArtifacts writeReleaseChecksums \
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}" \
             --no-daemon --stacktrace
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061.jar" build/libs/BaseMetals-3.1.0.120061.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061-sources.jar" build/libs/BaseMetals-3.1.0.120061-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.120061-javadoc.jar" build/libs/BaseMetals-3.1.0.120061-javadoc.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.120061.jar" build/libs/BaseMetals-3.1.1.120061.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.120061-sources.jar" build/libs/BaseMetals-3.1.1.120061-sources.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.120061-javadoc.jar" build/libs/BaseMetals-3.1.1.120061-javadoc.jar
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run all required GameTests
@@ -146,9 +146,9 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.1.0.120061.jar
-            build/libs/BaseMetals-3.1.0.120061-sources.jar
-            build/libs/BaseMetals-3.1.0.120061-javadoc.jar
+            build/libs/BaseMetals-3.1.1.120061.jar
+            build/libs/BaseMetals-3.1.1.120061-sources.jar
+            build/libs/BaseMetals-3.1.1.120061-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 

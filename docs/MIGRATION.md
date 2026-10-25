@@ -112,3 +112,19 @@ dimensions, and heights.
 The generated manifests at `data/basemetals/registry_manifest_1_12.json` and
 `data/basemetals/registry_manifest.json` document the runtime baseline,
 restored content, and explicit 1.18 additions.
+
+## Existing modern worlds
+
+Modern worlds do not need the old numeric-ID conversion. Base Metals only runs
+it after confirming an older source save. A leftover `level.dat_old` does not
+replace the current player or turn on legacy terrain protection.
+
+For a genuine upgrade, the original single-player record is captured before
+Minecraft reads it. The world-local migration sidecar keeps the source version
+and saved registry map for reloads and chunks opened later; it does not store
+a player record. A saved registry map from an earlier upgrade takes precedence
+over an older backup.
+
+Chunk reading uses Minecraft's supported region formats. Empty region files
+are left alone, and backups include external chunk files when their region
+needs conversion.

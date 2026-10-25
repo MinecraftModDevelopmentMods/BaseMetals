@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.20.6 Forge version, `3.1.0.120061`. It keeps the
+This is the Minecraft 1.20.6 Forge version, `3.1.1.120061`. It keeps the
 fixes and features from the released 1.20.1 version, including raw metals, ore texture
 overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
@@ -26,7 +26,7 @@ Tables are no longer needed.
 - OreSpawn `[4.1.0.120061,5.0.0)` on both client and server
 
 This version uses OreSpawn `4.1.0.120061`. Put
-`BaseMetals-3.1.0.120061.jar` and a compatible OreSpawn JAR in the `mods`
+`BaseMetals-3.1.1.120061.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -130,6 +130,10 @@ is unavailable.
 Always perform the first upgrade on a copy of the world and keep the untouched
 original. Read [Migration](docs/MIGRATION.md) before starting an upgraded world.
 
+Adding Base Metals to a modern world does not trigger the old numeric-ID
+conversion just because an older backup is present. Existing player data stays
+in place; genuine legacy upgrades still make backups before changing saved data.
+
 ## Mod and data-pack compatibility
 
 Forge item, block, and fluid tags are Base Metals' public compatibility API.
@@ -185,7 +189,7 @@ artifacts. GameTests, smoke probes, migration fixtures, and reference sources
 are isolated from the published JAR.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.120061`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.1.120061`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
