@@ -109,7 +109,7 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
         if (!marker.isFile()) throw new GradleException('Packaged dedicated-server completion marker is missing')
         Properties values = new Properties()
         marker.withInputStream { values.load(it) }
-        if (values.getProperty('basemetals') != '3.1.0.120011'
+        if (values.getProperty('basemetals') != '3.1.1.120011'
                 || values.getProperty('orespawn') != '4.1.0.120011'
                 || values.getProperty('forge') != '47.4.10') {
             throw new GradleException("Packaged dedicated-server versions are wrong: ${values}")
