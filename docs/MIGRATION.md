@@ -17,6 +17,16 @@ or the `basemetals-legacy-registry.dat` snapshot
 when available. If neither retains a legacy map, it uses the map captured from
 the public Base Metals 2.5.0-rc2.332 and MMDLib 1.0.0-rc2.36 runtime.
 
+That fallback is only used after confirming an old source save. An old
+`level.dat_old` on its own does not make a modern world a legacy world.
+The single-player record is captured from the current legacy save before
+Forge reads it, rather than restored from an older backup. Once the world has
+been upgraded, later visits keep the player's current progress.
+
+The migrator uses Minecraft's own region reader, including external chunks.
+Empty region files are left alone. Backups include any external chunk files
+referenced by a region that needs conversion.
+
 Before replacing any region file, `level.dat`, or playerdata file, the
 migrator copies the original to
 `basemetals-1.12-region-backup` inside the world. Region replacements are
@@ -63,6 +73,11 @@ upgrade start. Missing mappings also forward:
 These worlds already use named block states, so they do not need the numeric
 ID conversion. Older wall connections are converted to the current wall
 states. Item aliases, tool damage, names and enchantments are retained.
+
+The first visit records the source version in the world-local migration
+sidecar. This keeps terrain protection available for chunks opened on a later
+visit without relying on `level.dat_old`. The sidecar does not store a player
+record.
 
 Older custom dimensions using Minecraft's removed `vanilla_layered` biome
 source are converted to its 1.18 Overworld replacement. Their dimension IDs,
