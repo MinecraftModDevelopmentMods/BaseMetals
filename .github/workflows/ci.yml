@@ -123,14 +123,16 @@ jobs:
 
       - name: Run exact packaged integrated-world client smoke
         run: >-
-          timeout 15m xvfb-run -a ./gradlew packagedClientStartupSmoke
+          timeout --kill-after=30s 15m xvfb-run -a ./gradlew packagedClientStartupSmoke
+          -PvirtualDisplaySmoke=true
           -PpackagedForgeClientRuntime=${{ steps.forge-runtimes.outputs.client_runtime }}
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
           --no-daemon --stacktrace
 
       - name: Run bounded development integrated-world client smoke
         run: >-
-          timeout 15m xvfb-run -a ./gradlew runClient
+          timeout --kill-after=30s 15m xvfb-run -a ./gradlew runClient
+          -PvirtualDisplaySmoke=true
           -PintegratedWorldSmoke=true
           -PintegratedWorldSmokeName=basemetals-ci-${{ github.run_id }}
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
