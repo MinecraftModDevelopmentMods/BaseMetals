@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -46,12 +46,12 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public boolean matches(CraftingContainer inventory, Level world) {
+        public boolean matches(CraftingInput inventory, Level world) {
             return allowed(this) && super.matches(inventory, world);
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.HolderLookup.Provider registries) {
+        public ItemStack assemble(CraftingInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
             return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 
@@ -75,12 +75,12 @@ public final class ContentCraftingRecipe {
         }
 
         @Override
-        public boolean matches(CraftingContainer inventory, Level world) {
+        public boolean matches(CraftingInput inventory, Level world) {
             return allowed(this) && super.matches(inventory, world);
         }
 
         @Override
-        public ItemStack assemble(CraftingContainer inventory, net.minecraft.core.HolderLookup.Provider registries) {
+        public ItemStack assemble(CraftingInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
             return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
         }
 

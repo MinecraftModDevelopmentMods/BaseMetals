@@ -38,7 +38,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) throws IOException {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.0.120061".equals(baseMetals) || !"4.1.0.120061".equals(oreSpawn)) {
+        if (!"3.1.1.121011".equals(baseMetals) || !"4.1.0.121011".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -48,7 +48,7 @@ public final class PackagedServerSmoke {
         result.setProperty("basemetals", baseMetals);
         result.setProperty("orespawn", oreSpawn);
         result.setProperty("forge", version("forge"));
-        Path marker = event.getServer().getServerDirectory().toPath()
+        Path marker = event.getServer().getServerDirectory()
                 .resolve("packaged-server-smoke-pass.properties");
         try (var writer = Files.newBufferedWriter(marker, StandardCharsets.UTF_8)) {
             result.store(writer, "Base Metals packaged dedicated-server smoke");
@@ -81,7 +81,7 @@ public final class PackagedServerSmoke {
                 if (burn != expected) throw new IllegalStateException(id + " has burn time " + burn + ", expected " + expected);
             }
         }
-        var bow = server.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("basemetals:adamantine_bow"))
+        var bow = server.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.parse("basemetals:adamantine_bow"))
                 .orElseThrow();
         boolean enabled = !bow.value().isSpecial();
         if (enabled != policy.allows("basemetals:adamantine_bow")) {
@@ -96,7 +96,7 @@ public final class PackagedServerSmoke {
     private static void verifyIntegrationRecipes(net.minecraft.server.MinecraftServer server) throws IOException {
         var policy = zone.moddev.mc.basemetals.config.ContentPolicy.active();
         int checked = 0;
-        for (var resource : server.getResourceManager().listResources("recipes/compat", id -> id.getPath().endsWith(".json")).keySet()) {
+        for (var resource : server.getResourceManager().listResources("recipe/compat", id -> id.getPath().endsWith(".json")).keySet()) {
             if (!resource.getNamespace().equals("basemetals")) continue;
             String path = resource.getPath();
             String mod = path.contains("/thermal/") ? "thermal_expansion"
@@ -112,8 +112,8 @@ public final class PackagedServerSmoke {
                     if (!"basemetals:content_mode".equals(object.get("type").getAsString())) continue;
                     enabled &= policy.allows(object.get("item").getAsString());
                 }
-                var id = new net.minecraft.resources.ResourceLocation("basemetals",
-                        path.substring("recipes/".length(), path.length() - ".json".length()));
+                var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("basemetals",
+                        path.substring("recipe/".length(), path.length() - ".json".length()));
                 if (server.getRecipeManager().byKey(id).isPresent() != enabled) {
                     throw new IllegalStateException("Integration recipe does not follow content mode: " + id);
                 }
@@ -158,6 +158,6 @@ public final class PackagedServerSmoke {
     }
 
     private static void verifyTinkers() {
-        throw new IllegalStateException("Tinkers has no supported Forge 1.20.6 release");
+        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 1.21.1 build");
     }
 }

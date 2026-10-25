@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_leggings",
+    "basemetals:antimony_leggings",
+    "basemetals:aquarium_leggings",
+    "basemetals:bismuth_leggings",
+    "basemetals:brass_leggings",
+    "basemetals:bronze_leggings",
+    "basemetals:coldiron_leggings",
+    "basemetals:copper_leggings",
+    "basemetals:cupronickel_leggings",
+    "basemetals:electrum_leggings",
+    "basemetals:emerald_leggings",
+    "basemetals:invar_leggings",
+    "basemetals:lead_leggings",
+    "basemetals:mithril_leggings",
+    "basemetals:nickel_leggings",
+    "basemetals:obsidian_leggings",
+    "basemetals:pewter_leggings",
+    "basemetals:platinum_leggings",
+    "basemetals:quartz_leggings",
+    "basemetals:silver_leggings",
+    "basemetals:starsteel_leggings",
+    "basemetals:steel_leggings",
+    "basemetals:tin_leggings",
+    "basemetals:zinc_leggings"
+  ]
+}

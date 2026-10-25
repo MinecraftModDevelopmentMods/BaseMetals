@@ -121,6 +121,8 @@ public final class UpgradeWorldSmoke {
             }
 
             ServerLevel overworld = event.getServer().overworld();
+            var unbreaking = overworld.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                    .getOrThrow(Enchantments.UNBREAKING);
             for (JsonElement itemElement : manifest.getAsJsonArray("items")) {
                 JsonObject oldItem = itemElement.getAsJsonObject();
                 int chestIndex = oldItem.get("chest").getAsInt();
@@ -144,7 +146,7 @@ public final class UpgradeWorldSmoke {
                                 net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture")
                         .getString("proof").equals(oldItem.get("id").getAsString());
                 boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
-                        || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack) == 2;
+                        || EnchantmentHelper.getItemEnchantmentLevel(unbreaking, stack) == 2;
                 if (!expected.equals(actual) || stack.getCount() != expectedCount
                         || stack.getDamageValue() != expectedDamage || !proofMatches || !enchantmentMatches) {
                     if (itemMismatches < 10) {
@@ -153,7 +155,7 @@ public final class UpgradeWorldSmoke {
                                 + " with fixture NBT but found " + stack + " damage="
                                 + stack.getDamageValue() + " proof=" + proofMatches
                                 + " unbreaking="
-                                + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack));
+                                + EnchantmentHelper.getItemEnchantmentLevel(unbreaking, stack));
                     }
                     itemMismatches++;
                 }
@@ -174,7 +176,7 @@ public final class UpgradeWorldSmoke {
                                 && worn.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
                                 net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture").getString("proof")
                                         .equals(oldItem.get("id").getAsString())
-                                && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, worn) == 2;
+                                && EnchantmentHelper.getItemEnchantmentLevel(unbreaking, worn) == 2;
                     });
                     if (!equipped) {
                         if (itemMismatches < 10) failures.add("missing armor-stand equipment " + expected);

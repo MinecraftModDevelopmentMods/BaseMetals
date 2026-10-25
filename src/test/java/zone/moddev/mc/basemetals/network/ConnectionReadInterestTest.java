@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
-/** Forge 50 owns protocol transitions; Base Metals only checks its own content mode. */
+/** Forge owns protocol transitions; Base Metals only checks its own content mode. */
 class ConnectionReadInterestTest {
     @Test
     void obsoleteConnectionPatchIsNotInstalled() throws Exception {

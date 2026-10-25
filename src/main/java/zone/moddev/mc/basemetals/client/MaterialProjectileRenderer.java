@@ -38,13 +38,12 @@ public final class MaterialProjectileRenderer extends ArrowRenderer<MaterialProj
     public void vertex(PoseStack.Pose pose, VertexConsumer vertices,
             int x, int y, int z, float u, float v, int normalX, int normalY,
             int normalZ, int packedLight) {
-        vertices.vertex(pose, x, y, z)
-                .color((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, 0xFF)
-                .uv(u, v)
-                .overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(packedLight)
-                .normal(pose, normalX, normalZ, normalY)
-                .endVertex();
+        vertices.addVertex(pose, x, y, z)
+                .setColor((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, 0xFF)
+                .setUv(u, v)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setLight(packedLight)
+                .setNormal(pose, normalX, normalZ, normalY);
     }
 
     @Override

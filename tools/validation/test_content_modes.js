@@ -94,7 +94,7 @@ function verifyConfig(directory, initial) {
 
 (async () => {
     const results = [];
-    const client = clientLaunch(spec.clientRuntime, '1.20.6', '50.2.0');
+    const client = clientLaunch(spec.clientRuntime, '1.21.1', '52.1.0');
     const selected = spec.cases ? cases.filter(([name]) => spec.cases.includes(name)) : cases;
     if (!selected.length || (spec.cases && selected.length !== spec.cases.length)) {
         throw new Error('The requested mode-test case is unknown or duplicated.');
@@ -114,14 +114,14 @@ function verifyConfig(directory, initial) {
             + 'generator-settings={"layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:dirt","height":2},{"block":"minecraft:grass_block","height":1}],"biome":"minecraft:plains"}\n'
             + 'generate-structures=false\nmax-tick-time=-1\n');
         const server = launch(serverDir, ['-Xms256m', '-Xmx2g', '-Dbasemetals.awaitLoginSmoke=true',
-            ...serverArguments(spec.serverRuntime, serverDir, '1.20.6', '50.2.0')], 'server.log');
+            ...serverArguments(spec.serverRuntime, serverDir, '1.21.1', '52.1.0')], 'server.log');
         let player;
         try {
             await waitFor(server, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS', 240000);
             player = launch(clientDir, ['-Xms512m', '-Xmx2g', '-Dbasemetals.remoteLoginSmoke=true',
                 `-Dbasemetals.remoteAddress=127.0.0.1:${port}`, `-Dbasemetals.loginSmokeConnections=${reject ? 1 : 3}`, `-Dbasemetals.expectModeReject=${!!reject}`,
                 ...client.args, ...client.metadata.arguments.game,
-                '--username', 'BMValidation', '--version', '1.20.6', '--gameDir', clientDir,
+                '--username', 'BMValidation', '--version', '1.21.1', '--gameDir', clientDir,
                 '--assetsDir', path.join(spec.clientRuntime, 'assets'), '--assetIndex', client.vanilla.assetIndex.id,
                 '--uuid', '00000000000000000000000000000118', '--accessToken', '0', '--userType', 'legacy'], 'client.log');
             await waitFor(player, 'BASEMETALS_MODE_LOGIN_CLIENT PASS result=' + (reject ? 'rejected' : 'connected'), 240000);

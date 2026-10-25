@@ -16,9 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 /**
- * Furnace recipe serializer which retains the counted outputs supported by the
- * 1.12 furnace registry. Vanilla's 1.18 JSON serializer only accepts a result
- * item ID and therefore cannot express the old multi-ingot recycling recipes.
+ * Keeps the existing recycling recipe IDs and counted furnace outputs.
  */
 public final class LegacySmeltingRecipe extends SmeltingRecipe {
     public LegacySmeltingRecipe(String group, Ingredient ingredient,
@@ -27,13 +25,13 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override
-    public boolean matches(net.minecraft.world.Container inventory, net.minecraft.world.level.Level world) {
+    public boolean matches(net.minecraft.world.item.crafting.SingleRecipeInput inventory, net.minecraft.world.level.Level world) {
         return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
                 && super.matches(inventory, world);
     }
 
     @Override
-    public ItemStack assemble(net.minecraft.world.Container inventory, net.minecraft.core.HolderLookup.Provider registries) {
+    public ItemStack assemble(net.minecraft.world.item.crafting.SingleRecipeInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
         return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
                 ? super.assemble(inventory, registries) : ItemStack.EMPTY;
     }

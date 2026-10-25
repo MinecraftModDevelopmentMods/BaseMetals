@@ -73,14 +73,14 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 || optionalDevelopmentArtifacts.any { expected ->
                     !optionalClient.classpath.files.any { it.name.contains("${expected.module}-${expected.file}") }
                 }) {
-            throw new GradleException('The optional client must load the pinned 1.20.6 dependencies')
+            throw new GradleException('The optional client must load the pinned 1.21.1 dependencies')
         }
     }
 }
 
-def syncForge50EclipseLaunches = tasks.register('syncForge50EclipseLaunches') {
+def syncForgeEclipseLaunches = tasks.register('syncForgeEclipseLaunches') {
     group = 'ide'
-    description = 'Normalizes Forge 50 Eclipse launches to the production-only merged output.'
+    description = 'Normalizes Forge Eclipse launches to the production-only merged output.'
     dependsOn tasks.named('classes')
     doLast {
         String mainOutput = new File(projectDir, 'bin/main').absolutePath
@@ -221,7 +221,7 @@ def syncForge50EclipseLaunches = tasks.register('syncForge50EclipseLaunches') {
 def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionClasspath') {
     group = 'verification'
     description = 'Verifies Eclipse client/server launches cannot see validation-only code.'
-    dependsOn syncForge50EclipseLaunches
+    dependsOn syncForgeEclipseLaunches
     dependsOn verifyDevelopmentRunProfiles
     doLast {
         File classpath = file('.classpath')
@@ -297,7 +297,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
             String expectedModClasses = "${mod_id}%%${new File(projectDir, 'bin/main').absolutePath}"
             if (!launch.contains(expectedModClasses)) {
-                throw new GradleException("Eclipse launch is not using Forge 50's merged production output: ${name}")
+                throw new GradleException("Eclipse launch is not using Forge's merged production output: ${name}")
             }
             ['cache', 'metadata', 'to-srg', 'to-obf'].each { flag ->
                 if (launch.contains("--${flag} ") && !launch.contains("--${flag} &quot;")) {
@@ -308,7 +308,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
         }
         File processed = layout.buildDirectory.dir('resources/main').get().asFile
         ['META-INF/mods.toml', 'data/basemetals/orespawn/provider.json',
-         'data/basemetals/recipes/stone_crackhammer.json'].each { name ->
+         'data/basemetals/recipe/stone_crackhammer.json'].each { name ->
             File expected = new File(processed, name)
             File actual = new File(projectDir, "bin/main/${name}")
             if (!expected.isFile() || !actual.isFile()
@@ -317,28 +317,28 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.0.120061"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.1.121011"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
 }
 
 verifyDevelopmentRunProfiles.configure {
-    dependsOn syncForge50EclipseLaunches
+    dependsOn syncForgeEclipseLaunches
 }
 
 tasks.matching { it.name == 'genEclipseRuns' }.configureEach {
-    finalizedBy syncForge50EclipseLaunches
+    finalizedBy syncForgeEclipseLaunches
 }
 
 tasks.register('isolateEclipseProductionRuns') {
     group = 'ide'
     dependsOn tasks.named('genEclipseRuns')
-    dependsOn syncForge50EclipseLaunches
+    dependsOn syncForgeEclipseLaunches
 }
 
 tasks.matching { it.name == 'eclipse' }.configureEach {
-    finalizedBy syncForge50EclipseLaunches
+    finalizedBy syncForgeEclipseLaunches
 }
 
 // Use this after import or refresh to regenerate and check the ordinary launches.

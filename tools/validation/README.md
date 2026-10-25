@@ -1,6 +1,6 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.20.6 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 1.21.1 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
@@ -18,6 +18,10 @@ Use `lateChunks:true` on captured fixtures to leave Nether and End blocks
 unopened through the first load and reload, then check them on a third start.
 `oreOverrides` edits named Base Metals rules in the disposable world's saved
 OreSpawn profile and verifies that those values survive both starts.
+
+The log check accepts known vanilla registry changes, including paintings moved
+to data files. Unknown or modded entries still fail the test. Check that boundary
+with `node --test tools/validation/test_painting_registry.js`.
 
 `compare_world_terrain.py` checks fixed vanilla terrain before and after
 conversion. It accepts Minecraft's new underground floor and accounts for

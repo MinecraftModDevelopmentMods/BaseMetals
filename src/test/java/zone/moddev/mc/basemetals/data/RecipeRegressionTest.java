@@ -22,11 +22,11 @@ class RecipeRegressionTest {
 
     @Test
     void doorsAndTrapdoorsHaveDifferentPatterns() throws Exception {
-        try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("recipe"))) {
             for (Path file : (Iterable<Path>) files.filter(path -> path.toString().endsWith("_door.json"))::iterator) {
                 JsonObject door = read(file);
                 String trapdoorName = file.getFileName().toString().replace("_door.json", "_trapdoor.json");
-                JsonObject trapdoor = read(DATA.resolve("recipes").resolve(trapdoorName));
+                JsonObject trapdoor = read(DATA.resolve("recipe").resolve(trapdoorName));
 
                 assertEquals(3, door.getAsJsonArray("pattern").size(), file.toString());
                 assertEquals(2, trapdoor.getAsJsonArray("pattern").size(), trapdoorName);
@@ -37,17 +37,17 @@ class RecipeRegressionTest {
 
     @Test
     void steelRailsGiveTheVanillaBatchSize() throws Exception {
-        JsonObject result = read(DATA.resolve("recipes/rail.json")).getAsJsonObject("result");
+        JsonObject result = read(DATA.resolve("recipe/rail.json")).getAsJsonObject("result");
         assertEquals(16, result.has("count") ? result.get("count").getAsInt() : 1);
     }
 
     @Test
     void craftingRecipesHaveIngredientBasedUnlocksButRepairsStayHidden() throws Exception {
-        try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("recipe"))) {
             for (Path file : (Iterable<Path>) files.filter(Files::isRegularFile)::iterator) {
                 JsonObject recipe = read(file);
                 String type = recipe.get("type").getAsString();
-                Path unlock = DATA.resolve("advancements/recipes").resolve(file.getFileName());
+                Path unlock = DATA.resolve("advancement/recipes").resolve(file.getFileName());
 
                 if (type.startsWith("minecraft:crafting_")) {
                     assertTrue(Files.isRegularFile(unlock), "Missing unlock for " + file);
@@ -68,7 +68,7 @@ class RecipeRegressionTest {
         Map<String, String> discovery = materialDiscovery();
         int tested = 0;
 
-        try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("recipe"))) {
             for (Path file : (Iterable<Path>) files.filter(Files::isRegularFile)::iterator) {
                 JsonObject recipe = read(file);
                 if (!recipe.get("type").getAsString().startsWith("minecraft:crafting_")) continue;
@@ -78,7 +78,7 @@ class RecipeRegressionTest {
                         ? "steel" : name.substring(0, name.indexOf('_'));
                 assertTrue(discovery.containsKey(material), "Missing discovery material for " + name);
 
-                JsonObject advancement = read(DATA.resolve("advancements/recipes").resolve(file.getFileName()));
+                JsonObject advancement = read(DATA.resolve("advancement/recipes").resolve(file.getFileName()));
                 JsonObject criteria = advancement.getAsJsonObject("criteria");
                 assertTrue(criteria.has("has_material"), "Missing material discovery for " + name);
                 JsonObject acquired = criteria.getAsJsonObject("has_material");
@@ -103,7 +103,7 @@ class RecipeRegressionTest {
 
     @Test
     void existing113RecipeAdvancementCriteriaRemainAvailable() throws Exception {
-        JsonObject criteria = read(DATA.resolve("advancements/recipes/adamantine_bow.json"))
+        JsonObject criteria = read(DATA.resolve("advancement/recipes/adamantine_bow.json"))
                 .getAsJsonObject("criteria");
         assertEquals("minecraft:recipe_unlocked", criteria.getAsJsonObject("has_recipe").get("trigger").getAsString());
         assertEquals("#forge:rods/adamantine", criteria.getAsJsonObject("has_ingredient_1")
@@ -112,25 +112,25 @@ class RecipeRegressionTest {
 
     @Test
     void obsidianCannotBeMultipliedThroughCrushingAndCompacting() throws Exception {
-        JsonObject block = read(DATA.resolve("recipes/obsidian_block.json"));
+        JsonObject block = read(DATA.resolve("recipe/obsidian_block.json"));
         int ingots = 0;
         for (com.google.gson.JsonElement row : block.getAsJsonArray("pattern")) {
             ingots += row.getAsString().replace(" ", "").length();
         }
-        JsonObject crushing = read(DATA.resolve("recipes/obsidian_crushing.json"));
+        JsonObject crushing = read(DATA.resolve("recipe/obsidian_crushing.json"));
         assertTrue(ingots >= crushing.getAsJsonObject("result").get("count").getAsInt());
         assertEquals("forge:ingots/obsidian", block.getAsJsonObject("key").getAsJsonObject("X")
                 .get("tag").getAsString());
-        assertEquals("basemetals:obsidian_ingot", read(DATA.resolve("recipes/obsidian_ingot.json"))
+        assertEquals("basemetals:obsidian_ingot", read(DATA.resolve("recipe/obsidian_ingot.json"))
                 .getAsJsonObject("result").get("id").getAsString());
-        assertFalse(block.get("pattern").equals(read(DATA.resolve("recipes/obsidian_bars.json"))
+        assertFalse(block.get("pattern").equals(read(DATA.resolve("recipe/obsidian_bars.json"))
                 .get("pattern")), "Obsidian blocks must not collide with bars");
     }
 
     @Test
     void craftingAndRecyclingCannotIncreaseTheSameMaterial() throws Exception {
         Map<String, JsonObject> recipes = new LinkedHashMap<String, JsonObject>();
-        try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
+        try (Stream<Path> files = Files.list(DATA.resolve("recipe"))) {
             for (Path file : (Iterable<Path>) files.filter(Files::isRegularFile)::iterator) {
                 recipes.put(file.getFileName().toString(), read(file));
             }
@@ -141,6 +141,10 @@ class RecipeRegressionTest {
             if (!entry.getKey().endsWith("_recycling.json")) continue;
             JsonObject craft = recipes.get(entry.getKey().replace("_recycling", ""));
             if (craft == null || !craft.has("pattern")) continue;
+
+            JsonObject recyclingInput = entry.getValue().getAsJsonObject("ingredient");
+            if (recyclingInput.has("item") && !recyclingInput.get("item").getAsString()
+                    .equals(craft.getAsJsonObject("result").get("id").getAsString())) continue;
 
             JsonObject result = entry.getValue().getAsJsonObject("result");
             String output = result.get("id").getAsString().split(":")[1];

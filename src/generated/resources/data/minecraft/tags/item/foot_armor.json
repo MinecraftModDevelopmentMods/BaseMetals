@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_boots",
+    "basemetals:antimony_boots",
+    "basemetals:aquarium_boots",
+    "basemetals:bismuth_boots",
+    "basemetals:brass_boots",
+    "basemetals:bronze_boots",
+    "basemetals:coldiron_boots",
+    "basemetals:copper_boots",
+    "basemetals:cupronickel_boots",
+    "basemetals:electrum_boots",
+    "basemetals:emerald_boots",
+    "basemetals:invar_boots",
+    "basemetals:lead_boots",
+    "basemetals:mithril_boots",
+    "basemetals:nickel_boots",
+    "basemetals:obsidian_boots",
+    "basemetals:pewter_boots",
+    "basemetals:platinum_boots",
+    "basemetals:quartz_boots",
+    "basemetals:silver_boots",
+    "basemetals:starsteel_boots",
+    "basemetals:steel_boots",
+    "basemetals:tin_boots",
+    "basemetals:zinc_boots"
+  ]
+}

@@ -30,8 +30,8 @@ flower, sapling and leaf tags include suitable new plants.
 
 Normal client and server launches load only Base Metals and OreSpawn. The
 optional-mod profile has its own run folder, but no optional integration mods
-are pinned for Forge 1.20.6. Mekanism, Tinkers, Thermal and Ender IO have no
-compatible releases for this target; their dormant data remains available for
+are pinned for Forge 1.21.1. The Mekanism, Tinkers, Thermal and Ender IO Java
+integrations are not enabled here; their dormant data remains available for
 future integration work.
 
 Run `prepareEclipse` after importing the project or refreshing Gradle. It

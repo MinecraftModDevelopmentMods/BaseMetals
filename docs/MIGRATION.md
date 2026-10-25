@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.20.6 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 1.21.1 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -88,7 +88,7 @@ The mode is a server or modpack setting, not a setting stored in each world.
 
 ## Moving from 1.20.1
 
-Minecraft 1.20.6 stores item properties as components rather than the older item
+Minecraft 1.21.1 stores item properties as components rather than the older item
 tag. Base Metals keeps names, enchantments, durability and custom data during
 that conversion. Saved arrows and bolts also retain their ammunition.
 
@@ -112,3 +112,19 @@ dimensions, and heights.
 The generated manifests at `data/basemetals/registry_manifest_1_12.json` and
 `data/basemetals/registry_manifest.json` document the runtime baseline,
 restored content, and explicit 1.18 additions.
+
+## Existing modern worlds
+
+Modern worlds do not need the old numeric-ID conversion. Base Metals only runs
+it after confirming an older source save. A leftover `level.dat_old` does not
+replace the current player or turn on legacy terrain protection.
+
+For a genuine upgrade, the original single-player record is captured before
+Minecraft reads it. The world-local migration sidecar keeps the source version
+and saved registry map for reloads and chunks opened later; it does not store
+a player record. A saved registry map from an earlier upgrade takes precedence
+over an older backup.
+
+Chunk reading uses Minecraft's supported region formats. Empty region files
+are left alone, and backups include external chunk files when their region
+needs conversion.

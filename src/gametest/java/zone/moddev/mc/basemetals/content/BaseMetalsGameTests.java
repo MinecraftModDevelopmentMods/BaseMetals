@@ -275,13 +275,13 @@ public final class BaseMetalsGameTests {
         crafting.setItem(7, new ItemStack(Items.STICK));
 
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
-                RecipeType.CRAFTING, crafting, helper.getLevel());
+                RecipeType.CRAFTING, crafting.asCraftInput(), helper.getLevel());
         require(helper, recipe.isPresent(), "Stone bricks above two sticks matched no crafting recipe");
         if (recipe.isEmpty()) return;
         require(helper, recipe.orElseThrow().id().equals(
                 ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "stone_crackhammer")),
                 "The legacy stone crackhammer pattern matched the wrong recipe");
-        ItemStack output = recipe.orElseThrow().value().assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack output = recipe.orElseThrow().value().assemble(crafting.asCraftInput(), net.minecraft.core.RegistryAccess.EMPTY);
         require(helper, output.is(ModContent.item("stone_crackhammer").get()),
                 "The legacy middle-column pattern returned the wrong item");
         helper.succeed();
@@ -598,7 +598,7 @@ public final class BaseMetalsGameTests {
         CraftingContainer crafting = craftingContainer(2, 1);
         ItemStack damaged = ModContent.item("adamantine_chestplate").get().getDefaultInstance();
         damaged.setDamageValue(20);
-        damaged.enchant(Enchantments.PROTECTION, 2);
+        damaged.enchant(enchantment(helper, Enchantments.PROTECTION), 2);
         damaged.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Old name"));
         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
                 damaged, tag -> tag.putBoolean("LegacyCustomData", true));
@@ -608,14 +608,14 @@ public final class BaseMetalsGameTests {
         require(helper, recipe.orElseThrow().value() instanceof PlateRepairRecipe,
                 "Plate-repair recipe loaded with the wrong implementation");
         if (!(recipe.orElseThrow().value() instanceof PlateRepairRecipe repair)) return;
-        require(helper, repair.matches(crafting, helper.getLevel()),
+        require(helper, repair.matches(crafting.asCraftInput(), helper.getLevel()),
                 "Plate-repair recipe rejected a damaged item and matching plate");
-        ItemStack output = repair.assemble(crafting, net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack output = repair.assemble(crafting.asCraftInput(), net.minecraft.core.RegistryAccess.EMPTY);
         require(helper, output.is(ModContent.item("adamantine_chestplate").get()),
                 "Plate repair returned the wrong armor item");
         require(helper, output.getDamageValue() == 0, "Plate repair did not fully restore durability");
         require(helper, EnchantmentHelper.getItemEnchantmentLevel(
-                Enchantments.PROTECTION, output) == 2,
+                enchantment(helper, Enchantments.PROTECTION), output) == 2,
                 "Plate repair lost enchantments");
         require(helper, output.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME), "Plate repair lost the custom name");
         require(helper, output.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getBoolean("LegacyCustomData"),
@@ -628,7 +628,7 @@ public final class BaseMetalsGameTests {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack shield = ModContent.item("copper_shield").get().getDefaultInstance();
         shield.setDamageValue(10);
-        shield.enchant(Enchantments.UNBREAKING, 2);
+        shield.enchant(enchantment(helper, Enchantments.UNBREAKING), 2);
         shield.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, net.minecraft.network.chat.Component.literal("Old shield"));
         net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
                 shield, tag -> tag.putBoolean("LegacyCustomData", true));
@@ -641,7 +641,7 @@ public final class BaseMetalsGameTests {
                 "Iron Vanilla Bits plate did not upgrade a softer shield");
         require(helper, event.getOutput().getDamageValue() == 0,
                 "Shield upgrade did not produce a fresh shield");
-        require(helper, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING,
+        require(helper, EnchantmentHelper.getItemEnchantmentLevel(enchantment(helper, Enchantments.UNBREAKING),
                 event.getOutput()) == 2, "Shield upgrade lost enchantments");
         require(helper, event.getOutput().has(net.minecraft.core.component.DataComponents.CUSTOM_NAME),
                 "Shield upgrade lost the custom name");
@@ -675,7 +675,7 @@ public final class BaseMetalsGameTests {
         player.setItemInHand(InteractionHand.MAIN_HAND, weapon);
         player.getInventory().setItem(1, bolt.copy());
         player.startUsingItem(InteractionHand.MAIN_HAND);
-        crossbow.releaseUsing(weapon, helper.getLevel(), player, crossbow.getUseDuration(weapon) - 20);
+        crossbow.releaseUsing(weapon, helper.getLevel(), player, crossbow.getUseDuration(weapon, player) - 20);
 
         // Assert synchronously: the GameTest harness may purge fast projectiles
         // after they leave its deliberately tiny empty structure.
@@ -731,7 +731,7 @@ public final class BaseMetalsGameTests {
         equip(player, "adamantine");
         player.tickCount = 20;
         BaseMetalsEvents events = new BaseMetalsEvents();
-        events.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
+        events.onPlayerTick(new TickEvent.PlayerTickEvent.Post(player));
         require(helper, player.getEffect(MobEffects.DAMAGE_RESISTANCE) != null
                 && player.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() == 1,
                 "Four Adamantine pieces did not grant Resistance II");
@@ -745,7 +745,7 @@ public final class BaseMetalsGameTests {
         player.setItemInHand(InteractionHand.MAIN_HAND, starsteel);
         player.setItemInHand(InteractionHand.OFF_HAND, armor);
         player.tickCount = 200;
-        events.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
+        events.onPlayerTick(new TickEvent.PlayerTickEvent.Post(player));
         require(helper, starsteel.getDamageValue() == 4,
                 "Held Starsteel tool did not regenerate one durability");
         require(helper, armor.getDamageValue() == 5,
@@ -864,7 +864,7 @@ public final class BaseMetalsGameTests {
     private static void assertCrushingRecipe(GameTestHelper helper, ItemStack input,
             String expectedItem, int expectedCount) {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
-                CrushingRecipe.TYPE.get(), new SimpleContainer(input), helper.getLevel());
+                CrushingRecipe.TYPE.get(), new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No crushing recipe loaded for " + input);
         ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
         ResourceLocation expectedId = expectedItem.contains(":")
@@ -878,7 +878,7 @@ public final class BaseMetalsGameTests {
 
     private static void tickEffects(BaseMetalsEvents events, ServerPlayer player) {
         player.tickCount = 20;
-        events.onPlayerTick(new TickEvent.PlayerTickEvent(TickEvent.Phase.END, player));
+        events.onPlayerTick(new TickEvent.PlayerTickEvent.Post(player));
     }
 
     private static int effectAmplifier(LivingEntity entity, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
@@ -889,7 +889,7 @@ public final class BaseMetalsGameTests {
     private static void assertSmeltingRecipe(GameTestHelper helper, ItemStack input,
             String expectedItem, int expectedCount) {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
-                RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
+                RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
         ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
@@ -903,7 +903,7 @@ public final class BaseMetalsGameTests {
     private static void assertSmeltingRecipeInTag(GameTestHelper helper, ItemStack input,
             String expectedTag, int expectedCount) {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
-                RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
+                RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
         ItemStack result = recipe.orElseThrow().value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY);
@@ -918,7 +918,7 @@ public final class BaseMetalsGameTests {
 
     private static void assertNoSmeltingRecipe(GameTestHelper helper, ItemStack input) {
         var recipe = helper.getLevel().getRecipeManager().getRecipeFor(
-                RecipeType.SMELTING, new SimpleContainer(input), helper.getLevel());
+                RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isEmpty(), input + " unexpectedly has a furnace recipe");
     }
 
@@ -960,7 +960,7 @@ public final class BaseMetalsGameTests {
         Player shooter = helper.makeMockPlayer(GameType.SURVIVAL);
         ItemStack ammunition = ModContent.item("starsteel_bolt").get().getDefaultInstance();
         MaterialProjectile original = new MaterialProjectile(ModEntities.CUSTOM_BOLT.get(), helper.getLevel(), shooter, ammunition);
-        require(helper, original.getAddEntityPacket().getClass().getName().contains("CustomPayload"),
+        require(helper, original.getAddEntityPacket(null).getClass().getName().contains("CustomPayload"),
                 "Projectile uses the vanilla packet, so Forge ammunition data cannot reach the client");
 
         CompoundTag saved = new CompoundTag();
@@ -999,9 +999,9 @@ public final class BaseMetalsGameTests {
         ServerPlayer player = survivalPlayer(helper);
         ItemStack pickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
         ItemStack silk = pickaxe.copy();
-        silk.enchant(Enchantments.SILK_TOUCH, 1);
+        silk.enchant(enchantment(helper, Enchantments.SILK_TOUCH), 1);
         ItemStack fortune = pickaxe.copy();
-        fortune.enchant(Enchantments.FORTUNE, 3);
+        fortune.enchant(enchantment(helper, Enchantments.FORTUNE), 3);
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
         for (var entry : ModContent.blocksById().entrySet()) {
             if (!entry.getKey().endsWith("_ore")) continue;
@@ -1049,19 +1049,31 @@ public final class BaseMetalsGameTests {
                     String launcher = material + (crossbow ? "_crossbow" : "_bow");
                     String ammo = material + (crossbow ? "_bolt" : "_arrow");
                     ItemStack weapon = ModContent.item(launcher).get().getDefaultInstance();
-                    if (power > 0) weapon.enchant(Enchantments.POWER, power);
+                    if (power > 0) weapon.enchant(enchantment(helper, Enchantments.POWER), power);
                     player.setItemInHand(InteractionHand.MAIN_HAND, weapon);
                     player.getInventory().setItem(1, ModContent.item(ammo).get().getDefaultInstance());
                     player.startUsingItem(InteractionHand.MAIN_HAND);
-                    weapon.getItem().releaseUsing(weapon, helper.getLevel(), player, weapon.getUseDuration() - 20);
+                    weapon.getItem().releaseUsing(weapon, helper.getLevel(), player, weapon.getUseDuration(player) - 20);
                     var projectiles = new ArrayList<MaterialProjectile>();
                     helper.getLevel().getAllEntities().forEach(entity -> {
                         if (entity instanceof MaterialProjectile arrow && arrow.getOwner() == player) projectiles.add(arrow);
                     });
-                    double damage = ((MaterialBacked) weapon.getItem()).baseMetalsMaterial().baseAttackDamage() * 2.0D
-                            + (power == 0 ? 0 : power * 0.5D + 0.5D);
-                    require(helper, projectiles.size() == 1 && close(projectiles.get(0).getBaseDamage(), damage),
-                            launcher + " Power " + power + " did not use material damage=" + damage);
+                    double baseDamage = ((MaterialBacked) weapon.getItem()).baseMetalsMaterial().baseAttackDamage() * 2.0D;
+                    require(helper, projectiles.size() == 1 && close(projectiles.get(0).getBaseDamage(), baseDamage),
+                            launcher + " did not keep the material base damage=" + baseDamage);
+
+                    MaterialProjectile projectile = projectiles.getFirst();
+                    var target = EntityType.ZOMBIE.create(helper.getLevel());
+                    double damage = EnchantmentHelper.modifyDamage(helper.getLevel(), projectile.getWeaponItem(), target,
+                            helper.getLevel().damageSources().arrow(projectile, player), (float) baseDamage);
+                    var vanilla = ((net.minecraft.world.item.ArrowItem) Items.ARROW)
+                            .createArrow(helper.getLevel(), Items.ARROW.getDefaultInstance(), player, weapon);
+                    double vanillaDamage = EnchantmentHelper.modifyDamage(helper.getLevel(), weapon, target,
+                            helper.getLevel().damageSources().arrow(vanilla, player), 2.0F);
+                    double expected = baseDamage + vanillaDamage - 2.0D;
+                    require(helper, power == 0 || vanillaDamage > 2.0D, "The vanilla Power reference did not apply");
+                    require(helper, close(damage, expected), launcher + " Power " + power + " damage=" + damage
+                            + " instead of " + expected);
                     require(helper, player.getInventory().getItem(1).isEmpty() && weapon.getDamageValue() == 1,
                             launcher + " did not consume ammunition and durability");
                     projectiles.forEach(Entity::discard);
@@ -1076,6 +1088,12 @@ public final class BaseMetalsGameTests {
                 net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY).modifiers().stream()
                 .filter(entry -> entry.slot().test(EquipmentSlot.MAINHAND) && entry.attribute().equals(attribute))
                 .mapToDouble(entry -> entry.modifier().amount()).sum();
+    }
+
+    private static net.minecraft.core.Holder<net.minecraft.world.item.enchantment.Enchantment> enchantment(
+            GameTestHelper helper, net.minecraft.resources.ResourceKey<net.minecraft.world.item.enchantment.Enchantment> key) {
+        return helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                .getOrThrow(key);
     }
 
     private static int burnTime(String item) {

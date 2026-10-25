@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class IntegrationContentPolicyTest {
     @Test
     void everyBundledMachineItemOutputHasAContentCondition() throws Exception {
-        Path recipes = Path.of("src/generated/resources/data/basemetals/recipes/compat");
+        Path recipes = Path.of("src/generated/resources/data/basemetals/recipe/compat");
         int count = 0;
         try (var paths = Files.walk(recipes)) {
             for (Path file : paths.filter(path -> path.toString().endsWith(".json")).toList()) {

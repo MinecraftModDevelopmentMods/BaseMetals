@@ -18,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.compat.VanillaCopper;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
@@ -26,6 +27,16 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SwordItem;
 
 /** Small catalogue-driven generator for server data and compatibility manifests. */
 final class GeneratedData implements DataProvider {
@@ -147,7 +158,7 @@ final class GeneratedData implements DataProvider {
             pool.add("conditions", conditions);
             JsonObject root = object("type", "minecraft:block");
             JsonArray pools = new JsonArray(); pools.add(pool); root.add("pools", pools);
-            save(cache, root, "data/basemetals/loot_tables/blocks/" + id + ".json");
+            save(cache, root, "data/basemetals/loot_table/blocks/" + id + ".json");
         }
     }
 
@@ -156,21 +167,21 @@ final class GeneratedData implements DataProvider {
         for (String id : ModContent.blocksById().keySet()) {
             if (!ModContent.fluids().containsKey(id)) allBlockDrops.add("basemetals:" + id);
         }
-        tag(cache, "minecraft", "blocks/mineable/pickaxe", allBlockDrops);
+        tag(cache, "minecraft", "block/mineable/pickaxe", allBlockDrops);
         List<String> beaconBases = MaterialCatalogue.ALL.stream()
                 .filter(MaterialDefinition::hasEquipment)
                 .map(material -> "basemetals:" + material.name() + "_block")
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
         beaconBases.add("basemetals:charcoal_block");
-        tag(cache, "minecraft", "blocks/beacon_base_blocks", beaconBases);
+        tag(cache, "minecraft", "block/beacon_base_blocks", beaconBases);
         // AnvilBlock.damage is hard-coded to the three vanilla blocks in 1.18.
         // Tagging a custom anvil makes any damaging fall delete it immediately.
         // BaseMetalAnvilBlock supplies the menu and durability handling itself.
-        tag(cache, "basemetals", "blocks/crackhammer_crushable", crackhammerCrushableBlocks());
+        tag(cache, "basemetals", "block/crackhammer_crushable", crackhammerCrushableBlocks());
         writeHarvestTierTags(cache);
-        tag(cache, "forge", "blocks/netherrack", List.of("minecraft:netherrack"));
-        tag(cache, "forge", "blocks/end_stones", List.of("minecraft:end_stone"));
-        tag(cache, "minecraft", "items/arrows", java.util.stream.Stream.concat(
+        tag(cache, "forge", "block/netherrack", List.of("minecraft:netherrack"));
+        tag(cache, "forge", "block/end_stones", List.of("minecraft:end_stone"));
+        tag(cache, "minecraft", "item/arrows", java.util.stream.Stream.concat(
                 MaterialCatalogue.ALL.stream().filter(MaterialDefinition::hasEquipment)
                         .map(material -> "basemetals:" + material.name() + "_arrow"),
                 List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz").stream()
@@ -242,21 +253,68 @@ final class GeneratedData implements DataProvider {
         for (String name : List.of("diamond", "emerald", "gold", "iron")) {
             addAggregate(aggregateItems, "plates", "#forge:plates/" + name);
         }
-        aggregateItems.forEach((path, values) -> uncheckedTag(cache, "forge", "items/" + path, values));
-        aggregateBlocks.forEach((path, values) -> uncheckedTag(cache, "forge", "blocks/" + path, values));
+        aggregateItems.forEach((path, values) -> uncheckedTag(cache, "forge", "item/" + path, values));
+        aggregateBlocks.forEach((path, values) -> uncheckedTag(cache, "forge", "block/" + path, values));
 
         for (String alias : List.of("adamant", "adamantite", "adamantium")) {
-            tag(cache, "forge", "items/ingots/" + alias, List.of("#forge:ingots/adamantine"));
-            tag(cache, "forge", "items/nuggets/" + alias, List.of("#forge:nuggets/adamantine"));
-            tag(cache, "forge", "items/dusts/" + alias, List.of("#forge:dusts/adamantine"));
+            tag(cache, "forge", "item/ingots/" + alias, List.of("#forge:ingots/adamantine"));
+            tag(cache, "forge", "item/nuggets/" + alias, List.of("#forge:nuggets/adamantine"));
+            tag(cache, "forge", "item/dusts/" + alias, List.of("#forge:dusts/adamantine"));
         }
-        tag(cache, "forge", "items/ingots/quicksilver", List.of("#forge:ingots/mercury"));
-        tag(cache, "forge", "items/gears/steel", List.of("basemetals:steel_gear"));
-        tag(cache, "forge", "items/sprockets/steel", List.of("#forge:gears/steel"));
-        tag(cache, "forge", "items/plates/diamond", List.of());
-        tag(cache, "forge", "items/plates/emerald", List.of());
+        tag(cache, "forge", "item/ingots/quicksilver", List.of("#forge:ingots/mercury"));
+        tag(cache, "forge", "item/gears/steel", List.of("basemetals:steel_gear"));
+        tag(cache, "forge", "item/sprockets/steel", List.of("#forge:gears/steel"));
+        tag(cache, "forge", "item/plates/diamond", List.of());
+        tag(cache, "forge", "item/plates/emerald", List.of());
         writeVanillaBitsTags(cache);
         writeCompatibilityTags(cache);
+        writeEnchantmentTags(cache);
+    }
+
+    private void writeEnchantmentTags(CachedOutput cache) throws IOException {
+        Map<String, List<String>> families = new LinkedHashMap<>();
+
+        ModContent.itemsById().forEach((id, registered) -> {
+            var item = registered.get();
+            String name = "basemetals:" + id;
+
+            if (item instanceof SwordItem) addAggregate(families, "swords", name);
+            if (item instanceof AxeItem) addAggregate(families, "axes", name);
+            if (item instanceof PickaxeItem) addAggregate(families, "pickaxes", name);
+            if (item instanceof ShovelItem) addAggregate(families, "shovels", name);
+            if (item instanceof HoeItem) addAggregate(families, "hoes", name);
+
+            if (item instanceof DiggerItem) {
+                addAggregate(families, "enchantable/mining", name);
+                addAggregate(families, "enchantable/mining_loot", name);
+            } else if (item instanceof ShearsItem) {
+                addAggregate(families, "enchantable/mining", name);
+            }
+
+            if (item instanceof BowItem) {
+                // Our crossbows still draw and fire like bows, including their enchantments.
+                addAggregate(families, "enchantable/bow", name);
+            }
+            if (item instanceof FishingRodItem) addAggregate(families, "enchantable/fishing", name);
+            if (item.getDefaultInstance().isDamageableItem()) addAggregate(families, "enchantable/durability", name);
+
+            if (item instanceof ArmorItem armor) {
+                String family = switch (armor.getType()) {
+                    case HELMET -> "head_armor";
+                    case CHESTPLATE -> "chest_armor";
+                    case LEGGINGS -> "leg_armor";
+                    case BOOTS -> "foot_armor";
+                    default -> null;
+                };
+                if (family != null) addAggregate(families, family, name);
+            }
+        });
+
+        for (var entry : families.entrySet()) {
+            tag(cache, "minecraft", "item/" + entry.getKey(), entry.getValue().stream().sorted().toList());
+        }
+
+        tag(cache, "minecraft", "entity_type/arrows", List.of("basemetals:custom_arrow", "basemetals:custom_bolt"));
     }
 
     private void writeVanillaBitsTags(CachedOutput cache) throws IOException {
@@ -270,52 +328,52 @@ final class GeneratedData implements DataProvider {
                 "quartz", "minecraft:quartz_block", "obsidian", "minecraft:obsidian");
         for (String material : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             if (ModContent.itemsById().containsKey(material + "_rod")) {
-                tag(cache, "forge", "items/rods/" + material,
+                tag(cache, "forge", "item/rods/" + material,
                         List.of("basemetals:" + material + "_rod"));
             }
             if (ModContent.itemsById().containsKey(material + "_gear")) {
-                tag(cache, "forge", "items/gears/" + material,
+                tag(cache, "forge", "item/gears/" + material,
                         List.of("basemetals:" + material + "_gear"));
             }
-            tag(cache, "forge", "items/materials/" + material,
+            tag(cache, "forge", "item/materials/" + material,
                     List.of(vanillaIngot.get(material)));
-            tag(cache, "forge", "items/storage_blocks/" + material,
+            tag(cache, "forge", "item/storage_blocks/" + material,
                     List.of(vanillaBlock.get(material)));
-            tag(cache, "forge", "blocks/storage_blocks/" + material,
+            tag(cache, "forge", "block/storage_blocks/" + material,
                     List.of(vanillaBlock.get(material)));
         }
-        tag(cache, "forge", "items/rods/stone", List.of("basemetals:stone_rod"));
+        tag(cache, "forge", "item/rods/stone", List.of("basemetals:stone_rod"));
         for (String material : List.of("wood", "stone")) {
-            tag(cache, "forge", "items/gears/" + material,
+            tag(cache, "forge", "item/gears/" + material,
                     List.of("basemetals:" + material + "_gear"));
         }
         for (String material : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
-            tag(cache, "forge", "items/dusts/" + material,
+            tag(cache, "forge", "item/dusts/" + material,
                     List.of("basemetals:" + material + "_powder"));
-            tag(cache, "forge", "items/tiny_dusts/" + material,
+            tag(cache, "forge", "item/tiny_dusts/" + material,
                     List.of("basemetals:" + material + "_smallpowder"));
         }
-        tag(cache, "forge", "items/tiny_dusts/redstone", List.of("basemetals:redstone_smallpowder"));
-        tag(cache, "forge", "items/tiny_dusts/lapis", List.of("basemetals:lapis_smallpowder"));
-        tag(cache, "forge", "items/dusts/redstone", List.of("minecraft:redstone"));
-        tag(cache, "forge", "items/dusts/lapis", List.of("minecraft:lapis_lazuli"));
-        tag(cache, "forge", "items/dusts/prismarine", List.of("minecraft:prismarine_shard"));
+        tag(cache, "forge", "item/tiny_dusts/redstone", List.of("basemetals:redstone_smallpowder"));
+        tag(cache, "forge", "item/tiny_dusts/lapis", List.of("basemetals:lapis_smallpowder"));
+        tag(cache, "forge", "item/dusts/redstone", List.of("minecraft:redstone"));
+        tag(cache, "forge", "item/dusts/lapis", List.of("minecraft:lapis_lazuli"));
+        tag(cache, "forge", "item/dusts/prismarine", List.of("minecraft:prismarine_shard"));
         for (String material : List.of("coal", "charcoal", "diamond", "emerald", "obsidian", "quartz")) {
-            tag(cache, "forge", "items/nuggets/" + material,
+            tag(cache, "forge", "item/nuggets/" + material,
                     List.of("basemetals:" + material + "_nugget"));
         }
-        tag(cache, "forge", "items/ingots/obsidian", List.of("basemetals:obsidian_ingot"));
-        tag(cache, "forge", "items/ingots/redstone", List.of("basemetals:redstone_ingot"));
-        tag(cache, "forge", "items/plates/gold", List.of("basemetals:gold_plate"));
-        tag(cache, "forge", "items/plates/iron", List.of("basemetals:iron_plate"));
+        tag(cache, "forge", "item/ingots/obsidian", List.of("basemetals:obsidian_ingot"));
+        tag(cache, "forge", "item/ingots/redstone", List.of("basemetals:redstone_ingot"));
+        tag(cache, "forge", "item/plates/gold", List.of("basemetals:gold_plate"));
+        tag(cache, "forge", "item/plates/iron", List.of("basemetals:iron_plate"));
         for (String material : List.of("diamond", "gold", "iron")) {
-            tag(cache, "forge", "items/blends/" + material,
+            tag(cache, "forge", "item/blends/" + material,
                     List.of("basemetals:" + material + "_blend"));
-            tag(cache, "forge", "items/small_blends/" + material,
+            tag(cache, "forge", "item/small_blends/" + material,
                     List.of("basemetals:" + material + "_smallblend"));
         }
-        tag(cache, "forge", "items/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
-        tag(cache, "forge", "blocks/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
+        tag(cache, "forge", "item/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
+        tag(cache, "forge", "block/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
     }
 
     private static List<String> crackhammerCrushableBlocks() {
@@ -371,23 +429,34 @@ final class GeneratedData implements DataProvider {
         byTier.get(3).add("basemetals:adamantine_anvil");
         // The registry-backed maps above do not promise iteration order. Sort
         // these generated tags so runData is byte-for-byte reproducible.
-        tag(cache, "minecraft", "blocks/needs_stone_tool",
+        tag(cache, "minecraft", "block/needs_stone_tool",
                 byTier.get(1).stream().sorted().toList());
-        tag(cache, "minecraft", "blocks/needs_iron_tool",
+        tag(cache, "minecraft", "block/needs_iron_tool",
                 byTier.get(2).stream().sorted().toList());
-        tag(cache, "minecraft", "blocks/needs_diamond_tool",
+        tag(cache, "minecraft", "block/needs_diamond_tool",
                 byTier.get(3).stream().sorted().toList());
     }
 
     private void writeCompatibilityTags(CachedOutput cache) throws IOException {
+        for (var entry : VanillaCopper.equivalents().entrySet()) {
+            if (entry.getKey().endsWith("_ingot") || entry.getKey().endsWith("_block")) continue;
+
+            String tag = VanillaCopper.ingredientTag(entry.getKey()).substring("forge:".length());
+            tag(cache, "forge", "item/" + tag, List.of(entry.getKey(), entry.getValue()));
+
+            if (!entry.getKey().endsWith("_ingot")) {
+                tag(cache, "forge", "block/" + tag, List.of(entry.getKey(), entry.getValue()));
+            }
+        }
+
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
-            tag(cache, "forge", "fluids/molten_" + material.name(), List.of(
+            tag(cache, "forge", "fluid/molten_" + material.name(), List.of(
                     "basemetals:" + material.name(),
                     "basemetals:flowing_" + material.name()));
         }
         for (String material : PROCESSING_MATERIALS) {
             for (String family : List.of("dirty_dusts", "clumps", "crystals", "shards")) {
-                tag(cache, "mekanism", "items/" + family + "/" + material,
+                tag(cache, "mekanism", "item/" + family + "/" + material,
                         List.of("#forge:" + family + "/" + material));
             }
         }
@@ -474,6 +543,11 @@ final class GeneratedData implements DataProvider {
         legacySpecialRecipes(cache);
         anvilRecipes(cache);
         writeCompatibilityRecipes(cache);
+
+        // Keep the four-ingot refund for old trapdoors.
+        // Vanilla trapdoors cost only three ingots each.
+        legacySmelting(cache, "vanilla_copper_trapdoor_recycling", "minecraft:copper_trapdoor",
+                "minecraft:copper_ingot", 3, MaterialCatalogue.get("copper").oreSmeltingExperience(), 200);
     }
 
     private void equipmentRecipes(CachedOutput cache, String name, String metal) throws IOException {
@@ -519,8 +593,8 @@ final class GeneratedData implements DataProvider {
         shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#forge:rods/" + name),
                 "basemetals:" + name + "_bars", 4);
         shaped(cache, name + "_door", List.of("XX", "XX", "XX"), Map.of('X', metal), "basemetals:" + name + "_door", 3);
-        shaped(cache, name + "_trapdoor", List.of("XX", "XX"), Map.of('X', metal),
-                "basemetals:" + name + "_trapdoor", 1);
+        shaped(cache, name + "_trapdoor", name.equals("copper") ? List.of("XXX", "XXX") : List.of("XX", "XX"),
+                Map.of('X', metal), "basemetals:" + name + "_trapdoor", name.equals("copper") ? 2 : 1);
         shaped(cache, name + "_button", List.of("X", "X"), Map.of('X', "#forge:nuggets/" + name),
                 "basemetals:" + name + "_button", 1);
         shaped(cache, name + "_slab", List.of("XXX"), Map.of('X', block), "basemetals:" + name + "_slab", 6);
@@ -1307,7 +1381,7 @@ final class GeneratedData implements DataProvider {
         outputs.stream().filter(item -> item.startsWith("basemetals:"))
                 .forEach(item -> conditions.add(object("type", "basemetals:content_mode", "item", item)));
         recipe.add("forge:condition", object("type", "forge:and", "values", conditions));
-        save(cache, recipe, "data/basemetals/recipes/" + id + ".json");
+        save(cache, recipe, "data/basemetals/recipe/" + id + ".json");
     }
 
     private static void collectItemOutputs(com.google.gson.JsonElement value, java.util.Set<String> outputs) {
@@ -1344,7 +1418,7 @@ final class GeneratedData implements DataProvider {
             JsonObject criterion = new JsonObject();
             criterion.addProperty("trigger", "minecraft:impossible");
             JsonObject criteria = new JsonObject(); criteria.add("event", criterion); root.add("criteria", criteria);
-            save(cache, root, "data/basemetals/advancements/" + id + ".json");
+            save(cache, root, "data/basemetals/advancement/" + id + ".json");
         }
     }
 
@@ -1476,7 +1550,7 @@ final class GeneratedData implements DataProvider {
             modifier.addProperty("table", "basemetals:chests/inject/" + target.getKey());
             save(cache, modifier, "data/basemetals/loot_modifiers/" + target.getKey() + ".json");
             save(cache, legacyChestTable(templates.get(target.getKey())),
-                    "data/basemetals/loot_tables/chests/inject/" + target.getKey() + ".json");
+                    "data/basemetals/loot_table/chests/inject/" + target.getKey() + ".json");
         }
         JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("entries", global);
         save(cache, root, "data/forge/loot_modifiers/global_loot_modifiers.json");
@@ -1489,6 +1563,7 @@ final class GeneratedData implements DataProvider {
         }
         JsonObject table = JsonParser.parseString(Files.readString(source, StandardCharsets.UTF_8)).getAsJsonObject();
         modernizeLootJson(table);
+        replaceCopperOutputs(table);
         table.addProperty("type", "minecraft:chest");
         return table;
     }
@@ -1538,7 +1613,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.20.6 catalogue");
+        root.addProperty("source", "Base Metals 1.21.1 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
@@ -1573,10 +1648,10 @@ final class GeneratedData implements DataProvider {
     }
 
     private void itemTag(CachedOutput cache, String family, String material, List<String> values) throws IOException {
-        tag(cache, "forge", "items/" + family + "/" + material, values);
+        tag(cache, "forge", "item/" + family + "/" + material, values);
     }
     private void blockTag(CachedOutput cache, String family, String material, List<String> values) throws IOException {
-        tag(cache, "forge", "blocks/" + family + "/" + material, values);
+        tag(cache, "forge", "block/" + family + "/" + material, values);
     }
     private void tag(CachedOutput cache, String namespace, String path, List<String> values) throws IOException {
         JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("values", array(values));
@@ -1597,13 +1672,13 @@ final class GeneratedData implements DataProvider {
         keys.entrySet().stream().sorted(Map.Entry.comparingByKey())
                 .forEach(entry -> key.add(entry.getKey().toString(), ingredient(entry.getValue())));
         root.add("key", key); root.add("result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void shapeless(CachedOutput cache, String id, List<String> ingredients, String result, int count) throws IOException {
         JsonObject root = object("type", "minecraft:crafting_shapeless");
         JsonArray values = new JsonArray(); ingredients.forEach(value -> values.add(ingredient(value)));
         root.add("ingredients", values); root.add("result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void smelting(CachedOutput cache, String id, String input, String result, float xp, int time,
             String type) throws IOException {
@@ -1613,24 +1688,24 @@ final class GeneratedData implements DataProvider {
         }
         JsonObject root = object("type", type, "ingredient", ingredient(input), "result", result,
                 "experience", xp, "cookingtime", time);
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void legacySmelting(CachedOutput cache, String id, String input, String result, int count,
             float xp, int time) throws IOException {
         JsonObject root = object("type", "basemetals:legacy_smelting",
                 "ingredient", ingredient(input), "result", result(result, count),
                 "experience", xp, "cookingtime", time);
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void crushing(CachedOutput cache, String id, String input, String result, int count) throws IOException {
         JsonObject root = object("type", "basemetals:crushing", "ingredient", ingredient(input),
                 "result", result(result, count));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private void plateRepair(CachedOutput cache, String id, String target, String plate) throws IOException {
         JsonObject root = object("type", "basemetals:plate_repair", "target", target,
                 "plate", ingredient(plate));
-        save(cache, root, "data/basemetals/recipes/" + id + ".json");
+        save(cache, root, "data/basemetals/recipe/" + id + ".json");
     }
     private static JsonObject ingredient(String value) {
         return value.startsWith("#") ? object("tag", value.substring(1)) : object("item", value);
@@ -1652,7 +1727,7 @@ final class GeneratedData implements DataProvider {
     }
     private static String advancementIcon(String id) {
         return switch (id) {
-            case "blocktastic" -> "basemetals:copper_block";
+            case "blocktastic" -> "minecraft:copper_block";
             case "geologist" -> "basemetals:iron_crackhammer";
             case "metallurgy" -> "basemetals:bronze_blend";
             case "angel_of_death" -> "basemetals:mithril_sword";
@@ -1661,7 +1736,7 @@ final class GeneratedData implements DataProvider {
             case "juggernaut" -> "basemetals:adamantine_chestplate";
             case "moon_boots" -> "basemetals:starsteel_boots";
             default -> id.endsWith("_maker") ? "basemetals:" + id.substring(0, id.length() - 6) + "_blend"
-                    : "basemetals:copper_ingot";
+                    : "minecraft:copper_ingot";
         };
     }
 
@@ -1695,9 +1770,22 @@ final class GeneratedData implements DataProvider {
         return result.toString();
     }
     private void save(CachedOutput cache, JsonObject value, String relative) throws IOException {
-        if (relative.startsWith("data/basemetals/recipes/") && value.has("type")
+        if (relative.startsWith("data/basemetals/recipe/")) {
+            for (String field : List.of("result", "results", "output", "outputs")) {
+                if (value.has(field)) value.add(field, replaceCopperOutputs(value.get(field)));
+            }
+
+            // Keep the old trapdoor refund limited to old Base Metals trapdoors.
+            if (!relative.endsWith("/copper_trapdoor_recycling.json")) {
+                for (String field : List.of("ingredient", "ingredients", "key", "input", "inputs")) {
+                    if (value.has(field)) acceptCopperEquivalents(value.get(field));
+                }
+            }
+        }
+
+        if (relative.startsWith("data/basemetals/recipe/") && value.has("type")
                 && value.get("type").getAsString().startsWith("minecraft:crafting_")) {
-            String id = relative.substring("data/basemetals/recipes/".length(), relative.length() - 5);
+            String id = relative.substring("data/basemetals/recipe/".length(), relative.length() - 5);
             String result = value.getAsJsonObject("result").get("item").getAsString();
             net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS
                     .getValue(ResourceLocation.parse(result));
@@ -1711,9 +1799,49 @@ final class GeneratedData implements DataProvider {
             writeCraftingUnlock(cache, id, value);
             value = object("type", "basemetals:content_crafting", "recipe", value);
         }
-        if (relative.contains("/recipes/")) normalizeRecipeResults(value);
-        if (relative.contains("/advancements/") || relative.contains("/loot_tables/")) normalizePredicates(value);
+        if (relative.contains("/recipe/")) normalizeRecipeResults(value);
+        if (relative.contains("/advancement/") || relative.contains("/loot_table/")) normalizePredicates(value);
         pendingWrites.add(DataProvider.saveStable(cache, value, output.resolve(relative)));
+    }
+
+    private static JsonElement replaceCopperOutputs(JsonElement value) {
+        if (value.isJsonPrimitive() && value.getAsJsonPrimitive().isString()) {
+            return new com.google.gson.JsonPrimitive(VanillaCopper.output(value.getAsString()));
+        }
+
+        if (value.isJsonArray()) {
+            JsonArray result = new JsonArray();
+            value.getAsJsonArray().forEach(entry -> result.add(replaceCopperOutputs(entry)));
+            return result;
+        }
+
+        if (value.isJsonObject()) {
+            JsonObject object = value.getAsJsonObject();
+            for (String key : new ArrayList<>(object.keySet())) {
+                object.add(key, replaceCopperOutputs(object.get(key)));
+            }
+        }
+
+        return value;
+    }
+
+    private static void acceptCopperEquivalents(JsonElement value) {
+        if (value.isJsonArray()) {
+            value.getAsJsonArray().forEach(GeneratedData::acceptCopperEquivalents);
+            return;
+        }
+        if (!value.isJsonObject()) return;
+
+        JsonObject object = value.getAsJsonObject();
+        if (object.has("item") && object.get("item").isJsonPrimitive()) {
+            String tag = VanillaCopper.ingredientTag(object.get("item").getAsString());
+            if (tag != null) {
+                object.remove("item");
+                object.addProperty("tag", tag);
+            }
+        }
+
+        new ArrayList<>(object.entrySet()).forEach(entry -> acceptCopperEquivalents(entry.getValue()));
     }
 
     private static void normalizeRecipeResults(JsonObject json) {
@@ -1741,7 +1869,10 @@ final class GeneratedData implements DataProvider {
             if (object.has("tag") && !object.has("type")) {
                 object.addProperty("items", "#" + object.remove("tag").getAsString());
             }
-            if (object.has("enchantments")) {
+            if (object.has("enchantment") && object.has("levels")) {
+                object.add("enchantments", object.remove("enchantment"));
+            }
+            if (object.has("enchantments") && !object.has("levels") && object.get("enchantments").isJsonArray()) {
                 JsonObject predicates = object.has("predicates")
                         ? object.getAsJsonObject("predicates") : new JsonObject();
                 predicates.add("minecraft:enchantments", object.remove("enchantments"));
@@ -1771,7 +1902,7 @@ final class GeneratedData implements DataProvider {
         functions.add(object("function", "minecraft:explosion_decay"));
         JsonObject rawEntry = object("type", "minecraft:item", "name", raw, "functions", functions);
         JsonArray enchantments = new JsonArray();
-        enchantments.add(object("enchantment", "minecraft:silk_touch", "levels", object("min", 1)));
+        enchantments.add(object("enchantments", "minecraft:silk_touch", "levels", object("min", 1)));
         JsonArray conditions = new JsonArray();
         conditions.add(object("condition", "minecraft:match_tool", "predicate", object("enchantments", enchantments)));
         JsonArray children = new JsonArray();
@@ -1782,7 +1913,7 @@ final class GeneratedData implements DataProvider {
         JsonArray pools = new JsonArray();
         pools.add(object("name", "basemetals_" + ore, "rolls", 1, "entries", entries));
         save(cache, object("type", "minecraft:block", "pools", pools),
-                "data/basemetals/loot_tables/blocks/" + ore + ".json");
+                "data/basemetals/loot_table/blocks/" + ore + ".json");
     }
 
     private void writeRawProcessing(CachedOutput cache) throws IOException {
@@ -1793,7 +1924,7 @@ final class GeneratedData implements DataProvider {
         for (String material : rawMaterials) {
             boolean vanilla = List.of("iron", "gold", "copper").contains(material);
             String raw = vanilla ? "minecraft:raw_" + material : "basemetals:" + material + "_raw";
-            tag(cache, "forge", "items/raw_materials/" + material, List.of(raw));
+            tag(cache, "forge", "item/raw_materials/" + material, List.of(raw));
             crushing(cache, material + "_raw_crushing", "#forge:raw_materials/" + material,
                     "basemetals:" + material + "_powder", 1);
             if (vanilla) continue;
@@ -1809,7 +1940,7 @@ final class GeneratedData implements DataProvider {
                 writeUnlock(cache, id, criteria);
             }
         }
-        tag(cache, "forge", "items/raw_materials", rawMaterials.stream().map(name -> "#forge:raw_materials/" + name).toList());
+        tag(cache, "forge", "item/raw_materials", rawMaterials.stream().map(name -> "#forge:raw_materials/" + name).toList());
     }
 
     private void writeCraftingUnlock(CachedOutput cache, String id, JsonObject recipe) throws IOException {
@@ -1855,7 +1986,7 @@ final class GeneratedData implements DataProvider {
         requirements.add(array(criteria.keySet()));
         save(cache, object("parent", "minecraft:recipes/root", "criteria", criteria,
                 "requirements", requirements, "rewards", object("recipes", array("basemetals:" + id))),
-                "data/basemetals/advancements/recipes/" + id + ".json");
+                "data/basemetals/advancement/recipes/" + id + ".json");
     }
 
     private static JsonObject inventoryCriterion(JsonObject ingredient) {

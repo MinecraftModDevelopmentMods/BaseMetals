@@ -16,7 +16,7 @@ import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -87,7 +87,7 @@ public final class BaseMetalsEvents {
         if (held.getItem() instanceof CrackhammerItem && !player.isCreative()
                 && event.getState().canHarvestBlock(level, event.getPos(), player)) {
             Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = level.getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
-                    new SimpleContainer(new ItemStack(event.getState().getBlock())), level);
+                    new SingleRecipeInput(new ItemStack(event.getState().getBlock())), level);
             if (recipe.isPresent()) {
                 event.setCanceled(true);
                 event.getState().getBlock().playerWillDestroy(level, event.getPos(), event.getState(), player);

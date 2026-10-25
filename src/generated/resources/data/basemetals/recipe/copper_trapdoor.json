@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "minecraft:copper_trapdoor",
+    "key": {
+      "X": {
+        "tag": "forge:ingots/copper"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "count": 2,
+      "id": "minecraft:copper_trapdoor"
+    }
+  }
+}

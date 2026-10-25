@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.06,
+  "ingredient": {
+    "tag": "forge:slabs/copper"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:copper_nugget"
+  }
+}

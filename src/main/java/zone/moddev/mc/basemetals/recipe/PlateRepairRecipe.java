@@ -12,7 +12,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,11 +36,11 @@ public final class PlateRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingInput container, Level level) {
         if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(target).toString())) return false;
         ItemStack foundTarget = ItemStack.EMPTY;
         boolean foundPlate = false;
-        for (int slot = 0; slot < container.getContainerSize(); slot++) {
+        for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
             if (stack.isEmpty()) continue;
             if (stack.is(target) && stack.isDamaged() && foundTarget.isEmpty()) {
@@ -55,9 +55,9 @@ public final class PlateRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, net.minecraft.core.HolderLookup.Provider registries) {
+    public ItemStack assemble(CraftingInput container, net.minecraft.core.HolderLookup.Provider registries) {
         if (!matches(container, null)) return ItemStack.EMPTY;
-        for (int slot = 0; slot < container.getContainerSize(); slot++) {
+        for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
             if (stack.is(target) && stack.isDamaged()) {
                 ItemStack repaired = stack.copy();

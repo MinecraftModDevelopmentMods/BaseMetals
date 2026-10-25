@@ -1,0 +1,21 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "minecraft:copper_block",
+    "key": {
+      "X": {
+        "tag": "forge:ingots/copper"
+      }
+    },
+    "pattern": [
+      "XXX",
+      "XXX",
+      "XXX"
+    ],
+    "result": {
+      "id": "minecraft:copper_block"
+    }
+  }
+}

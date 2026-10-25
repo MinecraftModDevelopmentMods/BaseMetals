@@ -6,16 +6,21 @@ plates, rods, gears, casings, dense plates, crushed and purified ores, crystals,
 shards, clumps, dirty dusts, and molten fluids.
 
 Adamantite, Adamantium, Adamant, Quicksilver, and steel-sprocket names are
-forwarding tags. Copper-consuming recipes accept `forge:ingots/copper`, except
-Base Metals' own compacting and decompacting recipes, whose unambiguous output
-must remain the Base Metals item. Copper ore and storage tags contain both
-vanilla and Base Metals entries; Base Metals copper ore smelts to the Base
-Metals ingot.
+forwarding tags. Copper-consuming recipes accept `forge:ingots/copper`.
+Copper ingots, storage blocks, doors, trapdoors, slabs and stairs use their
+vanilla equivalents as new recipe outputs. The old Base Metals IDs remain
+registered; their ingredient tags include both versions. Copper ore and powders
+smelt to vanilla copper ingots. Existing copper equipment remains usable.
+
+Vanilla copper trapdoors cost three ingots each, while the old Base Metals
+trapdoors cost four. Their separate recycling recipes return those respective
+amounts, so the new recipes cannot turn three ingots into four. Other retained
+recycling recipes also accept the appropriate vanilla equivalent.
 
 The tags and existing integration data for Mekanism, Thermal, Tinkers' Construct
-and Ender IO remain available for future compatibility work. None currently
-has a published Forge 1.20.6 build, so their Java API hooks and runtime jars
-are not included in this port. Do not substitute jars made for 1.20.1 or NeoForge.
+and Ender IO remain available for future compatibility work. Their Java API hooks
+and runtime jars are not included in this Forge 1.21.1 port. Do not substitute
+jars made for older Minecraft versions or NeoForge.
 
 Other processors can use the shared Forge tags without a direct Java integration.
 

@@ -30,7 +30,8 @@ public final class BaseMetalsTrades {
             int value = (int) (material.hardness() + material.strength() + material.magic() + material.toolLevel());
             int emeraldCost = Math.max(1, (int) (0.2F * value));
             int level = Math.max(1, Math.min(4, (int) (0.1F * value)));
-            Item ingot = ModContent.item(material.name() + "_ingot").get();
+            Item ingot = material.name().equals("copper")
+                    ? Items.COPPER_INGOT : ModContent.item(material.name() + "_ingot").get();
             event.getTrades().get(level).add(selling(ingot, 12, emeraldCost));
             if (!material.hasEquipment()) continue;
             if (event.getType() == VillagerProfession.ARMORER) {
@@ -106,7 +107,10 @@ public final class BaseMetalsTrades {
     private static ItemListing enchanted(Item item, int baseCost) {
         return (trader, random) -> {
             int enchantmentLevel = 5 + random.nextInt(15);
-            ItemStack result = EnchantmentHelper.enchantItem(trader.level().enabledFeatures(), random, new ItemStack(item), enchantmentLevel, false);
+            ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel,
+                    trader.registryAccess(), java.util.Optional.of(trader.registryAccess()
+                            .lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                            .getOrThrow(net.minecraft.tags.EnchantmentTags.ON_RANDOM_LOOT)));
             return new MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, Math.min(64, baseCost + enchantmentLevel)),
                     result, 3, 15, 0.2F);
         };

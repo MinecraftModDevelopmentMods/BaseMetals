@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "event": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.basemetals.this_is_new.description"
+    },
+    "frame": "task",
+    "icon": {
+      "id": "minecraft:copper_ingot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.basemetals.this_is_new.title"
+    }
+  }
+}
