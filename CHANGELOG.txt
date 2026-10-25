@@ -1,3 +1,9 @@
+Base Metals 3.1.1.118021
+
+- Fix startup failures when Base Metals is added to an existing modern world, including worlds with external chunks or empty region files.
+- Stop old level.dat_old backups from replacing current player data or enabling legacy terrain protection.
+- Keep genuine legacy upgrades, reloads and later-opened chunks supported, including chunks in nested custom dimensions.
+
 Base Metals 3.1.0.118021
 
 - Bring raw metals, ore overlays and High/Low Fantasy modes to Minecraft 1.18.2, along with the fixes from the earlier ports.

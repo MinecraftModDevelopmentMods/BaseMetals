@@ -23,7 +23,7 @@ FORGE_VERSION = "40.3.0"
 FORGE_INSTALLER_SHA256 = "9434c29790504dcd11ce97cb30dd8891b4b18848982357bc1b5abfa79fb95103"
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 ASSET_OBJECT_URL = "https://resources.download.minecraft.net/{prefix}/{digest}"
-USER_AGENT = "BaseMetals-release-validation/3.1.0.118021"
+USER_AGENT = "BaseMetals-release-validation/3.1.1.118021"
 
 
 def digest_file(path: Path, algorithm: str) -> str:

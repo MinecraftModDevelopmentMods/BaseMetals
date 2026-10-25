@@ -28,6 +28,17 @@ class LegacyWorldSourceTest {
     }
 
     @Test
+    void prefersThePreservedRegistryEvenAfterAFlattenedWorldHasBeenUpgradedAgain() throws IOException {
+        writeLevel("level.dat", 2_975, 1, "minecraft:stone");
+        writeLevel("level.dat_old", 512, 1_976, "minecraft:stone");
+        writeLevel("basemetals-legacy-registry.dat", 2_730, 1_976, "natura:nether_glowshroom");
+
+        Map<Integer, String> ids = Legacy112WorldMigrator.legacyBlockIdsForTest(temporaryWorld);
+
+        assertEquals("natura:nether_glowshroom", ids.get(1_976));
+    }
+
+    @Test
     void normalizesRegistryPathsThatWereLegalInMinecraft110() {
         assertEquals("mca:rosegoldore",
                 Legacy112WorldMigrator.normalizeLegacyRegistryName("mca:RoseGoldOre"));
