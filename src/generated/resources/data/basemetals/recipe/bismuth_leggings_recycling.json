@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:bismuth_leggings"
-  },
+  "ingredient": "basemetals:bismuth_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:bismuth_ingot"

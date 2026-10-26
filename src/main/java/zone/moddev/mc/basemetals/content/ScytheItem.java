@@ -4,7 +4,9 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.basemetals.ModTags;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.TooltipDisplay;
+import java.util.function.Consumer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.network.chat.Component;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import javax.annotation.Nullable;
 
-public final class ScytheItem extends DiggerItem implements MaterialBacked {
+public final class ScytheItem extends Item implements MaterialBacked {
     /**
      * The nested calls use the ordinary server break path so every affected
      * block still fires Forge's protection event and receives vanilla drops.
@@ -25,8 +27,8 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
     private final MaterialDefinition material;
 
     public ScytheItem(MaterialDefinition material, Properties properties) {
-        super(new MaterialTier(material), ModTags.SCYTHE_HARVESTABLE,
-                properties.attributes(DiggerItem.createAttributes(new MaterialTier(material), 0.0F, 0.0F)));
+        super(properties.tool(new MaterialTier(material).toolMaterial(),
+                ModTags.SCYTHE_HARVESTABLE, 0.0F, 0.0F, 0.0F));
         this.material = material;
     }
 
@@ -34,7 +36,7 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
 
     @Override
     public boolean onBlockStartBreak(ItemStack stack, BlockPos position, Player player) {
-        if (player.level().isClientSide || !(player instanceof ServerPlayer serverPlayer)
+        if (player.level().isClientSide() || !(player instanceof ServerPlayer serverPlayer)
                 || HARVESTING.get()) {
             return false;
         }
@@ -62,7 +64,7 @@ public final class ScytheItem extends DiggerItem implements MaterialBacked {
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            List<Component> tooltip, TooltipFlag flag) {
+            TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);
     }
 }

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:zinc_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/zinc"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/zinc",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

@@ -5,12 +5,8 @@
     "category": "building",
     "group": "minecraft:rail",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "X X",

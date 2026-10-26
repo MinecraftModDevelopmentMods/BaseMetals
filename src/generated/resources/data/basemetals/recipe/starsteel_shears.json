@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:starsteel_shears",
     "key": {
-      "X": {
-        "tag": "forge:ingots/starsteel"
-      }
+      "X": "#forge:ingots/starsteel"
     },
     "pattern": [
       " X",

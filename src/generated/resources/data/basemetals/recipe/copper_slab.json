@@ -5,9 +5,7 @@
     "category": "building",
     "group": "minecraft:cut_copper_slab",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/copper"
-      }
+      "X": "#forge:storage_blocks/copper"
     },
     "pattern": [
       "XXX"

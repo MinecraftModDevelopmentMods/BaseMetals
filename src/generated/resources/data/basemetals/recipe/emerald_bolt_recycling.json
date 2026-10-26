@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.04,
-  "ingredient": {
-    "item": "basemetals:emerald_bolt"
-  },
+  "ingredient": "basemetals:emerald_bolt",
   "result": {
     "count": 2,
     "id": "basemetals:emerald_nugget"

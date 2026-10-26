@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:iron_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/iron"
-      },
-      "R": {
-        "tag": "forge:rods/iron"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/iron",
+      "R": "#forge:rods/iron",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

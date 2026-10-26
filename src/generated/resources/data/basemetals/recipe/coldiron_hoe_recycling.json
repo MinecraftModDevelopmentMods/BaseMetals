@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:coldiron_hoe"
-  },
+  "ingredient": "basemetals:coldiron_hoe",
   "result": {
     "count": 2,
     "id": "basemetals:coldiron_ingot"

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:mithril_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/mithril"
-      }
+      "X": "#forge:rods/mithril"
     },
     "pattern": [
       "XXX"

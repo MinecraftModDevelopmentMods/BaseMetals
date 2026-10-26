@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/mercury"
-  },
+  "ingredient": "#forge:tiny_dusts/mercury",
   "result": {
     "id": "basemetals:mercury_nugget"
   }

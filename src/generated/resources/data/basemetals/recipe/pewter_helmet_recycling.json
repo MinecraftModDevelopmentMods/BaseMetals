@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:pewter_helmet"
-  },
+  "ingredient": "basemetals:pewter_helmet",
   "result": {
     "count": 5,
     "id": "basemetals:pewter_ingot"

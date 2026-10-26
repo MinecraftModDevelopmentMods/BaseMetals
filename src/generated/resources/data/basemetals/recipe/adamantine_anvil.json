@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:adamantine_anvil",
     "key": {
-      "B": {
-        "tag": "forge:storage_blocks/adamantine"
-      },
-      "I": {
-        "tag": "forge:ingots/adamantine"
-      }
+      "B": "#forge:storage_blocks/adamantine",
+      "I": "#forge:ingots/adamantine"
     },
     "pattern": [
       "BBB",

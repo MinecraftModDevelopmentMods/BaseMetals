@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.6,
-  "ingredient": {
-    "tag": "forge:raw_materials/silver"
-  },
+  "ingredient": "#forge:raw_materials/silver",
   "result": {
     "id": "basemetals:silver_ingot"
   }

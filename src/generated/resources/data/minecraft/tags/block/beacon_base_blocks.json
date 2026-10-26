@@ -7,6 +7,7 @@
     "basemetals:bismuth_block",
     "basemetals:brass_block",
     "basemetals:bronze_block",
+    "basemetals:charcoal_block",
     "basemetals:coldiron_block",
     "basemetals:copper_block",
     "basemetals:cupronickel_block",
@@ -21,7 +22,6 @@
     "basemetals:starsteel_block",
     "basemetals:steel_block",
     "basemetals:tin_block",
-    "basemetals:zinc_block",
-    "basemetals:charcoal_block"
+    "basemetals:zinc_block"
   ]
 }

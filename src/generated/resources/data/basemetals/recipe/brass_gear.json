@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:brass_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/brass"
-      },
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "R": "#forge:rods/brass",
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       " X ",

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:zinc_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/zinc"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/zinc"
     },
     "pattern": [
       "R",

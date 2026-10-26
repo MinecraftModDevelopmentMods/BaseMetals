@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bismuth_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/bismuth"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/bismuth"
     },
     "pattern": [
       "XWX",

@@ -5,18 +5,10 @@
     "category": "building",
     "group": "minecraft:piston",
     "key": {
-      "C": {
-        "tag": "forge:cobblestone"
-      },
-      "R": {
-        "tag": "forge:dusts/redstone"
-      },
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "C": "#forge:cobblestone",
+      "R": "#forge:dusts/redstone",
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "WWW",

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:iron_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/iron"
-      }
+      "X": "#forge:ingots/iron"
     },
     "pattern": [
       "XXX"

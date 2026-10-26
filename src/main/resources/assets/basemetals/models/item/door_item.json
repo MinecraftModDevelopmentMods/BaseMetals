@@ -1,4 +1,5 @@
 {
+    "textures": { "particle": "#bottom" },
     "ambientocclusion": false,
     "elements": [
         {   "from": [ 0, 0, 4 ],

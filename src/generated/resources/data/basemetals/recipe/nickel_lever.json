@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:nickel_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/nickel"
-      },
-      "X": {
-        "tag": "forge:ingots/nickel"
-      }
+      "R": "#forge:rods/nickel",
+      "X": "#forge:ingots/nickel"
     },
     "pattern": [
       "R",

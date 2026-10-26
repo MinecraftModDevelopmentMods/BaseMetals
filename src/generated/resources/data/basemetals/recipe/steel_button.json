@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:steel_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/steel"
-      }
+      "X": "#forge:nuggets/steel"
     },
     "pattern": [
       "X",

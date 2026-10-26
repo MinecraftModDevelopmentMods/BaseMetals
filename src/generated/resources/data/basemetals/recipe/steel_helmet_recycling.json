@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "item": "basemetals:steel_helmet"
-  },
+  "ingredient": "basemetals:steel_helmet",
   "result": {
     "count": 5,
     "id": "basemetals:steel_ingot"

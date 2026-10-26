@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:starsteel_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/starsteel"
-      },
-      "X": {
-        "tag": "forge:ingots/starsteel"
-      }
+      "R": "#forge:rods/starsteel",
+      "X": "#forge:ingots/starsteel"
     },
     "pattern": [
       " X ",

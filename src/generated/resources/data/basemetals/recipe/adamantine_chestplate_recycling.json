@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:adamantine_chestplate"
-  },
+  "ingredient": "basemetals:adamantine_chestplate",
   "result": {
     "count": 8,
     "id": "basemetals:adamantine_ingot"

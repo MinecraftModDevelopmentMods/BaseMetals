@@ -42,7 +42,7 @@ import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
@@ -97,16 +97,16 @@ public final class Legacy112WorldMigrator {
     static void prepareWorld(Path levelDat, CompoundTag root) {
         if (!isLegacyLevel(root)) return;
 
-        CompoundTag data = root.getCompound("Data");
+        CompoundTag data = root.getCompoundOrEmpty("Data");
         preparedWorld = levelDat.toAbsolutePath().normalize().getParent();
-        preparedVersion = data.getInt("DataVersion");
-        preparedPlayer = data.contains("Player", Tag.TAG_COMPOUND) ? data.getCompound("Player").copy() : null;
+        preparedVersion = data.getIntOr("DataVersion", 0);
+        preparedPlayer = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "Player", Tag.TAG_COMPOUND) ? data.getCompoundOrEmpty("Player").copy() : null;
     }
 
     private static boolean isLegacyLevel(CompoundTag root) {
-        CompoundTag data = root.getCompound("Data");
-        return data.contains("DataVersion", Tag.TAG_ANY_NUMERIC)
-                && data.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION;
+        CompoundTag data = root.getCompoundOrEmpty("Data");
+        return zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "DataVersion", 99)
+                && data.getIntOr("DataVersion", 0) <= LAST_SUPPORTED_LEGACY_DATA_VERSION;
     }
 
     private static boolean hasLegacySource(Path root) throws IOException {
@@ -193,22 +193,22 @@ public final class Legacy112WorldMigrator {
         CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
         if (loaded == null) return;
         CompoundTag level = LegacyNbt.readCompressed(worldRoot.resolve("level.dat").toFile());
-        CompoundTag data = level.getCompound("Data");
-        if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
-        int version = data.getInt("DataVersion");
+        CompoundTag data = level.getCompoundOrEmpty("Data");
+        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "Player", Tag.TAG_COMPOUND)) return;
+        int version = data.getIntOr("DataVersion", 0);
         CompoundTag corrected = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                data.getCompound("Player"), version);
-        for (String key : List.copyOf(loaded.getAllKeys())) loaded.remove(key);
+                data.getCompoundOrEmpty("Player"), version);
+        for (String key : List.copyOf(loaded.keySet())) loaded.remove(key);
         loaded.merge(corrected);
     }
 
     private static Map<Integer, String> oldBlockIds(CompoundTag level) {
-        CompoundTag registries = level.getCompound("FML").getCompound("Registries");
-        ListTag ids = registries.getCompound("minecraft:blocks").getList("ids", Tag.TAG_COMPOUND);
+        CompoundTag registries = level.getCompoundOrEmpty("FML").getCompoundOrEmpty("Registries");
+        ListTag ids = registries.getCompoundOrEmpty("minecraft:blocks").getListOrEmpty("ids");
         Map<Integer, String> result = new LinkedHashMap<>();
         for (Tag value : ids) {
             CompoundTag entry = (CompoundTag) value;
-            result.put(entry.getInt("V"), entry.getString("K"));
+            result.put(entry.getIntOr("V", 0), entry.getStringOr("K", ""));
         }
         return result;
     }
@@ -218,7 +218,7 @@ public final class Legacy112WorldMigrator {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
             CompoundTag candidate = LegacyNbt.readCompressed(file.toFile());
-            int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
+            int dataVersion = candidate.getCompoundOrEmpty("Data").getIntOr("DataVersion", 0);
             if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
                     && !fileName.equals("basemetals-legacy-registry.dat")) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
@@ -357,19 +357,19 @@ public final class Legacy112WorldMigrator {
     }
 
     private static ChunkConversion convertChunk(CompoundTag chunk, Map<Integer, String> ids) throws IOException {
-        int sourceVersion = chunk.getInt("DataVersion");
+        int sourceVersion = chunk.getIntOr("DataVersion", 0);
         if (sourceVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
         ItemMigration itemMigration = convertLegacyItems(chunk);
-        CompoundTag level = chunk.getCompound("Level");
-        ListTag sections = level.getList("Sections", Tag.TAG_COMPOUND);
+        CompoundTag level = chunk.getCompoundOrEmpty("Level");
+        ListTag sections = level.getListOrEmpty("Sections");
         List<LegacyBlock> savedBlocks = new ArrayList<>();
         int externalStates = 0;
         for (Tag value : sections) {
             CompoundTag section = (CompoundTag) value;
-            if (!section.contains("Blocks", Tag.TAG_BYTE_ARRAY)) continue;
+            if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(section, "Blocks", Tag.TAG_BYTE_ARRAY)) continue;
             SectionSnapshot snapshot = snapshotSection(section, ids);
             savedBlocks.addAll(snapshot.blocks());
             externalStates += snapshot.externalStates();
@@ -433,9 +433,9 @@ public final class Legacy112WorldMigrator {
         }
 
         CompoundTag current = LegacyNbt.readCompressed(currentFile.toFile());
-        CompoundTag currentData = current.getCompound("Data");
-        if (currentData.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION
-                || !currentData.contains("Player", Tag.TAG_COMPOUND)) {
+        CompoundTag currentData = current.getCompoundOrEmpty("Data");
+        if (currentData.getIntOr("DataVersion", 0) <= LAST_SUPPORTED_LEGACY_DATA_VERSION
+                || !zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(currentData, "Player", Tag.TAG_COMPOUND)) {
             return ItemMigration.NONE;
         }
 
@@ -457,10 +457,10 @@ public final class Legacy112WorldMigrator {
         int convertedItemAliases = 0;
         int convertedDamageValues = 0;
         if (value instanceof CompoundTag compound) {
-            if (compound.getString("id").equalsIgnoreCase("forge:bucketfilled")
-                    && compound.contains("tag", Tag.TAG_COMPOUND)) {
-                CompoundTag itemTag = compound.getCompound("tag");
-                String fluid = itemTag.getString("FluidName");
+            if (compound.getStringOr("id", "").equalsIgnoreCase("forge:bucketfilled")
+                    && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "tag", Tag.TAG_COMPOUND)) {
+                CompoundTag itemTag = compound.getCompoundOrEmpty("tag");
+                String fluid = itemTag.getStringOr("FluidName", "");
                 String target = MissingMappings.fluidTargetPath(fluid);
                 if (ModContent.fluids().containsKey(target)) {
                     compound.putString("id", BaseMetals.MOD_ID + ":" + target + "_bucket");
@@ -470,22 +470,22 @@ public final class Legacy112WorldMigrator {
                     convertedBuckets++;
                 }
             } else {
-                ResourceLocation oldId = ResourceLocation.tryParse(compound.getString("id"));
+                Identifier oldId = Identifier.tryParse(compound.getStringOr("id", ""));
                 if (oldId != null && (oldId.getNamespace().equals(BaseMetals.MOD_ID)
                         || oldId.getNamespace().equals("mmdlib"))
-                        && compound.contains("Count", Tag.TAG_ANY_NUMERIC)) {
-                    ResourceLocation targetId = MissingMappings.itemTargetId(oldId.getPath());
+                        && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "Count", 99)) {
+                    Identifier targetId = MissingMappings.itemTargetId(oldId.getPath());
                     net.minecraft.world.item.Item item = ForgeRegistries.ITEMS.getValue(targetId);
                     if (item != null && !oldId.equals(targetId)) {
                         compound.putString("id", targetId.toString());
                         convertedItemAliases++;
                     }
-                    int damage = compound.getInt("Damage");
+                    int damage = compound.getIntOr("Damage", 0);
                     if (item != null && item.getDefaultInstance().isDamageableItem() && damage > 0
-                            && compound.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
-                        CompoundTag itemTag = compound.contains("tag", Tag.TAG_COMPOUND)
-                                ? compound.getCompound("tag") : new CompoundTag();
-                        if (!itemTag.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
+                            && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "Damage", 99)) {
+                        CompoundTag itemTag = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "tag", Tag.TAG_COMPOUND)
+                                ? compound.getCompoundOrEmpty("tag") : new CompoundTag();
+                        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(itemTag, "Damage", 99)) {
                             itemTag.putInt("Damage", damage);
                             compound.put("tag", itemTag);
                             convertedDamageValues++;
@@ -493,7 +493,7 @@ public final class Legacy112WorldMigrator {
                     }
                 }
             }
-            for (String key : List.copyOf(compound.getAllKeys())) {
+            for (String key : List.copyOf(compound.keySet())) {
                 Tag child = compound.get(key);
                 if (child != null) {
                     ItemMigration childMigration = convertLegacyItems(child);
@@ -524,11 +524,11 @@ public final class Legacy112WorldMigrator {
     }
 
     static CompoundTag stateAtForTest(CompoundTag chunk, int sectionY, int index) throws IOException {
-        ListTag sections = chunk.getCompound("Level").getList("Sections", Tag.TAG_COMPOUND);
+        ListTag sections = chunk.getCompoundOrEmpty("Level").getListOrEmpty("Sections");
         for (Tag value : sections) {
             CompoundTag section = (CompoundTag) value;
-            if (section.getByte("Y") != sectionY) continue;
-            ListTag palette = section.getList("Palette", Tag.TAG_COMPOUND);
+            if (section.getByteOr("Y", (byte) 0) != sectionY) continue;
+            ListTag palette = section.getListOrEmpty("Palette");
             int[] values = unpackBlockStates(section, palette.size());
             return ((CompoundTag) palette.get(values[index])).copy();
         }
@@ -537,10 +537,10 @@ public final class Legacy112WorldMigrator {
 
     private static SectionSnapshot snapshotSection(CompoundTag section, Map<Integer, String> ids)
             throws IOException {
-        byte[] blocks = section.getByteArray("Blocks");
-        byte[] metadata = section.getByteArray("Data");
-        byte[] add = section.contains("Add", Tag.TAG_BYTE_ARRAY) ? section.getByteArray("Add") : null;
-        int sectionY = section.getByte("Y");
+        byte[] blocks = section.getByteArray("Blocks").orElseGet(() -> new byte[0]);
+        byte[] metadata = section.getByteArray("Data").orElseGet(() -> new byte[0]);
+        byte[] add = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(section, "Add", Tag.TAG_BYTE_ARRAY) ? section.getByteArray("Add").orElseGet(() -> new byte[0]) : null;
+        int sectionY = section.getByteOr("Y", (byte) 0);
         List<LegacyBlock> savedBlocks = new ArrayList<>();
         int externalStates = 0;
 
@@ -562,10 +562,10 @@ public final class Legacy112WorldMigrator {
 
     private static void restoreSavedBlocks(CompoundTag chunk, List<LegacyBlock> savedBlocks) throws IOException {
         Map<Integer, CompoundTag> targetSections = new HashMap<>();
-        ListTag sections = chunk.getCompound("Level").getList("Sections", Tag.TAG_COMPOUND);
+        ListTag sections = chunk.getCompoundOrEmpty("Level").getListOrEmpty("Sections");
         for (Tag value : sections) {
             CompoundTag section = (CompoundTag) value;
-            targetSections.put((int) section.getByte("Y"), section);
+            targetSections.put((int) section.getByteOr("Y", (byte) 0), section);
         }
 
         Map<Long, LegacyBlock> byPosition = new HashMap<>();
@@ -580,7 +580,7 @@ public final class Legacy112WorldMigrator {
             if (section == null) {
                 throw new IOException("Mojang's flattening data fix removed legacy section Y=" + entry.getKey());
             }
-            ListTag palette = section.getList("Palette", Tag.TAG_COMPOUND);
+            ListTag palette = section.getListOrEmpty("Palette");
             if (palette.isEmpty()) {
                 throw new IOException("Mojang's flattening data fix produced an empty palette at section Y="
                         + entry.getKey());
@@ -612,7 +612,7 @@ public final class Legacy112WorldMigrator {
         for (LegacyBlock block : savedBlocks) savedPositions.add(block.positionKey());
 
         Map<Long, List<CompoundTag>> result = new LinkedHashMap<>();
-        for (Tag value : level.getList("TileEntities", Tag.TAG_COMPOUND)) {
+        for (Tag value : level.getListOrEmpty("TileEntities")) {
             CompoundTag blockEntity = (CompoundTag) value;
             long position = localPositionKey(blockEntity);
             if (!savedPositions.contains(position)) continue;
@@ -626,9 +626,9 @@ public final class Legacy112WorldMigrator {
         Set<Long> savedPositions = new HashSet<>();
         for (LegacyBlock block : savedBlocks) savedPositions.add(block.positionKey());
 
-        CompoundTag level = chunk.getCompound("Level");
+        CompoundTag level = chunk.getCompoundOrEmpty("Level");
         ListTag restored = new ListTag();
-        for (Tag value : level.getList("TileEntities", Tag.TAG_COMPOUND)) {
+        for (Tag value : level.getListOrEmpty("TileEntities")) {
             CompoundTag blockEntity = (CompoundTag) value;
             if (!savedPositions.contains(localPositionKey(blockEntity))) restored.add(blockEntity.copy());
         }
@@ -639,13 +639,13 @@ public final class Legacy112WorldMigrator {
     }
 
     private static long localPositionKey(CompoundTag positioned) {
-        return BlockPos.asLong(Math.floorMod(positioned.getInt("x"), 16),
-                positioned.getInt("y"), Math.floorMod(positioned.getInt("z"), 16));
+        return BlockPos.asLong(Math.floorMod(positioned.getIntOr("x", 0), 16),
+                positioned.getIntOr("y", 0), Math.floorMod(positioned.getIntOr("z", 0), 16));
     }
 
     private static int[] unpackBlockStates(CompoundTag section, int paletteSize) throws IOException {
         int[] values = new int[4_096];
-        long[] packed = section.getLongArray("BlockStates");
+        long[] packed = section.getLongArray("BlockStates").orElseGet(() -> new long[0]);
         if (packed.length == 0 && paletteSize == 1) return values;
         int bits = bitsForPalette(paletteSize);
         int requiredLongs = (int) Math.ceil(values.length * (double) bits / 64.0D);
@@ -689,11 +689,11 @@ public final class Legacy112WorldMigrator {
     private static CompoundTag restoredState(LegacyBlock legacy, Map<Long, LegacyBlock> byPosition)
             throws IOException {
         String normalizedName = normalizeLegacyRegistryName(legacy.name());
-        ResourceLocation oldId = ResourceLocation.tryParse(normalizedName);
+        Identifier oldId = Identifier.tryParse(normalizedName);
         if (oldId == null) throw new IOException("Invalid legacy block registry name " + legacy.name());
         if (oldId.getNamespace().equals(BaseMetals.MOD_ID) || oldId.getNamespace().equals("mmdlib")) {
             String path = MissingMappings.blockTargetPath(oldId.getPath());
-            ResourceLocation targetId = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path);
+            Identifier targetId = Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, path);
             Block block = ForgeRegistries.BLOCKS.getValue(targetId);
             if (block == null) throw new IOException("No 1.18 block exists for legacy block " + legacy.name());
             BlockState state = stateForLegacyMetadata(block, legacy.metadata());
@@ -721,7 +721,7 @@ public final class Legacy112WorldMigrator {
 
     private static boolean sameTargetBlock(LegacyBlock block, String targetPath) {
         if (block == null) return false;
-        ResourceLocation id = ResourceLocation.tryParse(normalizeLegacyRegistryName(block.name()));
+        Identifier id = Identifier.tryParse(normalizeLegacyRegistryName(block.name()));
         return id != null
                 && (id.getNamespace().equals(BaseMetals.MOD_ID) || id.getNamespace().equals("mmdlib"))
                 && MissingMappings.blockTargetPath(id.getPath()).equals(targetPath);

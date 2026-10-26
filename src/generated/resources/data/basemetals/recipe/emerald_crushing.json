@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:emerald"
-  },
+  "ingredient": "minecraft:emerald",
   "result": {
     "id": "basemetals:emerald_powder"
   }

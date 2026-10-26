@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/bronze"
-  },
+  "ingredient": "#forge:storage_blocks/bronze",
   "result": {
     "count": 9,
     "id": "basemetals:bronze_powder"

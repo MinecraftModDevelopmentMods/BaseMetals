@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:cupronickel_wall",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/cupronickel"
-      }
+      "X": "#forge:storage_blocks/cupronickel"
     },
     "pattern": [
       "XXX",

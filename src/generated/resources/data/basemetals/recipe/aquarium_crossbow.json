@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:aquarium_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/aquarium"
-      },
-      "R": {
-        "tag": "forge:rods/aquarium"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/aquarium",
+      "R": "#forge:rods/aquarium",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

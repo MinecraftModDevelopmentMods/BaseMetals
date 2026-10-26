@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.9,
-  "ingredient": {
-    "item": "basemetals:brass_chestplate"
-  },
+  "ingredient": "basemetals:brass_chestplate",
   "result": {
     "count": 8,
     "id": "basemetals:brass_ingot"

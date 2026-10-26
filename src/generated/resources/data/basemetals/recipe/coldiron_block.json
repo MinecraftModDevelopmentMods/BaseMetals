@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:coldiron_block",
     "key": {
-      "X": {
-        "tag": "forge:ingots/coldiron"
-      }
+      "X": "#forge:ingots/coldiron"
     },
     "pattern": [
       "XXX",

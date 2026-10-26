@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:antimony_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "XX ",

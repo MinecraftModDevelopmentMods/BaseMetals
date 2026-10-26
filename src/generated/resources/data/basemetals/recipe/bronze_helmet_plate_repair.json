@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/bronze"
-  },
+  "plate": "#forge:plates/bronze",
   "target": "basemetals:bronze_helmet"
 }

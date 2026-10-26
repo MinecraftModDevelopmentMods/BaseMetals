@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:invar_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/invar"
-      },
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "R": "#forge:rods/invar",
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       "R",

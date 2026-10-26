@@ -2,15 +2,11 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
-    "group": "basemetals:copper_hoe",
+    "category": "misc",
+    "group": "minecraft:copper_hoe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "XX",
@@ -18,7 +14,7 @@
       " S"
     ],
     "result": {
-      "id": "basemetals:copper_hoe"
+      "id": "minecraft:copper_hoe"
     }
   }
 }

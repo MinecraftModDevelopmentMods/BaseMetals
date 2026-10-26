@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:gold_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/gold"
-      },
-      "R": {
-        "tag": "forge:rods/gold"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/gold",
+      "R": "#forge:rods/gold",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:lead_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/lead"
-      },
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "R": "#forge:rods/lead",
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "R",

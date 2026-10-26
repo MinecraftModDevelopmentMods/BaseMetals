@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:aquarium_sword",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/aquarium"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/aquarium"
     },
     "pattern": [
       "X",

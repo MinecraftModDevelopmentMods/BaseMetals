@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:nickel",
-    "basemetals:flowing_nickel"
+    "basemetals:flowing_nickel",
+    "basemetals:nickel"
   ]
 }

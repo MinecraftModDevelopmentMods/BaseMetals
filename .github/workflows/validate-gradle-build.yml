@@ -3,11 +3,11 @@ name: Validate Gradle Wrapper
 on:
   push:
     branches:
-      - master-1.21.1
+      - master-1.21.11
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.21.1
+      - master-1.21.11
 
 permissions:
   contents: read

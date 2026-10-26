@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:tin_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/tin"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/tin"
     },
     "pattern": [
       "X",

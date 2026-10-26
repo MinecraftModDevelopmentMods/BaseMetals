@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:diamond_rod",
     "key": {
-      "X": {
-        "tag": "forge:gems/diamond"
-      }
+      "X": "#forge:gems/diamond"
     },
     "pattern": [
       "X",

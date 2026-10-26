@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:pewter_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/pewter"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/pewter"
     },
     "pattern": [
       "XWX",

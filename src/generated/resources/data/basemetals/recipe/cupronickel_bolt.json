@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/cupronickel"
     },
     "pattern": [
       "R",

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:obsidian_crackhammer"
-  },
+  "ingredient": "basemetals:obsidian_crackhammer",
   "result": {
     "id": "minecraft:obsidian"
   }

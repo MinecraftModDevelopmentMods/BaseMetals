@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:steel_axe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "XX",

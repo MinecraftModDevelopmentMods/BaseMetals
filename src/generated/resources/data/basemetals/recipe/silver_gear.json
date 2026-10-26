@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:silver_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/silver"
-      },
-      "X": {
-        "tag": "forge:ingots/silver"
-      }
+      "R": "#forge:rods/silver",
+      "X": "#forge:ingots/silver"
     },
     "pattern": [
       " X ",

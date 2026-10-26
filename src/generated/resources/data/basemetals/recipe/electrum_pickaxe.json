@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:electrum_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/electrum"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/electrum"
     },
     "pattern": [
       "XXX",

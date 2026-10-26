@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/brass"
-  },
+  "ingredient": "#forge:nuggets/brass",
   "result": {
     "id": "basemetals:brass_smallpowder"
   }

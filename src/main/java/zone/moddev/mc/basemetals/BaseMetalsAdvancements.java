@@ -8,12 +8,12 @@ import zone.moddev.mc.basemetals.content.MaterialItems;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
+import zone.moddev.mc.basemetals.content.MaterialItems.Armor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,7 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 final class BaseMetalsAdvancements {
     private static final String CRITERION = "event";
     private static final TagKey<Block> STORAGE_BLOCKS = BlockTags.create(
-            ResourceLocation.fromNamespaceAndPath("forge", "storage_blocks"));
+            Identifier.fromNamespaceAndPath("forge", "storage_blocks"));
     private static final Map<String, String> ALLOY_ADVANCEMENTS = Map.ofEntries(
             Map.entry("aquarium", "aquarium_maker"),
             Map.entry("brass", "brass_maker"),
@@ -43,7 +43,7 @@ final class BaseMetalsAdvancements {
 
     static void onCrafted(ServerPlayer player, ItemStack result) {
         if (result.getItem() instanceof CrackhammerItem) award(player, "geologist");
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(result.getItem());
+        Identifier id = ForgeRegistries.ITEMS.getKey(result.getItem());
         if (id != null && id.getNamespace().equals(BaseMetals.MOD_ID)
                 && (id.getPath().endsWith("_blend") || id.getPath().endsWith("_smallblend"))) {
             award(player, "metallurgy");
@@ -56,7 +56,7 @@ final class BaseMetalsAdvancements {
             return;
         }
 
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(result.getItem());
+        Identifier id = ForgeRegistries.ITEMS.getKey(result.getItem());
         if (id == null || !id.getNamespace().equals(BaseMetals.MOD_ID)
                 || !id.getPath().endsWith("_ingot")) {
             return;
@@ -68,7 +68,7 @@ final class BaseMetalsAdvancements {
     }
 
     static void onPlaced(ServerPlayer player, BlockState state) {
-        ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
+        Identifier id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
         if (id != null && (id.getNamespace().equals(BaseMetals.MOD_ID)
                 || state.is(net.minecraft.world.level.block.Blocks.COPPER_BLOCK)) && state.is(STORAGE_BLOCKS)) {
             award(player, "blocktastic");
@@ -97,7 +97,7 @@ final class BaseMetalsAdvancements {
         for (EquipmentSlot slot : new EquipmentSlot[] {
                 EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
             ItemStack stack = player.getItemBySlot(slot);
-            if (!(stack.getItem() instanceof ArmorItem) || !material(stack, material)) return false;
+            if (!(stack.getItem() instanceof Armor) || !material(stack, material)) return false;
         }
         return true;
     }
@@ -113,8 +113,8 @@ final class BaseMetalsAdvancements {
     }
 
     static boolean award(ServerPlayer player, String id) {
-        AdvancementHolder advancement = player.getServer().getAdvancements().get(
-                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, id));
+        AdvancementHolder advancement = player.level().getServer().getAdvancements().get(
+                Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, id));
         if (advancement == null) return false;
         AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
         if (progress.isDone()) return false;

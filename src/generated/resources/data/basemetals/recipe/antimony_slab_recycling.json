@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "item": "basemetals:antimony_slab"
-  },
+  "ingredient": "basemetals:antimony_slab",
   "result": {
     "count": 4,
     "id": "basemetals:antimony_nugget"

@@ -2,12 +2,10 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
-    "group": "basemetals:copper_chestplate",
+    "category": "misc",
+    "group": "minecraft:copper_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "X X",
@@ -15,7 +13,7 @@
       "XXX"
     ],
     "result": {
-      "id": "basemetals:copper_chestplate"
+      "id": "minecraft:copper_chestplate"
     }
   }
 }

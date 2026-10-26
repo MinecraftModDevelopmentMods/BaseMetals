@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "item": "basemetals:tin_bow"
-  },
+  "ingredient": "basemetals:tin_bow",
   "result": {
     "id": "basemetals:tin_ingot"
   }

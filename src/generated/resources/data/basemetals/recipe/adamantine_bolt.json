@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:adamantine_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/adamantine"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/adamantine"
     },
     "pattern": [
       "R",

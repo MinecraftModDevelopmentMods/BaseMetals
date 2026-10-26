@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:steel_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "  X",

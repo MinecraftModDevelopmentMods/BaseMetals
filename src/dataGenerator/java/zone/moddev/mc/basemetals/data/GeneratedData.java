@@ -26,17 +26,13 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SwordItem;
 
 /** Small catalogue-driven generator for server data and compatibility manifests. */
 final class GeneratedData implements DataProvider {
@@ -71,6 +67,7 @@ final class GeneratedData implements DataProvider {
     private final Path output;
     private final Path legacyReference;
     private final List<java.util.concurrent.CompletableFuture<?>> pendingWrites = new ArrayList<>();
+    private final Map<String, JsonObject> scheduledResources = new LinkedHashMap<>();
 
     GeneratedData(net.minecraft.data.PackOutput generator) {
         this.output = generator.getOutputFolder();
@@ -80,6 +77,7 @@ final class GeneratedData implements DataProvider {
     @Override
     public java.util.concurrent.CompletableFuture<?> run(CachedOutput cache) {
         pendingWrites.clear();
+        scheduledResources.clear();
         try {
             writeFluidBlockstates(cache);
             writeLoot(cache);
@@ -278,13 +276,13 @@ final class GeneratedData implements DataProvider {
             var item = registered.get();
             String name = "basemetals:" + id;
 
-            if (item instanceof SwordItem) addAggregate(families, "swords", name);
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Sword) addAggregate(families, "swords", name);
             if (item instanceof AxeItem) addAggregate(families, "axes", name);
-            if (item instanceof PickaxeItem) addAggregate(families, "pickaxes", name);
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Pickaxe) addAggregate(families, "pickaxes", name);
             if (item instanceof ShovelItem) addAggregate(families, "shovels", name);
             if (item instanceof HoeItem) addAggregate(families, "hoes", name);
 
-            if (item instanceof DiggerItem) {
+            if (item instanceof zone.moddev.mc.basemetals.content.CrackhammerItem || item instanceof zone.moddev.mc.basemetals.content.ScytheItem || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Pickaxe || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem) {
                 addAggregate(families, "enchantable/mining", name);
                 addAggregate(families, "enchantable/mining_loot", name);
             } else if (item instanceof ShearsItem) {
@@ -298,12 +296,12 @@ final class GeneratedData implements DataProvider {
             if (item instanceof FishingRodItem) addAggregate(families, "enchantable/fishing", name);
             if (item.getDefaultInstance().isDamageableItem()) addAggregate(families, "enchantable/durability", name);
 
-            if (item instanceof ArmorItem armor) {
-                String family = switch (armor.getType()) {
-                    case HELMET -> "head_armor";
-                    case CHESTPLATE -> "chest_armor";
-                    case LEGGINGS -> "leg_armor";
-                    case BOOTS -> "foot_armor";
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Armor) {
+                String family = switch (item.components().get(net.minecraft.core.component.DataComponents.EQUIPPABLE).slot()) {
+                    case HEAD -> "head_armor";
+                    case CHEST -> "chest_armor";
+                    case LEGS -> "leg_armor";
+                    case FEET -> "foot_armor";
                     default -> null;
                 };
                 if (family != null) addAggregate(families, family, name);
@@ -413,7 +411,7 @@ final class GeneratedData implements DataProvider {
             if (level < 1) return;
             content.blocks().values().stream()
                     .map(net.minecraftforge.registries.RegistryObject::getId)
-                    .map(ResourceLocation::toString)
+                    .map(Identifier::toString)
                     .forEach(byTier.get(level)::add);
         });
         Map<String, Integer> vanillaLevels = Map.of(
@@ -438,13 +436,16 @@ final class GeneratedData implements DataProvider {
     }
 
     private void writeCompatibilityTags(CachedOutput cache) throws IOException {
+        tag(cache, "minecraft", "item/copper_tool_materials", List.of("#forge:ingots/copper"));
+        tag(cache, "minecraft", "item/repairs_copper_armor", List.of("#forge:ingots/copper"));
+
         for (var entry : VanillaCopper.equivalents().entrySet()) {
             if (entry.getKey().endsWith("_ingot") || entry.getKey().endsWith("_block")) continue;
 
             String tag = VanillaCopper.ingredientTag(entry.getKey()).substring("forge:".length());
             tag(cache, "forge", "item/" + tag, List.of(entry.getKey(), entry.getValue()));
 
-            if (!entry.getKey().endsWith("_ingot")) {
+            if (ModContent.blocksById().containsKey(entry.getKey().substring("basemetals:".length()))) {
                 tag(cache, "forge", "block/" + tag, List.of(entry.getKey(), entry.getValue()));
             }
         }
@@ -1613,7 +1614,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.21.1 catalogue");
+        root.addProperty("source", "Base Metals 1.21.11 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
@@ -1654,7 +1655,16 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "block/" + family + "/" + material, values);
     }
     private void tag(CachedOutput cache, String namespace, String path, List<String> values) throws IOException {
-        JsonObject root = new JsonObject(); root.addProperty("replace", false); root.add("values", array(values));
+        var compatible = new java.util.TreeSet<>(values);
+        for (String value : values) {
+            if (namespace.equals("forge") && !value.startsWith("#")) {
+                compatible.add(VanillaCopper.output(value));
+            }
+        }
+
+        JsonObject root = new JsonObject();
+        root.addProperty("replace", false);
+        root.add("values", array(List.copyOf(compatible)));
         save(cache, root, "data/" + namespace + "/tags/" + path + ".json");
     }
     private void uncheckedTag(CachedOutput cache, String namespace, String path, List<String> values) {
@@ -1788,7 +1798,7 @@ final class GeneratedData implements DataProvider {
             String id = relative.substring("data/basemetals/recipe/".length(), relative.length() - 5);
             String result = value.getAsJsonObject("result").get("item").getAsString();
             net.minecraft.world.item.Item item = net.minecraftforge.registries.ForgeRegistries.ITEMS
-                    .getValue(ResourceLocation.parse(result));
+                    .getValue(Identifier.parse(result));
             String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
                 case "blocks" -> "building";
                 case "tools", "combat" -> "equipment";
@@ -1801,7 +1811,15 @@ final class GeneratedData implements DataProvider {
         }
         if (relative.contains("/recipe/")) normalizeRecipeResults(value);
         if (relative.contains("/advancement/") || relative.contains("/loot_table/")) normalizePredicates(value);
-        pendingWrites.add(DataProvider.saveStable(cache, value, output.resolve(relative)));
+        JsonObject previous = scheduledResources.putIfAbsent(relative, value.deepCopy());
+        if (previous != null) {
+            if (!previous.equals(value)) {
+                throw new IllegalStateException("Conflicting generated resources: " + relative);
+            }
+            return;
+        }
+
+        pendingWrites.add(DataProvider.saveStable(cache, value.deepCopy(), output.resolve(relative)));
     }
 
     private static JsonElement replaceCopperOutputs(JsonElement value) {
@@ -1850,6 +1868,9 @@ final class GeneratedData implements DataProvider {
         }
         String type = json.has("type") ? json.get("type").getAsString() : "";
         if (!type.startsWith("minecraft:") && !type.startsWith("basemetals:")) return;
+        for (String field : List.of("ingredient", "ingredients", "key", "plate")) {
+            if (json.has(field)) json.add(field, nativeIngredient(json.get(field)));
+        }
         if (!json.has("result")) return;
 
         JsonElement result = json.get("result");
@@ -1859,6 +1880,23 @@ final class GeneratedData implements DataProvider {
             JsonObject stack = result.getAsJsonObject();
             stack.add("id", stack.remove("item"));
         }
+    }
+
+    private static JsonElement nativeIngredient(JsonElement value) {
+        if (value.isJsonArray()) {
+            JsonArray result = new JsonArray();
+            value.getAsJsonArray().forEach(entry -> result.add(nativeIngredient(entry)));
+            return result;
+        }
+        if (!value.isJsonObject()) return value;
+
+        JsonObject object = value.getAsJsonObject();
+        if (object.has("item")) return new com.google.gson.JsonPrimitive(object.get("item").getAsString());
+        if (object.has("tag")) return new com.google.gson.JsonPrimitive("#" + object.get("tag").getAsString());
+
+        JsonObject result = new JsonObject();
+        object.entrySet().forEach(entry -> result.add(entry.getKey(), nativeIngredient(entry.getValue())));
+        return result;
     }
 
     private static void normalizePredicates(JsonElement value) {

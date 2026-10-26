@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "item": "basemetals:tin_leggings"
-  },
+  "ingredient": "basemetals:tin_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:tin_ingot"

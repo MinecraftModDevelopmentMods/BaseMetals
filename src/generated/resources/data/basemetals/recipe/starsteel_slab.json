@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:starsteel_slab",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/starsteel"
-      }
+      "X": "#forge:storage_blocks/starsteel"
     },
     "pattern": [
       "XXX"

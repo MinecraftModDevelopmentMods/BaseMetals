@@ -5,24 +5,24 @@ import com.mojang.authlib.GameProfile;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.gametest.framework.GameTest;
+import net.minecraftforge.gametest.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.ArmorItem;
+import zone.moddev.mc.basemetals.content.MaterialItems.Armor;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.DiggerItem;
+
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraftforge.gametest.GameTestNamespace;
 import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.registries.ForgeRegistries;
 import zone.moddev.mc.basemetals.BaseMetals;
@@ -30,12 +30,12 @@ import zone.moddev.mc.basemetals.compat.VanillaCopper;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 
-@GameTestHolder(value = BaseMetals.MOD_ID, namespace = BaseMetals.MOD_ID)
+@GameTestNamespace(BaseMetals.MOD_ID)
 @GameTestDontPrefix
 public final class ForwardPortGameTests {
     private ForwardPortGameTests() {}
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void everyRangedMaterialContributesItsDamage(GameTestHelper helper) {
         var player = helper.makeMockServerPlayerInLevel();
         int checked = 0;
@@ -49,13 +49,13 @@ public final class ForwardPortGameTests {
                     material + " ammunition identity changed");
             AbstractArrow shot = bow.customArrow(arrow.createArrow(helper.getLevel(), arrow.getDefaultInstance(), player,
                     bow.getDefaultInstance()));
-            require(helper, close(shot.getBaseDamage(), 2 * bow.baseMetalsMaterial().baseAttackDamage()),
+            require(helper, close(zone.moddev.mc.basemetals.content.RuntimeTestData.damage(shot), 2 * bow.baseMetalsMaterial().baseAttackDamage()),
                     material + " did not use launcher plus ammunition damage");
             AbstractArrow ordinary = ((ArrowItem) Items.ARROW).createArrow(helper.getLevel(), Items.ARROW.getDefaultInstance(), player, null);
-            require(helper, ordinary.getBaseDamage() == 2.0D, "Vanilla arrow damage changed");
-            require(helper, close(bow.customArrow(ordinary).getBaseDamage(), 1 + bow.baseMetalsMaterial().baseAttackDamage()),
+            require(helper, zone.moddev.mc.basemetals.content.RuntimeTestData.damage(ordinary) == 2.0D, "Vanilla arrow damage changed");
+            require(helper, close(RuntimeTestData.damage(bow.customArrow(ordinary)), 1 + bow.baseMetalsMaterial().baseAttackDamage()),
                     material + " bow with vanilla ammunition has the wrong damage");
-            require(helper, close(arrow.createArrow(helper.getLevel(), arrow.getDefaultInstance(), player, null).getBaseDamage(),
+            require(helper, close(RuntimeTestData.damage(arrow.createArrow(helper.getLevel(), arrow.getDefaultInstance(), player, null)),
                     1 + arrow.baseMetalsMaterial().baseAttackDamage()), "Vanilla launcher ammunition contribution changed");
             checked++;
         }
@@ -63,17 +63,17 @@ public final class ForwardPortGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void rawCrushingAndSilkTouchInventoriesRemainSeparate(GameTestHelper helper) {
         int checked = 0;
         for (var material : MaterialCatalogue.ALL) {
             if (!material.hasOre()) continue;
             ItemStack raw = material.name().equals("copper") ? Items.RAW_COPPER.getDefaultInstance()
                     : ModContent.item(material.name() + "_raw").get().getDefaultInstance();
-            var crushed = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
+            var crushed = helper.getLevel().getServer().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SingleRecipeInput(raw), helper.getLevel()).orElseThrow();
             require(helper, crushed.value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 1, material.name() + " raw material was doubled");
-            var ore = helper.getLevel().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
+            var ore = helper.getLevel().getServer().getRecipeManager().getRecipeFor(CrushingRecipe.TYPE.get(),
                     new SingleRecipeInput(ModContent.item(material.name() + "_ore").get().getDefaultInstance()),
                     helper.getLevel()).orElseThrow();
             require(helper, ore.value().getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getCount() == 2, material.name() + " ore hammer yield changed");
@@ -83,7 +83,7 @@ public final class ForwardPortGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void thinTransparentBlocksDoNotHideTheirNeighbours(GameTestHelper helper) {
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
         for (var entry : ModContent.blocksById().entrySet()) {
@@ -98,14 +98,14 @@ public final class ForwardPortGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void vanillaCopperKeepsExistingRecipeChainsUsable(GameTestHelper helper) {
         var level = helper.getLevel();
 
         for (var entry : VanillaCopper.equivalents().entrySet()) {
-            var legacy = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(entry.getKey()));
-            var vanilla = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(entry.getValue()));
-            var tag = ItemTags.create(ResourceLocation.parse(VanillaCopper.ingredientTag(entry.getKey())));
+            var legacy = ForgeRegistries.ITEMS.getValue(Identifier.parse(entry.getKey()));
+            var vanilla = ForgeRegistries.ITEMS.getValue(Identifier.parse(entry.getValue()));
+            var tag = ItemTags.create(Identifier.parse(VanillaCopper.ingredientTag(entry.getKey())));
 
             require(helper, legacy != null && legacy != Items.AIR && vanilla != null && vanilla != Items.AIR,
                     "A copper save identity or its vanilla equivalent is missing: " + entry);
@@ -113,10 +113,16 @@ public final class ForwardPortGameTests {
                     "Copper equivalents cannot share an ingredient: " + entry);
 
             String path = entry.getKey().substring("basemetals:".length());
-            String recipeId = path.equals("copper_ingot") ? "copper_ingot_from_nuggets" : path;
-            var recipe = level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                    BaseMetals.MOD_ID, recipeId)).orElseThrow();
-            require(helper, recipe.value().getResultItem(level.registryAccess()).is(vanilla),
+            String recipeId = switch (path) {
+                case "copper_ingot" -> "copper_ingot_from_nuggets";
+                case "copper_nugget" -> "copper_nuggets";
+                case "copper_horse_armor" -> "copper_horsearmor";
+                default -> path;
+            };
+            var recipe = level.getServer().getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, Identifier.fromNamespaceAndPath(
+                    BaseMetals.MOD_ID, recipeId))).orElseThrow();
+            require(helper, ((net.minecraft.world.item.crafting.CraftingRecipe) recipe.value()).assemble(
+                    net.minecraft.world.item.crafting.CraftingInput.EMPTY, level.registryAccess()).is(vanilla),
                     recipeId + " still crafts the old duplicate item");
         }
 
@@ -124,7 +130,7 @@ public final class ForwardPortGameTests {
                 ModContent.item("copper_ingot").get().getDefaultInstance())) {
             var input = CraftingInput.of(3, 1,
                     List.of(ingot.copy(), ingot.copy(), ingot.copy()));
-            var plate = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING,
+            var plate = level.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING,
                     input, level).orElseThrow().value().assemble(input, level.registryAccess());
             require(helper, plate.is(ModContent.item("copper_plate").get()) && plate.getCount() == 3,
                     "Copper plate crafting rejected a supported ingot");
@@ -133,7 +139,7 @@ public final class ForwardPortGameTests {
         for (var entry : java.util.Map.of(Items.COPPER_TRAPDOOR, 3,
                 ModContent.item("copper_trapdoor").get(), 4).entrySet()) {
             var input = new SingleRecipeInput(entry.getKey().getDefaultInstance());
-            ItemStack recycled = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING,
+            ItemStack recycled = level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING,
                     input, level).orElseThrow().value().assemble(input, level.registryAccess());
             require(helper, recycled.is(Items.COPPER_INGOT) && recycled.getCount() == entry.getValue(),
                     "Copper trapdoor recycling used the wrong material value");
@@ -142,7 +148,7 @@ public final class ForwardPortGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void nativeEnchantmentsStillSupportMaterialEquipment(GameTestHelper helper) {
         var enchantments = helper.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         int checked = 0;
@@ -159,7 +165,8 @@ public final class ForwardPortGameTests {
                 require(helper, enchantments.getOrThrow(Enchantments.POWER)
                         .value().canEnchant(stack), "Power no longer supports " + stack);
             }
-            if (item instanceof DiggerItem || item instanceof ShearsItem) {
+            if ((item.components().has(net.minecraft.core.component.DataComponents.TOOL)
+                    && !(item instanceof MaterialItems.Sword)) || item instanceof ShearsItem) {
                 require(helper, enchantments.getOrThrow(Enchantments.EFFICIENCY)
                         .value().canEnchant(stack), "Efficiency no longer supports " + stack);
             }
@@ -167,7 +174,7 @@ public final class ForwardPortGameTests {
                 require(helper, enchantments.getOrThrow(Enchantments.LURE)
                         .value().canEnchant(stack), "Lure no longer supports " + stack);
             }
-            if (item instanceof ArmorItem) {
+            if (item instanceof Armor) {
                 require(helper, enchantments.getOrThrow(Enchantments.PROTECTION)
                         .value().canEnchant(stack), "Protection no longer supports " + stack);
             }

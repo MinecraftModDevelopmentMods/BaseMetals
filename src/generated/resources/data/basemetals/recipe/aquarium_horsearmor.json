@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:aquarium_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/aquarium"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/aquarium"
     },
     "pattern": [
       "  X",

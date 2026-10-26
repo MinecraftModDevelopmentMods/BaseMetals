@@ -5,9 +5,7 @@
     "category": "building",
     "group": "minecraft:copper_trapdoor",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "XXX",

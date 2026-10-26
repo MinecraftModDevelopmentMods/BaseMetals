@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/aquarium"
-  },
+  "ingredient": "#forge:storage_blocks/aquarium",
   "result": {
     "count": 9,
     "id": "basemetals:aquarium_powder"

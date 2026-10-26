@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/steel"
-  },
+  "ingredient": "#forge:ingots/steel",
   "result": {
     "id": "basemetals:steel_powder"
   }

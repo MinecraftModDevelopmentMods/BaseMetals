@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:platinum_door",
     "key": {
-      "X": {
-        "tag": "forge:ingots/platinum"
-      }
+      "X": "#forge:ingots/platinum"
     },
     "pattern": [
       "XX",

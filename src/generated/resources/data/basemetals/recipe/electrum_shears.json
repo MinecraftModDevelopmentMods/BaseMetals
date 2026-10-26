@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:electrum_shears",
     "key": {
-      "X": {
-        "tag": "forge:ingots/electrum"
-      }
+      "X": "#forge:ingots/electrum"
     },
     "pattern": [
       " X",

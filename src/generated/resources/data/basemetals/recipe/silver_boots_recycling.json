@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.6,
-  "ingredient": {
-    "item": "basemetals:silver_boots"
-  },
+  "ingredient": "basemetals:silver_boots",
   "result": {
     "count": 4,
     "id": "basemetals:silver_ingot"

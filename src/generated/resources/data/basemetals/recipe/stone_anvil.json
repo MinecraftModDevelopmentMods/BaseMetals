@@ -5,15 +5,9 @@
     "category": "building",
     "group": "basemetals:stone_anvil",
     "key": {
-      "B": {
-        "item": "minecraft:stone_bricks"
-      },
-      "C": {
-        "tag": "forge:stone"
-      },
-      "S": {
-        "item": "minecraft:stone_slab"
-      }
+      "B": "minecraft:stone_bricks",
+      "C": "#forge:stone",
+      "S": "minecraft:stone_slab"
     },
     "pattern": [
       "BBB",

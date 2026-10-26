@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:mithril",
-    "basemetals:flowing_mithril"
+    "basemetals:flowing_mithril",
+    "basemetals:mithril"
   ]
 }

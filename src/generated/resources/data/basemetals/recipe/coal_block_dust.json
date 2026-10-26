@@ -5,9 +5,7 @@
     "category": "building",
     "group": "minecraft:coal_block",
     "key": {
-      "X": {
-        "tag": "forge:dusts/coal"
-      }
+      "X": "#forge:dusts/coal"
     },
     "pattern": [
       "XXX",

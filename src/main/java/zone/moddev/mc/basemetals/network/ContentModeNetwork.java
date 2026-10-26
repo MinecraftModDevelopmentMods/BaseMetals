@@ -6,9 +6,8 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.network.ConfigurationTask;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.network.GatherLoginConfigurationTasksEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.listener.Priority;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
@@ -54,7 +53,7 @@ public final class ContentModeNetwork {
                     context.setPacketHandled(true);
                 }).add();
 
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, ContentModeNetwork::gatherTasks);
+        GatherLoginConfigurationTasksEvent.BUS.addListener(Priority.LOWEST, ContentModeNetwork::gatherTasks);
     }
 
     public static boolean modesMatch(String server, String client) {

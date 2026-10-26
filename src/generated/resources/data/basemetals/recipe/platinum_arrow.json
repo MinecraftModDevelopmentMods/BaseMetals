@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:platinum_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/platinum"
-      },
-      "R": {
-        "tag": "forge:rods/platinum"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/platinum",
+      "R": "#forge:rods/platinum"
     },
     "pattern": [
       "N",

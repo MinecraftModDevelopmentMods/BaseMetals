@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:copper_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/copper"
-      }
+      "X": "#forge:nuggets/copper"
     },
     "pattern": [
       "X",

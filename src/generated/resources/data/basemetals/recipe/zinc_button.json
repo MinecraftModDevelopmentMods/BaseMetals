@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:zinc_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/zinc"
-      }
+      "X": "#forge:nuggets/zinc"
     },
     "pattern": [
       "X",

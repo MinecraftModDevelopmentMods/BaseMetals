@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:wood_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "minecraft:planks"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#minecraft:planks"
     },
     "pattern": [
       "XX ",

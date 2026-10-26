@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/tin"
-  },
+  "plate": "#forge:plates/tin",
   "target": "basemetals:tin_boots"
 }

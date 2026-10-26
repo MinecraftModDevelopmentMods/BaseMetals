@@ -5,9 +5,7 @@
     "category": "building",
     "group": "minecraft:iron_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/iron"
-      }
+      "X": "#forge:rods/iron"
     },
     "pattern": [
       "XXX"

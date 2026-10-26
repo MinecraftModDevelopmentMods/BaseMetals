@@ -9,13 +9,14 @@ plugins {
 ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
         'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
 ext.mavenizerCompatibilitySha256 =
-        '019032A4A26ECB473D403EF017054D5892CE59A9904E8831B452287CD756397E'
+        'B36CA046DB72E30F27BD38E02B4AE34274ADB51AE1D65BAF9E1D07763755682E'
 
 ext.mavenizerFixtureChecksums = [
         'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
-        'minecraft-source-compatibility.json': '7F669F225520D0382E76991A8A3E5E4020840F0FA975F7DCB86681D7E7C3F766',
-        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': '84FEA234619CC2D1931E609B22B6E5D96F59366F7D6C2783C3BEE0F726F3E876',
-        'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331'
+        'minecraft-source-compatibility.json': '88F2EE4C6B7C903EB1C7D693C0BEEFC0EFC601C1023FB197F7CBA187B1142DB7',
+        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': '88F9035C8545CF1CBC7342C14F2F95076C4E415EDB7A74D585409CFC3F1BDD5C',
+        'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331',
+        'README.md': 'A097E126C606BDC86B34F5DDFB9580228A7C5BC866C6509C6BB362152EBACED7'
 ]
 // Mavenizer runs during configuration, so verify its inputs before configuring Forge.
 mavenizerFixtureChecksums.each { name, expected ->
@@ -26,7 +27,7 @@ mavenizerFixtureChecksums.each { name, expected ->
     }
 }
 
-// Forge 52 needs no source repairs. The sealed fixture records that result
+// Forge 61 needs no source repairs. The sealed fixture records that result
 // and stays separate from the mod and its runtime dependencies.
 fgtools.configure('mavenizer') {
     classpath.from(mavenizerCompatibilityJar)
@@ -117,7 +118,7 @@ sourceSets {
     }
     dataGenerator {
         java.srcDir 'src/dataGenerator/java'
-        resources.setSrcDirs([])
+        resources.setSrcDirs(['src/dataGenerator/resources'])
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
     }
@@ -191,6 +192,7 @@ minecraft {
                 workingDir.set(layout.projectDirectory.dir('run-optional-mods'))
             }
             jvmArgs '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED'
+            args '--mixin', 'basemetals.mixins.json'
 
             // Keep registry diagnostics available in development logs.
             systemProperty 'forge.logging.markers', 'REGISTRIES'

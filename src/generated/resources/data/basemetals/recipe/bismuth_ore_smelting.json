@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:ores/bismuth"
-  },
+  "ingredient": "#forge:ores/bismuth",
   "result": {
     "id": "basemetals:bismuth_ingot"
   }

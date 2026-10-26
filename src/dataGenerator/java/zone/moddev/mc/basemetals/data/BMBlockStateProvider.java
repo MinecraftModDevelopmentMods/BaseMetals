@@ -1,80 +1,100 @@
 package zone.moddev.mc.basemetals.data;
 
-import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceLocation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
-import zone.moddev.mc.basemetals.material.MaterialDefinition;
+
+import static zone.moddev.mc.basemetals.data.BaseMetalsDataGenerators.object;
 
 /**
- * Builds ores from a vanilla host texture and a transparent ore overlay.
+ * Builds ores from a vanilla host and a transparent overlay.
  *
  * @author KiriCattus (Kiri), original two-layer model
  */
 @Mod.EventBusSubscriber(modid = "basemetals", bus = Mod.EventBusSubscriber.Bus.MOD)
-public final class BMBlockStateProvider extends BlockStateProvider {
+public final class BMBlockStateProvider implements DataProvider {
     private static final float OVERLAY_OFFSET = 0.05F;
+    private final java.nio.file.Path output;
+    private final List<CompletableFuture<?>> writes = new ArrayList<>();
 
-    public BMBlockStateProvider(net.minecraft.data.PackOutput generator, ExistingFileHelper existingFiles) {
-        super(generator, "basemetals", existingFiles);
+    public BMBlockStateProvider(PackOutput output) {
+        this.output = output.getOutputFolder();
     }
-
-    @Override
-    public String getName() { return "Ore overlays: basemetals"; }
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         if (event.includeClient()) {
-            event.getGenerator().addProvider(true, new BMBlockStateProvider(
-                    event.getGenerator().getPackOutput(), event.getExistingFileHelper()));
+            event.getGenerator().addProvider(true, new BMBlockStateProvider(event.getGenerator().getPackOutput()));
         }
     }
 
     @Override
-    protected void registerStatesAndModels() {
-        for (MaterialDefinition material : MaterialCatalogue.ALL) {
+    public CompletableFuture<?> run(CachedOutput cache) {
+        writes.clear();
+        for (var material : MaterialCatalogue.ALL) {
             if (!material.hasOre()) continue;
 
-            Block block = ModContent.blocksById().get(material.name() + "_ore").get();
-            String host = "stone";
-            if (material.name().equals("adamantine") || material.name().equals("coldiron")) {
-                host = "netherrack";
-            } else if (material.name().equals("starsteel")) {
-                host = "end_stone";
-            }
-
-            createOverlayOre(block, mcLoc("block/" + host),
-                    modLoc("block/ore_overlays/" + material.name() + "_ore"));
+            String host = switch (material.name()) {
+                case "adamantine", "coldiron" -> "netherrack";
+                case "starsteel" -> "end_stone";
+                default -> "stone";
+            };
+            createOverlayOre(cache, ModContent.blocksById().get(material.name() + "_ore").get(),
+                    Identifier.withDefaultNamespace("block/" + host),
+                    Identifier.fromNamespaceAndPath("basemetals", "block/ore_overlays/" + material.name() + "_ore"));
         }
+
+        return CompletableFuture.allOf(writes.toArray(CompletableFuture[]::new));
     }
 
-    private void createOverlayOre(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
+    private void createOverlayOre(CachedOutput cache, Block block, Identifier baseTexture, Identifier overlayTexture) {
         String blockName = ForgeRegistries.BLOCKS.getKey(block).getPath();
+        JsonObject textures = object("particle", baseTexture, "base", baseTexture, "overlay", overlayTexture);
+        JsonArray elements = new JsonArray();
+        elements.add(cube(0, 16, "#base"));
+        // Keep the overlay clear of the host, including distant mip levels.
+        elements.add(cube(-OVERLAY_OFFSET, 16 + OVERLAY_OFFSET, "#overlay"));
 
-        BlockModelBuilder builder = models().withExistingParent(blockName, mcLoc("block/block"))
-                .texture("particle", baseTexture)
-                .texture("base", baseTexture)
-                .texture("overlay", overlayTexture)
-                .element()
-                .from(0, 0, 0)
-                .to(16, 16, 16)
-                .allFaces((direction, face) -> face.texture("#base").cullface(direction))
-                .end()
-                // Keep the overlay clear of the host, including distant mip levels.
-                .element()
-                .from(-OVERLAY_OFFSET, -OVERLAY_OFFSET, -OVERLAY_OFFSET)
-                .to(16 + OVERLAY_OFFSET, 16 + OVERLAY_OFFSET, 16 + OVERLAY_OFFSET)
-                .allFaces((direction, face) -> face.texture("#overlay").cullface(direction))
-                .end();
+        JsonObject model = object("parent", "minecraft:block/block", "textures", textures, "elements", elements);
+        writes.add(DataProvider.saveStable(cache, model,
+                output.resolve("assets/basemetals/models/block/" + blockName + ".json")));
+        writes.add(DataProvider.saveStable(cache,
+                object("variants", object("", object("model", "basemetals:block/" + blockName))),
+                output.resolve("assets/basemetals/blockstates/" + blockName + ".json")));
+    }
 
-        simpleBlock(block, builder);
+    private static JsonObject cube(float from, float to, String texture) {
+        JsonArray start = new JsonArray();
+        JsonArray end = new JsonArray();
+        for (int axis = 0; axis < 3; axis++) {
+            start.add(from);
+            end.add(to);
+        }
+
+        JsonObject faces = new JsonObject();
+        for (String direction : List.of("down", "up", "north", "south", "west", "east")) {
+            faces.add(direction, object("texture", texture, "cullface", direction));
+        }
+
+        return object("from", start, "to", end, "faces", faces);
+    }
+
+    @Override
+    public String getName() {
+        return "Base Metals ore overlays";
     }
 }

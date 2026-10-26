@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:diamond_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/diamond"
-      }
+      "X": "#forge:nuggets/diamond"
     },
     "pattern": [
       "X",

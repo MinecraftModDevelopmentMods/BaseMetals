@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:tin_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/tin"
-      },
-      "X": {
-        "tag": "forge:ingots/tin"
-      }
+      "R": "#forge:rods/tin",
+      "X": "#forge:ingots/tin"
     },
     "pattern": [
       "R",

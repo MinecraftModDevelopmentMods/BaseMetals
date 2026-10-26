@@ -5,18 +5,10 @@
     "category": "misc",
     "group": "basemetals:aquarium_blend",
     "ingredients": [
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/zinc"
-      },
-      {
-        "tag": "forge:dusts/prismarine"
-      }
+      "#forge:dusts/copper",
+      "#forge:dusts/copper",
+      "#forge:dusts/zinc",
+      "#forge:dusts/prismarine"
     ],
     "result": {
       "count": 3,

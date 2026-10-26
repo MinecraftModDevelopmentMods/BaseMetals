@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:cupronickel_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      },
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "R": "#forge:rods/cupronickel",
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       "R",

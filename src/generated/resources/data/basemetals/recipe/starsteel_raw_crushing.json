@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/starsteel"
-  },
+  "ingredient": "#forge:raw_materials/starsteel",
   "result": {
     "id": "basemetals:starsteel_powder"
   }

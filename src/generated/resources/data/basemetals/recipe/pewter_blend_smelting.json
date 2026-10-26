@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:blends/pewter"
-  },
+  "ingredient": "#forge:blends/pewter",
   "result": {
     "id": "basemetals:pewter_ingot"
   }

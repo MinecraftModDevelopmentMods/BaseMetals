@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:pewter_bars",
     "key": {
-      "X": {
-        "tag": "forge:ingots/pewter"
-      }
+      "X": "#forge:ingots/pewter"
     },
     "pattern": [
       "XXX",

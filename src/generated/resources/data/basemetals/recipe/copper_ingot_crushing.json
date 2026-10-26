@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/copper"
-  },
+  "ingredient": "#forge:ingots/copper",
   "result": {
     "id": "basemetals:copper_powder"
   }

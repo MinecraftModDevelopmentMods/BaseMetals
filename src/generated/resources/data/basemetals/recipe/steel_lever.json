@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:steel_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/steel"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "R": "#forge:rods/steel",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "R",

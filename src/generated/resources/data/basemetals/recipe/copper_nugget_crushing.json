@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/copper"
-  },
+  "ingredient": "#forge:nuggets/copper",
   "result": {
     "id": "basemetals:copper_smallpowder"
   }

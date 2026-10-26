@@ -41,6 +41,41 @@ def gravel(x=0.5, y=35, z=0.5, dimension=""):
 
 
 class FallingTerrainTest(unittest.TestCase):
+    def test_exposed_dirt_beside_old_grass_can_grow_normally(self):
+        self.compare_surface("minecraft:dirt", "minecraft:grass_block", nearby_grass=True)
+
+    def test_grass_does_not_excuse_buried_or_isolated_changes(self):
+        for buried, nearby in [(True, True), (False, False)]:
+            with self.assertRaisesRegex(AssertionError, "dirt became minecraft:grass_block"):
+                self.compare_surface("minecraft:dirt", "minecraft:grass_block", nearby, buried)
+
+    def test_surface_growth_never_excuses_changed_rock_or_new_ore(self):
+        for original, changed in [("minecraft:stone", "minecraft:grass_block"),
+                                  ("minecraft:dirt", "basemetals:tin_ore")]:
+            with self.assertRaises(AssertionError):
+                self.compare_surface(original, changed, nearby_grass=True)
+
+    def compare_surface(self, original, changed, nearby_grass, buried=False):
+        values = ["minecraft:air"] * 4096
+        values[0] = original
+        if nearby_grass:
+            values[1] = "minecraft:grass_block"
+        if buried:
+            values[256] = "minecraft:stone"
+        after = values.copy()
+        after[0] = changed
+
+        def chunk(blocks):
+            return {("", 0, 0): {"Sections": [{"Y": 0, "values": blocks,
+                "Palette": [{"Name": "minecraft:dirt"}, {"Name": "minecraft:stone"}]}]}}
+
+        with (
+            patch.object(terrain, "chunks", side_effect=[chunk(values), chunk(after)]),
+            patch.object(terrain, "block_names", side_effect=lambda section: iter(section["values"])),
+            patch.object(terrain, "falling_blocks", return_value={}),
+        ):
+            terrain.compare(Path("source"), Path("copy"))
+
     def test_identical_sections_still_count_every_solid_block(self):
         chunks = {("", 0, 0): {"Sections": [{"Y": 0, "Palette": [{"Name": "minecraft:stone"}]}]}}
         with (

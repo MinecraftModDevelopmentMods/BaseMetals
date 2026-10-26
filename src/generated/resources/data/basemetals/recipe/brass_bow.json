@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:brass_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/brass"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/brass",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

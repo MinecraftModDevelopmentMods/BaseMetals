@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:aquarium_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/aquarium"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/aquarium"
     },
     "pattern": [
       "X",

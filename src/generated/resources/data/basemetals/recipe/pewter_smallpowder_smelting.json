@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/pewter"
-  },
+  "ingredient": "#forge:tiny_dusts/pewter",
   "result": {
     "id": "basemetals:pewter_nugget"
   }

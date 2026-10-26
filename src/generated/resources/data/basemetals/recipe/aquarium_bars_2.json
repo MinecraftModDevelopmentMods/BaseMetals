@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:aquarium_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/aquarium"
-      }
+      "X": "#forge:rods/aquarium"
     },
     "pattern": [
       "XXX"

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:coldiron_shears"
-  },
+  "ingredient": "basemetals:coldiron_shears",
   "result": {
     "count": 2,
     "id": "basemetals:coldiron_ingot"

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.5,
-  "ingredient": {
-    "item": "basemetals:aquarium_leggings"
-  },
+  "ingredient": "basemetals:aquarium_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:aquarium_ingot"

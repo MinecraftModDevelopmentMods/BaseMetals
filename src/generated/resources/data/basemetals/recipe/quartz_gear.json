@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:quartz_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/quartz"
-      },
-      "X": {
-        "tag": "forge:gems/quartz"
-      }
+      "R": "#forge:rods/quartz",
+      "X": "#forge:gems/quartz"
     },
     "pattern": [
       " X ",

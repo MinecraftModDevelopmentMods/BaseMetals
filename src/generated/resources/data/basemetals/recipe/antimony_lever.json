@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:antimony_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/antimony"
-      },
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "R": "#forge:rods/antimony",
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "R",

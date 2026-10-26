@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:mithril_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/mithril"
-      },
-      "R": {
-        "tag": "forge:rods/mithril"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/mithril",
+      "R": "#forge:rods/mithril"
     },
     "pattern": [
       "N",

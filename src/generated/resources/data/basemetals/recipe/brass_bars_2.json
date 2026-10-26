@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:brass_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/brass"
-      }
+      "X": "#forge:rods/brass"
     },
     "pattern": [
       "XXX"

@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:brass_smallpowder",
     "ingredients": [
-      {
-        "tag": "forge:dusts/brass"
-      }
+      "#forge:dusts/brass"
     ],
     "result": {
       "count": 9,

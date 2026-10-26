@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:pewter_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/pewter"
-      }
+      "X": "#forge:nuggets/pewter"
     },
     "pattern": [
       "X",

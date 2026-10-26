@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:silver_ingot",
     "ingredients": [
-      {
-        "tag": "forge:storage_blocks/silver"
-      }
+      "#forge:storage_blocks/silver"
     ],
     "result": {
       "count": 9,

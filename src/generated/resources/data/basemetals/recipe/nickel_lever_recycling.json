@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:nickel_lever"
-  },
+  "ingredient": "basemetals:nickel_lever",
   "result": {
     "id": "basemetals:nickel_ingot"
   }

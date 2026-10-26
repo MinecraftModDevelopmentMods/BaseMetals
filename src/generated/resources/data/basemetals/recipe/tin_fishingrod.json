@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:tin_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/tin"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/tin",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

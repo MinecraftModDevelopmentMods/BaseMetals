@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:tin_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/tin"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/tin"
     },
     "pattern": [
       "XXX",

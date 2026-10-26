@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:electrum_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/electrum"
-      },
-      "R": {
-        "tag": "forge:rods/electrum"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/electrum",
+      "R": "#forge:rods/electrum",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

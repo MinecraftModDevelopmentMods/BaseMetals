@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/electrum"
-  },
+  "ingredient": "#forge:ingots/electrum",
   "result": {
     "id": "basemetals:electrum_powder"
   }

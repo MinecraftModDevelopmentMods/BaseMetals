@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:lead_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/lead"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/lead"
     },
     "pattern": [
       "R",

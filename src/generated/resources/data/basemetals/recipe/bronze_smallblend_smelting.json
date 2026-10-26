@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.05,
-  "ingredient": {
-    "tag": "forge:small_blends/bronze"
-  },
+  "ingredient": "#forge:small_blends/bronze",
   "result": {
     "id": "basemetals:bronze_nugget"
   }

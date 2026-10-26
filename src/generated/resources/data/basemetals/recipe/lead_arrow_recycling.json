@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "item": "basemetals:lead_arrow"
-  },
+  "ingredient": "basemetals:lead_arrow",
   "result": {
     "id": "basemetals:lead_nugget"
   }

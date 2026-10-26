@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:diamond_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/diamond"
-      },
-      "X": {
-        "tag": "forge:gems/diamond"
-      }
+      "R": "#forge:rods/diamond",
+      "X": "#forge:gems/diamond"
     },
     "pattern": [
       "R",

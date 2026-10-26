@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:lead_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "XX ",

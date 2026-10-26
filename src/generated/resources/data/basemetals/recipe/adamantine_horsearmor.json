@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:adamantine_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/adamantine"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/adamantine"
     },
     "pattern": [
       "  X",

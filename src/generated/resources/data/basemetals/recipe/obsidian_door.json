@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:obsidian_door",
     "key": {
-      "X": {
-        "tag": "forge:ingots/obsidian"
-      }
+      "X": "#forge:ingots/obsidian"
     },
     "pattern": [
       "XX",

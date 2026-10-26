@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:antimony_helmet"
-  },
+  "ingredient": "basemetals:antimony_helmet",
   "result": {
     "count": 5,
     "id": "basemetals:antimony_ingot"

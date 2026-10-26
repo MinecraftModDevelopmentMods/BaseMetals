@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:obsidian_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/obsidian"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/obsidian"
     },
     "pattern": [
       "XXX",

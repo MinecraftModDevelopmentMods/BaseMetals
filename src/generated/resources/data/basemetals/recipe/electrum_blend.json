@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:electrum_blend",
     "ingredients": [
-      {
-        "tag": "forge:dusts/gold"
-      },
-      {
-        "tag": "forge:dusts/silver"
-      }
+      "#forge:dusts/gold",
+      "#forge:dusts/silver"
     ],
     "result": {
       "count": 2,

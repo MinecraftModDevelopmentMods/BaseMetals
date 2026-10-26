@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/cupronickel"
-      },
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/cupronickel",
+      "R": "#forge:rods/cupronickel",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

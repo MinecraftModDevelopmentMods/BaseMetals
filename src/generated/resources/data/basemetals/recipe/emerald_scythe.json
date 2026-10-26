@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:emerald_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:gems/emerald"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:gems/emerald"
     },
     "pattern": [
       "XX ",

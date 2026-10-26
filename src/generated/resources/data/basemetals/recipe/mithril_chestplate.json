@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:mithril_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/mithril"
-      }
+      "X": "#forge:ingots/mithril"
     },
     "pattern": [
       "X X",

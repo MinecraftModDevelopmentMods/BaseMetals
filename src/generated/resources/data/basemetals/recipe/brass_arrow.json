@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:brass_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/brass"
-      },
-      "R": {
-        "tag": "forge:rods/brass"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/brass",
+      "R": "#forge:rods/brass"
     },
     "pattern": [
       "N",

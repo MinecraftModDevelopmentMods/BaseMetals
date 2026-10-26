@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:iron_wall",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/iron"
-      }
+      "X": "#forge:storage_blocks/iron"
     },
     "pattern": [
       "XXX",

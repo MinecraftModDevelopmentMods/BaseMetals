@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.07,
-  "ingredient": {
-    "tag": "forge:small_blends/cupronickel"
-  },
+  "ingredient": "#forge:small_blends/cupronickel",
   "result": {
     "id": "basemetals:cupronickel_nugget"
   }

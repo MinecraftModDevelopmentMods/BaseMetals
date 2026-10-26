@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:platinum_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/platinum"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/platinum"
     },
     "pattern": [
       "X",

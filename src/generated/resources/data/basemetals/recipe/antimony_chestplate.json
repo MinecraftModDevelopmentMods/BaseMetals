@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:antimony_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "X X",

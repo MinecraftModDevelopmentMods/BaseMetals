@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:gold_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/gold"
-      },
-      "R": {
-        "tag": "forge:rods/gold"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/gold",
+      "R": "#forge:rods/gold"
     },
     "pattern": [
       "N",

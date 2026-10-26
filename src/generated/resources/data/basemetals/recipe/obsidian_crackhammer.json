@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:obsidian_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/obsidian"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/obsidian"
     },
     "pattern": [
       "X",

@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:bismuth_smallpowder",
     "ingredients": [
-      {
-        "tag": "forge:dusts/bismuth"
-      }
+      "#forge:dusts/bismuth"
     ],
     "result": {
       "count": 9,

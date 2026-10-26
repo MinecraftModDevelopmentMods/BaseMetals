@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.5,
-  "ingredient": {
-    "item": "basemetals:aquarium_chestplate"
-  },
+  "ingredient": "basemetals:aquarium_chestplate",
   "result": {
     "count": 8,
     "id": "basemetals:aquarium_ingot"

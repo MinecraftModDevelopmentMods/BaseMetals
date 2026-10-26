@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:silver",
-    "basemetals:flowing_silver"
+    "basemetals:flowing_silver",
+    "basemetals:silver"
   ]
 }

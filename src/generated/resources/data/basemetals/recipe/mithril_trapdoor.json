@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:mithril_trapdoor",
     "key": {
-      "X": {
-        "tag": "forge:ingots/mithril"
-      }
+      "X": "#forge:ingots/mithril"
     },
     "pattern": [
       "XX",

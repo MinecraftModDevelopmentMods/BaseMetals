@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:tin_slab",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/tin"
-      }
+      "X": "#forge:storage_blocks/tin"
     },
     "pattern": [
       "XXX"

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:diamond_pressure_plate",
     "key": {
-      "X": {
-        "tag": "forge:gems/diamond"
-      }
+      "X": "#forge:gems/diamond"
     },
     "pattern": [
       "XX"

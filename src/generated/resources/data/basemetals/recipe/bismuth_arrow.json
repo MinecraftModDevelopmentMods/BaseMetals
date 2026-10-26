@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:bismuth_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/bismuth"
-      },
-      "R": {
-        "tag": "forge:rods/bismuth"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/bismuth",
+      "R": "#forge:rods/bismuth"
     },
     "pattern": [
       "N",

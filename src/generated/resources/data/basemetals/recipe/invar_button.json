@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:invar_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/invar"
-      }
+      "X": "#forge:nuggets/invar"
     },
     "pattern": [
       "X",

@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:zinc_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/zinc"
-      },
-      "X": {
-        "tag": "forge:ingots/zinc"
-      }
+      "R": "#forge:rods/zinc",
+      "X": "#forge:ingots/zinc"
     },
     "pattern": [
       " X ",

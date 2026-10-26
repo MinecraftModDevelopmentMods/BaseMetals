@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:platinum_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/platinum"
-      }
+      "X": "#forge:rods/platinum"
     },
     "pattern": [
       "XXX"

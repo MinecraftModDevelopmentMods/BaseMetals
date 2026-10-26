@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:adamantine_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/adamantine"
-      }
+      "X": "#forge:nuggets/adamantine"
     },
     "pattern": [
       "X",

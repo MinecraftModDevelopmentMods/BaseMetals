@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.0,
-  "ingredient": {
-    "item": "basemetals:electrum_bow"
-  },
+  "ingredient": "basemetals:electrum_bow",
   "result": {
     "id": "basemetals:electrum_ingot"
   }

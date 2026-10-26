@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:quartz_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/quartz"
-      },
-      "R": {
-        "tag": "forge:rods/quartz"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/quartz",
+      "R": "#forge:rods/quartz",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

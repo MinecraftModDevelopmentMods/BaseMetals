@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:ores/antimony"
-  },
+  "ingredient": "#forge:ores/antimony",
   "result": {
     "id": "basemetals:antimony_ingot"
   }

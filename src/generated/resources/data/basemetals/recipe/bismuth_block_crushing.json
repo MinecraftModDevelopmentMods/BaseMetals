@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/bismuth"
-  },
+  "ingredient": "#forge:storage_blocks/bismuth",
   "result": {
     "count": 9,
     "id": "basemetals:bismuth_powder"

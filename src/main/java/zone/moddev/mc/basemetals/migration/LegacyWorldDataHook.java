@@ -64,7 +64,7 @@ import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.datafix.fixes.BlockStateData;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -75,10 +75,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * durability data before Minecraft reads the items.
  */
 public final class LegacyWorldDataHook {
-    private static final ResourceLocation BLOCK_REGISTRY = ResourceLocation.fromNamespaceAndPath("minecraft", "blocks");
+    private static final Identifier BLOCK_REGISTRY = Identifier.fromNamespaceAndPath("minecraft", "blocks");
     private static final Map<String, CompoundTag> LEGACY_WORLD_DATA = new ConcurrentHashMap<String, CompoundTag>();
     private static final BitSet LEGACY_BASE_METALS_BLOCK_IDS = new BitSet();
-    private static volatile Map<ResourceLocation, LongSet> legacyTerrainChunks = Collections.emptyMap();
+    private static volatile Map<Identifier, LongSet> legacyTerrainChunks = Collections.emptyMap();
     private static final Map<Long, Integer> LEGACY_BASE_METALS_BLOCK_COUNTS =
             new ConcurrentHashMap<Long, Integer>();
     private static final Map<String, String> VANILLA_BLOCK_ENTITY_IDS = vanillaBlockEntityIds();
@@ -88,7 +88,7 @@ public final class LegacyWorldDataHook {
 
     private LegacyWorldDataHook() {}
 
-    /** Called by the coremod before Forge reads level.dat. */
+    /** Captures the current level.dat before vanilla converts it. */
     public static synchronized void prepareLegacyWorld(File levelDat) {
         Legacy112WorldMigrator.beginWorldLoad();
         legacyWorldActive = false;
@@ -99,12 +99,12 @@ public final class LegacyWorldDataHook {
         if (source == null) return;
         try (FileInputStream input = new FileInputStream(source)) {
             CompoundTag root = LegacyNbt.readCompressed(input);
-            if (root.getCompound("Data").getInt("DataVersion") < 2834) {
+            if (root.getCompoundOrEmpty("Data").getIntOr("DataVersion", 0) < 2834) {
                 legacyWorldActive = true;
                 indexLegacyChunks(levelDat.getParentFile());
             }
-            if (root.contains("FML", 10)) {
-                prepareLegacyData(levelDat.getParentFile(), root.getCompound("FML"));
+            if (zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(root, "FML", 10)) {
+                prepareLegacyData(levelDat.getParentFile(), root.getCompoundOrEmpty("FML"));
             }
             migrateLoosePlayerData(levelDat, root);
         } catch (IOException exception) {
@@ -132,8 +132,8 @@ public final class LegacyWorldDataHook {
     }
 
     private static void preserveLegacySource(File levelDat, CompoundTag root) throws IOException {
-        CompoundTag data = root.getCompound("Data");
-        if (!data.contains("DataVersion", Tag.TAG_ANY_NUMERIC) || data.getInt("DataVersion") >= 2834) return;
+        CompoundTag data = root.getCompoundOrEmpty("Data");
+        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "DataVersion", 99) || data.getIntOr("DataVersion", 0) >= 2834) return;
 
         Path sidecar = levelDat.toPath().resolveSibling(REGISTRY_SIDECAR);
         if (Files.exists(sidecar)) return;
@@ -142,9 +142,9 @@ public final class LegacyWorldDataHook {
         // Player data belongs to this load only and is deliberately not saved here.
         CompoundTag saved = new CompoundTag();
         CompoundTag source = new CompoundTag();
-        source.putInt("DataVersion", data.getInt("DataVersion"));
+        source.putInt("DataVersion", data.getIntOr("DataVersion", 0));
         saved.put("Data", source);
-        if (root.contains("FML", Tag.TAG_COMPOUND)) saved.put("FML", root.getCompound("FML").copy());
+        if (zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(root, "FML", Tag.TAG_COMPOUND)) saved.put("FML", root.getCompoundOrEmpty("FML").copy());
 
         try (java.io.OutputStream output = Files.newOutputStream(sidecar, StandardOpenOption.CREATE_NEW)) {
             LegacyNbt.writeCompressed(saved, output);
@@ -154,27 +154,27 @@ public final class LegacyWorldDataHook {
     static boolean removeRetiredVanillaProfessionRegistry(CompoundTag root) {
         boolean changed = false;
         for (String namespace : new String[] {"fml", "FML"}) {
-            CompoundTag registries = root.getCompound(namespace).getCompound("Registries");
+            CompoundTag registries = root.getCompoundOrEmpty(namespace).getCompoundOrEmpty("Registries");
             String key = "minecraft:villagerprofessions";
-            if (!registries.contains(key, 10)) continue;
-            CompoundTag snapshot = registries.getCompound(key);
-            if (!snapshot.contains("ids", 9)) continue;
+            if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(registries, key, 10)) continue;
+            CompoundTag snapshot = registries.getCompoundOrEmpty(key);
+            if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(snapshot, "ids", 9)) continue;
             boolean vanillaOnly = true;
             for (Tag entry : (ListTag) snapshot.get("ids")) {
                 if (!(entry instanceof CompoundTag)) {
                     vanillaOnly = false;
                     continue;
                 }
-                String name = ((CompoundTag) entry).getString("K");
+                String name = ((CompoundTag) entry).getStringOr("K", "");
                 if (!Arrays.asList("minecraft:farmer", "minecraft:librarian", "minecraft:priest",
                         "minecraft:smith", "minecraft:butcher", "minecraft:nitwit").contains(name)) {
                     vanillaOnly = false;
                 }
             }
             for (String list : new String[] {"aliases", "overrides", "dummied"}) {
-                if (snapshot.contains(list, 9) && !((ListTag) snapshot.get(list)).isEmpty()) vanillaOnly = false;
+                if (zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(snapshot, list, 9) && !((ListTag) snapshot.get(list)).isEmpty()) vanillaOnly = false;
             }
-            if (snapshot.getIntArray("blocked").length > 0) vanillaOnly = false;
+            if (snapshot.getIntArray("blocked").orElseGet(() -> new int[0]).length > 0) vanillaOnly = false;
             if (!vanillaOnly) continue;
 
             // Vanilla converts the villagers themselves. This retired Forge registry
@@ -206,15 +206,15 @@ public final class LegacyWorldDataHook {
                 + "windswept_forest windswept_gravelly_hills windswept_hills windswept_savanna wooded_badlands").split(" "));
         boolean changed = false;
         for (String namespace : new String[] {"fml", "FML"}) {
-            CompoundTag registries = root.getCompound(namespace).getCompound("Registries");
+            CompoundTag registries = root.getCompoundOrEmpty(namespace).getCompoundOrEmpty("Registries");
             String key = "minecraft:worldgen/biome";
-            if (!registries.contains(key, 10)) continue;
-            CompoundTag snapshot = registries.getCompound(key);
-            if (!snapshot.contains("ids", 9) || snapshot.getIntArray("blocked").length != 0) continue;
+            if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(registries, key, 10)) continue;
+            CompoundTag snapshot = registries.getCompoundOrEmpty(key);
+            if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(snapshot, "ids", 9) || snapshot.getIntArray("blocked").orElseGet(() -> new int[0]).length != 0) continue;
             boolean vanillaOnly = true;
             for (Tag entry : (ListTag) snapshot.get("ids")) {
                 if (!(entry instanceof CompoundTag id)) { vanillaOnly = false; break; }
-                String name = id.getString("K");
+                String name = id.getStringOr("K", "");
                 if (!name.startsWith("minecraft:") || !known.contains(name.substring("minecraft:".length()))) {
                     vanillaOnly = false;
                     break;
@@ -233,23 +233,23 @@ public final class LegacyWorldDataHook {
     }
 
     static boolean migrateRemovedVanillaBiomeSources(CompoundTag root) {
-        CompoundTag data = root.getCompound("Data");
-        if (data.getInt("DataVersion") >= 2834) return false;
+        CompoundTag data = root.getCompoundOrEmpty("Data");
+        if (data.getIntOr("DataVersion", 0) >= 2834) return false;
 
-        CompoundTag dimensions = data.getCompound("WorldGenSettings").getCompound("dimensions");
+        CompoundTag dimensions = data.getCompoundOrEmpty("WorldGenSettings").getCompoundOrEmpty("dimensions");
         boolean changed = false;
-        for (String id : dimensions.getAllKeys()) {
+        for (String id : dimensions.keySet()) {
             // Minecraft handles the main Overworld itself, but skips custom dimensions.
             if ("minecraft:overworld".equals(id)) continue;
 
-            CompoundTag generator = dimensions.getCompound(id).getCompound("generator");
-            CompoundTag source = generator.getCompound("biome_source");
-            if (!"minecraft:noise".equals(generator.getString("type"))
-                    || !"minecraft:vanilla_layered".equals(source.getString("type"))) continue;
+            CompoundTag generator = dimensions.getCompoundOrEmpty(id).getCompoundOrEmpty("generator");
+            CompoundTag source = generator.getCompoundOrEmpty("biome_source");
+            if (!"minecraft:noise".equals(generator.getStringOr("type", ""))
+                    || !"minecraft:vanilla_layered".equals(source.getStringOr("type", ""))) continue;
 
             // Use Minecraft's 1.18 replacement for this removed vanilla biome source.
             // Modded biome sources and noise settings stay untouched.
-            if (source.getBoolean("large_biomes") && "minecraft:overworld".equals(generator.getString("settings"))) {
+            if (source.getBooleanOr("large_biomes", false) && "minecraft:overworld".equals(generator.getStringOr("settings", ""))) {
                 generator.putString("settings", "minecraft:large_biomes");
             }
             CompoundTag replacement = new CompoundTag();
@@ -266,11 +266,11 @@ public final class LegacyWorldDataHook {
         if (root == null) return;
         migrateLegacyItems(root);
         migrateWallStates(root);
-        if (!legacyWorldActive || !root.contains("Level", 10)) return;
-        CompoundTag level = root.getCompound("Level");
+        if (!legacyWorldActive || !zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(root, "Level", 10)) return;
+        CompoundTag level = root.getCompoundOrEmpty("Level");
         int legacyBlocks = countLegacyBaseMetalsBlocks(level);
         if (legacyBlocks > 0) {
-            LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getInt("xPos"), level.getInt("zPos"))),
+            LEGACY_BASE_METALS_BLOCK_COUNTS.put(Long.valueOf(chunkKey(level.getIntOr("xPos", 0), level.getIntOr("zPos", 0))),
                     Integer.valueOf(legacyBlocks));
         }
         // Chests or entities may contain the only Base Metals items in this chunk.
@@ -285,18 +285,18 @@ public final class LegacyWorldDataHook {
         int changed = 0;
         if (value instanceof CompoundTag) {
             CompoundTag compound = (CompoundTag) value;
-            String name = compound.getString("Name");
+            String name = compound.getStringOr("Name", "");
             if (name.startsWith("basemetals:") && name.endsWith("_wall")) {
-                CompoundTag properties = compound.getCompound("Properties");
+                CompoundTag properties = compound.getCompoundOrEmpty("Properties");
                 for (String direction : new String[] {"north", "east", "south", "west"}) {
-                    String connection = properties.getString(direction);
+                    String connection = properties.getStringOr(direction, "");
                     if ("true".equals(connection) || "false".equals(connection)) {
                         properties.putString(direction, "true".equals(connection) ? "low" : "none");
                         changed++;
                     }
                 }
             }
-            for (String key : compound.getAllKeys()) changed += migrateWallStates(compound.get(key));
+            for (String key : compound.keySet()) changed += migrateWallStates(compound.get(key));
         } else if (value instanceof ListTag) {
             for (Tag entry : (ListTag) value) changed += migrateWallStates(entry);
         }
@@ -306,11 +306,11 @@ public final class LegacyWorldDataHook {
     /** Called after vanilla datafixing, before a legacy chunk is returned. */
     public static CompoundTag finalizeLegacyChunk(CompoundTag root) {
         if (root != null) {
-            CompoundTag level = root.contains("Level", 10) ? root.getCompound("Level") : root;
-            if (level.getBoolean(PRESERVE_CHUNK_MARKER)) {
+            CompoundTag level = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(root, "Level", 10) ? root.getCompoundOrEmpty("Level") : root;
+            if (level.getBooleanOr(PRESERVE_CHUNK_MARKER, false)) {
                 removePhantomBedEntities(level);
                 // Keep vanilla's below-zero retrogen status so 1.18 can fill the new underground.
-                if (!level.contains("below_zero_retrogen", 10)) level.putString("Status", "full");
+                if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(level, "below_zero_retrogen", 10)) level.putString("Status", "full");
                 level.remove(PRESERVE_CHUNK_MARKER);
             }
         }
@@ -318,16 +318,16 @@ public final class LegacyWorldDataHook {
     }
 
     static int removePhantomBedEntities(CompoundTag level) {
-        ListTag entities = level.getList(level.contains("block_entities", 9) ? "block_entities" : "TileEntities", 10);
+        ListTag entities = level.getListOrEmpty(NbtCompat.containsTag(level, "block_entities", 9) ? "block_entities" : "TileEntities");
         int removed = 0;
 
         for (int index = entities.size() - 1; index >= 0; index--) {
-            CompoundTag entity = entities.getCompound(index);
-            if (!"minecraft:bed".equals(entity.getString("id"))) continue;
+            CompoundTag entity = entities.getCompoundOrEmpty(index);
+            if (!"minecraft:bed".equals(entity.getStringOr("id", ""))) continue;
 
             // Vanilla's pre-flattening bed fixer ignores the high bits of modded block IDs.
             // A bed entity cannot belong to a Base Metals block; real beds are left alone.
-            String block = paletteBlockAt(level, entity.getInt("x"), entity.getInt("y"), entity.getInt("z"));
+            String block = paletteBlockAt(level, entity.getIntOr("x", 0), entity.getIntOr("y", 0), entity.getIntOr("z", 0));
             if (block.startsWith("basemetals:")) {
                 entities.remove(index);
                 removed++;
@@ -338,25 +338,25 @@ public final class LegacyWorldDataHook {
     }
 
     private static String paletteBlockAt(CompoundTag level, int x, int y, int z) {
-        for (Tag entry : level.getList(level.contains("sections", 9) ? "sections" : "Sections", 10)) {
+        for (Tag entry : level.getListOrEmpty(NbtCompat.containsTag(level, "sections", 9) ? "sections" : "Sections")) {
             CompoundTag section = (CompoundTag) entry;
-            if (section.getByte("Y") != (y >> 4)) continue;
+            if (section.getByteOr("Y", (byte) 0) != (y >> 4)) continue;
 
-            CompoundTag statesTag = section.getCompound("block_states");
-            boolean modern = section.contains("block_states", 10);
-            ListTag palette = modern ? statesTag.getList("palette", 10) : section.getList("Palette", 10);
+            CompoundTag statesTag = section.getCompoundOrEmpty("block_states");
+            boolean modern = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(section, "block_states", 10);
+            ListTag palette = modern ? statesTag.getListOrEmpty("palette") : section.getListOrEmpty("Palette");
             if (palette.isEmpty()) return "";
             int state = 0;
             if (palette.size() > 1) {
                 int bits = Math.max(4, 32 - Integer.numberOfLeadingZeros(palette.size() - 1));
                 int perWord = 64 / bits;
                 int position = ((y & 15) << 8) | ((z & 15) << 4) | (x & 15);
-                long[] states = modern ? statesTag.getLongArray("data") : section.getLongArray("BlockStates");
+                long[] states = modern ? statesTag.getLongArray("data").orElseGet(() -> new long[0]) : section.getLongArray("BlockStates").orElseGet(() -> new long[0]);
                 int word = position / perWord;
                 if (word >= states.length) return "";
                 state = (int) ((states[word] >>> ((position % perWord) * bits)) & ((1L << bits) - 1));
             }
-            return state < palette.size() ? palette.getCompound(state).getString("Name") : "";
+            return state < palette.size() ? palette.getCompoundOrEmpty(state).getStringOr("Name", "") : "";
         }
         return "";
     }
@@ -364,10 +364,10 @@ public final class LegacyWorldDataHook {
     public static boolean shouldBlockWorldgenWrite(net.minecraft.server.level.WorldGenRegion region,
             net.minecraft.core.BlockPos position) {
         return legacyWorldActive && position != null
-                && isProtectedChunk(region.getLevel().dimension().location(), position);
+                && isProtectedChunk(region.getLevel().dimension().identifier(), position);
     }
 
-    static boolean isProtectedChunk(ResourceLocation dimension, net.minecraft.core.BlockPos position) {
+    static boolean isProtectedChunk(Identifier dimension, net.minecraft.core.BlockPos position) {
         LongSet chunks = legacyTerrainChunks.get(dimension);
         // Pre-1.18 worlds have saved terrain at Y=0..255. New negative-Y terrain is not protected.
         return position.getY() >= 0 && position.getY() < 256 && chunks != null
@@ -375,12 +375,12 @@ public final class LegacyWorldDataHook {
     }
 
     private static synchronized void prepareLegacyData(File worldDirectory, CompoundTag tag) {
-        if (!tag.contains("Registries", 10)) return;
-        CompoundTag registries = tag.getCompound("Registries");
-        if (!registries.contains(BLOCK_REGISTRY.toString(), 10)) return;
+        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(tag, "Registries", 10)) return;
+        CompoundTag registries = tag.getCompoundOrEmpty("Registries");
+        if (!NbtCompat.containsTag(registries, BLOCK_REGISTRY.toString(), 10)) return;
         String key = worldKey(worldDirectory);
         boolean first = !LEGACY_WORLD_DATA.containsKey(key);
-        int states = installLegacyBlockStates(registries.getCompound(BLOCK_REGISTRY.toString()));
+        int states = installLegacyBlockStates(registries.getCompoundOrEmpty(BLOCK_REGISTRY.toString()));
         if (first) LEGACY_WORLD_DATA.put(key, tag.copy());
         legacyWorldActive |= states > 0;
         File sidecar = new File(worldDirectory, REGISTRY_SIDECAR);
@@ -402,18 +402,18 @@ public final class LegacyWorldDataHook {
 
     private static int installLegacyBlockStates(CompoundTag snapshot) {
         LEGACY_BASE_METALS_BLOCK_IDS.clear();
-        Map<ResourceLocation, Integer> ids = new LinkedHashMap<ResourceLocation, Integer>();
-        ListTag savedIds = snapshot.getList("ids", 10);
+        Map<Identifier, Integer> ids = new LinkedHashMap<Identifier, Integer>();
+        ListTag savedIds = snapshot.getListOrEmpty("ids");
         int highestState = 0;
         for (int index = 0; index < savedIds.size(); index++) {
-            CompoundTag entry = savedIds.getCompound(index);
-            String normalized = normalizeLegacyRegistryName(entry.getString("K"));
+            CompoundTag entry = savedIds.getCompoundOrEmpty(index);
+            String normalized = normalizeLegacyRegistryName(entry.getStringOr("K", ""));
             int separator = normalized.indexOf(':');
             if (separator < 0) continue;
             String namespace = normalized.substring(0, separator);
             if (!BaseMetals.MOD_ID.equals(namespace) && !"mmdlib".equals(namespace)) continue;
-            ResourceLocation id = ResourceLocation.parse(normalized);
-            int numeric = entry.getInt("V");
+            Identifier id = Identifier.parse(normalized);
+            int numeric = entry.getIntOr("V", 0);
             ids.put(id, Integer.valueOf(numeric));
             LEGACY_BASE_METALS_BLOCK_IDS.set(numeric);
             highestState = Math.max(highestState, (numeric << 4) | 15);
@@ -421,21 +421,21 @@ public final class LegacyWorldDataHook {
         if (ids.isEmpty()) return 0;
         Dynamic<?>[] table = expandFlatteningTable(highestState + 1);
         int mapped = 0;
-        for (Map.Entry<ResourceLocation, Integer> entry : ids.entrySet()) {
+        for (Map.Entry<Identifier, Integer> entry : ids.entrySet()) {
             Block block = resolveCurrentBlock(entry.getKey());
             for (int meta = 0; meta < 16; meta++) {
                 BlockState state = legacyState(block, entry.getKey().getPath(), meta);
                 table[(entry.getValue().intValue() << 4) | meta] =
-                        BlockStateData.parse(NbtUtils.writeBlockState(state).toString());
+                        new Dynamic<>(net.minecraft.nbt.NbtOps.INSTANCE, NbtUtils.writeBlockState(state));
                 mapped++;
             }
         }
         return mapped;
     }
 
-    private static Block resolveCurrentBlock(ResourceLocation oldId) {
+    private static Block resolveCurrentBlock(Identifier oldId) {
         String path = MissingMappings.blockTargetPath(oldId.getPath());
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path));
+        Block block = ForgeRegistries.BLOCKS.getValue(Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, path));
         if (block == null) throw new IllegalStateException("No Base Metals replacement for legacy block " + oldId);
         return block;
     }
@@ -536,11 +536,11 @@ public final class LegacyWorldDataHook {
 
     private static Map<Integer, String> idsFromRoot(CompoundTag root) {
         Map<Integer, String> result = new LinkedHashMap<Integer, String>();
-        ListTag ids = root.getCompound("FML").getCompound("Registries")
-                .getCompound(BLOCK_REGISTRY.toString()).getList("ids", 10);
+        ListTag ids = root.getCompoundOrEmpty("FML").getCompoundOrEmpty("Registries")
+                .getCompoundOrEmpty(BLOCK_REGISTRY.toString()).getListOrEmpty("ids");
         for (int index = 0; index < ids.size(); index++) {
-            CompoundTag entry = ids.getCompound(index);
-            result.put(Integer.valueOf(entry.getInt("V")), normalizeLegacyRegistryName(entry.getString("K")));
+            CompoundTag entry = ids.getCompoundOrEmpty(index);
+            result.put(Integer.valueOf(entry.getIntOr("V", 0)), normalizeLegacyRegistryName(entry.getStringOr("K", "")));
         }
         return result;
     }
@@ -585,16 +585,16 @@ public final class LegacyWorldDataHook {
         int changed = 0;
         if (value instanceof CompoundTag) {
             CompoundTag compound = (CompoundTag) value;
-            String id = compound.getString("id");
+            String id = compound.getStringOr("id", "");
             String vanillaBlockEntity = VANILLA_BLOCK_ENTITY_IDS.get(id);
             if (vanillaBlockEntity != null) {
                 compound.putString("id", vanillaBlockEntity);
                 id = vanillaBlockEntity;
                 changed++;
             }
-            if ("forge:bucketfilled".equalsIgnoreCase(id) && compound.contains("tag", 10)) {
-                CompoundTag tag = compound.getCompound("tag");
-                String target = MissingMappings.fluidTargetPath(tag.getString("FluidName"));
+            if ("forge:bucketfilled".equalsIgnoreCase(id) && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "tag", 10)) {
+                CompoundTag tag = compound.getCompoundOrEmpty("tag");
+                String target = MissingMappings.fluidTargetPath(tag.getStringOr("FluidName", ""));
                 if (ModContent.fluids().containsKey(target)) {
                     compound.putString("id", BaseMetals.MOD_ID + ":" + target + "_bucket");
                     tag.remove("FluidName");
@@ -602,27 +602,27 @@ public final class LegacyWorldDataHook {
                     if (tag.isEmpty()) compound.remove("tag");
                     changed++;
                 }
-            } else if (compound.contains("Count", 99)) {
-                ResourceLocation oldId = safeId(id);
+            } else if (zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "Count", 99)) {
+                Identifier oldId = safeId(id);
                 if (oldId != null && (BaseMetals.MOD_ID.equals(oldId.getNamespace())
                         || "mmdlib".equals(oldId.getNamespace()))) {
-                    ResourceLocation target = MissingMappings.itemTargetId(oldId.getPath());
+                    Identifier target = MissingMappings.itemTargetId(oldId.getPath());
                     if (!target.equals(oldId)) {
                         compound.putString("id", target.toString());
                         changed++;
                     }
-                    if (compound.contains("Damage", 99) && compound.getInt("Damage") > 0) {
-                        CompoundTag tag = compound.contains("tag", 10)
-                                ? compound.getCompound("tag") : new CompoundTag();
-                        if (!tag.contains("Damage", 99)) {
-                            tag.putInt("Damage", compound.getInt("Damage"));
+                    if (zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "Damage", 99) && compound.getIntOr("Damage", 0) > 0) {
+                        CompoundTag tag = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "tag", 10)
+                                ? compound.getCompoundOrEmpty("tag") : new CompoundTag();
+                        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(tag, "Damage", 99)) {
+                            tag.putInt("Damage", compound.getIntOr("Damage", 0));
                             compound.put("tag", tag);
                             changed++;
                         }
                     }
                 }
             }
-            for (String key : new ArrayList<String>(compound.getAllKeys())) {
+            for (String key : new ArrayList<String>(compound.keySet())) {
                 Tag child = compound.get(key);
                 if (child != null) changed += migrateLegacyItems(child);
             }
@@ -661,8 +661,8 @@ public final class LegacyWorldDataHook {
         return Collections.unmodifiableMap(ids);
     }
 
-    private static ResourceLocation safeId(String value) {
-        try { return value == null || value.isEmpty() ? null : ResourceLocation.parse(value.toLowerCase(Locale.ROOT)); }
+    private static Identifier safeId(String value) {
+        try { return value == null || value.isEmpty() ? null : Identifier.parse(value.toLowerCase(Locale.ROOT)); }
         catch (RuntimeException ignored) { return null; }
     }
 
@@ -686,9 +686,9 @@ public final class LegacyWorldDataHook {
             if (!candidate.isFile()) continue;
             try (FileInputStream input = new FileInputStream(candidate)) {
                 CompoundTag root = LegacyNbt.readCompressed(input);
-                if ((root.contains("FML", 10) && containsLegacyBaseMetalsRegistryEntry(root))
-                        || (root.getCompound("Data").contains("DataVersion", Tag.TAG_ANY_NUMERIC)
-                                && root.getCompound("Data").getInt("DataVersion") < 2834)) return candidate;
+                if ((zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(root, "FML", 10) && containsLegacyBaseMetalsRegistryEntry(root))
+                        || (NbtCompat.containsTag(root.getCompoundOrEmpty("Data"), "DataVersion", 99)
+                                && root.getCompoundOrEmpty("Data").getIntOr("DataVersion", 0) < 2834)) return candidate;
             } catch (IOException ignored) {}
         }
         return null;
@@ -705,12 +705,12 @@ public final class LegacyWorldDataHook {
 
     private static int countLegacyBaseMetalsBlocks(CompoundTag level) {
         int found = 0;
-        ListTag sections = level.getList("Sections", 10);
+        ListTag sections = level.getListOrEmpty("Sections");
         for (int sectionIndex = 0; sectionIndex < sections.size(); sectionIndex++) {
-            CompoundTag section = sections.getCompound(sectionIndex);
-            byte[] blocks = section.getByteArray("Blocks");
+            CompoundTag section = sections.getCompoundOrEmpty(sectionIndex);
+            byte[] blocks = section.getByteArray("Blocks").orElseGet(() -> new byte[0]);
             if (blocks.length != 4096) continue;
-            byte[] add = section.getByteArray("Add");
+            byte[] add = section.getByteArray("Add").orElseGet(() -> new byte[0]);
             for (int index = 0; index < blocks.length; index++) {
                 int high = add.length == 2048 ? (add[index >> 1] >> ((index & 1) * 4)) & 15 : 0;
                 if (LEGACY_BASE_METALS_BLOCK_IDS.get((blocks[index] & 255) | (high << 8))) found++;
@@ -725,10 +725,10 @@ public final class LegacyWorldDataHook {
     }
 
     static int indexLegacyChunks(File worldDirectory) {
-        Map<ResourceLocation, LongSet> indexed = new LinkedHashMap<>();
-        indexRegionDirectory(indexed, ResourceLocation.parse("minecraft:overworld"), new File(worldDirectory, "region"));
-        indexRegionDirectory(indexed, ResourceLocation.parse("minecraft:the_nether"), new File(worldDirectory, "DIM-1/region"));
-        indexRegionDirectory(indexed, ResourceLocation.parse("minecraft:the_end"), new File(worldDirectory, "DIM1/region"));
+        Map<Identifier, LongSet> indexed = new LinkedHashMap<>();
+        indexRegionDirectory(indexed, Identifier.parse("minecraft:overworld"), new File(worldDirectory, "region"));
+        indexRegionDirectory(indexed, Identifier.parse("minecraft:the_nether"), new File(worldDirectory, "DIM-1/region"));
+        indexRegionDirectory(indexed, Identifier.parse("minecraft:the_end"), new File(worldDirectory, "DIM1/region"));
 
         Path dimensions = worldDirectory.toPath().resolve("dimensions");
         if (Files.isDirectory(dimensions)) {
@@ -739,7 +739,7 @@ public final class LegacyWorldDataHook {
                             if (relative.getNameCount() < 2) return;
                             String namespace = relative.getName(0).toString();
                             String name = relative.subpath(1, relative.getNameCount()).toString().replace(File.separatorChar, '/');
-                            indexRegionDirectory(indexed, ResourceLocation.fromNamespaceAndPath(namespace, name), path.toFile());
+                            indexRegionDirectory(indexed, Identifier.fromNamespaceAndPath(namespace, name), path.toFile());
                         });
             } catch (IOException exception) {
                 throw new IllegalStateException("Could not inspect saved dimensions in " + dimensions, exception);
@@ -750,8 +750,8 @@ public final class LegacyWorldDataHook {
         return indexed.values().stream().mapToInt(LongSet::size).sum();
     }
 
-    private static void indexRegionDirectory(Map<ResourceLocation, LongSet> indexed,
-            ResourceLocation dimension, File regionDirectory) {
+    private static void indexRegionDirectory(Map<Identifier, LongSet> indexed,
+            Identifier dimension, File regionDirectory) {
         File[] regions = regionDirectory.listFiles((directory, name) -> name.matches("r\\.-?\\d+\\.-?\\d+\\.mc[ar]"));
         if (regions == null) return;
         LongSet chunks = indexed.computeIfAbsent(dimension, key -> new LongOpenHashSet());

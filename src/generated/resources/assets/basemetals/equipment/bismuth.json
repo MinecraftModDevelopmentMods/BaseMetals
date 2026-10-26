@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:bismuth"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:bismuth"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:bismuth"
+      }
+    ]
+  }
+}

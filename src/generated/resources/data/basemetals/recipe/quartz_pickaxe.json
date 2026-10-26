@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:quartz_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:gems/quartz"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:gems/quartz"
     },
     "pattern": [
       "XXX",

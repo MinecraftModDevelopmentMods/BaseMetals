@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:stone_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:stone"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:stone"
     },
     "pattern": [
       "XX ",

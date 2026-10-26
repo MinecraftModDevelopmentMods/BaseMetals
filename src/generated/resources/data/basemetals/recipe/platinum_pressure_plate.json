@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:platinum_pressure_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/platinum"
-      }
+      "X": "#forge:ingots/platinum"
     },
     "pattern": [
       "XX"

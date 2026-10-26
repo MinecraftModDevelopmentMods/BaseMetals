@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/cupronickel"
-      },
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/cupronickel",
+      "R": "#forge:rods/cupronickel"
     },
     "pattern": [
       "N",

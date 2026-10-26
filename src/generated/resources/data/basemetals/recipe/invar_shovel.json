@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:invar_shovel",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       "X",

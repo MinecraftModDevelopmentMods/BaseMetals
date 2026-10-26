@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:gold_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/gold"
-      },
-      "X": {
-        "tag": "forge:ingots/gold"
-      }
+      "R": "#forge:rods/gold",
+      "X": "#forge:ingots/gold"
     },
     "pattern": [
       "R",

@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:adamantine_shears",
     "key": {
-      "X": {
-        "tag": "forge:ingots/adamantine"
-      }
+      "X": "#forge:ingots/adamantine"
     },
     "pattern": [
       " X",

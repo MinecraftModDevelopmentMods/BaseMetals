@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:copper_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/copper"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/copper",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

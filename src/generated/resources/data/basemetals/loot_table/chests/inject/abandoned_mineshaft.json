@@ -220,47 +220,47 @@
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_axe",
+          "name": "minecraft:copper_axe",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_boots",
+          "name": "minecraft:copper_boots",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_chestplate",
+          "name": "minecraft:copper_chestplate",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_helmet",
+          "name": "minecraft:copper_helmet",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_hoe",
+          "name": "minecraft:copper_hoe",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_leggings",
+          "name": "minecraft:copper_leggings",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_pickaxe",
+          "name": "minecraft:copper_pickaxe",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_shovel",
+          "name": "minecraft:copper_shovel",
           "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "basemetals:copper_sword",
+          "name": "minecraft:copper_sword",
           "weight": 3
         },
         {

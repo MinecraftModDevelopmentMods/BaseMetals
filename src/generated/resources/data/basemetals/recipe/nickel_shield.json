@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:nickel_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/nickel"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/nickel"
     },
     "pattern": [
       "XWX",

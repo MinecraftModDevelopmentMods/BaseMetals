@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:aquarium_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/aquarium"
-      },
-      "R": {
-        "tag": "forge:rods/aquarium"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/aquarium",
+      "R": "#forge:rods/aquarium"
     },
     "pattern": [
       "N",

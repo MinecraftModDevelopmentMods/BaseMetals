@@ -1,5 +1,11 @@
 {
   "parent": "forge:item/bucket",
   "fluid": "basemetals:quartz",
-  "loader": "forge:fluid_container"
+  "loader": "forge:fluid_container",
+  "textures": {
+    "base": "basemetals:block/bucket_base",
+    "cover": "basemetals:block/bucket_cover",
+    "fluid": "basemetals:block/bucket_fluid",
+    "particle": "#base"
+  }
 }

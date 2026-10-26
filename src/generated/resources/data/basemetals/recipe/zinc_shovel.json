@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:zinc_shovel",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/zinc"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/zinc"
     },
     "pattern": [
       "X",

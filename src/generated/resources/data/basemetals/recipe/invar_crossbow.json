@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:invar_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/invar"
-      },
-      "R": {
-        "tag": "forge:rods/invar"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/invar",
+      "R": "#forge:rods/invar",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

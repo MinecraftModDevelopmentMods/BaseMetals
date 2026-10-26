@@ -6,9 +6,9 @@ import net.minecraft.world.level.material.Fluid;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.registries.MissingMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -20,7 +20,7 @@ public final class MissingMappings {
     @SubscribeEvent
     public static void blocks(MissingMappingsEvent event) {
         for (MissingMappingsEvent.Mapping<Block> mapping : event.getAllMappings(ForgeRegistries.Keys.BLOCKS)) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
+            Identifier vanillaTarget = vanilla114Target(mapping.getKey());
             if (vanillaTarget != null) {
                 Block target = ForgeRegistries.BLOCKS.getValue(vanillaTarget);
                 if (target != null) mapping.remap(target);
@@ -35,7 +35,7 @@ public final class MissingMappings {
     @SubscribeEvent
     public static void items(MissingMappingsEvent event) {
         for (MissingMappingsEvent.Mapping<Item> mapping : event.getAllMappings(ForgeRegistries.Keys.ITEMS)) {
-            ResourceLocation vanillaTarget = vanilla114Target(mapping.getKey());
+            Identifier vanillaTarget = vanilla114Target(mapping.getKey());
             if (vanillaTarget != null) {
                 Item target = ForgeRegistries.ITEMS.getValue(vanillaTarget);
                 if (target != null) mapping.remap(target);
@@ -60,17 +60,17 @@ public final class MissingMappings {
         return BaseMetals.MOD_ID.equals(namespace) || "mmdlib".equals(namespace);
     }
 
-    public static ResourceLocation vanilla114Target(ResourceLocation oldName) {
+    public static Identifier vanilla114Target(Identifier oldName) {
         if (!"minecraft".equals(oldName.getNamespace())) return null;
 
         // Vanilla converts the saved blocks and items, but Forge's registry
         // snapshot still needs aliases for names retired in 1.14.
         switch (oldName.getPath()) {
-            case "sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_sign");
-            case "wall_sign": return ResourceLocation.fromNamespaceAndPath("minecraft", "oak_wall_sign");
-            case "rose_red": return ResourceLocation.fromNamespaceAndPath("minecraft", "red_dye");
-            case "cactus_green": return ResourceLocation.fromNamespaceAndPath("minecraft", "green_dye");
-            case "dandelion_yellow": return ResourceLocation.fromNamespaceAndPath("minecraft", "yellow_dye");
+            case "sign": return Identifier.fromNamespaceAndPath("minecraft", "oak_sign");
+            case "wall_sign": return Identifier.fromNamespaceAndPath("minecraft", "oak_wall_sign");
+            case "rose_red": return Identifier.fromNamespaceAndPath("minecraft", "red_dye");
+            case "cactus_green": return Identifier.fromNamespaceAndPath("minecraft", "green_dye");
+            case "dandelion_yellow": return Identifier.fromNamespaceAndPath("minecraft", "yellow_dye");
             default: return null;
         }
     }
@@ -85,10 +85,10 @@ public final class MissingMappings {
         return path.endsWith("_door_item") ? path.substring(0, path.length() - "_item".length()) : path;
     }
 
-    public static ResourceLocation itemTargetId(String path) {
+    public static Identifier itemTargetId(String path) {
         return "iron_nugget".equals(path)
-                ? ResourceLocation.fromNamespaceAndPath("minecraft", "iron_nugget")
-                : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));
+                ? Identifier.fromNamespaceAndPath("minecraft", "iron_nugget")
+                : Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));
     }
 
     public static String fluidTargetPath(String name) {

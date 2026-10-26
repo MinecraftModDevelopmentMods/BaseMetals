@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:silver_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/silver"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/silver",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

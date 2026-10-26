@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:mithril_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/mithril"
-      },
-      "R": {
-        "tag": "forge:rods/mithril"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/mithril",
+      "R": "#forge:rods/mithril",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

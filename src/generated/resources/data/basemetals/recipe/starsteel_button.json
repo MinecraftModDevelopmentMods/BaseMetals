@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:starsteel_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/starsteel"
-      }
+      "X": "#forge:nuggets/starsteel"
     },
     "pattern": [
       "X",

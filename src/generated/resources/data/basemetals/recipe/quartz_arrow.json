@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:quartz_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/quartz"
-      },
-      "R": {
-        "tag": "forge:rods/quartz"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/quartz",
+      "R": "#forge:rods/quartz"
     },
     "pattern": [
       "N",

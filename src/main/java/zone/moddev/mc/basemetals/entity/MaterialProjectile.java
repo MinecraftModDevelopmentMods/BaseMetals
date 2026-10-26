@@ -7,7 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -53,27 +53,44 @@ public final class MaterialProjectile extends AbstractArrow implements IEntityAd
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput tag) {
         super.addAdditionalSaveData(tag);
-        if (!ammunition.isEmpty()) tag.put("Ammunition", ammunition.save(registryAccess()));
+        if (!ammunition.isEmpty()) tag.store("Ammunition", ItemStack.CODEC, ammunition);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput tag) {
         super.readAdditionalSaveData(tag);
-        CompoundTag saved = tag.getCompound("Ammunition");
+        CompoundTag saved = tag.read("Ammunition", CompoundTag.CODEC).orElseGet(CompoundTag::new);
         if (saved.contains("Count")) {
             saved = (CompoundTag) net.minecraft.util.datafix.DataFixers.getDataFixer().update(
                     net.minecraft.util.datafix.fixes.References.ITEM_STACK,
                     new com.mojang.serialization.Dynamic<>(net.minecraft.nbt.NbtOps.INSTANCE, saved),
-                    3465, net.minecraft.SharedConstants.getCurrentVersion().getDataVersion().getVersion()).getValue();
+                    3465, net.minecraft.SharedConstants.getCurrentVersion().dataVersion().version()).getValue();
         }
-        ammunition = ItemStack.parseOptional(registryAccess(), saved);
+        ammunition = decodeAmmunition(saved);
         if (!ammunition.isEmpty()) setPickupItemStack(ammunition);
     }
 
-    @Override public void writeSpawnData(FriendlyByteBuf buffer) { buffer.writeNbt((CompoundTag) ammunition.saveOptional(registryAccess())); }
-    @Override public void readSpawnData(FriendlyByteBuf additionalData) { ammunition = ItemStack.parseOptional(registryAccess(), additionalData.readNbt()); }
+    private ItemStack decodeAmmunition(CompoundTag saved) {
+        if (saved == null || saved.isEmpty()) return ItemStack.EMPTY;
+
+        return ItemStack.CODEC.parse(registryAccess().createSerializationContext(
+                net.minecraft.nbt.NbtOps.INSTANCE), saved).getOrThrow();
+    }
+
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buffer) {
+        buffer.writeNbt(ammunition.isEmpty() ? new CompoundTag()
+                : (CompoundTag) ItemStack.CODEC.encodeStart(registryAccess().createSerializationContext(
+                        net.minecraft.nbt.NbtOps.INSTANCE), ammunition).getOrThrow());
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf buffer) {
+        ammunition = decodeAmmunition(buffer.readNbt());
+        if (!ammunition.isEmpty()) setPickupItemStack(ammunition);
+    }
 
     /**
      * AbstractArrow's vanilla packet omits Forge additional spawn data. The

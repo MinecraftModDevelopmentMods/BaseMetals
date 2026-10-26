@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:glass"
-  },
+  "ingredient": "minecraft:glass",
   "result": {
     "id": "minecraft:sand"
   }

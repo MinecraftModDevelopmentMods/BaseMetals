@@ -3,11 +3,9 @@
   "recipe": {
     "type": "minecraft:crafting_shaped",
     "category": "building",
-    "group": "basemetals:copper_bars",
+    "group": "minecraft:copper_bars",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "XXX",
@@ -15,7 +13,7 @@
     ],
     "result": {
       "count": 16,
-      "id": "basemetals:copper_bars"
+      "id": "minecraft:copper_bars"
     }
   }
 }

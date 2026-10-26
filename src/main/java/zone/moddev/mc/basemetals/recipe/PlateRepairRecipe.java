@@ -10,7 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.Item;
@@ -43,7 +43,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
         for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
             if (stack.isEmpty()) continue;
-            if (stack.is(target) && stack.isDamaged() && foundTarget.isEmpty()) {
+            if (isTarget(stack) && stack.isDamaged() && foundTarget.isEmpty()) {
                 foundTarget = stack;
             } else if (plate.test(stack) && !foundPlate) {
                 foundPlate = true;
@@ -59,7 +59,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
         if (!matches(container, null)) return ItemStack.EMPTY;
         for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
-            if (stack.is(target) && stack.isDamaged()) {
+            if (isTarget(stack) && stack.isDamaged()) {
                 ItemStack repaired = stack.copy();
                 repaired.setCount(1);
                 repaired.setDamageValue(0);
@@ -69,23 +69,29 @@ public final class PlateRepairRecipe extends CustomRecipe {
         return ItemStack.EMPTY;
     }
 
-    @Override
+    private boolean isTarget(ItemStack stack) {
+        if (stack.is(target)) return true;
+
+        String oldId = ForgeRegistries.ITEMS.getKey(target).toString();
+        String equivalent = zone.moddev.mc.basemetals.compat.VanillaCopper.output(oldId);
+        return !equivalent.equals(oldId)
+                && equivalent.equals(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+    }
+
     public boolean canCraftInDimensions(int width, int height) {
         return width * height >= 2;
     }
 
-    @Override
     public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) {
         return target.getDefaultInstance();
     }
 
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return NonNullList.of(Ingredient.EMPTY, Ingredient.of(target), plate);
+    public java.util.List<Ingredient> getIngredients() {
+        return java.util.List.of(Ingredient.of(target), plate);
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<PlateRepairRecipe> getSerializer() {
         return CrushingRecipe.PLATE_REPAIR_SERIALIZER.get();
     }
 
@@ -93,7 +99,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
         private static final MapCodec<PlateRepairRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
                         BuiltInRegistries.ITEM.byNameCodec().fieldOf("target").forGetter(recipe -> recipe.target),
-                        Ingredient.CODEC_NONEMPTY.fieldOf("plate").forGetter(recipe -> recipe.plate))
+                        Ingredient.CODEC.fieldOf("plate").forGetter(recipe -> recipe.plate))
                         .apply(instance, PlateRepairRecipe::new));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, PlateRepairRecipe> STREAM_CODEC =

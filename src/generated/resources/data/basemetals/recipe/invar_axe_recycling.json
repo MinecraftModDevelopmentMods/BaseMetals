@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.3,
-  "ingredient": {
-    "item": "basemetals:invar_axe"
-  },
+  "ingredient": "basemetals:invar_axe",
   "result": {
     "count": 3,
     "id": "basemetals:invar_ingot"

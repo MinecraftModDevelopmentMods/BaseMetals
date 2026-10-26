@@ -5,15 +5,9 @@
     "category": "misc",
     "group": "basemetals:pewter_blend",
     "ingredients": [
-      {
-        "tag": "forge:dusts/tin"
-      },
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/lead"
-      }
+      "#forge:dusts/tin",
+      "#forge:dusts/copper",
+      "#forge:dusts/lead"
     ],
     "result": {
       "count": 3,

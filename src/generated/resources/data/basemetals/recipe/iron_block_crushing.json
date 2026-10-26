@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/iron"
-  },
+  "ingredient": "#forge:storage_blocks/iron",
   "result": {
     "count": 9,
     "id": "basemetals:iron_powder"

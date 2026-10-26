@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bismuth_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/bismuth"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/bismuth"
     },
     "pattern": [
       "R",

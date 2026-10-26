@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.05,
-  "ingredient": {
-    "tag": "forge:small_blends/iron"
-  },
+  "ingredient": "#forge:small_blends/iron",
   "result": {
     "id": "minecraft:iron_nugget"
   }

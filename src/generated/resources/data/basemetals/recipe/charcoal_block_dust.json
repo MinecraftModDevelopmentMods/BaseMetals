@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:charcoal_block",
     "key": {
-      "X": {
-        "tag": "forge:dusts/charcoal"
-      }
+      "X": "#forge:dusts/charcoal"
     },
     "pattern": [
       "XXX",

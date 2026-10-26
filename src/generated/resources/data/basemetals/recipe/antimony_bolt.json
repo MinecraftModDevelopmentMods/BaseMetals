@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:antimony_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/antimony"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/antimony"
     },
     "pattern": [
       "R",

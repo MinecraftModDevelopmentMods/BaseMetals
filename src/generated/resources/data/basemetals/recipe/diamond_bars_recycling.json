@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.04,
-  "ingredient": {
-    "item": "basemetals:diamond_bars"
-  },
+  "ingredient": "basemetals:diamond_bars",
   "result": {
     "count": 3,
     "id": "basemetals:diamond_nugget"

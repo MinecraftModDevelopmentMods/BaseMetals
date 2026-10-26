@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/pewter"
-  },
+  "ingredient": "#forge:nuggets/pewter",
   "result": {
     "id": "basemetals:pewter_smallpowder"
   }

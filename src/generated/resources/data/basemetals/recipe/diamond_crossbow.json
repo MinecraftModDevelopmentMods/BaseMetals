@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:diamond_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/diamond"
-      },
-      "R": {
-        "tag": "forge:rods/diamond"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/diamond",
+      "R": "#forge:rods/diamond",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

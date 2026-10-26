@@ -14,12 +14,15 @@ import org.junit.jupiter.api.Test;
 
 class Minecraft1211ResourceTest {
     @Test
-    void resourceAndDataPacksUseThe1211Formats() throws Exception {
+    void resourceAndDataPacksUseThe12111Formats() throws Exception {
         var pack = read("src/main/resources/pack.mcmeta").getAsJsonObject("pack");
-        assertEquals(34, pack.get("pack_format").getAsInt());
-        var formats = pack.getAsJsonObject("supported_formats");
-        assertEquals(34, formats.get("min_inclusive").getAsInt());
-        assertEquals(48, formats.get("max_inclusive").getAsInt());
+        assertEquals("[94,1]", pack.get("min_format").toString());
+        assertEquals("[94,1]", pack.get("max_format").toString());
+        net.minecraft.SharedConstants.tryDetectVersion();
+        var resources = net.minecraft.SharedConstants.getCurrentVersion()
+                .packVersion(net.minecraft.server.packs.PackType.CLIENT_RESOURCES);
+        assertEquals(75, resources.major());
+        assertEquals(0, resources.minor());
     }
 
     @Test

@@ -8,7 +8,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.codec.ByteBufCodecs;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -26,38 +26,40 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
 
     @Override
     public boolean matches(net.minecraft.world.item.crafting.SingleRecipeInput inventory, net.minecraft.world.level.Level world) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(world.registryAccess()).getItem()).toString())
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(result().getItem()).toString())
                 && super.matches(inventory, world);
     }
 
     @Override
     public ItemStack assemble(net.minecraft.world.item.crafting.SingleRecipeInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
-        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(getResultItem(registries).getItem()).toString())
+        return zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(result().getItem()).toString())
                 ? super.assemble(inventory, registries) : ItemStack.EMPTY;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
+    @SuppressWarnings("unchecked")
+    public RecipeSerializer<SmeltingRecipe> getSerializer() {
+        return (RecipeSerializer<SmeltingRecipe>) (RecipeSerializer<?>)
+                CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
     }
 
     public static final class Serializer implements RecipeSerializer<LegacySmeltingRecipe> {
         private static final MapCodec<LegacySmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(LegacySmeltingRecipe::getGroup),
-                        Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.getIngredients().getFirst()),
-                        ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.getResultItem(null)),
-                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(LegacySmeltingRecipe::getExperience),
-                        Codec.INT.optionalFieldOf("cookingtime", 200).forGetter(LegacySmeltingRecipe::getCookingTime))
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(LegacySmeltingRecipe::group),
+                        Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input()),
+                        ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result()),
+                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(LegacySmeltingRecipe::experience),
+                        Codec.INT.optionalFieldOf("cookingtime", 200).forGetter(LegacySmeltingRecipe::cookingTime))
                         .apply(instance, LegacySmeltingRecipe::new));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, LegacySmeltingRecipe> STREAM_CODEC =
                 StreamCodec.composite(
-                        ByteBufCodecs.STRING_UTF8, LegacySmeltingRecipe::getGroup,
-                        Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.getIngredients().getFirst(),
-                        ItemStack.STREAM_CODEC, recipe -> recipe.getResultItem(null),
-                        ByteBufCodecs.FLOAT, LegacySmeltingRecipe::getExperience,
-                        ByteBufCodecs.VAR_INT, LegacySmeltingRecipe::getCookingTime,
+                        ByteBufCodecs.STRING_UTF8, LegacySmeltingRecipe::group,
+                        Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.input(),
+                        ItemStack.STREAM_CODEC, recipe -> recipe.result(),
+                        ByteBufCodecs.FLOAT, LegacySmeltingRecipe::experience,
+                        ByteBufCodecs.VAR_INT, LegacySmeltingRecipe::cookingTime,
                         LegacySmeltingRecipe::new);
 
         @Override public MapCodec<LegacySmeltingRecipe> codec() { return CODEC; }

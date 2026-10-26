@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:emerald_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/iron"
-      },
-      "X": {
-        "tag": "forge:gems/emerald"
-      }
+      "R": "#forge:rods/iron",
+      "X": "#forge:gems/emerald"
     },
     "pattern": [
       " X ",

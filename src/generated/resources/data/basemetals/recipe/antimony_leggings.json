@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:antimony_leggings",
     "key": {
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "XXX",

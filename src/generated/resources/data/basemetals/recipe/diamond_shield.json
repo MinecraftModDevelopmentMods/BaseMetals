@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:diamond_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:gems/diamond"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:gems/diamond"
     },
     "pattern": [
       "XWX",

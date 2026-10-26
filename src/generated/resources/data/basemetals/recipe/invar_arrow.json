@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:invar_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/invar"
-      },
-      "R": {
-        "tag": "forge:rods/invar"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/invar",
+      "R": "#forge:rods/invar"
     },
     "pattern": [
       "N",

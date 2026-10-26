@@ -40,6 +40,12 @@ import org.junit.jupiter.api.io.TempDir;
 
 /** Checks the migration boundary without opening a player's save. */
 class LegacyMigrationSafetyTest {
+    @BeforeAll
+    static void bootstrapRegistries() {
+        SharedConstants.tryDetectVersion();
+        net.minecraft.server.Bootstrap.bootStrap();
+    }
+
     @TempDir(cleanup = CleanupMode.ON_SUCCESS)
     Path temporaryWorld;
 
@@ -94,7 +100,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void modernLz4Chunk() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.1"), "Native LZ4 is not available on older targets");
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11"), "Native LZ4 is not available on older targets");
         Path world = world("lz4", false);
         Path file = region(world, false, true);
         assertTrue(nativeAccepts(file, false));
@@ -171,7 +177,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void savedRegistryCanBeScannedWithLz4Chunks() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.1"));
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11"));
         Path world = world("saved-registry-lz4", false);
         writeRegistry(world.resolve("basemetals-legacy-registry.dat"));
         Path file = region(world, false, true);
@@ -274,9 +280,9 @@ class LegacyMigrationSafetyTest {
         for (Path file : Arrays.asList(mixed, later)) {
             int index = file.equals(mixed) ? 1 : 0;
             CompoundTag chunk = readRegionChunk(file, index);
-            assertEquals(1456, chunk.getInt("DataVersion"));
+            assertEquals(1456, chunk.getIntOr("DataVersion", 0));
             assertEquals("example:legacy_block",
-                    Legacy112WorldMigrator.stateAtForTest(chunk, 0, 0).getString("Name"));
+                    Legacy112WorldMigrator.stateAtForTest(chunk, 0, 0).getStringOr("Name", ""));
             assertTrue(Files.exists(world.resolve("basemetals-1.12-region-backup").resolve(world.relativize(file))));
         }
         assertEquals(37, experience(world.resolve("level.dat")));
@@ -440,7 +446,7 @@ class LegacyMigrationSafetyTest {
 
     private static int experience(Path file) throws IOException {
         try (DataInputStream input = new DataInputStream(new GZIPInputStream(Files.newInputStream(file)))) {
-            return NbtIo.read(input).getCompound("Data").getCompound("Player").getInt("XpLevel");
+            return NbtIo.read(input).getCompoundOrEmpty("Data").getCompoundOrEmpty("Player").getIntOr("XpLevel", 0);
         }
     }
 
@@ -488,7 +494,7 @@ class LegacyMigrationSafetyTest {
             }
 
             assertNotNull(input);
-            assertEquals(DATA_VERSION, NbtIo.read(input).getInt("DataVersion"));
+            assertEquals(DATA_VERSION, NbtIo.read(input).getIntOr("DataVersion", 0));
             return true;
         }
     }

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:bismuth_lever"
-  },
+  "ingredient": "basemetals:bismuth_lever",
   "result": {
     "id": "basemetals:bismuth_ingot"
   }

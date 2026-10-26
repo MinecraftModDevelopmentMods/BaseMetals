@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:platinum_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/platinum"
-      },
-      "X": {
-        "tag": "forge:ingots/platinum"
-      }
+      "R": "#forge:rods/platinum",
+      "X": "#forge:ingots/platinum"
     },
     "pattern": [
       "R",

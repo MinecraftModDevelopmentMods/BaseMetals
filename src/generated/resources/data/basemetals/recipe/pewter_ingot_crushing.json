@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/pewter"
-  },
+  "ingredient": "#forge:ingots/pewter",
   "result": {
     "id": "basemetals:pewter_powder"
   }

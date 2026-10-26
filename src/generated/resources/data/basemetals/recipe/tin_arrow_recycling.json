@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.02,
-  "ingredient": {
-    "item": "basemetals:tin_arrow"
-  },
+  "ingredient": "basemetals:tin_arrow",
   "result": {
     "id": "basemetals:tin_nugget"
   }

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:mithril_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/mithril"
-      }
+      "X": "#forge:nuggets/mithril"
     },
     "pattern": [
       "X",

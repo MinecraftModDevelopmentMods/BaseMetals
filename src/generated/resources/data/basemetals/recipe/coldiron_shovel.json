@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:coldiron_shovel",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/coldiron"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/coldiron"
     },
     "pattern": [
       "X",

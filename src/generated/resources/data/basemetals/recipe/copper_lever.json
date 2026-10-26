@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:copper_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/copper"
-      },
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "R": "#forge:rods/copper",
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "R",

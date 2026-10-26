@@ -384,7 +384,7 @@ class ResourceIntegrityTest {
         assertRecipeIngredientTag("copper_block_ingot", "forge:storage_blocks/copper");
         assertRecipeIngredientTag("tin_block_ingot", "forge:storage_blocks/tin");
         assertRecipeIngredientTag("copper_nuggets", "forge:ingots/copper");
-        assertRecipeKeyItem("copper_ingot_from_nuggets", "X", "basemetals:copper_nugget");
+        assertRecipeKeyTag("copper_ingot_from_nuggets", "X", "forge:nuggets/copper");
         assertRecipeResult("iron_plate", "basemetals:iron_plate", 3);
         assertRecipeResult("gold_plate", "basemetals:gold_plate", 3);
 
@@ -706,6 +706,28 @@ class ResourceIntegrityTest {
     }
 
     private static void assertResource(String relative) {
+        if (relative.startsWith("assets/basemetals/textures/") && relative.endsWith(".png")) {
+            String sprite = "basemetals:" + relative.substring("assets/basemetals/textures/".length(),
+                    relative.length() - ".png".length());
+
+            try {
+                var sources = JsonParser.parseString(Files.readString(
+                        MAIN.resolve("assets/minecraft/atlases/blocks.json")))
+                        .getAsJsonObject().getAsJsonArray("sources");
+
+                for (var source : sources) {
+                    var alias = source.getAsJsonObject();
+                    if (alias.has("sprite") && alias.get("sprite").getAsString().equals(sprite)) {
+                        assertEquals("minecraft:single", alias.get("type").getAsString());
+                        assertTrue(alias.get("resource").getAsString().matches("(?:minecraft|forge):[a-z0-9_./-]+"));
+                        return;
+                    }
+                }
+            } catch (IOException exception) {
+                throw new AssertionError("Could not read the block-atlas aliases", exception);
+            }
+        }
+
         assertTrue(Files.isRegularFile(resource(relative)), "Missing resource " + relative);
     }
 
@@ -717,7 +739,7 @@ class ResourceIntegrityTest {
 
     private static JsonElement read(Path path) throws IOException {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            JsonElement value = JsonParser.parseReader(reader);
+            JsonElement value = RecipeDataSemantics.normalize(JsonParser.parseReader(reader));
             if (value.isJsonObject() && value.getAsJsonObject().has("recipe")
                     && "basemetals:content_crafting".equals(value.getAsJsonObject().get("type").getAsString())) {
                 return value.getAsJsonObject().get("recipe");

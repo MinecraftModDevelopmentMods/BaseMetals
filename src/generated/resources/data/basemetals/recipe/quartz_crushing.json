@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:quartz"
-  },
+  "ingredient": "minecraft:quartz",
   "result": {
     "id": "basemetals:quartz_powder"
   }

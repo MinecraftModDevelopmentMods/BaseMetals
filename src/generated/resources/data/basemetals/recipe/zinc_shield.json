@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:zinc_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/zinc"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/zinc"
     },
     "pattern": [
       "XWX",

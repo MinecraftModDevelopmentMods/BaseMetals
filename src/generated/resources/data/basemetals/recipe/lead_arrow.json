@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:lead_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/lead"
-      },
-      "R": {
-        "tag": "forge:rods/lead"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/lead",
+      "R": "#forge:rods/lead"
     },
     "pattern": [
       "N",

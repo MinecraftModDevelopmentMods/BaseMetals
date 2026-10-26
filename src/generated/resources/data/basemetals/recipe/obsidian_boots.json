@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:obsidian_boots",
     "key": {
-      "X": {
-        "tag": "forge:ingots/obsidian"
-      }
+      "X": "#forge:ingots/obsidian"
     },
     "pattern": [
       "X X",

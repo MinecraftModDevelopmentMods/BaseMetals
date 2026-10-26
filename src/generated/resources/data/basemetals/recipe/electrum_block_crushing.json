@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/electrum"
-  },
+  "ingredient": "#forge:storage_blocks/electrum",
   "result": {
     "count": 9,
     "id": "basemetals:electrum_powder"

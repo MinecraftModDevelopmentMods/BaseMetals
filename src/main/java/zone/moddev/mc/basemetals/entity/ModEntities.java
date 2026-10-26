@@ -4,7 +4,7 @@ import zone.moddev.mc.basemetals.BaseMetals;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -15,12 +15,12 @@ public final class ModEntities {
     public static final RegistryObject<EntityType<MaterialProjectile>> CUSTOM_ARROW = ENTITIES.register(
             "custom_arrow", () -> EntityType.Builder.<MaterialProjectile>of(MaterialProjectile::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)
-                    .build(BaseMetals.MOD_ID + ":custom_arrow"));
+                    .build(ENTITIES.key("custom_arrow")));
     public static final RegistryObject<EntityType<MaterialProjectile>> CUSTOM_BOLT = ENTITIES.register(
             "custom_bolt", () -> EntityType.Builder.<MaterialProjectile>of(MaterialProjectile::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)
-                    .build(BaseMetals.MOD_ID + ":custom_bolt"));
+                    .build(ENTITIES.key("custom_bolt")));
 
     private ModEntities() {}
-    public static void register(IEventBus bus) { ENTITIES.register(bus); }
+    public static void register(BusGroup bus) { ENTITIES.register(bus); }
 }

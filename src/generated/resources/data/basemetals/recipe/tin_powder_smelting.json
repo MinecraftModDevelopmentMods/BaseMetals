@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "tag": "forge:dusts/tin"
-  },
+  "ingredient": "#forge:dusts/tin",
   "result": {
     "id": "basemetals:tin_ingot"
   }

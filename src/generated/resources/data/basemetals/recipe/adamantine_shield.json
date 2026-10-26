@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:adamantine_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/adamantine"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/adamantine"
     },
     "pattern": [
       "XWX",

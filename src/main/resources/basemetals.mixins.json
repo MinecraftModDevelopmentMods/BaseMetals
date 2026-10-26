@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8.7",
+  "package": "zone.moddev.mc.basemetals.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilBlockMixin",
+    "AnvilMenuMixin",
+    "BlockStateDataMixin",
+    "LevelCapabilityDataMixin",
+    "LevelStorageSourceMixin",
+    "OreSpawnEarlyTagCompatibilityMixin",
+    "SimpleRegionStorageMixin",
+    "WorldGenRegionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

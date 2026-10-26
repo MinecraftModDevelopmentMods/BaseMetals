@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:dusts/antimony"
-  },
+  "ingredient": "#forge:dusts/antimony",
   "result": {
     "id": "basemetals:antimony_ingot"
   }

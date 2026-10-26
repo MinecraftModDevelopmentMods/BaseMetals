@@ -11,7 +11,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.TooltipDisplay;
+import java.util.function.Consumer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -22,14 +24,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
-public final class CrackhammerItem extends DiggerItem implements MaterialBacked {
+public final class CrackhammerItem extends Item implements MaterialBacked {
     private final MaterialDefinition material;
 
     public CrackhammerItem(MaterialDefinition material, Properties properties) {
-        super(new MaterialTier(material), BlockTags.MINEABLE_WITH_PICKAXE,
-                properties.durability(material.crackhammerDurability()).attributes(
-                        DiggerItem.createAttributes(new MaterialTier(material),
-                                5.0F + material.baseAttackDamage(), -3.5F)));
+        super(properties.pickaxe(new MaterialTier(material).toolMaterial(),
+                5.0F + material.baseAttackDamage(), -3.5F)
+                .durability(material.crackhammerDurability()));
         this.material = material;
     }
 
@@ -50,14 +51,14 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
 
     @Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            List<net.minecraft.network.chat.Component> tooltip,
+            TooltipDisplay display, Consumer<net.minecraft.network.chat.Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
         MaterialItems.addToolTooltip(material, tooltip);
     }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        if (context.getClickedFace() != Direction.UP || context.getLevel().isClientSide
+        if (context.getClickedFace() != Direction.UP || context.getLevel().isClientSide()
                 || context.getPlayer() == null) {
             return InteractionResult.PASS;
         }
@@ -66,7 +67,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
                 entity -> entity.isAlive() && !entity.getItem().isEmpty());
         for (ItemEntity entity : entities) {
             ItemStack input = entity.getItem();
-            Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = context.getLevel().getRecipeManager().getRecipeFor(
+            Optional<net.minecraft.world.item.crafting.RecipeHolder<CrushingRecipe>> recipe = ((net.minecraft.server.level.ServerLevel) context.getLevel()).getServer().getRecipeManager().getRecipeFor(
                     CrushingRecipe.TYPE.get(), new SingleRecipeInput(input), context.getLevel());
             if (recipe.isEmpty() || !canCrushDroppedBlock(context.getItemInHand(), input)) continue;
             // Sneaking is the per-use full-stack control; ordinary use crushes
@@ -83,7 +84,7 @@ public final class CrackhammerItem extends DiggerItem implements MaterialBacked 
             if (input.isEmpty()) entity.discard(); else entity.setItem(input);
             spawnOutputs(context.getLevel(), entity, output, operations);
             hammer.hurtAndBreak(operations, context.getPlayer(),
-                    net.minecraft.world.entity.LivingEntity.getSlotForHand(context.getHand()));
+                    zone.moddev.mc.basemetals.content.MaterialItems.handSlot(context.getHand()));
             context.getLevel().playSound(null, context.getClickedPos(),
                     net.minecraft.sounds.SoundEvents.GRAVEL_BREAK,
                     net.minecraft.sounds.SoundSource.BLOCKS, 0.5F,

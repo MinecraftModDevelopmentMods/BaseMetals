@@ -40,14 +40,30 @@ def ordered(tag):
 
 
 def canonical_text(value):
-    text = str(value)
-    try:
-        parsed = json.loads(text)
-    except (ValueError, TypeError):
-        parsed = text
+    if isinstance(value, (nbtlib.Compound, nbtlib.List)):
+        parsed = value.unpack(json=True)
+    else:
+        text = str(value)
+        try:
+            parsed = json.loads(text)
+        except (ValueError, TypeError):
+            parsed = text
+
     if isinstance(parsed, str):
         parsed = {"text": parsed}
-    return nbtlib.String(json.dumps(parsed, sort_keys=True, separators=(",", ":")))
+
+    def styles(component):
+        if isinstance(component, dict):
+            result = {}
+            boolean_styles = {"bold", "italic", "underlined", "strikethrough", "obfuscated"}
+            for key, child in component.items():
+                result[key] = bool(child) if key in boolean_styles and isinstance(child, int) else styles(child)
+            return result
+        if isinstance(component, list):
+            return [styles(child) for child in component]
+        return component
+
+    return nbtlib.String(json.dumps(styles(parsed), sort_keys=True, separators=(",", ":")))
 
 
 def canonical_stack(stack):
@@ -83,6 +99,9 @@ def canonical_stack(stack):
             components[new] = nbtlib.Compound({"levels": levels})
         if new in components:
             enchantments = components[new]
+            if "levels" not in enchantments:
+                enchantments = nbtlib.Compound({"levels": enchantments})
+                components[new] = enchantments
             if bool(enchantments.get("show_in_tooltip", False)):
                 enchantments.pop("show_in_tooltip")
             if not enchantments.get("levels"):
@@ -93,6 +112,16 @@ def canonical_stack(stack):
     if components:
         result["components"] = components
     return ordered(result).snbt()
+
+
+def canonical_player(player):
+    """Keep worn slots comparable after Minecraft moves them out of Inventory."""
+    result = copy.deepcopy(player)
+    slots = {"feet": 100, "legs": 101, "chest": 102, "head": 103, "offhand": -106}
+    for name, stack in result.get("equipment", {}).items():
+        if name in slots and isinstance(stack, nbtlib.Compound):
+            stack["Slot"] = nbtlib.Byte(slots[name])
+    return result
 
 
 def snapshot(world):
@@ -140,9 +169,9 @@ def snapshot(world):
     for entity in saved_entities(world):
         items(entity)
 
-    items(nbtlib.load(world / "level.dat")["Data"].get("Player", {}))
+    items(canonical_player(nbtlib.load(world / "level.dat")["Data"].get("Player", {})))
     for player in (world / "playerdata").glob("*.dat"):
-        items(nbtlib.load(player))
+        items(canonical_player(nbtlib.load(player)))
 
     advancements = {}
     for file in (world / "advancements").glob("*.json"):

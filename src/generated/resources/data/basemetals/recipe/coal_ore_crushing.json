@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ores/coal"
-  },
+  "ingredient": "#forge:ores/coal",
   "result": {
     "count": 2,
     "id": "basemetals:coal_powder"

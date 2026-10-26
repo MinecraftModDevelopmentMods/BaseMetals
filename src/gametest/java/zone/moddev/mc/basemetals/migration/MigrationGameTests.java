@@ -6,23 +6,23 @@ import java.util.Map;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import net.minecraft.gametest.framework.GameTest;
+import net.minecraftforge.gametest.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTestNamespace;
 import net.minecraftforge.gametest.GameTestDontPrefix;
 
 /** Direct coverage of the pre-flattening overlay around Mojang's data fixer. */
-@GameTestHolder(value = BaseMetals.MOD_ID, namespace = BaseMetals.MOD_ID)
+@GameTestNamespace(BaseMetals.MOD_ID)
 @GameTestDontPrefix
 public final class MigrationGameTests {
     private MigrationGameTests() {}
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void floorAndCeilingLeversKeepTheirLegacyOrientation(GameTestHelper helper) {
         var lever = net.minecraft.world.level.block.Blocks.LEVER;
         for (int metadata : new int[] {0, 5, 6, 7, 8, 13, 14, 15}) {
@@ -37,66 +37,66 @@ public final class MigrationGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void vanillaFixesAndMmdlibStatesSurviveTheSameChunkConversion(GameTestHelper helper) {
         try {
             CompoundTag converted = Legacy112WorldMigrator.convertChunkForTest(legacyChunk(1_343), legacyIds());
-            require(helper, converted.getInt("DataVersion") == 1_456,
+            require(helper, converted.getIntOr("DataVersion", 0) == 1_456,
                     "Migration did not stop at the safe post-flattening data version");
 
             CompoundTag vanillaLower = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(0, 1, 0));
             CompoundTag vanillaUpper = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(0, 2, 0));
-            require(helper, vanillaLower.getString("Name").equals("minecraft:oak_door"),
+            require(helper, vanillaLower.getStringOr("Name", "").equals("minecraft:oak_door"),
                     "Mojang's vanilla wooden-door flattening did not run");
             require(helper, hasDoorProperties(vanillaLower) && hasDoorProperties(vanillaUpper),
                     "Mojang's context-sensitive vanilla door fix did not merge both halves");
 
             CompoundTag aliasLower = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(2, 1, 0));
             CompoundTag aliasUpper = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(2, 2, 0));
-            require(helper, aliasLower.getString("Name").equals("basemetals:quartz_door")
-                    && aliasUpper.getString("Name").equals("basemetals:quartz_door"),
+            require(helper, aliasLower.getStringOr("Name", "").equals("basemetals:quartz_door")
+                    && aliasUpper.getStringOr("Name", "").equals("basemetals:quartz_door"),
                     "mmdlib block aliases were not restored under Base Metals");
             require(helper, hasDoorProperties(aliasLower) && hasDoorProperties(aliasUpper),
                     "Base Metals door halves did not receive a complete modern state");
-            require(helper, aliasLower.getCompound("Properties").getString("open").equals("true")
-                    && aliasUpper.getCompound("Properties").getString("hinge").equals("right")
-                    && aliasUpper.getCompound("Properties").getString("powered").equals("true"),
+            require(helper, aliasLower.getCompoundOrEmpty("Properties").getStringOr("open", "").equals("true")
+                    && aliasUpper.getCompoundOrEmpty("Properties").getStringOr("hinge", "").equals("right")
+                    && aliasUpper.getCompoundOrEmpty("Properties").getStringOr("powered", "").equals("true"),
                     "Base Metals door metadata was not merged across its two halves");
 
             CompoundTag plate = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(4, 1, 0));
-            require(helper, plate.getString("Name").equals("basemetals:copper_plate")
-                    && plate.getCompound("Properties").getString("facing").equals("east"),
+            require(helper, plate.getStringOr("Name", "").equals("basemetals:copper_plate")
+                    && plate.getCompoundOrEmpty("Properties").getStringOr("facing", "").equals("east"),
                     "mmdlib metadata was lost while forwarding a stateful block");
 
             CompoundTag cyanoExternal = Legacy112WorldMigrator.stateAtForTest(converted, 5, index(6, 1, 0));
-            require(helper, cyanoExternal.getString("Name").equals("mca:rosegoldore"),
+            require(helper, cyanoExternal.getStringOr("Name", "").equals("mca:rosegoldore"),
                     "Minecraft 1.10 mixed-case registry paths were not normalized");
 
-            CompoundTag chest = converted.getCompound("Level").getList("TileEntities", Tag.TAG_COMPOUND)
-                    .getCompound(0);
-            CompoundTag bucket = chest.getList("Items", Tag.TAG_COMPOUND).getCompound(0);
-            require(helper, bucket.getString("id").equals("basemetals:mercury_bucket"),
+            CompoundTag chest = converted.getCompoundOrEmpty("Level").getListOrEmpty("TileEntities")
+                    .getCompoundOrEmpty(0);
+            CompoundTag bucket = chest.getListOrEmpty("Items").getCompoundOrEmpty(0);
+            require(helper, bucket.getStringOr("id", "").equals("basemetals:mercury_bucket"),
                     "Legacy Forge universal bucket did not become its dedicated Base Metals bucket");
-            require(helper, !bucket.contains("tag", Tag.TAG_COMPOUND)
-                    || !bucket.getCompound("tag").contains("FluidName", Tag.TAG_STRING),
+            require(helper, !zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(bucket, "tag", Tag.TAG_COMPOUND)
+                    || !bucket.getCompoundOrEmpty("tag").getString("FluidName").isPresent(),
                     "Obsolete universal-bucket fluid metadata survived conversion");
-            CompoundTag damagedTool = chest.getList("Items", Tag.TAG_COMPOUND).getCompound(1);
-            require(helper, damagedTool.getCompound("tag").getInt("Damage") == 12,
+            CompoundTag damagedTool = chest.getListOrEmpty("Items").getCompoundOrEmpty(1);
+            require(helper, damagedTool.getCompoundOrEmpty("tag").getIntOr("Damage", 0) == 12,
                     "Legacy mod-item damage was consumed as flattening metadata");
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(2)
-                    .getString("id").equals("basemetals:coal_powder"),
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(2)
+                    .getStringOr("id", "").equals("basemetals:coal_powder"),
                     "Cyano carbon-powder item alias was not forwarded");
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(3)
-                    .getString("id").equals("minecraft:iron_nugget"),
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(3)
+                    .getStringOr("id", "").equals("minecraft:iron_nugget"),
                     "Legacy MMDLib iron nugget was not forwarded to vanilla");
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(4)
-                    .getString("id").equals("basemetals:quartz_door"),
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(4)
+                    .getStringOr("id", "").equals("basemetals:quartz_door"),
                     "Legacy MMDLib door-item alias was not forwarded");
             CompoundTag cabinet = findBlockEntity(converted, "cfmCabinet");
             require(helper, cabinet != null,
                     "Third-party block entity at a restored mod block was discarded");
-            require(helper, cabinet.getList("cabinetItems", Tag.TAG_COMPOUND).getCompound(0)
-                    .getString("id").equals("basemetals:coal_powder"),
+            require(helper, cabinet.getListOrEmpty("cabinetItems").getCompoundOrEmpty(0)
+                    .getStringOr("id", "").equals("basemetals:coal_powder"),
                     "Items inside a restored third-party block entity were not migrated");
         } catch (IOException | RuntimeException exception) {
             helper.fail("Legacy chunk conversion failed: " + exception);
@@ -105,30 +105,30 @@ public final class MigrationGameTests {
         helper.succeed();
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = "empty")
+    @GameTest(structure = "basemetals:empty")
     public static void mmdForge110ChunksUseTheCompleteFlatteningPath(GameTestHelper helper) {
         try {
             CompoundTag converted = Legacy112WorldMigrator.convertChunkForTest(legacyChunk(512), legacyIds());
-            require(helper, converted.getInt("DataVersion") == 1_456,
+            require(helper, converted.getIntOr("DataVersion", 0) == 1_456,
                     "Forge 1.10 chunk did not reach the safe post-flattening data version");
             require(helper,
                     Legacy112WorldMigrator.stateAtForTest(converted, 5, index(2, 1, 0))
-                            .getString("Name").equals("basemetals:quartz_door"),
+                            .getStringOr("Name", "").equals("basemetals:quartz_door"),
                     "Forge 1.10 mmdlib block alias was not restored under Base Metals");
             require(helper,
                     Legacy112WorldMigrator.stateAtForTest(converted, 5, index(4, 1, 0))
-                            .getString("Name").equals("basemetals:copper_plate"),
+                            .getStringOr("Name", "").equals("basemetals:copper_plate"),
                     "Forge 1.10 Base Metals stateful block was not restored");
-            CompoundTag chest = converted.getCompound("Level").getList("TileEntities", Tag.TAG_COMPOUND)
-                    .getCompound(0);
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(0)
-                    .getString("id").equals("basemetals:mercury_bucket"),
+            CompoundTag chest = converted.getCompoundOrEmpty("Level").getListOrEmpty("TileEntities")
+                    .getCompoundOrEmpty(0);
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(0)
+                    .getStringOr("id", "").equals("basemetals:mercury_bucket"),
                     "Forge 1.10 universal bucket did not become its dedicated Base Metals bucket");
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(1)
-                    .getCompound("tag").getInt("Damage") == 12,
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(1)
+                    .getCompoundOrEmpty("tag").getIntOr("Damage", 0) == 12,
                     "Forge 1.10 mod-item durability was consumed as flattening metadata");
-            require(helper, chest.getList("Items", Tag.TAG_COMPOUND).getCompound(2)
-                    .getString("id").equals("basemetals:coal_powder"),
+            require(helper, chest.getListOrEmpty("Items").getCompoundOrEmpty(2)
+                    .getStringOr("id", "").equals("basemetals:coal_powder"),
                     "Forge 1.10 Cyano item alias was not forwarded");
         } catch (IOException | RuntimeException exception) {
             helper.fail("Forge 1.10 MMD chunk conversion failed: " + exception);
@@ -237,9 +237,9 @@ public final class MigrationGameTests {
     }
 
     private static CompoundTag findBlockEntity(CompoundTag chunk, String id) {
-        for (Tag value : chunk.getCompound("Level").getList("TileEntities", Tag.TAG_COMPOUND)) {
+        for (Tag value : chunk.getCompoundOrEmpty("Level").getListOrEmpty("TileEntities")) {
             CompoundTag blockEntity = (CompoundTag) value;
-            if (blockEntity.getString("id").equals(id)) return blockEntity;
+            if (blockEntity.getStringOr("id", "").equals(id)) return blockEntity;
         }
         return null;
     }
@@ -261,13 +261,13 @@ public final class MigrationGameTests {
     }
 
     private static boolean hasDoorProperties(CompoundTag state) {
-        if (!state.contains("Properties", Tag.TAG_COMPOUND)) return false;
-        CompoundTag properties = state.getCompound("Properties");
-        return properties.contains("half", Tag.TAG_STRING)
-                && properties.contains("facing", Tag.TAG_STRING)
-                && properties.contains("open", Tag.TAG_STRING)
-                && properties.contains("hinge", Tag.TAG_STRING)
-                && properties.contains("powered", Tag.TAG_STRING);
+        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(state, "Properties", Tag.TAG_COMPOUND)) return false;
+        CompoundTag properties = state.getCompoundOrEmpty("Properties");
+        return zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(properties, "half", Tag.TAG_STRING)
+                && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(properties, "facing", Tag.TAG_STRING)
+                && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(properties, "open", Tag.TAG_STRING)
+                && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(properties, "hinge", Tag.TAG_STRING)
+                && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(properties, "powered", Tag.TAG_STRING);
     }
 
     private static void require(GameTestHelper helper, boolean condition, String message) {

@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:aquarium"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:aquarium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:aquarium"
+      }
+    ]
+  }
+}

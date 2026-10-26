@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:brass_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       "XWX",

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/copper"
-  },
+  "ingredient": "#forge:storage_blocks/copper",
   "result": {
     "count": 9,
     "id": "basemetals:copper_powder"

@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:brass_boots",
     "key": {
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       "X X",

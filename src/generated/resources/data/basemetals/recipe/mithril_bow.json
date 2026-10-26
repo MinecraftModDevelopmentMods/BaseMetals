@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:mithril_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/mithril"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/mithril",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

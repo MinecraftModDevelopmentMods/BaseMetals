@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/coldiron"
-  },
+  "plate": "#forge:plates/coldiron",
   "target": "basemetals:coldiron_chestplate"
 }

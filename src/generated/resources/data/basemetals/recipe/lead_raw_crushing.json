@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/lead"
-  },
+  "ingredient": "#forge:raw_materials/lead",
   "result": {
     "id": "basemetals:lead_powder"
   }

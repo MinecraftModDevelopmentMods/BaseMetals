@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:antimony_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "XWX",

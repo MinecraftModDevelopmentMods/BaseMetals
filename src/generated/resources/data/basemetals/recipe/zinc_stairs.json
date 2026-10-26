@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:zinc_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/zinc"
-      }
+      "X": "#forge:storage_blocks/zinc"
     },
     "pattern": [
       "X  ",

@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:pewter_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/pewter"
-      },
-      "X": {
-        "tag": "forge:ingots/pewter"
-      }
+      "R": "#forge:rods/pewter",
+      "X": "#forge:ingots/pewter"
     },
     "pattern": [
       "R",

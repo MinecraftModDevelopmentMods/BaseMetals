@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:invar_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       "X X",

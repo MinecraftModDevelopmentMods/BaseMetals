@@ -2,15 +2,11 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
-    "group": "basemetals:copper_horse_armor",
+    "category": "misc",
+    "group": "minecraft:copper_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "  X",
@@ -18,7 +14,7 @@
       "XXX"
     ],
     "result": {
-      "id": "basemetals:copper_horse_armor"
+      "id": "minecraft:copper_horse_armor"
     }
   }
 }

@@ -10,8 +10,9 @@ class ConnectionReadInterestTest {
     @Test
     void obsoleteConnectionPatchIsNotInstalled() throws Exception {
         assertFalse(Files.exists(Path.of("src/main/resources/coremods/connection_read_interest.js")));
-        String coremods = Files.readString(Path.of("src/main/resources/META-INF/coremods.json"));
-        assertFalse(coremods.contains("connection_read_interest"));
+        assertFalse(Files.exists(Path.of("src/main/resources/META-INF/coremods.json")));
+        String mixins = Files.readString(Path.of("src/main/resources/basemetals.mixins.json"));
+        assertFalse(mixins.contains("Connection"));
     }
 
     @Test

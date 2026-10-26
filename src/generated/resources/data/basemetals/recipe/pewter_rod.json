@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:pewter_rod",
     "key": {
-      "X": {
-        "tag": "forge:ingots/pewter"
-      }
+      "X": "#forge:ingots/pewter"
     },
     "pattern": [
       "X",

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:silver_slab",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/silver"
-      }
+      "X": "#forge:storage_blocks/silver"
     },
     "pattern": [
       "XXX"

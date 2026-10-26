@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:lead_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/lead"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/lead",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:lead_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "XWX",

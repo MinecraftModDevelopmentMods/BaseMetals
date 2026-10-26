@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/iron"
-  },
+  "ingredient": "#forge:nuggets/iron",
   "result": {
     "id": "basemetals:iron_smallpowder"
   }

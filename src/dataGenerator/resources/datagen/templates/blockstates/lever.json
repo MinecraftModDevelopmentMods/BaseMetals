@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "face=ceiling,facing=east,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=ceiling,facing=east,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=ceiling,facing=north,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=ceiling,facing=north,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=ceiling,facing=south,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=ceiling,facing=south,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=ceiling,facing=west,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=ceiling,facing=west,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=floor,facing=east,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=floor,facing=east,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=floor,facing=north,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=floor,facing=north,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=floor,facing=south,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=floor,facing=south,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=floor,facing=west,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=floor,facing=west,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=wall,facing=east,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=wall,facing=east,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=wall,facing=north,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=wall,facing=north,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=wall,facing=south,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=wall,facing=south,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    },
+    "face=wall,facing=west,powered=false": {
+      "model": "basemetals:block/copper_lever_off"
+    },
+    "face=wall,facing=west,powered=true": {
+      "model": "basemetals:block/copper_lever"
+    }
+  }
+}

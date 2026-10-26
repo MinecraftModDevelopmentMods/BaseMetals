@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.13,
-  "ingredient": {
-    "item": "basemetals:starsteel_button"
-  },
+  "ingredient": "basemetals:starsteel_button",
   "result": {
     "count": 2,
     "id": "basemetals:starsteel_nugget"

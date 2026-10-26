@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.5,
-  "ingredient": {
-    "item": "basemetals:copper_plate"
-  },
+  "ingredient": "basemetals:copper_plate",
   "result": {
     "id": "minecraft:copper_ingot"
   }

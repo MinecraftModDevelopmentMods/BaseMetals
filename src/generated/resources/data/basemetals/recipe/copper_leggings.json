@@ -2,12 +2,10 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
-    "group": "basemetals:copper_leggings",
+    "category": "misc",
+    "group": "minecraft:copper_leggings",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "XXX",
@@ -15,7 +13,7 @@
       "X X"
     ],
     "result": {
-      "id": "basemetals:copper_leggings"
+      "id": "minecraft:copper_leggings"
     }
   }
 }

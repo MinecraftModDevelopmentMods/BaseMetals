@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:copper_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/copper"
-      },
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "R": "#forge:rods/copper",
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       " X ",

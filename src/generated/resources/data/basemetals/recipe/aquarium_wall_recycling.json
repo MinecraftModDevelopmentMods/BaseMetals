@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:aquarium_wall"
-  },
+  "ingredient": "basemetals:aquarium_wall",
   "result": {
     "id": "basemetals:aquarium_block"
   }

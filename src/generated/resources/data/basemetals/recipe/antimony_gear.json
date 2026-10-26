@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:antimony_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/antimony"
-      },
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "R": "#forge:rods/antimony",
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       " X ",

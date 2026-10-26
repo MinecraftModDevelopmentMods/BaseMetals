@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:silver_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/silver"
-      }
+      "X": "#forge:nuggets/silver"
     },
     "pattern": [
       "X",

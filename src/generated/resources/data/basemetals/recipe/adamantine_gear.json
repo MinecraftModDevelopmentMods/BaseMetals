@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:adamantine_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/adamantine"
-      },
-      "X": {
-        "tag": "forge:ingots/adamantine"
-      }
+      "R": "#forge:rods/adamantine",
+      "X": "#forge:ingots/adamantine"
     },
     "pattern": [
       " X ",

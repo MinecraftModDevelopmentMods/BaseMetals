@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:coldiron_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/coldiron"
-      },
-      "R": {
-        "tag": "forge:rods/coldiron"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/coldiron",
+      "R": "#forge:rods/coldiron"
     },
     "pattern": [
       "N",

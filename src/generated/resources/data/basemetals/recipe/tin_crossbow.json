@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:tin_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/tin"
-      },
-      "R": {
-        "tag": "forge:rods/tin"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/tin",
+      "R": "#forge:rods/tin",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

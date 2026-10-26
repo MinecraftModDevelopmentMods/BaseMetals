@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:electrum"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:electrum"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:electrum"
+      }
+    ]
+  }
+}

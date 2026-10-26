@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 
@@ -23,27 +21,33 @@ public final class PackagedServerSmoke {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public PackagedServerSmoke() {
-        MinecraftForge.EVENT_BUS.register(this);
+        ServerStartedEvent.BUS.addListener(this::onServerStarted);
+
+        if (Boolean.getBoolean("basemetals.capabilityDiskSmoke")) {
+            SavedWorldCapabilitySmoke.register();
+        }
+
         if (Boolean.getBoolean("basemetals.upgradeWorldSmoke")) {
             try {
-                MinecraftForge.EVENT_BUS.register(Class.forName(
-                        "zone.moddev.mc.basemetals.smoke.UpgradeWorldSmoke"));
-            } catch (ClassNotFoundException exception) {
-                throw new IllegalStateException("The upgrade probe is missing from the test jar", exception);
+                Class.forName("zone.moddev.mc.basemetals.smoke.UpgradeWorldSmoke")
+                        .getMethod("register").invoke(null);
+            } catch (ReflectiveOperationException exception) {
+                throw new IllegalStateException("Could not register the isolated upgrade probe", exception);
             }
         }
     }
 
-    @SubscribeEvent
-    public void onServerStarted(ServerStartedEvent event) throws IOException {
+    public void onServerStarted(ServerStartedEvent event) {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.1.121011".equals(baseMetals) || !"4.1.0.121011".equals(oreSpawn)) {
+        if (!"3.1.1.121111".equals(baseMetals) || !"4.1.0.121111".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
         verifyContent(event.getServer());
         if (Boolean.getBoolean("basemetals.oreSampleSmoke")) verifyOreSample(event.getServer());
+        if (Boolean.getBoolean("basemetals.modernFlatWorldSmoke")) verifyModernFlatTerrain(event.getServer());
+        if (Boolean.getBoolean("basemetals.capabilityDiskSmoke")) SavedWorldCapabilitySmoke.verify(event.getServer());
         Properties result = new Properties();
         result.setProperty("basemetals", baseMetals);
         result.setProperty("orespawn", oreSpawn);
@@ -52,6 +56,8 @@ public final class PackagedServerSmoke {
                 .resolve("packaged-server-smoke-pass.properties");
         try (var writer = Files.newBufferedWriter(marker, StandardCharsets.UTF_8)) {
             result.store(writer, "Base Metals packaged dedicated-server smoke");
+        } catch (IOException exception) {
+            throw new java.io.UncheckedIOException("Could not save the server smoke result", exception);
         }
         LOGGER.info("BASEMETALS_PACKAGED_SERVER_SMOKE PASS basemetals={} orespawn={} forge={}",
                 baseMetals, oreSpawn, result.getProperty("forge"));
@@ -66,7 +72,7 @@ public final class PackagedServerSmoke {
                 .getModInfo().getVersion().toString();
     }
 
-    private static void verifyContent(net.minecraft.server.MinecraftServer server) throws IOException {
+    private static void verifyContent(net.minecraft.server.MinecraftServer server) {
         var level = server.overworld();
         var policy = zone.moddev.mc.basemetals.config.ContentPolicy.active();
         var items = zone.moddev.mc.basemetals.content.ModContent.itemsById();
@@ -74,21 +80,25 @@ public final class PackagedServerSmoke {
         for (var entry : items.entrySet()) {
             String id = entry.getKey();
             if (id.endsWith("_powder") || id.endsWith("_smallpowder") || id.endsWith("_nugget")) {
-                int burn = net.minecraftforge.common.ForgeHooks.getBurnTime(entry.getValue().get().getDefaultInstance(),
+                int burn = server.fuelValues().burnDuration(entry.getValue().get().getDefaultInstance(),
                         net.minecraft.world.item.crafting.RecipeType.SMELTING);
                 int expected = id.startsWith("coal_") || id.startsWith("charcoal_")
                         ? (id.endsWith("_powder") ? 1600 : 200) : 0;
                 if (burn != expected) throw new IllegalStateException(id + " has burn time " + burn + ", expected " + expected);
             }
         }
-        var bow = server.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.parse("basemetals:adamantine_bow"))
+        var bow = server.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, net.minecraft.resources.Identifier.parse("basemetals:adamantine_bow")))
                 .orElseThrow();
         boolean enabled = !bow.value().isSpecial();
         if (enabled != policy.allows("basemetals:adamantine_bow")) {
             throw new IllegalStateException("The recipe book does not follow the active content mode");
         }
         if (ModList.get().isLoaded("tconstruct")) verifyTinkers();
-        verifyIntegrationRecipes(server);
+        try {
+            verifyIntegrationRecipes(server);
+        } catch (IOException exception) {
+            throw new java.io.UncheckedIOException("Could not read the integration recipes", exception);
+        }
         LOGGER.info("BASEMETALS_PACKAGED_CONTENT PASS mode={} items={}",
                 zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName(), items.size());
     }
@@ -112,9 +122,9 @@ public final class PackagedServerSmoke {
                     if (!"basemetals:content_mode".equals(object.get("type").getAsString())) continue;
                     enabled &= policy.allows(object.get("item").getAsString());
                 }
-                var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("basemetals",
+                var id = net.minecraft.resources.Identifier.fromNamespaceAndPath("basemetals",
                         path.substring("recipe/".length(), path.length() - ".json".length()));
-                if (server.getRecipeManager().byKey(id).isPresent() != enabled) {
+                if (server.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, id)).isPresent() != enabled) {
                     throw new IllegalStateException("Integration recipe does not follow content mode: " + id);
                 }
                 checked++;
@@ -132,8 +142,11 @@ public final class PackagedServerSmoke {
         for (var level : server.getAllLevels()) {
             var dimension = level.dimension();
             var counts = new java.util.TreeMap<String, Integer>();
-            for (int chunkX = 0; chunkX < 3; chunkX++) {
-                for (int chunkZ = 0; chunkZ < 3; chunkZ++) {
+            int start = dimension == net.minecraft.world.level.Level.OVERWORLD
+                    ? Integer.getInteger("basemetals.oreSampleOverworldChunkStart", 0) : 0;
+
+            for (int chunkX = start; chunkX < start + 3; chunkX++) {
+                for (int chunkZ = start; chunkZ < start + 3; chunkZ++) {
                     var chunk = level.getChunk(chunkX, chunkZ);
                     for (var section : chunk.getSections()) {
                         for (int x = 0; x < 16; x++) for (int y = 0; y < 16; y++) for (int z = 0; z < 16; z++) {
@@ -153,11 +166,58 @@ public final class PackagedServerSmoke {
                 }
             }
             if (counts.isEmpty()) throw new IllegalStateException("No Base Metals ores in " + dimension);
-            LOGGER.info("BASEMETALS_ORE_SAMPLE PASS dimension={} chunks=9 ores={}", dimension.location(), counts);
+            if (Boolean.getBoolean("basemetals.tagOnlyTinSmoke")
+                    && dimension == net.minecraft.world.level.Level.OVERWORLD
+                    && counts.getOrDefault("tin_ore", 0) == 0) {
+                throw new IllegalStateException("The tag-only tin rule produced no ore after tags were loaded");
+            }
+            LOGGER.info("BASEMETALS_ORE_SAMPLE PASS dimension={} chunks=9 ores={}", dimension.identifier(), counts);
         }
     }
 
     private static void verifyTinkers() {
-        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 1.21.1 build");
+        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 1.21.11 build");
+    }
+
+    private static void verifyModernFlatTerrain(net.minecraft.server.MinecraftServer server) {
+        var level = server.overworld();
+        if (!(level.getChunkSource().getGenerator() instanceof net.minecraft.world.level.levelgen.FlatLevelSource)) {
+            throw new IllegalStateException("The modern-world control must use its captured flat generator");
+        }
+
+        int start = Boolean.getBoolean("basemetals.modernLaterChunkSmoke") ? 10 : 0;
+        int checked = 0;
+
+        for (int chunkX = start; chunkX < start + 3; chunkX++) {
+            for (int chunkZ = start; chunkZ < start + 3; chunkZ++) {
+                var chunk = level.getChunk(chunkX, chunkZ);
+
+                for (int sectionIndex = 0; sectionIndex < chunk.getSectionsCount(); sectionIndex++) {
+                    var section = chunk.getSection(sectionIndex);
+                    int bottom = chunk.getSectionYFromSectionIndex(sectionIndex) * 16;
+
+                    for (int y = 0; y < 16; y++) {
+                        int height = bottom + y;
+                        var expected = height == -64 ? net.minecraft.world.level.block.Blocks.BEDROCK
+                                : height == -63 || height == -62 ? net.minecraft.world.level.block.Blocks.DIRT
+                                : height == -61 ? net.minecraft.world.level.block.Blocks.GRASS_BLOCK
+                                : net.minecraft.world.level.block.Blocks.AIR;
+
+                        for (int x = 0; x < 16; x++) {
+                            for (int z = 0; z < 16; z++) {
+                                if (!section.getBlockState(x, y, z).is(expected)) {
+                                    throw new IllegalStateException("Modern terrain changed at chunk "
+                                            + chunk.getPos() + ", local " + x + "," + height + "," + z);
+                                }
+                                checked++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        LOGGER.info("BASEMETALS_MODERN_TERRAIN PASS blocks={} later_chunks={}",
+                checked, start != 0);
     }
 }

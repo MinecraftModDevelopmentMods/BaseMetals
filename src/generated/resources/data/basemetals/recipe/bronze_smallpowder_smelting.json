@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.05,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/bronze"
-  },
+  "ingredient": "#forge:tiny_dusts/bronze",
   "result": {
     "id": "basemetals:bronze_nugget"
   }

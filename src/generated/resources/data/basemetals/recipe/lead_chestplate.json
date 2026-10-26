@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:lead_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "X X",

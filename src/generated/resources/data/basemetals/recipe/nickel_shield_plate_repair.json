@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/nickel"
-  },
+  "plate": "#forge:plates/nickel",
   "target": "basemetals:nickel_shield"
 }

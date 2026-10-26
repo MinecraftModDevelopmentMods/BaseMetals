@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:brass_trapdoor",
     "key": {
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       "XX",

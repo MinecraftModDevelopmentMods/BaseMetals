@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.5,
-  "ingredient": {
-    "item": "basemetals:platinum_gear"
-  },
+  "ingredient": "basemetals:platinum_gear",
   "result": {
     "id": "basemetals:platinum_ingot"
   }

@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:adamantine_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/adamantine"
-      },
-      "R": {
-        "tag": "forge:rods/adamantine"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/adamantine",
+      "R": "#forge:rods/adamantine",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

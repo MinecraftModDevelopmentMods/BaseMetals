@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:coldiron_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/coldiron"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/coldiron"
     },
     "pattern": [
       "R",

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:cobblestone"
-  },
+  "ingredient": "#forge:cobblestone",
   "result": {
     "id": "minecraft:gravel"
   }

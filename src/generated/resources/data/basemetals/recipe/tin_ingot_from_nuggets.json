@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:tin_ingot",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/tin"
-      }
+      "X": "#forge:nuggets/tin"
     },
     "pattern": [
       "XXX",

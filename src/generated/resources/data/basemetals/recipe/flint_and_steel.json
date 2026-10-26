@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "minecraft:flint_and_steel",
     "ingredients": [
-      {
-        "tag": "forge:ingots/steel"
-      },
-      {
-        "item": "minecraft:flint"
-      }
+      "#forge:ingots/steel",
+      "minecraft:flint"
     ],
     "result": {
       "id": "minecraft:flint_and_steel"

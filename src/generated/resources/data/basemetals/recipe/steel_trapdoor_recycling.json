@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "item": "basemetals:steel_trapdoor"
-  },
+  "ingredient": "basemetals:steel_trapdoor",
   "result": {
     "count": 4,
     "id": "basemetals:steel_ingot"

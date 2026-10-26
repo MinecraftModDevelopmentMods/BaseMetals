@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:steel_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "XWX",

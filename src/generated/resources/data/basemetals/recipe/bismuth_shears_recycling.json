@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:bismuth_shears"
-  },
+  "ingredient": "basemetals:bismuth_shears",
   "result": {
     "count": 2,
     "id": "basemetals:bismuth_ingot"

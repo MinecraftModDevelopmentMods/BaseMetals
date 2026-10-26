@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:brass_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/brass"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/brass"
     },
     "pattern": [
       "R",

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/nickel"
-  },
+  "ingredient": "#forge:storage_blocks/nickel",
   "result": {
     "count": 9,
     "id": "basemetals:nickel_powder"

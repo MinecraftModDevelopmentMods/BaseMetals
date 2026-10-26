@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bronze_scythe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/bronze"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/bronze"
     },
     "pattern": [
       "XX ",

@@ -11,7 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -38,25 +38,25 @@ public final class BaseMetalBucketItem extends BucketItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, net.minecraft.world.entity.player.Player player,
+    public InteractionResult use(Level level, net.minecraft.world.entity.player.Player player,
             InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
         BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
-        InteractionResultHolder<ItemStack> forgeResult = ForgeEventFactory.onBucketUse(player, level, held, hit);
+        InteractionResult forgeResult = ForgeEventFactory.onBucketUse(player, level, held, hit);
         if (forgeResult != null) return forgeResult;
-        if (hit.getType() != HitResult.Type.BLOCK) return InteractionResultHolder.pass(held);
+        if (hit.getType() != HitResult.Type.BLOCK) return InteractionResult.PASS;
 
         BlockPos clicked = hit.getBlockPos();
         Direction direction = hit.getDirection();
         BlockPos adjacent = clicked.relative(direction);
         if (!level.mayInteract(player, clicked) || !player.mayUseItemAt(adjacent, direction, held)) {
-            return InteractionResultHolder.fail(held);
+            return InteractionResult.FAIL;
         }
 
         BlockState clickedState = level.getBlockState(clicked);
         BlockPos destination = canContainFluid(level, clicked, clickedState) ? clicked : adjacent;
         if (!emptyContents(player, level, destination, hit, held, hand)) {
-            return InteractionResultHolder.fail(held);
+            return InteractionResult.FAIL;
         }
 
         checkExtraContent(player, level, held, destination);
@@ -65,10 +65,9 @@ public final class BaseMetalBucketItem extends BucketItem {
         }
         player.awardStat(Stats.ITEM_USED.get(this));
         level.gameEvent(player, GameEvent.FLUID_PLACE, destination);
-        return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(held, player), level.isClientSide());
+        return InteractionResult.SUCCESS.heldItemTransformedTo(getEmptySuccessItem(held, player));
     }
 
-    @Override
     public boolean emptyContents(@Nullable net.minecraft.world.entity.player.Player player,
             Level level, BlockPos position, @Nullable BlockHitResult hit) {
         return emptyContents(player, level, position, hit, getDefaultInstance());

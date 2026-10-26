@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:quartz_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/quartz"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/quartz",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

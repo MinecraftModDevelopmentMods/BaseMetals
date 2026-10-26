@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:bronze_wall",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/bronze"
-      }
+      "X": "#forge:storage_blocks/bronze"
     },
     "pattern": [
       "XXX",

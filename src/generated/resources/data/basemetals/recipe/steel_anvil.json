@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:steel_anvil",
     "key": {
-      "B": {
-        "tag": "forge:storage_blocks/steel"
-      },
-      "I": {
-        "tag": "forge:ingots/steel"
-      }
+      "B": "#forge:storage_blocks/steel",
+      "I": "#forge:ingots/steel"
     },
     "pattern": [
       "BBB",
