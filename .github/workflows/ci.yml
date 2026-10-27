@@ -141,9 +141,7 @@ jobs:
           ./gradlew "${gradle_args[@]}"
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.1.0.116051.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.116051-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.1.0.116051-javadoc.jar "$first/"
+          cp build/libs/*.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -159,9 +157,9 @@ jobs:
             -Dorg.gradle.java.installations.auto-download=false
           )
           ./gradlew "${gradle_args[@]}"
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.116051.jar" build/libs/BaseMetals-3.1.0.116051.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.116051-sources.jar" build/libs/BaseMetals-3.1.0.116051-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.0.116051-javadoc.jar" build/libs/BaseMetals-3.1.0.116051-javadoc.jar
+          for jar in build/libs/*.jar; do
+            cmp "$RUNNER_TEMP/basemetals-first/${jar##*/}" "$jar"
+          done
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run exact-OreSpawn dedicated-server probe
@@ -185,9 +183,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.1.0.116051.jar
-            build/libs/BaseMetals-3.1.0.116051-sources.jar
-            build/libs/BaseMetals-3.1.0.116051-javadoc.jar
+            build/libs/*.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 

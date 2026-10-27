@@ -1,3 +1,10 @@
+Base Metals 3.1.1.116051
+
+- Register the old-world hook through Forge's queued common setup, before any
+  world loads. This avoids changing a shared list while mods load in parallel.
+- Keep saved IDs, migration rules, ore generation and gameplay unchanged.
+- Let CI collect and compare the three audited jars without fixed filenames.
+
 Base Metals 3.1.0.116051
 
 - Bring the 1.15.2 release to Minecraft 1.16.5 and Forge 36.2.34.

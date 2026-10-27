@@ -131,7 +131,7 @@ tasks.register('verifyReleaseConfiguration') {
                 loaderCode: project.loader_code.toString(), javaVersion: project.java_version.toString(),
                 gradleJavaVersion: project.gradle_java_version.toString(),
                 curseForgeProjectId: project.curseforge_project_id.toString()]
-        def expected = [modVersion: '3.1.0.116051', modGroup: expectedMavenGroup,
+        def expected = [modVersion: '3.1.1.116051', modGroup: expectedMavenGroup,
                 minecraftVersion: '1.16.5', forgeVersion: '36.2.34',
                 forgeInstallerSha256: '53B73DBBCC486F38726E76CE923B13381044984C83C762847C7193340F97130F',
                 mappingChannel: 'official', mappingVersion: '1.16.5',
@@ -204,7 +204,7 @@ tasks.register('verifyReleaseArtifacts') {
     dependsOn tasks.named('assemble')
     doLast {
         File libs = file("${buildDir}/libs")
-        def actualArtifacts = fileTree(libs) { include 'BaseMetals-*.jar' }.files.collect { it.name }.sort()
+        def actualArtifacts = fileTree(libs) { include '*.jar' }.files.collect { it.name }.sort()
         if (actualArtifacts != expectedReleaseNames.sort()) {
             throw new GradleException("Expected exactly ${expectedReleaseNames.sort()}, found ${actualArtifacts}")
         }
@@ -256,7 +256,7 @@ tasks.register('verifyReleaseArtifacts') {
                 throw new GradleException('Release manifest contains the wrong identity')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
-            if (modsToml.contains('${') || !modsToml.contains('version="3.1.0.116051"')
+            if (modsToml.contains('${') || !modsToml.contains('version="3.1.1.116051"')
                     || !modsToml.contains('versionRange="[4.1.0.116051,5.0.0)"')
                     || !modsToml.contains('loaderVersion="[36,)"')
                     || !modsToml.contains('versionRange="[36,)"')

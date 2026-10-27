@@ -11,7 +11,7 @@ description='''Build-only lifecycle checks for Base Metals 1.16.5.'''
 [[dependencies.basemetalsprobe]]
 modId="basemetals"
 mandatory=true
-versionRange="[3.1.0.116051]"
+versionRange="[3.1.1.116051]"
 ordering="AFTER"
 side="BOTH"
 
