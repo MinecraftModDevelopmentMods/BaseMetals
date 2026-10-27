@@ -141,9 +141,8 @@ jobs:
           ./gradlew "${gradle_args[@]}"
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.0.1.115021.jar "$first/"
-          cp build/libs/BaseMetals-3.0.1.115021-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.0.1.115021-javadoc.jar "$first/"
+          # verifyReleaseArtifacts has already required exactly the three versioned jars.
+          cp build/libs/*.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -159,9 +158,9 @@ jobs:
             -Dorg.gradle.java.installations.auto-download=false
           )
           ./gradlew "${gradle_args[@]}"
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.115021.jar" build/libs/BaseMetals-3.0.1.115021.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.115021-sources.jar" build/libs/BaseMetals-3.0.1.115021-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.1.115021-javadoc.jar" build/libs/BaseMetals-3.0.1.115021-javadoc.jar
+          for jar in "$RUNNER_TEMP"/basemetals-first/*.jar; do
+            cmp "$jar" "build/libs/$(basename "$jar")"
+          done
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run exact-OreSpawn dedicated-server probe
@@ -185,9 +184,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.0.1.115021.jar
-            build/libs/BaseMetals-3.0.1.115021-sources.jar
-            build/libs/BaseMetals-3.0.1.115021-javadoc.jar
+            build/libs/*.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 

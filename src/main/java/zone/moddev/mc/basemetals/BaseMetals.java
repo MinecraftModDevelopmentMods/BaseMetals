@@ -16,9 +16,11 @@ import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(BaseMetals.MOD_ID)
@@ -27,14 +29,19 @@ public final class BaseMetals {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public BaseMetals() {
-        LegacyWorldDataHook.register();
         ContentModeNetwork.register();
         ModContent.initializeFluids();
         LootConditionManager.registerCondition(new ContentModeLootCondition.Serializer());
         ModEntities.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BaseMetalsConfig::onConfigLoading);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(new BaseMetalsEvents());
         DistExecutor.runWhenOn(Dist.CLIENT, () -> ClientSetup::register);
+    }
+
+    private void commonSetup(FMLCommonSetupEvent event) {
+        // Forge's shared hook list is not safe to mutate during parallel mod construction.
+        DeferredWorkQueue.runLater(LegacyWorldDataHook::register);
     }
 }

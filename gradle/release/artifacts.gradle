@@ -131,7 +131,7 @@ tasks.register('verifyReleaseConfiguration') {
                 loaderCode: project.loader_code.toString(), javaVersion: project.java_version.toString(),
                 gradleJavaVersion: project.gradle_java_version.toString(),
                 curseForgeProjectId: project.curseforge_project_id.toString()]
-        def expected = [modVersion: '3.0.1.115021', modGroup: expectedMavenGroup,
+        def expected = [modVersion: '3.0.2.115021', modGroup: expectedMavenGroup,
                 minecraftVersion: '1.15.2', forgeVersion: '31.2.57',
                 forgeInstallerSha256: '84FD49A743978421B26F62AC78222289FE892A46F996CF11CB5E05B7441A7773',
                 mappingChannel: 'snapshot', mappingVersion: '20200514-1.15.1',
@@ -256,7 +256,7 @@ tasks.register('verifyReleaseArtifacts') {
                 throw new GradleException('Release manifest contains the wrong identity')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
-            if (modsToml.contains('${') || !modsToml.contains('version="3.0.1.115021"')
+            if (modsToml.contains('${') || !modsToml.contains('version="3.0.2.115021"')
                     || !modsToml.contains('versionRange="[4.1.0.115021,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }

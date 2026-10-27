@@ -11,7 +11,7 @@ description='''Build-only packaged-client checks for Base Metals 1.15.2.'''
 [[dependencies.basemetalsclientprobe]]
 modId="basemetals"
 mandatory=true
-versionRange="[3.0.1.115021]"
+versionRange="[3.0.2.115021]"
 ordering="AFTER"
 side="CLIENT"
 

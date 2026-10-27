@@ -45,6 +45,16 @@ class Native115ContractTest {
     }
 
     @Test
+    void ciCollectsTheAuditedJarsWithoutRepeatingTheReleaseVersion() throws Exception {
+        String workflow = source(".github/workflows/ci.yml");
+        assertTrue(workflow.contains("cp build/libs/*.jar \"$first/\""));
+        assertTrue(workflow.contains("for jar in \"$RUNNER_TEMP\"/basemetals-first/*.jar; do"));
+        assertFalse(workflow.contains("BaseMetals-3.0.1.115021"));
+        assertFalse(workflow.contains("BaseMetals-3.0.2.115021"));
+        assertTrue(workflow.contains("verifyReleaseArtifacts writeReleaseChecksums"));
+    }
+
+    @Test
     void keepsTheLocalCandidatePublicationGuard() throws Exception {
         assertTrue(source("gradle/stage-orespawn-release.sh")
                 .contains("Publication is blocked"));
