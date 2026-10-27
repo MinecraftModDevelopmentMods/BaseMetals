@@ -5,6 +5,10 @@
 <a href="https://discord.tophatcat.dev">
     <img src="https://img.shields.io/badge/Discord-16181C?style=for-the-badge&logo=discord&logoColor=5865F2" alt="Discord server invite."/>
 </a>
+=======
+[![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
+[![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+[![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 
 <a href="https://www.curseforge.com/minecraft/mc-mods/base-metals">
     <img src="https://img.shields.io/badge/CurseForge-16181C?style=for-the-badge&logo=curseforge&logoColor=FF784D" alt="CurseForge Badge.">

@@ -1,4 +1,4 @@
-Base Metals 3.1.0.121012 (in development)
+### Base Metals 3.1.0.121012 (in development)
 
 - Port Base Metals to Minecraft 1.21.1 and NeoForge.
 - Restore recipe-book unlocks and armour advancements in the new data-pack folders.

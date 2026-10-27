@@ -900,4 +900,3 @@ public final class Legacy112WorldMigrator {
             return BlockPos.asLong(x(), y() + yOffset, z());
         }
     }
-}
