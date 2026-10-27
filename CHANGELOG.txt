@@ -4,6 +4,8 @@ Base Metals 3.0.2.115021
   register world-data hooks. Register our migration hook through Forge's queued
   setup instead of changing its shared hook list during parallel mod loading.
 - Keep existing world data, migration rules, registries and gameplay unchanged.
+- Collect the audited release jars in CI without repeating their version in
+  copy and comparison commands.
 
 Base Metals 3.0.1.115021
 
