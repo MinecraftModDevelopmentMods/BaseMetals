@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/starsteel"
-  },
+  "ingredient": "#forge:nuggets/starsteel",
   "result": {
     "id": "basemetals:starsteel_smallpowder"
   }

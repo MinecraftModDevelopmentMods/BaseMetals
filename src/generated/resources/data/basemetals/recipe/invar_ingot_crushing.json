@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/invar"
-  },
+  "ingredient": "#forge:ingots/invar",
   "result": {
     "id": "basemetals:invar_powder"
   }

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:aquarium_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/aquarium"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/aquarium"
     },
     "pattern": [
       "XWX",

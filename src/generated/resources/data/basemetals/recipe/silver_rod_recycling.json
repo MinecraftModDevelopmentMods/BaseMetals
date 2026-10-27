@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.07,
-  "ingredient": {
-    "item": "basemetals:silver_rod"
-  },
+  "ingredient": "basemetals:silver_rod",
   "result": {
     "count": 4,
     "id": "basemetals:silver_nugget"

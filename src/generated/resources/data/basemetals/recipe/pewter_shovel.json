@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:pewter_shovel",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/pewter"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/pewter"
     },
     "pattern": [
       "X",

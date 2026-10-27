@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:invar_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/invar"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/invar",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

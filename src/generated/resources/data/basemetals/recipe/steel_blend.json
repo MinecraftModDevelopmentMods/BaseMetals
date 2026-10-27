@@ -5,33 +5,15 @@
     "category": "misc",
     "group": "basemetals:steel_blend",
     "ingredients": [
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/iron"
-      },
-      {
-        "tag": "forge:dusts/coal"
-      }
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/iron",
+      "#forge:dusts/coal"
     ],
     "result": {
       "count": 8,

@@ -1,9 +1,11 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.21.1 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 1.21.11 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
+An optional `forgeVersion` selects another installed Forge 1.21.11 build for
+compatibility checks; the default is the compilation target, `61.1.0`.
 
 Pass a local JSON specification containing `java` (the Java 21 executable), `serverRuntime`, `output`,
 `modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
@@ -26,6 +28,8 @@ with `node --test tools/validation/test_painting_registry.js`.
 `compare_world_terrain.py` checks fixed vanilla terrain before and after
 conversion. It accepts Minecraft's new underground floor and accounts for
 normal falling sand and gravel, but rejects ore replacing existing rock.
+Exposed dirt may become grass only when grass was already growing beside it;
+buried changes and new ore in saved terrain still fail the comparison.
 It needs the Python `nbtlib` package. Run `test_world_terrain.py` to check the
 palette readers and falling-block comparison.
 

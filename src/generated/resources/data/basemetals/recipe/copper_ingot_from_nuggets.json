@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "minecraft:copper_ingot",
     "key": {
-      "X": {
-        "item": "basemetals:copper_nugget"
-      }
+      "X": "#forge:nuggets/copper"
     },
     "pattern": [
       "XXX",

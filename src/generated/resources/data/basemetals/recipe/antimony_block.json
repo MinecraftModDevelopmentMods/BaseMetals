@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:antimony_block",
     "key": {
-      "X": {
-        "tag": "forge:ingots/antimony"
-      }
+      "X": "#forge:ingots/antimony"
     },
     "pattern": [
       "XXX",

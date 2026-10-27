@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:antimony_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/antimony"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/antimony",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:electrum_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/electrum"
-      },
-      "X": {
-        "tag": "forge:ingots/electrum"
-      }
+      "R": "#forge:rods/electrum",
+      "X": "#forge:ingots/electrum"
     },
     "pattern": [
       " X ",

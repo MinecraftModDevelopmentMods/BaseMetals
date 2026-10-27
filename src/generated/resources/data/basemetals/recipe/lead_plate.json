@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:lead_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "XXX"

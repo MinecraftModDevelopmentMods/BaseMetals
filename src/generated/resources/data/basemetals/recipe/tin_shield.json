@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:tin_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/tin"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/tin"
     },
     "pattern": [
       "XWX",

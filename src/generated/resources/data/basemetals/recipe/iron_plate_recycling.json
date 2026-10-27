@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:iron_plate"
-  },
+  "ingredient": "basemetals:iron_plate",
   "result": {
     "id": "minecraft:iron_ingot"
   }

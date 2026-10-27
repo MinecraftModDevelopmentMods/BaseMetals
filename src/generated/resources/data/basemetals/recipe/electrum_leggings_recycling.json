@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.0,
-  "ingredient": {
-    "item": "basemetals:electrum_leggings"
-  },
+  "ingredient": "basemetals:electrum_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:electrum_ingot"

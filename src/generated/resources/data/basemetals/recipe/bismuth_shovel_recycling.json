@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:bismuth_shovel"
-  },
+  "ingredient": "basemetals:bismuth_shovel",
   "result": {
     "id": "basemetals:bismuth_ingot"
   }

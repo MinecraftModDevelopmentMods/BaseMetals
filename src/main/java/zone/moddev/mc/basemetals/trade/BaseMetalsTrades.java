@@ -7,8 +7,8 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemListing;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -100,12 +100,12 @@ public final class BaseMetalsTrades {
     }
 
     private static ItemListing selling(Item item, int count, int emeralds) {
-        return (trader, random) -> new MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, Math.max(1, emeralds)),
+        return (level, trader, random) -> new MerchantOffer(new net.minecraft.world.item.trading.ItemCost(Items.EMERALD, Math.max(1, emeralds)),
                 new ItemStack(item, count), 6, 5, 0.2F);
     }
 
     private static ItemListing enchanted(Item item, int baseCost) {
-        return (trader, random) -> {
+        return (level, trader, random) -> {
             int enchantmentLevel = 5 + random.nextInt(15);
             ItemStack result = EnchantmentHelper.enchantItem(random, new ItemStack(item), enchantmentLevel,
                     trader.registryAccess(), java.util.Optional.of(trader.registryAccess()

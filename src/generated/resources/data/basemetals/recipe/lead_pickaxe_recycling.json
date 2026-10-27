@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:lead_pickaxe"
-  },
+  "ingredient": "basemetals:lead_pickaxe",
   "result": {
     "count": 3,
     "id": "basemetals:lead_ingot"

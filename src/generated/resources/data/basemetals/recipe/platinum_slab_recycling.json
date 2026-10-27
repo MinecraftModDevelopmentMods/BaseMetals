@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.17,
-  "ingredient": {
-    "item": "basemetals:platinum_slab"
-  },
+  "ingredient": "basemetals:platinum_slab",
   "result": {
     "count": 4,
     "id": "basemetals:platinum_nugget"

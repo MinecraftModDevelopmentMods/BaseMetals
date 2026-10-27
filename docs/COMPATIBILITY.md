@@ -7,7 +7,8 @@ shards, clumps, dirty dusts, and molten fluids.
 
 Adamantite, Adamantium, Adamant, Quicksilver, and steel-sprocket names are
 forwarding tags. Copper-consuming recipes accept `forge:ingots/copper`.
-Copper ingots, storage blocks, doors, trapdoors, slabs and stairs use their
+Copper ingots, nuggets, tools, armour, horse armour, bars, storage blocks, doors,
+trapdoors, slabs and stairs use their
 vanilla equivalents as new recipe outputs. The old Base Metals IDs remain
 registered; their ingredient tags include both versions. Copper ore and powders
 smelt to vanilla copper ingots. Existing copper equipment remains usable.
@@ -19,7 +20,7 @@ recycling recipes also accept the appropriate vanilla equivalent.
 
 The tags and existing integration data for Mekanism, Thermal, Tinkers' Construct
 and Ender IO remain available for future compatibility work. Their Java API hooks
-and runtime jars are not included in this Forge 1.21.1 port. Do not substitute
+and runtime jars are not included in this Forge 1.21.11 port. Do not substitute
 jars made for older Minecraft versions or NeoForge.
 
 Other processors can use the shared Forge tags without a direct Java integration.

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:invar_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       "  X",

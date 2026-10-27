@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:coldiron_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/coldiron"
-      },
-      "X": {
-        "tag": "forge:ingots/coldiron"
-      }
+      "R": "#forge:rods/coldiron",
+      "X": "#forge:ingots/coldiron"
     },
     "pattern": [
       "R",

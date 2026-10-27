@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:invar_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/invar"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/invar"
     },
     "pattern": [
       "R",

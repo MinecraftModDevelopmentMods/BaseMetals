@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/coldiron"
-  },
+  "ingredient": "#forge:raw_materials/coldiron",
   "result": {
     "id": "basemetals:coldiron_powder"
   }

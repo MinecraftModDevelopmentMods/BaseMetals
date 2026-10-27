@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:ores/adamantine"
-  },
+  "ingredient": "#forge:ores/adamantine",
   "result": {
     "id": "basemetals:adamantine_ingot"
   }

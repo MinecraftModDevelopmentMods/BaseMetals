@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:iron_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/iron"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/iron"
     },
     "pattern": [
       "XWX",

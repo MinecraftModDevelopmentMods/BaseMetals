@@ -9,7 +9,7 @@ import zone.moddev.mc.basemetals.BaseMetals;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +35,7 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
             SERIALIZERS.register("legacy_smelting", LegacySmeltingRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<PlateRepairRecipe>> PLATE_REPAIR_SERIALIZER =
             SERIALIZERS.register("plate_repair", PlateRepairRecipe.Serializer::new);
-    public static final RegistryObject<RecipeSerializer<Recipe<?>>> CONTENT_CRAFTING_SERIALIZER =
+    public static final RegistryObject<RecipeSerializer<ContentCraftingRecipe>> CONTENT_CRAFTING_SERIALIZER =
             SERIALIZERS.register("content_crafting", () -> ContentCraftingRecipe.SERIALIZER);
 
     private final Ingredient ingredient;
@@ -55,12 +55,18 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
     public ItemStack assemble(SingleRecipeInput input, net.minecraft.core.HolderLookup.Provider registries) {
         return result.copy();
     }
-    @Override public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
-    @Override public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
-    @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER.get(); }
-    @Override public RecipeType<?> getType() { return TYPE.get(); }
-    @Override public NonNullList<Ingredient> getIngredients() { return NonNullList.of(Ingredient.EMPTY, ingredient); }
+    public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
+    public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
+    @Override public RecipeSerializer<CrushingRecipe> getSerializer() { return SERIALIZER.get(); }
+    @Override public RecipeType<CrushingRecipe> getType() { return TYPE.get(); }
+    public java.util.List<Ingredient> getIngredients() { return java.util.List.of(ingredient); }
     @Override public boolean isSpecial() { return true; }
+    @Override public net.minecraft.world.item.crafting.PlacementInfo placementInfo() {
+        return net.minecraft.world.item.crafting.PlacementInfo.NOT_PLACEABLE;
+    }
+    @Override public net.minecraft.world.item.crafting.RecipeBookCategory recipeBookCategory() {
+        return net.minecraft.world.item.crafting.RecipeBookCategories.CRAFTING_MISC;
+    }
 
     private static final class CrushingRecipeType implements RecipeType<CrushingRecipe> {
         @Override
@@ -72,7 +78,7 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
     public static final class Serializer implements RecipeSerializer<CrushingRecipe> {
         private static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
-                        Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+                        Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
                         ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result))
                         .apply(instance, CrushingRecipe::new));
 

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:quartz_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/quartz"
-      }
+      "X": "#forge:rods/quartz"
     },
     "pattern": [
       "XXX"

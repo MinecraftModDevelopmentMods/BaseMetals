@@ -10,11 +10,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -43,13 +41,8 @@ public final class BaseMetalAnvilBlock extends AnvilBlock {
     }
 
     private static final class DurableAnvilMenu extends AnvilMenu {
-        private final Level level;
-        private final BlockPos pos;
-
         private DurableAnvilMenu(int containerId, Inventory inventory, Level level, BlockPos pos) {
             super(containerId, inventory, ContainerLevelAccess.create(level, pos));
-            this.level = level;
-            this.pos = pos.immutable();
         }
 
         @Override
@@ -57,29 +50,5 @@ public final class BaseMetalAnvilBlock extends AnvilBlock {
             return state.getBlock() instanceof BaseMetalAnvilBlock;
         }
 
-        @Override
-        protected void onTake(Player player, ItemStack output) {
-            BlockState original = level.getBlockState(pos);
-            if (!(original.getBlock() instanceof BaseMetalAnvilBlock)) {
-                super.onTake(player, output);
-                return;
-            }
-
-            int damage = original.getValue(DAMAGE);
-            Block placeholder = switch (damage) {
-                case 0 -> Blocks.ANVIL;
-                case 1 -> Blocks.CHIPPED_ANVIL;
-                default -> Blocks.DAMAGED_ANVIL;
-            };
-            level.setBlock(pos, placeholder.defaultBlockState().setValue(FACING, original.getValue(FACING)), 2);
-            super.onTake(player, output);
-
-            BlockState after = level.getBlockState(pos);
-            if (after.is(placeholder)) {
-                level.setBlock(pos, original, 2);
-            } else if (damage < 2 && (after.is(Blocks.CHIPPED_ANVIL) || after.is(Blocks.DAMAGED_ANVIL))) {
-                level.setBlock(pos, original.setValue(DAMAGE, damage + 1), 2);
-            }
-        }
     }
 }

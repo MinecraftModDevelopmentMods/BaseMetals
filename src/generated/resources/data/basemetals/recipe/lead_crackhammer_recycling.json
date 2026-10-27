@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:lead_crackhammer"
-  },
+  "ingredient": "basemetals:lead_crackhammer",
   "result": {
     "id": "basemetals:lead_block"
   }

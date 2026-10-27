@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:starsteel_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/starsteel"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/starsteel"
     },
     "pattern": [
       "R",

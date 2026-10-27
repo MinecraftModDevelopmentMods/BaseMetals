@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:antimony_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/antimony"
-      }
+      "X": "#forge:storage_blocks/antimony"
     },
     "pattern": [
       "X  ",

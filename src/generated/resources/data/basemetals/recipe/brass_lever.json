@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:brass_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/brass"
-      },
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "R": "#forge:rods/brass",
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       "R",

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:bismuth_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/bismuth"
-      }
+      "X": "#forge:rods/bismuth"
     },
     "pattern": [
       "XXX"

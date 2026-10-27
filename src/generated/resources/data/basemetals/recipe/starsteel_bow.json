@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:starsteel_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/starsteel"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/starsteel",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

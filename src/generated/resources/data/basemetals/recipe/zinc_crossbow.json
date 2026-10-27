@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:zinc_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/zinc"
-      },
-      "R": {
-        "tag": "forge:rods/zinc"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/zinc",
+      "R": "#forge:rods/zinc",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

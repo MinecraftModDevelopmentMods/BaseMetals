@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.08,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/nickel"
-  },
+  "ingredient": "#forge:tiny_dusts/nickel",
   "result": {
     "id": "basemetals:nickel_nugget"
   }

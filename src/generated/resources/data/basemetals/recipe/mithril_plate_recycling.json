@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.9,
-  "ingredient": {
-    "item": "basemetals:mithril_plate"
-  },
+  "ingredient": "basemetals:mithril_plate",
   "result": {
     "id": "basemetals:mithril_ingot"
   }

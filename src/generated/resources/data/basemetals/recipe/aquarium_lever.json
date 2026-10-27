@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:aquarium_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/aquarium"
-      },
-      "X": {
-        "tag": "forge:ingots/aquarium"
-      }
+      "R": "#forge:rods/aquarium",
+      "X": "#forge:ingots/aquarium"
     },
     "pattern": [
       "R",

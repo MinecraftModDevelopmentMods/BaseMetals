@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:nickel_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/nickel"
-      }
+      "X": "#forge:nuggets/nickel"
     },
     "pattern": [
       "X",

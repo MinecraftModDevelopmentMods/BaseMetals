@@ -5,18 +5,10 @@
     "category": "misc",
     "group": "basemetals:brass_blend",
     "ingredients": [
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/copper"
-      },
-      {
-        "tag": "forge:dusts/zinc"
-      }
+      "#forge:dusts/copper",
+      "#forge:dusts/copper",
+      "#forge:dusts/copper",
+      "#forge:dusts/zinc"
     ],
     "result": {
       "count": 4,

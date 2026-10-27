@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:antimony_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/antimony"
-      },
-      "R": {
-        "tag": "forge:rods/antimony"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/antimony",
+      "R": "#forge:rods/antimony"
     },
     "pattern": [
       "N",

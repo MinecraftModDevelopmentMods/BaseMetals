@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:nickel_hoe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/nickel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/nickel"
     },
     "pattern": [
       "XX",

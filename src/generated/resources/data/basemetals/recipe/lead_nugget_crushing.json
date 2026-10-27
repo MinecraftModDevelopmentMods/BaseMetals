@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/lead"
-  },
+  "ingredient": "#forge:nuggets/lead",
   "result": {
     "id": "basemetals:lead_smallpowder"
   }

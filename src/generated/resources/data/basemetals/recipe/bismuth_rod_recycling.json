@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "item": "basemetals:bismuth_rod"
-  },
+  "ingredient": "basemetals:bismuth_rod",
   "result": {
     "count": 4,
     "id": "basemetals:bismuth_nugget"

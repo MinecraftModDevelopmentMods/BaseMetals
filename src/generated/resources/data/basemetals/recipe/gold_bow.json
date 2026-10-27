@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:gold_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/gold"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/gold",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

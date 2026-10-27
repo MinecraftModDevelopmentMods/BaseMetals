@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:tin_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/tin"
-      }
+      "X": "#forge:ingots/tin"
     },
     "pattern": [
       "XXX"

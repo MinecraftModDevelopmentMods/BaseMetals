@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/nickel"
-  },
+  "ingredient": "#forge:nuggets/nickel",
   "result": {
     "id": "basemetals:nickel_smallpowder"
   }

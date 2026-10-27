@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:gold_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/gold"
-      }
+      "X": "#forge:nuggets/gold"
     },
     "pattern": [
       "X",

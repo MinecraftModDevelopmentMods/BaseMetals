@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "item": "basemetals:pewter_arrow"
-  },
+  "ingredient": "basemetals:pewter_arrow",
   "result": {
     "id": "basemetals:pewter_nugget"
   }

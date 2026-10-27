@@ -4,7 +4,7 @@ import zone.moddev.mc.basemetals.BaseMetals;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,5 +16,5 @@ public final class ModLoot {
             SERIALIZERS.register("add_table", () -> AppendLootTableModifier.CODEC);
 
     private ModLoot() {}
-    public static void register(IEventBus bus) { SERIALIZERS.register(bus); }
+    public static void register(BusGroup bus) { SERIALIZERS.register(bus); }
 }

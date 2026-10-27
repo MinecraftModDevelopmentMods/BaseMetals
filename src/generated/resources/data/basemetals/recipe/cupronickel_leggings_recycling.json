@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.6,
-  "ingredient": {
-    "item": "basemetals:cupronickel_leggings"
-  },
+  "ingredient": "basemetals:cupronickel_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:cupronickel_ingot"

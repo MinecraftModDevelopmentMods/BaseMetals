@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/cupronickel",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

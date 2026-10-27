@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:silver_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/silver"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/silver"
     },
     "pattern": [
       "XWX",

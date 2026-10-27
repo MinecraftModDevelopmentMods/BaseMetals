@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:pewter_leggings"
-  },
+  "ingredient": "basemetals:pewter_leggings",
   "result": {
     "count": 7,
     "id": "basemetals:pewter_ingot"

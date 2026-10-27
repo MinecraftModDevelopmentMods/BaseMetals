@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:nickel_shears"
-  },
+  "ingredient": "basemetals:nickel_shears",
   "result": {
     "count": 2,
     "id": "basemetals:nickel_ingot"

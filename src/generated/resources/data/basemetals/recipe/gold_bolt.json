@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:gold_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/gold"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/gold"
     },
     "pattern": [
       "R",

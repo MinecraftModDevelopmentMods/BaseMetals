@@ -2,15 +2,14 @@ package zone.moddev.mc.basemetals.client;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.util.FormattedCharSequence;
-
-
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.ConfirmScreen;
-import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
@@ -34,7 +33,7 @@ public final class BaseMetalsConfigScreen extends Screen {
     private OptionButton modeButton;
 
     public BaseMetalsConfigScreen(Screen parent) {
-        super(net.minecraft.network.chat.Component.translatable(PREFIX + "title"));
+        super(Component.translatable(PREFIX + "title"));
         this.parent = parent;
         this.edits = new ConfigEdits(ContentMode.parse(BaseMetalsConfig.CONTENT_MODE.get()),
                 VALUES[0].get(), VALUES[1].get(), VALUES[2].get(), VALUES[3].get());
@@ -83,26 +82,29 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     private void initLabels() {
-        modeButton.setMessage(net.minecraft.network.chat.Component.literal(modeLabel()));
+        modeButton.setMessage(Component.literal(modeLabel()));
 
         for (int index = 0; index < optionButtons.size(); index++) {
-            optionButtons.get(index).setMessage(net.minecraft.network.chat.Component.literal(optionLabel(index)));
+            optionButtons.get(index).setMessage(Component.literal(optionLabel(index)));
         }
     }
 
     private void done() {
         if (edits.modeChanged()) {
             minecraft.setScreen(new ConfirmScreen(this::confirmResult,
-                    net.minecraft.network.chat.Component.translatable(PREFIX + "confirm.title"),
-                    net.minecraft.network.chat.Component.translatable(PREFIX + "confirm.message")));
+                    Component.translatable(PREFIX + "confirm.title"),
+                    Component.translatable(PREFIX + "confirm.message")));
         } else {
             saveAndClose();
         }
     }
 
     private void confirmResult(boolean accepted) {
-        if (accepted) saveAndClose();
-        else minecraft.setScreen(this);
+        if (accepted) {
+            saveAndClose();
+        } else {
+            minecraft.setScreen(this);
+        }
     }
 
     private void saveAndClose() {
@@ -122,29 +124,30 @@ public final class BaseMetalsConfigScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         renderBackground(graphics, mouseX, mouseY, partialTicks);
         super.render(graphics, mouseX, mouseY, partialTicks);
-        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
+        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFFFF);
 
         for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
             if (child instanceof OptionButton && ((OptionButton) child).isHoveredOrFocused()) {
                 String key = ((OptionButton) child).option;
                 if (key != null) {
                     List<FormattedCharSequence> help = new ArrayList<>(font.split(
-                            net.minecraft.network.chat.Component.translatable(PREFIX + key + ".tooltip"), 280));
+                            Component.translatable(PREFIX + key + ".tooltip"), 280));
                     if ("contentMode".equals(key)) {
-                        help.addAll(font.split(net.minecraft.network.chat.Component.translatable(edits.mode().translationKey() + ".description"), 280));
-                        help.addAll(font.split(net.minecraft.network.chat.Component.translatable(PREFIX + "restart"), 280));
+                        help.addAll(font.split(Component.translatable(
+                                edits.mode().translationKey() + ".description"), 280));
+                        help.addAll(font.split(Component.translatable(PREFIX + "restart"), 280));
                     }
-                    graphics.renderTooltip(font, help, mouseX, mouseY);
+                    graphics.setTooltipForNextFrame(help, mouseX, mouseY);
                 }
             }
         }
     }
 
-    private static final class OptionButton extends Button {
+    private static final class OptionButton extends Button.Plain {
         private final String option;
 
         private OptionButton(int x, int y, int width, String label, Runnable click, String option) {
-            super(x, y, width, 20, net.minecraft.network.chat.Component.literal(label), button -> click.run(), DEFAULT_NARRATION);
+            super(x, y, width, 20, Component.literal(label), button -> click.run(), DEFAULT_NARRATION);
             this.option = option;
         }
 

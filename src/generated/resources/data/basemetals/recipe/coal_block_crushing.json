@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/coal"
-  },
+  "ingredient": "#forge:storage_blocks/coal",
   "result": {
     "count": 9,
     "id": "basemetals:coal_powder"

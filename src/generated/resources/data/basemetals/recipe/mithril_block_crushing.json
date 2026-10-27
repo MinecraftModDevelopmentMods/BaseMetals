@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/mithril"
-  },
+  "ingredient": "#forge:storage_blocks/mithril",
   "result": {
     "count": 9,
     "id": "basemetals:mithril_powder"

@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.21.1)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.1)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.21.11)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.11)
 
 # Base Metals
 
@@ -12,21 +12,23 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.1 Forge version, `3.1.1.121011`. It keeps the
-fixes and features from the released 1.20.6 version, including raw metals, ore texture
-overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
-their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
-Tables are no longer needed.
+This is the Minecraft 1.21.11 Forge version, `3.1.1.121111`. It keeps the
+fixes and features from the released 1.21.1 version, including raw metals, ore
+texture overlays and High/Low Fantasy modes. Existing Base Metals items and
+blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
+Additional Loot Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `1.21.1`
-- Forge `52.1.0` or newer in the Minecraft 1.21.1 Forge 52 line
+- Minecraft `1.21.11`
+- Forge `61.1.0` or newer in the Minecraft 1.21.11 Forge 61 line
 - A current Java 21 runtime
-- OreSpawn `[4.1.0.121011,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.121111,5.0.0)` on both client and server
 
-This version uses OreSpawn `4.1.0.121011`. Put
-`BaseMetals-3.1.1.121011.jar` and a compatible OreSpawn JAR in the `mods`
+The port has also been checked against Forge `61.2.4`.
+
+This version uses OreSpawn `4.1.0.121111`. Put
+`BaseMetals-3.1.1.121111.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -45,10 +47,12 @@ ingots, powders, plates, rods, gears and other components from different mods
 can be used together.
 
 Where vanilla has the same copper forms, recipes now produce vanilla ingots,
-blocks, doors, trapdoors, cut-copper slabs and stairs. The old Base Metals items
-and blocks stay registered and continue working in existing saves. Shared
-ingredient tags accept both versions, so older items and the rest of the copper
-recipe chains remain usable. Other Base Metals copper equipment is unchanged.
+blocks, nuggets, tools, armour, horse armour, bars, doors, trapdoors, cut-copper
+slabs and stairs. The old Base Metals items and blocks stay registered and
+continue working in existing saves. Shared ingredient tags accept both versions,
+so older items and the rest of the copper recipe chains remain usable.
+Existing Base Metals copper equipment keeps its
+original behaviour.
 
 Notable mechanics include:
 
@@ -146,7 +150,7 @@ Forge item, block, and fluid tags are Base Metals' public compatibility API.
 
 Compatible tags and the existing recipe data for Mekanism, Thermal, Tinkers'
 Construct and Ender IO are retained, but their Java integrations are not enabled
-in this Forge 1.21.1 port. Do not add jars made for older Minecraft versions or
+in this Forge 1.21.11 port. Do not add jars made for older Minecraft versions or
 NeoForge to this instance. No optional integration API is required to compile
 or launch Base Metals.
 
@@ -199,7 +203,7 @@ early splash window. Minecraft still opens its game window and runs the full
 world check. Ordinary client launches keep the normal splash screen.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.121011`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.1.121111`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

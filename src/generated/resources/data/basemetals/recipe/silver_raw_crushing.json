@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/silver"
-  },
+  "ingredient": "#forge:raw_materials/silver",
   "result": {
     "id": "basemetals:silver_powder"
   }

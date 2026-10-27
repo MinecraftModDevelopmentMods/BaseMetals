@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:pewter_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/pewter"
-      },
-      "R": {
-        "tag": "forge:rods/pewter"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/pewter",
+      "R": "#forge:rods/pewter"
     },
     "pattern": [
       "N",

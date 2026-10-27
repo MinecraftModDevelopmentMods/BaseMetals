@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:bronze_boots",
     "key": {
-      "X": {
-        "tag": "forge:ingots/bronze"
-      }
+      "X": "#forge:ingots/bronze"
     },
     "pattern": [
       "X X",

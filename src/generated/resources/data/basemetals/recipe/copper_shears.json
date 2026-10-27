@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:copper_shears",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       " X",

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/antimony"
-  },
+  "ingredient": "#forge:nuggets/antimony",
   "result": {
     "id": "basemetals:antimony_smallpowder"
   }

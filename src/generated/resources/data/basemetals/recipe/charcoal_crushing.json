@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:charcoal"
-  },
+  "ingredient": "minecraft:charcoal",
   "result": {
     "id": "basemetals:charcoal_powder"
   }

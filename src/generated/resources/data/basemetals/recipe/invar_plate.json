@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:invar_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       "XXX"

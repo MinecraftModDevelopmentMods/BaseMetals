@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:aquarium_door",
     "key": {
-      "X": {
-        "tag": "forge:ingots/aquarium"
-      }
+      "X": "#forge:ingots/aquarium"
     },
     "pattern": [
       "XX",

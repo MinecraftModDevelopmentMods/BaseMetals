@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:lead_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       "  X",

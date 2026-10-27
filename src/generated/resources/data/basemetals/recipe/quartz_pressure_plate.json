@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:quartz_pressure_plate",
     "key": {
-      "X": {
-        "tag": "forge:gems/quartz"
-      }
+      "X": "#forge:gems/quartz"
     },
     "pattern": [
       "XX"

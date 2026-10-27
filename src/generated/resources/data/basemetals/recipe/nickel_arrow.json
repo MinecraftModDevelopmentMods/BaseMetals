@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:nickel_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/nickel"
-      },
-      "R": {
-        "tag": "forge:rods/nickel"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/nickel",
+      "R": "#forge:rods/nickel"
     },
     "pattern": [
       "N",

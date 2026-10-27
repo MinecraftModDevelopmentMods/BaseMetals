@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:brass_slab"
-  },
+  "ingredient": "basemetals:brass_slab",
   "result": {
     "count": 4,
     "id": "basemetals:brass_nugget"

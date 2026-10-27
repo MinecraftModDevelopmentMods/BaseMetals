@@ -1,111 +1,108 @@
 package zone.moddev.mc.basemetals.recipe;
 
+import java.util.List;
+
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import com.google.gson.JsonSyntaxException;
-import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
-/** Keeps recipe IDs stable between modes, including IDs stored in an old recipe book. */
-public final class ContentCraftingRecipe {
-    public static final RecipeSerializer<Recipe<?>> SERIALIZER = new Serializer();
-    private ContentCraftingRecipe() {}
+/** Keeps recipe IDs stable while hiding recipes that the selected mode does not allow. */
+public final class ContentCraftingRecipe implements CraftingRecipe {
+    public static final RecipeSerializer<ContentCraftingRecipe> SERIALIZER = new Serializer();
+    private final CraftingRecipe plain;
 
-    private static boolean allowed(Recipe recipe) {
-        return ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(recipe.getResultItem(net.minecraft.core.RegistryAccess.EMPTY).getItem()).toString());
+    private ContentCraftingRecipe(CraftingRecipe plain) {
+        this.plain = plain;
     }
 
-    private static Recipe wrap(Recipe recipe) {
-        // Recipe-book placement needs the shaped recipe's width and height, not just its ingredients.
-        if (recipe instanceof ShapedRecipe) return new Shaped((ShapedRecipe) recipe);
-        if (recipe instanceof ShapelessRecipe) return new Shapeless((ShapelessRecipe) recipe);
-        throw new IllegalArgumentException("Not an ordinary crafting recipe: " + recipe.getSerializer());
+    private boolean allowed() {
+        ItemStack result = plain.assemble(CraftingInput.EMPTY, RegistryAccess.EMPTY);
+        return ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(result.getItem()).toString());
     }
 
-    private static final class Shaped extends ShapedRecipe {
-        private final ShapedRecipe plain;
-
-        private Shaped(ShapedRecipe plain) {
-            super(plain.getGroup(), plain.category(),
-                    new net.minecraft.world.item.crafting.ShapedRecipePattern(plain.getWidth(), plain.getHeight(),
-                            plain.getIngredients(), java.util.Optional.empty()),
-                    plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.showNotification());
-            this.plain = plain;
+    private static ContentCraftingRecipe wrap(Recipe<?> recipe) {
+        if (!(recipe instanceof CraftingRecipe crafting)) {
+            throw new IllegalArgumentException("Expected a crafting recipe, got " + recipe.getSerializer());
         }
 
-        @Override
-        public boolean matches(CraftingInput inventory, Level world) {
-            return allowed(this) && super.matches(inventory, world);
-        }
-
-        @Override
-        public ItemStack assemble(CraftingInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
-            return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean isSpecial() {
-            return !allowed(this);
-        }
-
-        @Override
-        public RecipeSerializer<?> getSerializer() {
-            return SERIALIZER;
-        }
+        return new ContentCraftingRecipe(crafting);
     }
 
-    private static final class Shapeless extends ShapelessRecipe {
-        private final ShapelessRecipe plain;
-
-        private Shapeless(ShapelessRecipe plain) {
-            super(plain.getGroup(), plain.category(), plain.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), plain.getIngredients());
-            this.plain = plain;
-        }
-
-        @Override
-        public boolean matches(CraftingInput inventory, Level world) {
-            return allowed(this) && super.matches(inventory, world);
-        }
-
-        @Override
-        public ItemStack assemble(CraftingInput inventory, net.minecraft.core.HolderLookup.Provider registries) {
-            return allowed(this) ? super.assemble(inventory, registries) : ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean isSpecial() {
-            return !allowed(this);
-        }
-
-        @Override
-        public RecipeSerializer<?> getSerializer() {
-            return SERIALIZER;
-        }
+    @Override
+    public boolean matches(CraftingInput input, Level level) {
+        return allowed() && plain.matches(input, level);
     }
 
-    private static Recipe<?> plain(Recipe<?> recipe) {
-        return recipe instanceof Shaped shaped ? shaped.plain : ((Shapeless) recipe).plain;
+    @Override
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
+        return allowed() ? plain.assemble(input, registries) : ItemStack.EMPTY;
     }
 
-    private static final class Serializer implements RecipeSerializer<Recipe<?>> {
-        private static final MapCodec<Recipe<?>> CODEC = Recipe.CODEC.fieldOf("recipe")
-                .xmap(ContentCraftingRecipe::wrap, ContentCraftingRecipe::plain);
-        private static final StreamCodec<RegistryFriendlyByteBuf, Recipe<?>> STREAM_CODEC =
-                Recipe.STREAM_CODEC.map(ContentCraftingRecipe::wrap, ContentCraftingRecipe::plain);
+    @Override
+    public boolean isSpecial() {
+        return !allowed() || plain.isSpecial();
+    }
 
-        @Override public MapCodec<Recipe<?>> codec() { return CODEC; }
-        @Override public StreamCodec<RegistryFriendlyByteBuf, Recipe<?>> streamCodec() { return STREAM_CODEC; }
+    @Override
+    public String group() {
+        return plain.group();
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return plain.category();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return allowed() ? plain.placementInfo() : PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public List<RecipeDisplay> display() {
+        return allowed() ? plain.display() : List.of();
+    }
+
+    @Override
+    public boolean showNotification() {
+        return plain.showNotification();
+    }
+
+    @Override
+    public RecipeSerializer<ContentCraftingRecipe> getSerializer() {
+        return SERIALIZER;
+    }
+
+    private static final class Serializer implements RecipeSerializer<ContentCraftingRecipe> {
+        private static final MapCodec<ContentCraftingRecipe> CODEC = Recipe.CODEC.fieldOf("recipe")
+                .xmap(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
+        // Preserve empty pattern slots and tag names instead of flattening the ingredients.
+        private static final StreamCodec<RegistryFriendlyByteBuf, ContentCraftingRecipe> STREAM_CODEC =
+                ByteBufCodecs.fromCodecWithRegistries(Recipe.CODEC)
+                        .map(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
+
+        @Override
+        public MapCodec<ContentCraftingRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, ContentCraftingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
     }
 }

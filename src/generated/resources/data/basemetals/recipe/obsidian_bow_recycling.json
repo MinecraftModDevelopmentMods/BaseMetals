@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.4,
-  "ingredient": {
-    "item": "basemetals:obsidian_bow"
-  },
+  "ingredient": "basemetals:obsidian_bow",
   "result": {
     "id": "basemetals:obsidian_ingot"
   }

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:wood_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "minecraft:logs"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#minecraft:logs"
     },
     "pattern": [
       "X",

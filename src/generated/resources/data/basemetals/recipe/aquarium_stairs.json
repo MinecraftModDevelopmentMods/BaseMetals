@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:aquarium_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/aquarium"
-      }
+      "X": "#forge:storage_blocks/aquarium"
     },
     "pattern": [
       "X  ",

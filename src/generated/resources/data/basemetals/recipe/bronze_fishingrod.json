@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bronze_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/bronze"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/bronze",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

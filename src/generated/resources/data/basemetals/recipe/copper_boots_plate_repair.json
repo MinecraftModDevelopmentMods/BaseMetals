@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/copper"
-  },
+  "plate": "#forge:plates/copper",
   "target": "basemetals:copper_boots"
 }

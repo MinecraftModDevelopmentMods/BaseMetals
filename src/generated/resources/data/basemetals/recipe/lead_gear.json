@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:lead_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/lead"
-      },
-      "X": {
-        "tag": "forge:ingots/lead"
-      }
+      "R": "#forge:rods/lead",
+      "X": "#forge:ingots/lead"
     },
     "pattern": [
       " X ",

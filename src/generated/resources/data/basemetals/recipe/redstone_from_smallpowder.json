@@ -5,9 +5,7 @@
     "category": "building",
     "group": "minecraft:redstone",
     "key": {
-      "X": {
-        "tag": "forge:tiny_dusts/redstone"
-      }
+      "X": "#forge:tiny_dusts/redstone"
     },
     "pattern": [
       "XXX",

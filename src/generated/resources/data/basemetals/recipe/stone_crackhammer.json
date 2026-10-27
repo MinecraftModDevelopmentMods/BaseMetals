@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:stone_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "item": "minecraft:stone_bricks"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "minecraft:stone_bricks"
     },
     "pattern": [
       "X",

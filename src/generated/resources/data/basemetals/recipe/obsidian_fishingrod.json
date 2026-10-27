@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:obsidian_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/obsidian"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/obsidian",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

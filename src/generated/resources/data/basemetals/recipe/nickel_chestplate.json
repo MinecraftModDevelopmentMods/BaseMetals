@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:nickel_chestplate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/nickel"
-      }
+      "X": "#forge:ingots/nickel"
     },
     "pattern": [
       "X X",

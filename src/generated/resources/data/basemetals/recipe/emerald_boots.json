@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:emerald_boots",
     "key": {
-      "X": {
-        "tag": "forge:gems/emerald"
-      }
+      "X": "#forge:gems/emerald"
     },
     "pattern": [
       "X X",

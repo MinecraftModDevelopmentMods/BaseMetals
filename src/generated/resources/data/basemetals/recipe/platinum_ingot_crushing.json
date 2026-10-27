@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/platinum"
-  },
+  "ingredient": "#forge:ingots/platinum",
   "result": {
     "id": "basemetals:platinum_powder"
   }

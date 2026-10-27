@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:silver_trapdoor",
     "key": {
-      "X": {
-        "tag": "forge:ingots/silver"
-      }
+      "X": "#forge:ingots/silver"
     },
     "pattern": [
       "XX",

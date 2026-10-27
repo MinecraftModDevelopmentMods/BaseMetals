@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       "  X",

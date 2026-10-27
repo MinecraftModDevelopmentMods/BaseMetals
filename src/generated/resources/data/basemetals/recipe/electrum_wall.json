@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:electrum_wall",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/electrum"
-      }
+      "X": "#forge:storage_blocks/electrum"
     },
     "pattern": [
       "XXX",

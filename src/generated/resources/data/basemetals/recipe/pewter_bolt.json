@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:pewter_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/pewter"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/pewter"
     },
     "pattern": [
       "R",

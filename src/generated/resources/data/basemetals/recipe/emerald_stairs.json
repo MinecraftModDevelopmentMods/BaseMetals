@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:emerald_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/emerald"
-      }
+      "X": "#forge:storage_blocks/emerald"
     },
     "pattern": [
       "X  ",

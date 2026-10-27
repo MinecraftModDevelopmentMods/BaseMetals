@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.0,
-  "ingredient": {
-    "item": "basemetals:diamond_lever"
-  },
+  "ingredient": "basemetals:diamond_lever",
   "result": {
     "id": "minecraft:diamond"
   }

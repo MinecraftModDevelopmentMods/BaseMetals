@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bronze_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/bronze"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/bronze"
     },
     "pattern": [
       "R",

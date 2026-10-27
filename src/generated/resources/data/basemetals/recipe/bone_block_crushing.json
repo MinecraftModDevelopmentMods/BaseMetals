@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:bone_block"
-  },
+  "ingredient": "minecraft:bone_block",
   "result": {
     "count": 9,
     "id": "minecraft:bone_meal"

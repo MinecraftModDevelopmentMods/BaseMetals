@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:brass_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/brass"
-      }
+      "X": "#forge:nuggets/brass"
     },
     "pattern": [
       "X",

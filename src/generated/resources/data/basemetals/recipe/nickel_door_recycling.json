@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:nickel_door"
-  },
+  "ingredient": "basemetals:nickel_door",
   "result": {
     "count": 2,
     "id": "basemetals:nickel_ingot"

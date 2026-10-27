@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:bismuth_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/bismuth"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/bismuth",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

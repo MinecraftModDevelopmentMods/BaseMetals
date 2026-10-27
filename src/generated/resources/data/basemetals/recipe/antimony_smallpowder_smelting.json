@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/antimony"
-  },
+  "ingredient": "#forge:tiny_dusts/antimony",
   "result": {
     "id": "basemetals:antimony_nugget"
   }

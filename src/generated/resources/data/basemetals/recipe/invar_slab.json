@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:invar_slab",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/invar"
-      }
+      "X": "#forge:storage_blocks/invar"
     },
     "pattern": [
       "XXX"

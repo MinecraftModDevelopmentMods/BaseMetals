@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/tin"
-  },
+  "ingredient": "#forge:nuggets/tin",
   "result": {
     "id": "basemetals:tin_smallpowder"
   }

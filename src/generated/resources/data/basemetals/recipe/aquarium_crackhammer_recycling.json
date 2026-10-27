@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:aquarium_crackhammer"
-  },
+  "ingredient": "basemetals:aquarium_crackhammer",
   "result": {
     "id": "basemetals:aquarium_block"
   }

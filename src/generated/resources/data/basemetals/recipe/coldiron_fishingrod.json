@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:coldiron_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/coldiron"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/coldiron",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

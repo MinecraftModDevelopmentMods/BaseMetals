@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:tin_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/tin"
-      }
+      "X": "#forge:rods/tin"
     },
     "pattern": [
       "XXX"

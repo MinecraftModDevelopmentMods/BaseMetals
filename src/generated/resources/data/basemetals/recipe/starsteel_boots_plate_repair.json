@@ -1,7 +1,5 @@
 {
   "type": "basemetals:plate_repair",
-  "plate": {
-    "tag": "forge:plates/starsteel"
-  },
+  "plate": "#forge:plates/starsteel",
   "target": "basemetals:starsteel_boots"
 }

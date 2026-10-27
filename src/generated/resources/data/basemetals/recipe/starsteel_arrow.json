@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:starsteel_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/starsteel"
-      },
-      "R": {
-        "tag": "forge:rods/starsteel"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/starsteel",
+      "R": "#forge:rods/starsteel"
     },
     "pattern": [
       "N",

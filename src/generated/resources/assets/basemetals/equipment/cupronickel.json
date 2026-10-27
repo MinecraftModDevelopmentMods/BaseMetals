@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:cupronickel"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:cupronickel"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:cupronickel"
+      }
+    ]
+  }
+}

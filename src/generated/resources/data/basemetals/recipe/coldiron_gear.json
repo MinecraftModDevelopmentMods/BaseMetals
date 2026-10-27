@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:coldiron_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/coldiron"
-      },
-      "X": {
-        "tag": "forge:ingots/coldiron"
-      }
+      "R": "#forge:rods/coldiron",
+      "X": "#forge:ingots/coldiron"
     },
     "pattern": [
       " X ",

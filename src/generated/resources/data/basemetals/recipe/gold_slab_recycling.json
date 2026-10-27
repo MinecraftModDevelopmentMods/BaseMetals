@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.11,
-  "ingredient": {
-    "item": "basemetals:gold_slab"
-  },
+  "ingredient": "basemetals:gold_slab",
   "result": {
     "count": 4,
     "id": "minecraft:gold_nugget"

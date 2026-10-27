@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:platinum_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/platinum"
-      }
+      "X": "#forge:nuggets/platinum"
     },
     "pattern": [
       "X",

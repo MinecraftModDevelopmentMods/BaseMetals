@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ores/redstone"
-  },
+  "ingredient": "#forge:ores/redstone",
   "result": {
     "count": 8,
     "id": "minecraft:redstone"

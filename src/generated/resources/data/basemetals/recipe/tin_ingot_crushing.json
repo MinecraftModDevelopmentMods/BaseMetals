@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/tin"
-  },
+  "ingredient": "#forge:ingots/tin",
   "result": {
     "id": "basemetals:tin_powder"
   }

@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:platinum_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/platinum"
-      },
-      "X": {
-        "tag": "forge:ingots/platinum"
-      }
+      "R": "#forge:rods/platinum",
+      "X": "#forge:ingots/platinum"
     },
     "pattern": [
       " X ",

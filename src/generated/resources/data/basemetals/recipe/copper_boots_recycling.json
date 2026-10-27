@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.5,
-  "ingredient": {
-    "item": "basemetals:copper_boots"
-  },
+  "ingredient": "#forge:armors/boots/copper",
   "result": {
     "count": 4,
     "id": "minecraft:copper_ingot"

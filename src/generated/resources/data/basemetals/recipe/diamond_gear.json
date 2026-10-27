@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:diamond_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/diamond"
-      },
-      "X": {
-        "tag": "forge:gems/diamond"
-      }
+      "R": "#forge:rods/diamond",
+      "X": "#forge:gems/diamond"
     },
     "pattern": [
       " X ",

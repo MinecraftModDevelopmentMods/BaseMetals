@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:quartz_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:gems/quartz"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:gems/quartz"
     },
     "pattern": [
       "  X",

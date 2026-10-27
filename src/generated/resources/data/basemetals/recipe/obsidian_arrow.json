@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:obsidian_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/obsidian"
-      },
-      "R": {
-        "tag": "forge:rods/obsidian"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/obsidian",
+      "R": "#forge:rods/obsidian"
     },
     "pattern": [
       "N",

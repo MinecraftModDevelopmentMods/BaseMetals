@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:diamond_wall"
-  },
+  "ingredient": "basemetals:diamond_wall",
   "result": {
     "id": "minecraft:diamond_block"
   }

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/diamond"
-  },
+  "ingredient": "#forge:storage_blocks/diamond",
   "result": {
     "count": 9,
     "id": "basemetals:diamond_powder"

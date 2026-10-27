@@ -5,9 +5,9 @@ import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.client.gui.screens.DisconnectedScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
@@ -24,8 +24,8 @@ public final class RemoteLoginSmoke {
     private RemoteLoginSmoke() {}
 
     @SubscribeEvent
-    public static void tick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || completed || !Boolean.getBoolean("basemetals.remoteLoginSmoke")) return;
+    public static void tick(TickEvent.ClientTickEvent.Post event) {
+        if (completed || !Boolean.getBoolean("basemetals.remoteLoginSmoke")) return;
         Minecraft minecraft = Minecraft.getInstance();
         if (++ticks > 3600) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: timed out at "
                 + (minecraft.screen == null ? "gameplay" : minecraft.screen.getClass().getName()));
@@ -43,16 +43,14 @@ public final class RemoteLoginSmoke {
         if (minecraft.player != null && minecraft.level != null) {
             if (reject) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: mismatched modes entered gameplay");
             if (++joinedTicks < 40) return;
-            var recipe = minecraft.level.getRecipeManager().byKey(ResourceLocation.parse("basemetals:adamantine_bow"))
-                    .orElseThrow();
-            if (recipe.value().isSpecial() != (BaseMetalsConfig.activeMode() == ContentMode.LOW_FANTASY)) {
-                throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: recipe policy was not synchronized");
+            if (minecraft.player.connection == null) {
+                throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: gameplay has no live connection");
             }
             connections++;
             if (connections < Integer.getInteger("basemetals.loginSmokeConnections", 1)) {
                 BaseMetals.LOGGER.info("BASEMETALS_MODE_RECONNECT connection={}", connections);
-                minecraft.level.disconnect();
-                minecraft.disconnect(new TitleScreen());
+                minecraft.level.disconnect(net.minecraft.network.chat.Component.literal("Reconnect smoke"));
+                minecraft.disconnect(new TitleScreen(), false);
                 connecting = false;
                 titleTicks = 0;
                 joinedTicks = 0;

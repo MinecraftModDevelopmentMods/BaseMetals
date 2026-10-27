@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "targets": {
-    "net.minecraftforge:forge:1.21.1-52.1.0": {
+    "net.minecraftforge:forge:1.21.11-61.1.0": {
       "expectedApplications": 0,
       "rules": []
     }

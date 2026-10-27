@@ -20,7 +20,7 @@ import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -34,12 +34,12 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /** Validation-only reader for captured legacy Forge upgrade fixtures and worlds. */
-@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID)
+@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class UpgradeWorldSmoke {
     private static final String ENABLED_PROPERTY = "basemetals.upgradeWorldSmoke";
     private static final String LEGACY_WORLD_PROPERTY = "basemetals.legacyWorldSmoke";
@@ -47,10 +47,23 @@ public final class UpgradeWorldSmoke {
     private static ServerStartedEvent pending;
     private static int waitTicks;
     private static boolean equipmentReady;
+    private static boolean registered;
 
     private UpgradeWorldSmoke() {}
 
     @SubscribeEvent
+    public static void setup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
+        register();
+    }
+
+    public static void register() {
+        if (!registered) {
+            ServerStartedEvent.BUS.addListener(UpgradeWorldSmoke::onServerStarted);
+            net.minecraftforge.event.TickEvent.ServerTickEvent.Post.BUS.addListener(UpgradeWorldSmoke::onServerTick);
+            registered = true;
+        }
+    }
+
     public static void onServerStarted(ServerStartedEvent event) {
         boolean fixture = Boolean.getBoolean(ENABLED_PROPERTY);
         boolean legacyWorld = Boolean.getBoolean(LEGACY_WORLD_PROPERTY);
@@ -143,8 +156,8 @@ public final class UpgradeWorldSmoke {
                 int expectedCount = oldItem.has("count") ? oldItem.get("count").getAsInt() : 1;
                 int expectedDamage = oldItem.has("damage") ? oldItem.get("damage").getAsInt() : 0;
                 boolean proofMatches = format < 2 || stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture")
-                        .getString("proof").equals(oldItem.get("id").getAsString());
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("basemetals_fixture")
+                        .getStringOr("proof", "").equals(oldItem.get("id").getAsString());
                 boolean enchantmentMatches = !oldItem.has("enchanted") || !oldItem.get("enchanted").getAsBoolean()
                         || EnchantmentHelper.getItemEnchantmentLevel(unbreaking, stack) == 2;
                 if (!expected.equals(actual) || stack.getCount() != expectedCount
@@ -166,15 +179,15 @@ public final class UpgradeWorldSmoke {
                             (int) Math.floor(oldItem.get("armor_z").getAsDouble()));
                     overworld.getChunkAt(armorPos);
                     List<ArmorStand> stands = overworld.getEntitiesOfClass(ArmorStand.class,
-                            new AABB(armorPos.getX() - 0.75D, overworld.getMinBuildHeight(), armorPos.getZ() - 0.75D,
-                                    armorPos.getX() + 1.75D, overworld.getMaxBuildHeight(), armorPos.getZ() + 1.75D));
+                            new AABB(armorPos.getX() - 0.75D, overworld.getMinY(), armorPos.getZ() - 0.75D,
+                                    armorPos.getX() + 1.75D, overworld.getMaxY(), armorPos.getZ() + 1.75D));
                     EquipmentSlot equipmentSlot = EquipmentSlot.byName(oldItem.get("armor_slot").getAsString());
                     boolean equipped = stands.stream().anyMatch(stand -> {
                         ItemStack worn = stand.getItemBySlot(equipmentSlot);
                         return expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(worn.getItem())))
                                 && worn.getDamageValue() == expectedDamage
                                 && worn.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture").getString("proof")
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("basemetals_fixture").getStringOr("proof", "")
                                         .equals(oldItem.get("id").getAsString())
                                 && EnchantmentHelper.getItemEnchantmentLevel(unbreaking, worn) == 2;
                     });
@@ -216,19 +229,22 @@ public final class UpgradeWorldSmoke {
                     ServerPlayer player = new ServerPlayer(event.getServer(), overworld,
                             new GameProfile(UUID.fromString(savedPlayer.get("uuid").getAsString()), name),
                             net.minecraft.server.level.ClientInformation.createDefault());
-                    CompoundTag loaded = event.getServer().getPlayerList().load(player).orElse(null);
+                    CompoundTag loaded = event.getServer().getPlayerList().loadPlayerData(
+                            new net.minecraft.server.players.NameAndId(player.getGameProfile())).orElse(null);
                     if (loaded == null) {
                         failures.add("fixture playerdata did not load");
                         continue;
                     }
+                    player.load(net.minecraft.world.level.storage.TagValueInput.create(
+                            net.minecraft.util.ProblemReporter.DISCARDING, overworld.registryAccess(), loaded));
                     for (JsonElement inventoryElement : savedPlayer.getAsJsonArray("inventory")) {
                         JsonObject expectedItem = inventoryElement.getAsJsonObject();
                         int slot = expectedItem.get("slot").getAsInt();
                         ItemStack stack = player.getInventory().getItem(slot);
                         String expected = currentItemId(expectedItem.get("id").getAsString());
                         boolean proof = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("basemetals_fixture")
-                                .getString("player_proof").equals(expectedItem.get("id").getAsString());
+                                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompoundOrEmpty("basemetals_fixture")
+                                .getStringOr("player_proof", "").equals(expectedItem.get("id").getAsString());
                         if (!expected.equals(String.valueOf(ForgeRegistries.ITEMS.getKey(stack.getItem())))
                                 || !proof) {
                             if (itemMismatches < 10) failures.add("player slot " + slot + " lost " + expected);
@@ -290,9 +306,8 @@ public final class UpgradeWorldSmoke {
         }
     }
 
-    @SubscribeEvent
-    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent event) {
-        if (event.phase != net.minecraftforge.event.TickEvent.Phase.END || pending == null || ++waitTicks < 20) return;
+    public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent.Post event) {
+        if (pending == null || ++waitTicks < 20) return;
         var server = pending.getServer();
         boolean loaded = equipmentChunks.stream().allMatch(chunk -> server.overworld().areEntitiesLoaded(chunk.toLong()));
         if (!loaded && waitTicks < 200) return;
@@ -316,7 +331,7 @@ public final class UpgradeWorldSmoke {
         int retained = 0;
         for (var entry : fixture.getAsJsonObject("progress").entrySet()) {
             if ("DataVersion".equals(entry.getKey())) continue;
-            var advancement = server.getAdvancements().get(ResourceLocation.parse(entry.getKey()));
+            var advancement = server.getAdvancements().get(Identifier.parse(entry.getKey()));
             if (advancement == null) throw new IllegalStateException("Saved advancement missing: " + entry.getKey());
             var progress = player.getAdvancements().getOrStartProgress(advancement);
             if (!progress.isDone()) throw new IllegalStateException("Saved advancement is incomplete: " + entry.getKey());
@@ -367,7 +382,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentBlockId(String legacy) {
-        ResourceLocation id = ResourceLocation.parse(legacy.toLowerCase(java.util.Locale.ROOT));
+        Identifier id = Identifier.parse(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return BaseMetals.MOD_ID + ":" + MissingMappings.blockTargetPath(id.getPath());
         }
@@ -375,7 +390,7 @@ public final class UpgradeWorldSmoke {
     }
 
     private static String currentItemId(String legacy) {
-        ResourceLocation id = ResourceLocation.parse(legacy.toLowerCase(java.util.Locale.ROOT));
+        Identifier id = Identifier.parse(legacy.toLowerCase(java.util.Locale.ROOT));
         if (id.getNamespace().equals("mmdlib") || id.getNamespace().equals(BaseMetals.MOD_ID)) {
             return MissingMappings.itemTargetId(id.getPath()).toString();
         }

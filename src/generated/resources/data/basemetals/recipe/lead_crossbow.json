@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:lead_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/lead"
-      },
-      "R": {
-        "tag": "forge:rods/lead"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/lead",
+      "R": "#forge:rods/lead",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

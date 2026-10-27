@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:cupronickel_block",
     "key": {
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       "XXX",

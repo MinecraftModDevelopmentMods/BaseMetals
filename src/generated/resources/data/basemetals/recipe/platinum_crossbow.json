@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:platinum_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/platinum"
-      },
-      "R": {
-        "tag": "forge:rods/platinum"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/platinum",
+      "R": "#forge:rods/platinum",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

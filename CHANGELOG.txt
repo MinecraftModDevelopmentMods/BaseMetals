@@ -1,3 +1,15 @@
+Base Metals 3.1.1.121111
+
+- Port the released 1.21.1 version to Minecraft 1.21.11 and Forge 61, keeping Java 21.
+- Keep the existing gameplay, raw metals, ore overlays, filled buckets and High/Low Fantasy modes.
+- Update equipment, recipes, projectiles, configuration screens and item models for the newer Minecraft APIs.
+- Use vanilla copper nuggets, tools, armour, horse armour and bars for new crafting outputs. Keep old Base Metals items valid and accept both versions in shared ingredients.
+- Replace the old JavaScript migration hooks with required Mixins, keeping the checks which protect modern worlds and current player data.
+- Use the published OreSpawn 4.1.0.121111 release with the same eleven ore rules and copper defaults.
+- Let OreSpawn defer early ore-host tag lookups until Minecraft has loaded the world's tags.
+- Keep older Forge world-capability data readable after the saved-data format change.
+- Keep filled-bucket textures together on the new texture atlases, including resource-pack replacements.
+
 Base Metals 3.1.1.121011
 
 - Fix startup failures when Base Metals is added to an existing modern world, including worlds with LZ4-compressed chunks, external chunks or empty region files.

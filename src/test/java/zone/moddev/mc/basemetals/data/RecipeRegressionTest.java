@@ -202,7 +202,7 @@ class RecipeRegressionTest {
 
     private static JsonObject read(Path path) throws Exception {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            JsonObject json = new JsonParser().parse(reader).getAsJsonObject();
+            JsonObject json = RecipeDataSemantics.normalize(JsonParser.parseReader(reader)).getAsJsonObject();
             return json.has("recipe") ? json.getAsJsonObject("recipe") : json;
         }
     }

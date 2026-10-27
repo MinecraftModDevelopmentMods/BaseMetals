@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:bismuth_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/bismuth"
-      },
-      "R": {
-        "tag": "forge:rods/bismuth"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/bismuth",
+      "R": "#forge:rods/bismuth",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:adamantine_plate"
-  },
+  "ingredient": "basemetals:adamantine_plate",
   "result": {
     "id": "basemetals:adamantine_ingot"
   }

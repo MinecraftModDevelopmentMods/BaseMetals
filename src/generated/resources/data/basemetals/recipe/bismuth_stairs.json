@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:bismuth_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/bismuth"
-      }
+      "X": "#forge:storage_blocks/bismuth"
     },
     "pattern": [
       "X  ",

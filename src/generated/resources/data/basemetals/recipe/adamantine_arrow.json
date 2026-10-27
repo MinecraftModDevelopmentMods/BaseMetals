@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:adamantine_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/adamantine"
-      },
-      "R": {
-        "tag": "forge:rods/adamantine"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/adamantine",
+      "R": "#forge:rods/adamantine"
     },
     "pattern": [
       "N",

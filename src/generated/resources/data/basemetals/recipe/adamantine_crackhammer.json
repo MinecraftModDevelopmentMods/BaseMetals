@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:adamantine_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/adamantine"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/adamantine"
     },
     "pattern": [
       "X",

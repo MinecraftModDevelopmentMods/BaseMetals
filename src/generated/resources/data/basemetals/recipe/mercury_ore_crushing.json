@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ores/mercury"
-  },
+  "ingredient": "#forge:ores/mercury",
   "result": {
     "count": 2,
     "id": "basemetals:mercury_powder"

@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:lead_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/lead"
-      }
+      "X": "#forge:rods/lead"
     },
     "pattern": [
       "XXX"

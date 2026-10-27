@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:antimony_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/antimony"
-      }
+      "X": "#forge:rods/antimony"
     },
     "pattern": [
       "XXX"

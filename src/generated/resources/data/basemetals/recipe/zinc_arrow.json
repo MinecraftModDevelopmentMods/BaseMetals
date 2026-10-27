@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:zinc_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/zinc"
-      },
-      "R": {
-        "tag": "forge:rods/zinc"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/zinc",
+      "R": "#forge:rods/zinc"
     },
     "pattern": [
       "N",

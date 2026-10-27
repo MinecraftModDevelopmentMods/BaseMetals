@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:obsidian_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/obsidian"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/obsidian"
     },
     "pattern": [
       "R",

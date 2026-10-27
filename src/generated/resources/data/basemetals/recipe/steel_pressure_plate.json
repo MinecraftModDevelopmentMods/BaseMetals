@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:steel_pressure_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "XX"

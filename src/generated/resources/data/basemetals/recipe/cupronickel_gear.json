@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:cupronickel_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/cupronickel"
-      },
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "R": "#forge:rods/cupronickel",
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       " X ",

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:brass_axe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/brass"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/brass"
     },
     "pattern": [
       "XX",

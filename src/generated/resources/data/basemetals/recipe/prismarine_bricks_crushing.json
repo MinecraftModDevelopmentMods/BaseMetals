@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "item": "minecraft:prismarine_bricks"
-  },
+  "ingredient": "minecraft:prismarine_bricks",
   "result": {
     "count": 9,
     "id": "minecraft:prismarine_shard"

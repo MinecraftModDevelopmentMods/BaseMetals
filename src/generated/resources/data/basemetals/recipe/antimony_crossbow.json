@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:antimony_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/antimony"
-      },
-      "R": {
-        "tag": "forge:rods/antimony"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/antimony",
+      "R": "#forge:rods/antimony",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

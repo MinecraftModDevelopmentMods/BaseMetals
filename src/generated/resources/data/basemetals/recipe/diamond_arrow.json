@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:diamond_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/diamond"
-      },
-      "R": {
-        "tag": "forge:rods/diamond"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/diamond",
+      "R": "#forge:rods/diamond"
     },
     "pattern": [
       "N",

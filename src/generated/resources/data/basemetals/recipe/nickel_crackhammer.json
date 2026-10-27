@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:nickel_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/nickel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/nickel"
     },
     "pattern": [
       "X",

@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:emerald_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/emerald"
-      },
-      "X": {
-        "tag": "forge:gems/emerald"
-      }
+      "R": "#forge:rods/emerald",
+      "X": "#forge:gems/emerald"
     },
     "pattern": [
       "R",

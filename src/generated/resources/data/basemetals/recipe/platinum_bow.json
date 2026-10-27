@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:platinum_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/platinum"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/platinum",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

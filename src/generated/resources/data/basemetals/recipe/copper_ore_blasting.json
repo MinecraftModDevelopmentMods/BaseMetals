@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.5,
-  "ingredient": {
-    "tag": "forge:ores/copper"
-  },
+  "ingredient": "#forge:ores/copper",
   "result": {
     "id": "minecraft:copper_ingot"
   }

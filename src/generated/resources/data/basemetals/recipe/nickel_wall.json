@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:nickel_wall",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/nickel"
-      }
+      "X": "#forge:storage_blocks/nickel"
     },
     "pattern": [
       "XXX",

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:pewter_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/pewter"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/pewter"
     },
     "pattern": [
       "X",

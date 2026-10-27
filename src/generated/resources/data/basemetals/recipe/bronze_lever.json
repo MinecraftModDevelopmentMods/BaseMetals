@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:bronze_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/bronze"
-      },
-      "X": {
-        "tag": "forge:ingots/bronze"
-      }
+      "R": "#forge:rods/bronze",
+      "X": "#forge:ingots/bronze"
     },
     "pattern": [
       "R",

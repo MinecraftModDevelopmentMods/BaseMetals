@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:diamond_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/diamond"
-      }
+      "X": "#forge:storage_blocks/diamond"
     },
     "pattern": [
       "X  ",

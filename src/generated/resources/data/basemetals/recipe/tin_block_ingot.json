@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:tin_ingot",
     "ingredients": [
-      {
-        "tag": "forge:storage_blocks/tin"
-      }
+      "#forge:storage_blocks/tin"
     ],
     "result": {
       "count": 9,

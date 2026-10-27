@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:bronze_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/bronze"
-      },
-      "R": {
-        "tag": "forge:rods/bronze"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/bronze",
+      "R": "#forge:rods/bronze",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

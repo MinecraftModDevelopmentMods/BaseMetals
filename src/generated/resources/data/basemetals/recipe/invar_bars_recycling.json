@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.03,
-  "ingredient": {
-    "item": "basemetals:invar_bars"
-  },
+  "ingredient": "basemetals:invar_bars",
   "result": {
     "count": 3,
     "id": "basemetals:invar_nugget"

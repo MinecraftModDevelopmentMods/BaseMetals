@@ -6,9 +6,8 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.level.block.Block;
@@ -17,71 +16,51 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientSetup {
     private ClientSetup() {}
 
-    @SubscribeEvent
+    public static void register(net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext context) {
+        EntityRenderersEvent.RegisterRenderers.BUS.addListener(ClientSetup::registerRenderers);
+        FMLClientSetupEvent.getBus(context.getModBusGroup()).addListener(ClientSetup::clientSetup);
+        context.registerExtensionPoint(
+                net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory(
+                        (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
+    }
+
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.CUSTOM_ARROW.get(), MaterialProjectileRenderer::new);
         event.registerEntityRenderer(ModEntities.CUSTOM_BOLT.get(), MaterialProjectileRenderer::new);
     }
 
-    @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        net.minecraftforge.fml.ModLoadingContext.get().registerExtensionPoint(
-                net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory(
-                        (minecraft, parent) -> new BaseMetalsConfigScreen(parent)));
         event.enqueueWork(() -> {
             zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry.registerConfigScreen(
                     BaseMetals.MOD_ID, BaseMetalsConfigScreen::new);
             ModContent.blocksById().forEach((id, block) -> {
-                if (id.endsWith("_ore")) ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
+                if (id.endsWith("_ore")) ItemBlockRenderTypes.setRenderLayer(block.get(), ChunkSectionLayer.CUTOUT);
             });
             ModContent.fluids().values().forEach(fluid -> {
-                ItemBlockRenderTypes.setRenderLayer(fluid.source().get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(fluid.flowing().get(), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(fluid.source().get(), ChunkSectionLayer.TRANSLUCENT);
+                ItemBlockRenderTypes.setRenderLayer(fluid.flowing().get(), ChunkSectionLayer.TRANSLUCENT);
             });
             ModContent.blocksById().values().stream()
                     .map(entry -> entry.get())
                     .forEach(ClientSetup::registerBlockRenderLayer);
 
-            ModContent.itemsById().values().forEach(entry -> {
-                net.minecraft.world.item.Item item = entry.get();
-                if (item instanceof MaterialItems.Bow || item instanceof MaterialItems.Crossbow) {
-                    ItemProperties.register(item, ResourceLocation.parse("pull"), (stack, level, user, seed) ->
-                            user == null || user.getUseItem() != stack ? 0.0F
-                                    : (float) (stack.getUseDuration(user) - user.getUseItemRemainingTicks()) / 20.0F);
-                    ItemProperties.register(item, ResourceLocation.parse("pulling"), (stack, level, user, seed) ->
-                            user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
-                }
-                if (item instanceof MaterialItems.Shield) {
-                    ItemProperties.register(item, ResourceLocation.parse("blocking"), (stack, level, user, seed) ->
-                            user != null && user.isUsingItem() && user.getUseItem() == stack ? 1.0F : 0.0F);
-                }
-                if (item instanceof MaterialItems.FishingRod) {
-                    ItemProperties.register(item, ResourceLocation.parse("cast"), (stack, level, user, seed) -> {
-                        if (user == null) return 0.0F;
-                        boolean main = user.getMainHandItem() == stack;
-                        boolean off = user.getOffhandItem() == stack;
-                        if (user.getMainHandItem().getItem() instanceof FishingRodItem) off = false;
-                        return (main || off) && user instanceof Player player && player.fishing != null ? 1.0F : 0.0F;
-                    });
-                }
-            });
+
         });
     }
 
     private static void registerBlockRenderLayer(Block block) {
         if (block instanceof IronBarsBlock) {
-            ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT);
         } else if (block instanceof DoorBlock || block instanceof TrapDoorBlock) {
-            ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(block, ChunkSectionLayer.CUTOUT);
         }
     }
 }

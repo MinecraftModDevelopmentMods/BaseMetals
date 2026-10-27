@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:diamond_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/diamond"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/diamond"
     },
     "pattern": [
       "R",

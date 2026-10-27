@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:tin_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/tin"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/tin"
     },
     "pattern": [
       "  X",

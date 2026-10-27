@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.01,
-  "ingredient": {
-    "item": "basemetals:zinc_rod"
-  },
+  "ingredient": "basemetals:zinc_rod",
   "result": {
     "count": 4,
     "id": "basemetals:zinc_nugget"

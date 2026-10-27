@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       "XWX",

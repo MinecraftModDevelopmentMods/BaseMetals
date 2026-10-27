@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:pewter_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/pewter"
-      },
-      "R": {
-        "tag": "forge:rods/pewter"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/pewter",
+      "R": "#forge:rods/pewter",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

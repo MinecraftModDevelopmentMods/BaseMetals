@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.04,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/diamond"
-  },
+  "ingredient": "#forge:tiny_dusts/diamond",
   "result": {
     "id": "basemetals:diamond_nugget"
   }

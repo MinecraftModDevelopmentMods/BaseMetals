@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:platinum_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/platinum"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/platinum"
     },
     "pattern": [
       "XXX",

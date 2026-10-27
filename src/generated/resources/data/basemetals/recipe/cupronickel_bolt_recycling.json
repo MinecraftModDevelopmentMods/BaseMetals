@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.07,
-  "ingredient": {
-    "item": "basemetals:cupronickel_bolt"
-  },
+  "ingredient": "basemetals:cupronickel_bolt",
   "result": {
     "count": 2,
     "id": "basemetals:cupronickel_nugget"

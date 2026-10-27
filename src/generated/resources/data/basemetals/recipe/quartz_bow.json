@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:quartz_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/quartz"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/quartz",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/zinc"
-  },
+  "ingredient": "#forge:storage_blocks/zinc",
   "result": {
     "count": 9,
     "id": "basemetals:zinc_powder"

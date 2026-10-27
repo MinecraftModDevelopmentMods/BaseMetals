@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:gold_shield",
     "key": {
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/gold"
-      }
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/gold"
     },
     "pattern": [
       "XWX",

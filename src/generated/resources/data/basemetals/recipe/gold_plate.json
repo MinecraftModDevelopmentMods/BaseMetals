@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:gold_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/gold"
-      }
+      "X": "#forge:ingots/gold"
     },
     "pattern": [
       "XXX"

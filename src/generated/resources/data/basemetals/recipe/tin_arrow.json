@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:tin_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/tin"
-      },
-      "R": {
-        "tag": "forge:rods/tin"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/tin",
+      "R": "#forge:rods/tin"
     },
     "pattern": [
       "N",

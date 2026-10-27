@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:platinum_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/platinum"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/platinum"
     },
     "pattern": [
       "R",

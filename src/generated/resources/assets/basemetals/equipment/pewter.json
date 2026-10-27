@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:pewter"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:pewter"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:pewter"
+      }
+    ]
+  }
+}

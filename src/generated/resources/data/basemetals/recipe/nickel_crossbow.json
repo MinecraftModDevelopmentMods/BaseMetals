@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:nickel_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/nickel"
-      },
-      "R": {
-        "tag": "forge:rods/nickel"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/nickel",
+      "R": "#forge:rods/nickel",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "basemetals:copper_nugget"
-            ]
+            "items": "#forge:nuggets/copper"
           }
         ]
       },

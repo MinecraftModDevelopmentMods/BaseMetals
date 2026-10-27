@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:starsteel",
-    "basemetals:flowing_starsteel"
+    "basemetals:flowing_starsteel",
+    "basemetals:starsteel"
   ]
 }

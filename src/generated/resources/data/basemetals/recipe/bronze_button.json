@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:bronze_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/bronze"
-      }
+      "X": "#forge:nuggets/bronze"
     },
     "pattern": [
       "X",

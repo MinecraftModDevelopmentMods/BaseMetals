@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:copper_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/copper"
-      },
-      "R": {
-        "tag": "forge:rods/copper"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/copper",
+      "R": "#forge:rods/copper",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

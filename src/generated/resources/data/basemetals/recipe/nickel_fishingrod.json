@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:nickel_fishing_rod",
     "key": {
-      "R": {
-        "tag": "forge:rods/nickel"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/nickel",
+      "S": "minecraft:string"
     },
     "pattern": [
       "  R",

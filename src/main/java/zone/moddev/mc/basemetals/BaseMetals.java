@@ -9,8 +9,8 @@ import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
 import zone.moddev.mc.basemetals.entity.ModEntities;
 import zone.moddev.mc.basemetals.loot.ModLoot;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -23,12 +23,13 @@ public final class BaseMetals {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public BaseMetals(FMLJavaModLoadingContext context) {
-        IEventBus modBus = context.getModEventBus();
+        BusGroup modBus = context.getModBusGroup();
         ModContent.register(modBus);
         ModTabs.register(modBus);
         zone.moddev.mc.basemetals.recipe.ContentRecipeCondition.SERIALIZERS.register(modBus);
-        modBus.addListener(BaseMetalsConfig::onConfigLoading);
-        modBus.addListener((net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) -> {
+        net.minecraftforge.fml.event.config.ModConfigEvent.Loading.getBus(modBus)
+                .addListener(BaseMetalsConfig::onConfigLoading);
+        FMLCommonSetupEvent.getBus(modBus).addListener(event -> {
             event.enqueueWork(() -> {
                 zone.moddev.mc.basemetals.network.ContentModeNetwork.register();
             });
@@ -38,6 +39,9 @@ public final class BaseMetals {
         ModEntities.register(modBus);
         ModLoot.register(modBus);
         context.registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
-        MinecraftForge.EVENT_BUS.register(new BaseMetalsEvents());
+        if (net.minecraftforge.fml.loading.FMLEnvironment.dist == net.minecraftforge.api.distmarker.Dist.CLIENT) {
+            zone.moddev.mc.basemetals.client.ClientSetup.register(context);
+        }
+        BaseMetalsEvents.register();
     }
 }

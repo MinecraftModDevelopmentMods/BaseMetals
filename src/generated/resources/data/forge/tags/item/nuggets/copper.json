@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_nugget"
+    "basemetals:copper_nugget",
+    "minecraft:copper_nugget"
   ]
 }

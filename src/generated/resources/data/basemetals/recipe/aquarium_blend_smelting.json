@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 1.5,
-  "ingredient": {
-    "tag": "forge:blends/aquarium"
-  },
+  "ingredient": "#forge:blends/aquarium",
   "result": {
     "id": "basemetals:aquarium_ingot"
   }

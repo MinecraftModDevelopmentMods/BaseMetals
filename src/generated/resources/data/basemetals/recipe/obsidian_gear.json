@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:obsidian_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/obsidian"
-      },
-      "X": {
-        "tag": "forge:ingots/obsidian"
-      }
+      "R": "#forge:rods/obsidian",
+      "X": "#forge:ingots/obsidian"
     },
     "pattern": [
       " X ",

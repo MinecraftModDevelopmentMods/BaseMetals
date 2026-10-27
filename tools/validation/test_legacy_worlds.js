@@ -68,6 +68,9 @@ function prepare(directory, runtime, launcher, mods) {
 function checkUpgradeLog(log) {
     // Forge reports these removed vanilla names when it reads an older registry snapshot.
     const retiredVanillaEntries = new Set([
+        // Vanilla split boats by wood type and thrown potions by potion type.
+        'minecraft:boat', 'minecraft:chest_boat', 'minecraft:potion',
+        'minecraft:chain',
         'minecraft:grass_path',
         // These names were changed by vanilla's 1.20.5 data fixes.
         'minecraft:grass', 'minecraft:scute', 'minecraft:sweeping', 'minecraft:empty',
@@ -83,6 +86,9 @@ function checkUpgradeLog(log) {
         'minecraft:music.overworld.jungle_and_forest',
         'minecraft:entity.zombie_pigman.ambient', 'minecraft:entity.zombie_pigman.angry',
         'minecraft:entity.zombie_pigman.death', 'minecraft:entity.zombie_pigman.hurt',
+        'minecraft:entity.leash_knot.break', 'minecraft:entity.leash_knot.place',
+        'minecraft:entity.puffer_fish.ambient', 'minecraft:entity.wolf.howl',
+        'minecraft:entity.goat.screaming.horn_break', 'minecraft:item.goat_horn.play',
         'minecraft:music.nether', 'minecraft:item.sweet_berries.pick_from_bush'
     ]);
     // Minecraft's Caves and Cliffs data fix folds these biomes into their new names.
@@ -114,14 +120,13 @@ function checkUpgradeLog(log) {
             const registry = line.slice(line.indexOf('Unidentified mapping from registry ')
                 + 'Unidentified mapping from registry '.length).trim();
             const knownPaintingSnapshot = isVanillaPaintingSnapshot(registry, entries);
-            const renamedTrialSpawnerSounds = registry === 'minecraft:sound_event'
-                && entries.length > 0 && entries.every(entry => [
+            const knownVanillaNames = entries.length > 0 && entries.every(entry =>
+                retiredVanillaEntries.has(entry) || registry === 'minecraft:sound_event' && [
                     'minecraft:block.trial_spawner.ambient_charged',
                     'minecraft:block.trial_spawner.charge_activate'
                 ].includes(entry));
 
-            if (knownPaintingSnapshot || renamedTrialSpawnerSounds
-                || entries.length && entries.every(entry => retiredVanillaEntries.has(entry))) {
+            if (knownPaintingSnapshot || knownVanillaNames) {
                 entries.forEach(entry => acceptedEntries.add(entry));
                 continue;
             }
@@ -143,7 +148,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
     const executable = phase === 'capture' ? spec.java8 : (spec.java || spec.java17);
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.serverRuntime, directory, '1.21.1', '52.1.0');
+        : serverArguments(spec.serverRuntime, directory, '1.21.11', spec.forgeVersion || '61.1.0');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });

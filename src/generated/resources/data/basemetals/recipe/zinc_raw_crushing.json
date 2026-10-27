@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/zinc"
-  },
+  "ingredient": "#forge:raw_materials/zinc",
   "result": {
     "id": "basemetals:zinc_powder"
   }

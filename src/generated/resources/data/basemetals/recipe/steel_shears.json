@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:steel_shears",
     "key": {
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       " X",

@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 1.0,
-  "ingredient": {
-    "tag": "forge:blends/electrum"
-  },
+  "ingredient": "#forge:blends/electrum",
   "result": {
     "id": "basemetals:electrum_ingot"
   }

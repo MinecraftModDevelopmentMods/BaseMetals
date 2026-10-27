@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.03,
-  "ingredient": {
-    "tag": "forge:small_blends/invar"
-  },
+  "ingredient": "#forge:small_blends/invar",
   "result": {
     "id": "basemetals:invar_nugget"
   }

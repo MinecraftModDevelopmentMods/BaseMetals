@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:mithril_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/mithril"
-      },
-      "X": {
-        "tag": "forge:ingots/mithril"
-      }
+      "R": "#forge:rods/mithril",
+      "X": "#forge:ingots/mithril"
     },
     "pattern": [
       " X ",

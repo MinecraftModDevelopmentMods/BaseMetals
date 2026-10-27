@@ -9,21 +9,20 @@ import org.junit.jupiter.api.io.TempDir;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 class LegacyWorldDataHookTest {
     @TempDir Path world;
 
     @Test
     void levelHookPassesTheFileBeforeComponentConversion() throws IOException {
-        String hook = Files.readString(Path.of("src/main/resources/coremods/basemetals_118_compatibility.js"));
-        int start = hook.indexOf("'basemetals_legacy_world_info'");
-        int end = hook.indexOf("'basemetals_legacy_chunk_status'");
-        String levelHook = hook.substring(start, end);
-        assertTrue(levelHook.contains("'readLevelDataTagFixed'"));
-        assertTrue(levelHook.contains("'toFile', '()Ljava/io/File;'"));
-        assertFalse(levelHook.contains("'getParent'"));
-        assertTrue(levelHook.contains("'prepareLegacyWorld'"));
+        String hook = Files.readString(Path.of(
+                "src/main/java/zone/moddev/mc/basemetals/mixin/LevelStorageSourceMixin.java"));
+        assertTrue(hook.contains("method = \"readLevelDataTagFixed\""));
+        assertTrue(hook.contains("at = @At(\"HEAD\")"));
+        assertTrue(hook.contains("prepareLegacyWorld(file.toFile())"));
+        assertTrue(hook.contains("file.getFileName().toString().equals(\"level.dat\")"));
+        assertFalse(hook.contains("getParent"));
     }
 
     @Test
@@ -34,10 +33,10 @@ class LegacyWorldDataHookTest {
         root.put("Data", data);
         CompoundTag blocks = new CompoundTag();
         blocks.putInt("marker", 42);
-        root.getCompound("fml").getCompound("Registries").put("minecraft:block", blocks);
+        root.getCompoundOrEmpty("fml").getCompoundOrEmpty("Registries").put("minecraft:block", blocks);
         assertTrue(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
-        assertEquals(data, root.getCompound("Data"));
-        assertEquals(blocks, root.getCompound("fml").getCompound("Registries").getCompound("minecraft:block"));
+        assertEquals(data, root.getCompoundOrEmpty("Data"));
+        assertEquals(blocks, root.getCompoundOrEmpty("fml").getCompoundOrEmpty("Registries").getCompoundOrEmpty("minecraft:block"));
         assertFalse(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
     }
 
@@ -53,7 +52,7 @@ class LegacyWorldDataHookTest {
             CompoundTag root = biomeSnapshot("minecraft:plains");
             ListTag entries = new ListTag();
             entries.add(new CompoundTag());
-            root.getCompound("fml").getCompound("Registries").getCompound("minecraft:worldgen/biome").put(list, entries);
+            root.getCompoundOrEmpty("fml").getCompoundOrEmpty("Registries").getCompoundOrEmpty("minecraft:worldgen/biome").put(list, entries);
             CompoundTag before = root.copy();
             assertFalse(LegacyWorldDataHook.removeObsoleteVanillaBiomeSnapshot(root));
             assertEquals(before, root);
@@ -83,15 +82,15 @@ class LegacyWorldDataHookTest {
     void oldCustomOverworldDimensionsUseTheNativeBiomeSourceReplacement() {
         CompoundTag root = dimensionFixture("minecraft:vanilla_layered", "minecraft:overworld");
         CompoundTag generator = dimensionGenerator(root);
-        generator.getCompound("biome_source").putBoolean("large_biomes", true);
+        generator.getCompoundOrEmpty("biome_source").putBoolean("large_biomes", true);
 
         assertTrue(LegacyWorldDataHook.migrateRemovedVanillaBiomeSources(root));
-        assertEquals("minecraft:multi_noise", generator.getCompound("biome_source").getString("type"));
-        assertEquals("minecraft:overworld", generator.getCompound("biome_source").getString("preset"));
-        assertEquals("minecraft:large_biomes", generator.getString("settings"));
-        assertEquals(1234L, generator.getLong("seed"));
-        assertEquals("example:overworld", root.getCompound("Data").getCompound("WorldGenSettings")
-                .getCompound("dimensions").getCompound("example:overworld").getString("type"));
+        assertEquals("minecraft:multi_noise", generator.getCompoundOrEmpty("biome_source").getStringOr("type", ""));
+        assertEquals("minecraft:overworld", generator.getCompoundOrEmpty("biome_source").getStringOr("preset", ""));
+        assertEquals("minecraft:large_biomes", generator.getStringOr("settings", ""));
+        assertEquals(1234L, generator.getLongOr("seed", 0L));
+        assertEquals("example:overworld", root.getCompoundOrEmpty("Data").getCompoundOrEmpty("WorldGenSettings")
+                .getCompoundOrEmpty("dimensions").getCompoundOrEmpty("example:overworld").getStringOr("type", ""));
         assertFalse(LegacyWorldDataHook.migrateRemovedVanillaBiomeSources(root));
     }
 
@@ -103,7 +102,7 @@ class LegacyWorldDataHookTest {
         assertEquals(copy, modded);
 
         CompoundTag modern = dimensionFixture("minecraft:vanilla_layered", "minecraft:overworld");
-        modern.getCompound("Data").putInt("DataVersion", 2975);
+        modern.getCompoundOrEmpty("Data").putInt("DataVersion", 2975);
         assertFalse(LegacyWorldDataHook.migrateRemovedVanillaBiomeSources(modern));
     }
 
@@ -131,8 +130,8 @@ class LegacyWorldDataHookTest {
     }
 
     private static CompoundTag dimensionGenerator(CompoundTag root) {
-        return root.getCompound("Data").getCompound("WorldGenSettings").getCompound("dimensions")
-                .getCompound("example:overworld").getCompound("generator");
+        return root.getCompoundOrEmpty("Data").getCompoundOrEmpty("WorldGenSettings").getCompoundOrEmpty("dimensions")
+                .getCompoundOrEmpty("example:overworld").getCompoundOrEmpty("generator");
     }
 
     @Test
@@ -146,9 +145,9 @@ class LegacyWorldDataHookTest {
         wall.put("Properties", properties);
 
         assertEquals(2, LegacyWorldDataHook.migrateWallStates(wall));
-        assertEquals("low", properties.getString("north"));
-        assertEquals("none", properties.getString("east"));
-        assertEquals("tall", properties.getString("south"));
+        assertEquals("low", properties.getStringOr("north", ""));
+        assertEquals("none", properties.getStringOr("east", ""));
+        assertEquals("tall", properties.getStringOr("south", ""));
         assertEquals(0, LegacyWorldDataHook.migrateWallStates(wall));
     }
 
@@ -166,7 +165,7 @@ class LegacyWorldDataHookTest {
 
         assertEquals(1, LegacyWorldDataHook.removePhantomBedEntities(root));
         assertEquals(1, entities.size());
-        assertEquals(17, entities.getCompound(0).getInt("y"));
+        assertEquals(17, entities.getCompoundOrEmpty(0).getIntOr("y", 0));
     }
 
     @Test
@@ -177,7 +176,7 @@ class LegacyWorldDataHookTest {
         root.put("below_zero_retrogen", new CompoundTag());
 
         assertSame(root, LegacyWorldDataHook.finalizeLegacyChunk(root));
-        assertEquals("noise", root.getString("Status"));
+        assertEquals("noise", root.getStringOr("Status", ""));
         assertFalse(root.contains("BaseMetalsLegacyPreserveChunk"));
     }
 
@@ -189,14 +188,14 @@ class LegacyWorldDataHookTest {
         locations[3] = 1;
         Files.write(region, locations);
         assertEquals(1, LegacyWorldDataHook.indexLegacyChunks(world.toFile()));
-        ResourceLocation overworld = ResourceLocation.parse("minecraft:overworld");
+        Identifier overworld = Identifier.parse("minecraft:overworld");
 
         assertTrue(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 0, 1)));
         assertTrue(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 255, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, -1, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(1, 256, 1)));
         assertFalse(LegacyWorldDataHook.isProtectedChunk(overworld, new BlockPos(17, 64, 1)));
-        assertFalse(LegacyWorldDataHook.isProtectedChunk(ResourceLocation.parse("minecraft:the_nether"),
+        assertFalse(LegacyWorldDataHook.isProtectedChunk(Identifier.parse("minecraft:the_nether"),
                 new BlockPos(1, 64, 1)));
     }
 

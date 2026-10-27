@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:storage_blocks/lead"
-  },
+  "ingredient": "#forge:storage_blocks/lead",
   "result": {
     "count": 9,
     "id": "basemetals:lead_powder"

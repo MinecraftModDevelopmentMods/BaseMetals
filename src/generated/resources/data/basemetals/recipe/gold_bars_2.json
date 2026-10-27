@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:gold_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/gold"
-      }
+      "X": "#forge:rods/gold"
     },
     "pattern": [
       "XXX"

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "basemetals:nickel_pickaxe"
-  },
+  "ingredient": "basemetals:nickel_pickaxe",
   "result": {
     "count": 3,
     "id": "basemetals:nickel_ingot"

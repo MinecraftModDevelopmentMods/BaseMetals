@@ -1,8 +1,8 @@
 # Migrating from Base Metals 1.10 or 1.12
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
-3.1.0 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.21.1 instance.
+3.1.1 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
+OreSpawn 3 plugin, or the old native fallback generator into the 1.21.11 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -12,17 +12,18 @@ Any vanilla block entities which Mojang's fixer inferred from a reused mod
 numeric ID are removed at those positions. Vanilla's context-sensitive block,
 block-entity, entity, inventory, map, statistics, objective, jukebox, spawn
 egg, banner, and villager fixes still run everywhere else. The migrator reads
-the exact numeric map from an untouched legacy `level.dat`, `level.dat_old`,
-or the `basemetals-legacy-registry.dat` snapshot
-when available. If neither retains a legacy map, it uses the map captured from
+the numeric map captured from the current legacy `level.dat` or the world-local
+`basemetals-legacy-registry.dat` snapshot. An old backup is never used to start
+conversion. If a proven legacy save has no registry map, it uses the map captured from
 the public Base Metals 2.5.0-rc2.332 and MMDLib 1.0.0-rc2.36 runtime.
 
 Before replacing any region file, `level.dat`, or playerdata file, the
 migrator copies the original to
 `basemetals-1.12-region-backup` inside the world. Region replacements are
 transactional. A completed scan writes
-`BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt`, recording either the conversion
-summary or that no legacy content was present; subsequent starts do nothing.
+`BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt` with a conversion summary.
+Later starts do not repeat the completed scan. Modern worlds do not
+receive a legacy conversion marker or backup.
 
 The packaged fallback map covers the exact public 1.12 runtime. With a saved
 legacy registry map, blocks from the world's other 1.10/1.12 mods also retain
@@ -32,14 +33,14 @@ state. Base Metals and historical `mmdlib:*` states retain their old metadata
 semantics, including complete paired-door state. If neither legacy level file
 contains an ID used by a numeric chunk, migration stops instead of guessing or
 deleting it. Restore the backed-up regions and recover the world's original
-`level.dat_old` before retrying. Forge normally creates that file before Base
-Metals' migration hook runs; keep it beside `level.dat` for the first upgrade.
+world metadata before retrying. Do not replace the current metadata with an
+unrelated or stale backup.
 This supports both the original Cyano Base Metals 2.4 line and the later MMD
 Base Metals 2.5 line. Registry paths containing uppercase characters, which
 Minecraft 1.10 still allowed, are normalized to the lowercase form required by
 modern Minecraft.
 
-Base Metals 3.1.0 preserves historical `basemetals:*` IDs, including hidden
+This version preserves historical `basemetals:*` IDs, including hidden
 `double_<material>_slab` blocks and molten-fluid block IDs such as
 `basemetals:adamantine`. Dedicated bucket items and flowing-fluid registry
 entries are new. Legacy `forge:bucketfilled` stacks containing Base Metals
@@ -86,11 +87,17 @@ Old inventories remain valid in either content mode. A configuration without
 `contentMode` starts in High Fantasy; Low Fantasy only restricts new acquisition.
 The mode is a server or modpack setting, not a setting stored in each world.
 
-## Moving from 1.20.1
+## Moving from 1.20.1 through 1.21.1
 
-Minecraft 1.21.1 stores item properties as components rather than the older item
-tag. Base Metals keeps names, enchantments, durability and custom data during
+Minecraft stores item properties as components rather than the older item tag,
+and newer versions also store worn equipment differently. Base Metals keeps
+names, enchantments, durability and custom data during
 that conversion. Saved arrows and bolts also retain their ammunition.
+
+Forge 61 adds another wrapper to saved world-capability data. Base Metals reads
+both the older payload and the current wrapper, so installed mods receive their
+saved data rather than an empty replacement. New saves use Forge's current
+format. This does not enable legacy block conversion in a modern world.
 
 Make the first upgrade on a copy, then check stored equipment and inventories
 before using the upgraded world normally. Keep the original: a converted world

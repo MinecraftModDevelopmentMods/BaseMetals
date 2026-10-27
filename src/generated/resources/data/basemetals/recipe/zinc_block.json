@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:zinc_block",
     "key": {
-      "X": {
-        "tag": "forge:ingots/zinc"
-      }
+      "X": "#forge:ingots/zinc"
     },
     "pattern": [
       "XXX",

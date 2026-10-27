@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:bismuth_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/bismuth"
-      },
-      "X": {
-        "tag": "forge:ingots/bismuth"
-      }
+      "R": "#forge:rods/bismuth",
+      "X": "#forge:ingots/bismuth"
     },
     "pattern": [
       "R",

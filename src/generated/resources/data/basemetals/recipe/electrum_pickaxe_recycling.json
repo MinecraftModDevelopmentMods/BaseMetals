@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 1.0,
-  "ingredient": {
-    "item": "basemetals:electrum_pickaxe"
-  },
+  "ingredient": "basemetals:electrum_pickaxe",
   "result": {
     "count": 3,
     "id": "basemetals:electrum_ingot"

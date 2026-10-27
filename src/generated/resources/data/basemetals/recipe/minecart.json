@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "minecraft:minecart",
     "key": {
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "X X",

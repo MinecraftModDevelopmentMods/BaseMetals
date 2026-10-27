@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:electrum_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/electrum"
-      }
+      "X": "#forge:nuggets/electrum"
     },
     "pattern": [
       "X",

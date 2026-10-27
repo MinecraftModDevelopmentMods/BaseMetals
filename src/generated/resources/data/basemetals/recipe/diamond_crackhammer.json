@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:diamond_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/diamond"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/diamond"
     },
     "pattern": [
       "X",

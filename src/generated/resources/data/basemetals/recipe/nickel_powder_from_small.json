@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:nickel_powder",
     "key": {
-      "X": {
-        "tag": "forge:tiny_dusts/nickel"
-      }
+      "X": "#forge:tiny_dusts/nickel"
     },
     "pattern": [
       "XXX",

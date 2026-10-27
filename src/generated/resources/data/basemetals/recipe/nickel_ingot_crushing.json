@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/nickel"
-  },
+  "ingredient": "#forge:ingots/nickel",
   "result": {
     "id": "basemetals:nickel_powder"
   }

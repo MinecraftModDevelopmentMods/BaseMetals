@@ -2,11 +2,9 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.06,
-  "ingredient": {
-    "item": "basemetals:copper_bars"
-  },
+  "ingredient": "#forge:bars/copper",
   "result": {
     "count": 3,
-    "id": "basemetals:copper_nugget"
+    "id": "minecraft:copper_nugget"
   }
 }

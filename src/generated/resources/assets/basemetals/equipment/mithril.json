@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:mithril"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:mithril"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:mithril"
+      }
+    ]
+  }
+}

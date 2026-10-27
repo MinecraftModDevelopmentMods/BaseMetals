@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:bronze_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/bronze"
-      },
-      "R": {
-        "tag": "forge:rods/bronze"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/bronze",
+      "R": "#forge:rods/bronze"
     },
     "pattern": [
       "N",

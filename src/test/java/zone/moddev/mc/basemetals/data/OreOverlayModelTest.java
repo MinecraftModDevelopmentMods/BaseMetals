@@ -53,8 +53,9 @@ class OreOverlayModelTest {
     @Test
     void providerUsesForgeAndRemainsOutsideTheProductionSourceSet() throws Exception {
         String provider = Files.readString(Paths.get("src/dataGenerator/java/zone/moddev/mc/basemetals/data/BMBlockStateProvider.java"));
-        assertTrue(provider.contains("extends BlockStateProvider"));
-        assertTrue(provider.contains(".allFaces((direction, face) -> face.texture(\"#overlay\").cullface(direction))"));
+        assertTrue(provider.contains("implements DataProvider"));
+        assertTrue(provider.contains("elements.add(cube(-OVERLAY_OFFSET, 16 + OVERLAY_OFFSET, \"#overlay\"))"));
+        assertTrue(provider.contains("\"texture\", texture, \"cullface\", direction"));
         assertTrue(provider.contains("@author KiriCattus"));
         assertFalse(Files.isRegularFile(Paths.get("src/modelGenerator/java/zone/moddev/mc/basemetals/data/BMBlockStateProvider.java")));
         assertFalse(Files.exists(Paths.get("src/main/java/zone/moddev/mc/basemetals/data/BMBlockStateProvider.java")));

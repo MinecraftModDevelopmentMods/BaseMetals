@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.2,
-  "ingredient": {
-    "tag": "forge:raw_materials/tin"
-  },
+  "ingredient": "#forge:raw_materials/tin",
   "result": {
     "id": "basemetals:tin_ingot"
   }

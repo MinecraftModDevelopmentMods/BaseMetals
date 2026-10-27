@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/bronze"
-  },
+  "ingredient": "#forge:ingots/bronze",
   "result": {
     "id": "basemetals:bronze_powder"
   }

@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:nickel"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:nickel"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:nickel"
+      }
+    ]
+  }
+}

@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:pewter_plate"
-  },
+  "ingredient": "basemetals:pewter_plate",
   "result": {
     "id": "basemetals:pewter_ingot"
   }

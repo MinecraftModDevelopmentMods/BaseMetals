@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.17,
-  "ingredient": {
-    "tag": "forge:tiny_dusts/aquarium"
-  },
+  "ingredient": "#forge:tiny_dusts/aquarium",
   "result": {
     "id": "basemetals:aquarium_nugget"
   }

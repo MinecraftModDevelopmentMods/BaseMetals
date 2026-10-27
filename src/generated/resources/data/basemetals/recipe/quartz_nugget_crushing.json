@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/quartz"
-  },
+  "ingredient": "#forge:nuggets/quartz",
   "result": {
     "id": "basemetals:quartz_smallpowder"
   }

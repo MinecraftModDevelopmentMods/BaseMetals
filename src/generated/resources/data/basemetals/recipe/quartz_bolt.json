@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:quartz_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/quartz"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/quartz"
     },
     "pattern": [
       "R",

@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:nickel_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/nickel"
-      },
-      "X": {
-        "tag": "forge:ingots/nickel"
-      }
+      "R": "#forge:rods/nickel",
+      "X": "#forge:ingots/nickel"
     },
     "pattern": [
       " X ",

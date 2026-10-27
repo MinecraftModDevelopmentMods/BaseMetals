@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.2,
-  "ingredient": {
-    "item": "basemetals:quartz_leggings"
-  },
+  "ingredient": "basemetals:quartz_leggings",
   "result": {
     "count": 7,
     "id": "minecraft:quartz"

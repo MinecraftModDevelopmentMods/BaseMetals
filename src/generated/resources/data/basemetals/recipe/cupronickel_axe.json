@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:cupronickel_axe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/cupronickel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/cupronickel"
     },
     "pattern": [
       "XX",

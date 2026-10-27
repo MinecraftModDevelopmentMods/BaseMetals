@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:coldiron_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/coldiron"
-      }
+      "X": "#forge:storage_blocks/coldiron"
     },
     "pattern": [
       "X  ",

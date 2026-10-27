@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:aquarium_button",
     "key": {
-      "X": {
-        "tag": "forge:nuggets/aquarium"
-      }
+      "X": "#forge:nuggets/aquarium"
     },
     "pattern": [
       "X",

@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:electrum_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/electrum"
-      },
-      "X": {
-        "tag": "forge:ingots/electrum"
-      }
+      "R": "#forge:rods/electrum",
+      "X": "#forge:ingots/electrum"
     },
     "pattern": [
       "R",

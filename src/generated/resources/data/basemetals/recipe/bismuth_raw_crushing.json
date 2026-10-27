@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/bismuth"
-  },
+  "ingredient": "#forge:raw_materials/bismuth",
   "result": {
     "id": "basemetals:bismuth_powder"
   }

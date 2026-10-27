@@ -2,31 +2,31 @@ package zone.moddev.mc.basemetals.compat;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import net.minecraft.gametest.framework.GameTest;
+import net.minecraftforge.gametest.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTestNamespace;
 import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.fml.ModList;
 
 /** Proves optional-mod serializers accept every packaged compatibility recipe. */
-@GameTestHolder(value = BaseMetals.MOD_ID, namespace = BaseMetals.MOD_ID)
+@GameTestNamespace(BaseMetals.MOD_ID)
 @GameTestDontPrefix
 public final class CompatibilityRecipeGameTests {
-    private static final String EMPTY = "empty";
+    private static final String EMPTY = "basemetals:empty";
 
     private CompatibilityRecipeGameTests() {}
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
+    @GameTest(structure = EMPTY)
     public static void thermalRecipesLoadWhenInstalled(GameTestHelper helper) {
         requireRecipeCount(helper, "thermal_expansion", "thermal", 130L);
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
+    @GameTest(structure = EMPTY)
     public static void tinkersConstructRecipesLoadWhenInstalled(GameTestHelper helper) {
         requireRecipeCount(helper, "tconstruct", "tconstruct", 472L);
     }
 
-    @GameTest(batch = BaseMetals.MOD_ID, template = EMPTY)
+    @GameTest(structure = EMPTY)
     public static void enderIoRecipesLoadWhenInstalled(GameTestHelper helper) {
         requireRecipeCount(helper, "enderio", "enderio", 44L);
     }
@@ -39,9 +39,9 @@ public final class CompatibilityRecipeGameTests {
         }
 
         String pathPrefix = "compat/" + recipeFolder + "/";
-        long actual = helper.getLevel().getRecipeManager().getRecipes().stream()
-                .filter(recipe -> recipe.id().getNamespace().equals(BaseMetals.MOD_ID))
-                .filter(recipe -> recipe.id().getPath().startsWith(pathPrefix))
+        long actual = helper.getLevel().getServer().getRecipeManager().getRecipes().stream()
+                .filter(recipe -> recipe.id().identifier().getNamespace().equals(BaseMetals.MOD_ID))
+                .filter(recipe -> recipe.id().identifier().getPath().startsWith(pathPrefix))
                 .count();
         if (actual != expected) {
             helper.fail("Expected " + expected + " live " + modId

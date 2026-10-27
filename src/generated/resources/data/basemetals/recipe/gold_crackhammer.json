@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:gold_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/gold"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/gold"
     },
     "pattern": [
       "X",

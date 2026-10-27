@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/bismuth"
-  },
+  "ingredient": "#forge:nuggets/bismuth",
   "result": {
     "id": "basemetals:bismuth_smallpowder"
   }

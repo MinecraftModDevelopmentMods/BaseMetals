@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:obsidian_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/obsidian"
-      }
+      "X": "#forge:storage_blocks/obsidian"
     },
     "pattern": [
       "X  ",

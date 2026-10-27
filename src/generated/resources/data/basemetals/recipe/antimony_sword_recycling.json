@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:antimony_sword"
-  },
+  "ingredient": "basemetals:antimony_sword",
   "result": {
     "count": 2,
     "id": "basemetals:antimony_ingot"

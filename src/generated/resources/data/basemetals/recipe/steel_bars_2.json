@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:steel_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/steel"
-      }
+      "X": "#forge:rods/steel"
     },
     "pattern": [
       "XXX"

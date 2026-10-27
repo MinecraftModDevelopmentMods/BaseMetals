@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:mithril_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/mithril"
-      },
-      "X": {
-        "tag": "forge:ingots/mithril"
-      }
+      "R": "#forge:rods/mithril",
+      "X": "#forge:ingots/mithril"
     },
     "pattern": [
       "R",

@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:iron_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/iron"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/iron",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

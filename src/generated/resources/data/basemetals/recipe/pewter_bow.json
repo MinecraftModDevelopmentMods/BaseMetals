@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:pewter_bow",
     "key": {
-      "R": {
-        "tag": "forge:rods/pewter"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "R": "#forge:rods/pewter",
+      "S": "minecraft:string"
     },
     "pattern": [
       " RS",

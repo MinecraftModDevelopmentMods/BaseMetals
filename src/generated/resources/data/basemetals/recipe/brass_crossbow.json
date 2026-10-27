@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:brass_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/brass"
-      },
-      "R": {
-        "tag": "forge:rods/brass"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/brass",
+      "R": "#forge:rods/brass",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

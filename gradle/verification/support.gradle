@@ -90,6 +90,11 @@ tasks.register('generateResources', Sync) {
     into generatedResourcesDir
 }
 
+// Honour an explicit resource refresh without making ordinary builds rewrite it.
+tasks.named('sourcesJar').configure {
+    mustRunAfter tasks.named('generateResources')
+}
+
 def verifyGeneratedData = tasks.register('verifyGeneratedData') {
     group = 'verification'
     description = 'Compares native datagen output with checked-in resources without modifying them.'
@@ -118,6 +123,7 @@ def prepareGameTestStructures = tasks.register('prepareGameTestStructures') {
     group = 'verification'
     description = 'Creates the empty structure used by the isolated GameTests.'
     outputs.dir gameTestResources
+    inputs.files(fileTree('src/gametest/java') { include '**/*.java' })
     doLast {
         File structure = new File(gameTestResources.get().asFile, 'data/basemetals/structure/empty.nbt')
         structure.parentFile.mkdirs()
@@ -135,6 +141,34 @@ def prepareGameTestStructures = tasks.register('prepareGameTestStructures') {
                 nbt.writeByte(0)
             }
         }
+
+        File instances = new File(gameTestResources.get().asFile, 'data/basemetals/test_instance')
+        delete instances
+        instances.mkdirs()
+        int count = 0
+
+        fileTree('src/gametest/java').matching { include '**/*.java' }.files.sort().each { source ->
+            def methods = source.getText('UTF-8') =~ /(?s)@GameTest\((.*?)\)\s+public static void (\w+)\(/
+
+            methods.each { match ->
+                String annotation = match[1]
+                String name = match[2].replaceAll(/([A-Z])/, '_$1').toLowerCase(Locale.ROOT)
+                def maxTicks = annotation =~ /maxTicks\s*=\s*(\d+)/
+                def setupTicks = annotation =~ /setupTicks\s*=\s*(\d+)/
+                Map data = [type: 'minecraft:function', function: "basemetals:${name}",
+                            environment: 'minecraft:default', structure: 'basemetals:empty',
+                            max_ticks: maxTicks.find() ? maxTicks.group(1).toInteger() : 100,
+                            setup_ticks: setupTicks.find() ? setupTicks.group(1).toInteger() : 0]
+
+                new File(instances, "${name}.json").setText(
+                        groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(data)) + '\n', 'UTF-8')
+                count++
+            }
+        }
+
+        if (count != 46) {
+            throw new GradleException("Expected 46 native GameTest instances, found ${count}")
+        }
     }
 }
 
@@ -147,6 +181,7 @@ tasks.matching { it.name == 'prepareRunGameTestServer' }.configureEach {
 
 tasks.matching { it.name == 'runGameTestServer' }.configureEach {
     dependsOn prepareGameTestStructures
+    args '--tests', 'basemetals:*'
     doFirst {
         File runDirectory = layout.projectDirectory.dir('run-gametest').asFile
         runDirectory.mkdirs()
@@ -163,7 +198,7 @@ tasks.matching { it.name == 'runGameTestServer' }.configureEach {
     doLast {
         File log = layout.projectDirectory.file('run-gametest/logs/latest.log').asFile
         String text = log.isFile() ? log.getText('UTF-8') : ''
-        if (!(text =~ /All 43 required tests passed/).find()) {
+        if (!(text =~ /All 46 required tests passed/).find()) {
             throw new GradleException('GameTests did not report a completed, passing suite. See run-gametest/logs/latest.log.')
         }
         if (text =~ /(?i)(ERROR|FATAL)\]/) {

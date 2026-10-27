@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:electrum_horse_armor",
     "key": {
-      "W": {
-        "tag": "minecraft:wool"
-      },
-      "X": {
-        "tag": "forge:ingots/electrum"
-      }
+      "W": "#minecraft:wool",
+      "X": "#forge:ingots/electrum"
     },
     "pattern": [
       "  X",

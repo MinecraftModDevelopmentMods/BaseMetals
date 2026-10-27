@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:adamantine_bars",
     "key": {
-      "X": {
-        "tag": "forge:rods/adamantine"
-      }
+      "X": "#forge:rods/adamantine"
     },
     "pattern": [
       "XXX"

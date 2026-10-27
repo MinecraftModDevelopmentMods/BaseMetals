@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:iron_bolt",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "R": {
-        "tag": "forge:rods/iron"
-      }
+      "F": "minecraft:feather",
+      "R": "#forge:rods/iron"
     },
     "pattern": [
       "R",

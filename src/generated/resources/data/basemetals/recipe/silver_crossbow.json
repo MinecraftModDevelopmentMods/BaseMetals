@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:silver_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/silver"
-      },
-      "R": {
-        "tag": "forge:rods/silver"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/silver",
+      "R": "#forge:rods/silver",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

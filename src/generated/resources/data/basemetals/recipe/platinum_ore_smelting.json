@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 1.5,
-  "ingredient": {
-    "tag": "forge:ores/platinum"
-  },
+  "ingredient": "#forge:ores/platinum",
   "result": {
     "id": "basemetals:platinum_ingot"
   }

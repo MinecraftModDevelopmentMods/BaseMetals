@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:brass_crackhammer"
-  },
+  "ingredient": "basemetals:brass_crackhammer",
   "result": {
     "id": "basemetals:brass_block"
   }

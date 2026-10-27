@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/diamond"
-  },
+  "ingredient": "#forge:nuggets/diamond",
   "result": {
     "id": "basemetals:diamond_smallpowder"
   }

@@ -5,15 +5,9 @@
     "category": "building",
     "group": "minecraft:tripwire_hook",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "W": {
-        "tag": "minecraft:planks"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "S": "#forge:rods/wooden",
+      "W": "#minecraft:planks",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       "X",

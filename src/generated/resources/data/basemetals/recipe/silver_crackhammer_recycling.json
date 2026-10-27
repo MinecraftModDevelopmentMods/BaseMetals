@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:silver_crackhammer"
-  },
+  "ingredient": "basemetals:silver_crackhammer",
   "result": {
     "id": "basemetals:silver_block"
   }

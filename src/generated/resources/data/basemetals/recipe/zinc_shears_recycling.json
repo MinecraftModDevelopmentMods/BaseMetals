@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "basemetals:zinc_shears"
-  },
+  "ingredient": "basemetals:zinc_shears",
   "result": {
     "count": 2,
     "id": "basemetals:zinc_ingot"

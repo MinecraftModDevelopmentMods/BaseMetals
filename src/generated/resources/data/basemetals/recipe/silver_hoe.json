@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:silver_hoe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/silver"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/silver"
     },
     "pattern": [
       "XX",

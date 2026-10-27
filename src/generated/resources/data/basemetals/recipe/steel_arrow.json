@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:steel_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/steel"
-      },
-      "R": {
-        "tag": "forge:rods/steel"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/steel",
+      "R": "#forge:rods/steel"
     },
     "pattern": [
       "N",

@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:steel_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/steel"
-      },
-      "X": {
-        "tag": "forge:ingots/steel"
-      }
+      "R": "#forge:rods/steel",
+      "X": "#forge:ingots/steel"
     },
     "pattern": [
       " X ",

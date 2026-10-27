@@ -1,0 +1,49 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        7,
+        0.001,
+        7
+      ],
+      "to": [
+        9,
+        0.001,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#edge"
+        },
+        "up": {
+          "texture": "#edge"
+        }
+      },
+      "from": [
+        7,
+        15.999,
+        7
+      ],
+      "to": [
+        9,
+        15.999,
+        9
+      ]
+    }
+  ],
+  "textures": {
+    "edge": "basemetals:block/copper_bars",
+    "particle": "basemetals:block/copper_bars"
+  }
+}

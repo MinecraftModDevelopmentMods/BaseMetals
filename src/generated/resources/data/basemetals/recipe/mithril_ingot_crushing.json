@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/mithril"
-  },
+  "ingredient": "#forge:ingots/mithril",
   "result": {
     "id": "basemetals:mithril_powder"
   }

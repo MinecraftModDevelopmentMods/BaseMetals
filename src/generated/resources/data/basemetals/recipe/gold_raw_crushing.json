@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/gold"
-  },
+  "ingredient": "#forge:raw_materials/gold",
   "result": {
     "id": "basemetals:gold_powder"
   }

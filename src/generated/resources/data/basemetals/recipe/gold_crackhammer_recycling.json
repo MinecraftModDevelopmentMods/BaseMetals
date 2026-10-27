@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "basemetals:gold_crackhammer"
-  },
+  "ingredient": "basemetals:gold_crackhammer",
   "result": {
     "id": "minecraft:gold_block"
   }

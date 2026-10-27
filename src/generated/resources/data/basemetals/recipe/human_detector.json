@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:human_detector",
     "key": {
-      "G": {
-        "tag": "forge:gears"
-      },
-      "X": {
-        "item": "minecraft:brick"
-      }
+      "G": "#forge:gears",
+      "X": "minecraft:brick"
     },
     "pattern": [
       "XX",

@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:quartz_nugget",
     "ingredients": [
-      {
-        "tag": "forge:gems/quartz"
-      }
+      "#forge:gems/quartz"
     ],
     "result": {
       "count": 9,

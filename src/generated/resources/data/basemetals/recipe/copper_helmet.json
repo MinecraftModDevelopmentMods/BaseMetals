@@ -2,19 +2,17 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
-    "group": "basemetals:copper_helmet",
+    "category": "misc",
+    "group": "minecraft:copper_helmet",
     "key": {
-      "X": {
-        "tag": "forge:ingots/copper"
-      }
+      "X": "#forge:ingots/copper"
     },
     "pattern": [
       "XXX",
       "X X"
     ],
     "result": {
-      "id": "basemetals:copper_helmet"
+      "id": "minecraft:copper_helmet"
     }
   }
 }

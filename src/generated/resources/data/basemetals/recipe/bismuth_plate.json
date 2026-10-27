@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:bismuth_plate",
     "key": {
-      "X": {
-        "tag": "forge:ingots/bismuth"
-      }
+      "X": "#forge:ingots/bismuth"
     },
     "pattern": [
       "XXX"

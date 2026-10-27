@@ -20,6 +20,7 @@ Keep machine-specific paths in Gradle properties, never in these scripts.
 
 Model and data providers live in the separate `dataGenerator` source set.
 Use `generateResources` after changing them to update the committed resources.
+Run it before starting a separate build, so resource processing sees the new files.
 `check` generates a temporary copy and reports differences without changing
 source files. Neither the providers nor test probes enter ordinary game
 launches or public jars.
@@ -30,9 +31,13 @@ flower, sapling and leaf tags include suitable new plants.
 
 Normal client and server launches load only Base Metals and OreSpawn. The
 optional-mod profile has its own run folder, but no optional integration mods
-are pinned for Forge 1.21.1. The Mekanism, Tinkers, Thermal and Ender IO Java
+are pinned for Forge 1.21.11. The Mekanism, Tinkers, Thermal and Ender IO Java
 integrations are not enabled here; their dormant data remains available for
 future integration work.
+
+Filled buckets use three atlas aliases from the vanilla bucket and Forge masks.
+They keep the bucket and molten fluid on the block atlas without copying those
+textures, so resource packs can still replace them.
 
 Run `prepareEclipse` after importing the project or refreshing Gradle. It
 generates the launches, copies processed resources and checks that ordinary

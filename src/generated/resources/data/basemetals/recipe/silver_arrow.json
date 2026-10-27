@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:silver_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/silver"
-      },
-      "R": {
-        "tag": "forge:rods/silver"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/silver",
+      "R": "#forge:rods/silver"
     },
     "pattern": [
       "N",

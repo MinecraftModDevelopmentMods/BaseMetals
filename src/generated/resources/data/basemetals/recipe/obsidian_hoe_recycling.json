@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.4,
-  "ingredient": {
-    "item": "basemetals:obsidian_hoe"
-  },
+  "ingredient": "basemetals:obsidian_hoe",
   "result": {
     "count": 2,
     "id": "basemetals:obsidian_ingot"

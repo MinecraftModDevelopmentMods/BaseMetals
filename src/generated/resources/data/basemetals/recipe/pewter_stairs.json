@@ -5,9 +5,7 @@
     "category": "building",
     "group": "basemetals:pewter_stairs",
     "key": {
-      "X": {
-        "tag": "forge:storage_blocks/pewter"
-      }
+      "X": "#forge:storage_blocks/pewter"
     },
     "pattern": [
       "X  ",

@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "basemetals:antimony"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "basemetals:antimony"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "basemetals:antimony"
+      }
+    ]
+  }
+}

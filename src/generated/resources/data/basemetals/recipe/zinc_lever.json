@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:zinc_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/zinc"
-      },
-      "X": {
-        "tag": "forge:ingots/zinc"
-      }
+      "R": "#forge:rods/zinc",
+      "X": "#forge:ingots/zinc"
     },
     "pattern": [
       "R",

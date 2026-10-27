@@ -5,9 +5,7 @@
     "category": "equipment",
     "group": "basemetals:coldiron_boots",
     "key": {
-      "X": {
-        "tag": "forge:ingots/coldiron"
-      }
+      "X": "#forge:ingots/coldiron"
     },
     "pattern": [
       "X X",

@@ -173,12 +173,43 @@ def match_fallen_blocks(missing, recovered):
 
 def compare(original, upgraded):
     before, after = chunks(original), chunks(upgraded)
+    decoded_sections = {}
+
+    def block_at(world, dimension, x, y, z):
+        key = (dimension, x >> 4, z >> 4)
+        section_y = y >> 4
+        cache_key = (id(world), key, section_y)
+        if cache_key not in decoded_sections:
+            chunk = world.get(key, {})
+            sections = chunk.get("Sections", chunk.get("sections", []))
+            section = next((entry for entry in sections if int(entry["Y"]) == section_y), None)
+            decoded_sections[cache_key] = list(block_names(section)) if section is not None else [None] * 4096
+        index = ((y & 15) << 8) | ((z & 15) << 4) | (x & 15)
+        return decoded_sections[cache_key][index]
+
+    def natural_grass_growth(dimension, x, y, z):
+        if block_at(before, dimension, x, y + 1, z) not in AIR:
+            return False
+        if block_at(after, dimension, x, y + 1, z) not in AIR:
+            return False
+
+        # Grass can spread from an exposed neighbour, but never turn buried dirt or rock into grass.
+        for dx in range(-1, 2):
+            for dz in range(-1, 2):
+                for dy in range(-1, 4):
+                    neighbour = block_at(before, dimension, x + dx, y + dy, z + dz)
+                    above = block_at(before, dimension, x + dx, y + dy + 1, z + dz)
+                    if neighbour == "minecraft:grass_block" and above in AIR:
+                        return True
+        return False
+
     original_drops, current_drops = [], []
     falling_blocks(original, before, original_drops)
     current_falling = falling_blocks(upgraded, after, current_drops)
     old_drop_ids = {drop["uuid"] for drop in original_drops}
     current_drops = [drop for drop in current_drops if drop["uuid"] not in old_drop_ids]
     checked = 0
+    grass_updates = 0
     missing, recovered = [], []
 
     for (dimension, chunk_x, chunk_z, column), entries in current_falling.items():
@@ -217,6 +248,10 @@ def compare(original, upgraded):
                     continue
                 checked += 1
                 if actual[index] != expected:
+                    if (expected == "minecraft:dirt" and actual[index] == "minecraft:grass_block"
+                            and natural_grass_growth(key[0], math.floor(x), y, math.floor(z))):
+                        grass_updates += 1
+                        continue
                     # Vanilla replaces the old Overworld floor when it opens the new underground.
                     if (key[0] == "" and 0 <= y <= 4 and lowest_section < 0
                             and expected == "minecraft:bedrock" and actual[index] == "minecraft:deepslate"):
@@ -231,7 +266,7 @@ def compare(original, upgraded):
 
     match_fallen_blocks(missing, recovered)
     print(f"TERRAIN_UPGRADE PASS chunks={len(before)} solid_blocks={checked} "
-          f"recovered_falling_blocks={len(missing)}")
+          f"recovered_falling_blocks={len(missing)} natural_grass_updates={grass_updates}")
 
 
 if __name__ == "__main__":

@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "forge:raw_materials/mercury"
-  },
+  "ingredient": "#forge:raw_materials/mercury",
   "result": {
     "id": "basemetals:mercury_ingot"
   }

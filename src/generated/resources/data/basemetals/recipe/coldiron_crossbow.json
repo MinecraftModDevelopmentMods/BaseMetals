@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:coldiron_crossbow",
     "key": {
-      "G": {
-        "tag": "forge:gears/coldiron"
-      },
-      "R": {
-        "tag": "forge:rods/coldiron"
-      },
-      "S": {
-        "item": "minecraft:string"
-      }
+      "G": "#forge:gears/coldiron",
+      "R": "#forge:rods/coldiron",
+      "S": "minecraft:string"
     },
     "pattern": [
       "GRR",

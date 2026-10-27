@@ -5,12 +5,8 @@
     "category": "building",
     "group": "basemetals:starsteel_lever",
     "key": {
-      "R": {
-        "tag": "forge:rods/starsteel"
-      },
-      "X": {
-        "tag": "forge:ingots/starsteel"
-      }
+      "R": "#forge:rods/starsteel",
+      "X": "#forge:ingots/starsteel"
     },
     "pattern": [
       "R",

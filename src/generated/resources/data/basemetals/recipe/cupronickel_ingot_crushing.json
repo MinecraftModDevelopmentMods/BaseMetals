@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:ingots/cupronickel"
-  },
+  "ingredient": "#forge:ingots/cupronickel",
   "result": {
     "id": "basemetals:cupronickel_powder"
   }

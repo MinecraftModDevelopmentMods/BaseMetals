@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.3,
-  "ingredient": {
-    "tag": "forge:dusts/invar"
-  },
+  "ingredient": "#forge:dusts/invar",
   "result": {
     "id": "basemetals:invar_ingot"
   }

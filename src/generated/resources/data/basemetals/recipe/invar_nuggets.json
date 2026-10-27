@@ -5,9 +5,7 @@
     "category": "misc",
     "group": "basemetals:invar_nugget",
     "ingredients": [
-      {
-        "tag": "forge:ingots/invar"
-      }
+      "#forge:ingots/invar"
     ],
     "result": {
       "count": 9,

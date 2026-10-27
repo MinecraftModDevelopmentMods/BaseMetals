@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:steel_crackhammer",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:storage_blocks/steel"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:storage_blocks/steel"
     },
     "pattern": [
       "X",

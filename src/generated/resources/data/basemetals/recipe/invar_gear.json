@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:invar_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/invar"
-      },
-      "X": {
-        "tag": "forge:ingots/invar"
-      }
+      "R": "#forge:rods/invar",
+      "X": "#forge:ingots/invar"
     },
     "pattern": [
       " X ",

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "basemetals:pewter",
-    "basemetals:flowing_pewter"
+    "basemetals:flowing_pewter",
+    "basemetals:pewter"
   ]
 }

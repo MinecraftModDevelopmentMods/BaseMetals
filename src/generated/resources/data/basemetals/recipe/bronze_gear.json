@@ -5,12 +5,8 @@
     "category": "misc",
     "group": "basemetals:bronze_gear",
     "key": {
-      "R": {
-        "tag": "forge:rods/bronze"
-      },
-      "X": {
-        "tag": "forge:ingots/bronze"
-      }
+      "R": "#forge:rods/bronze",
+      "X": "#forge:ingots/bronze"
     },
     "pattern": [
       " X ",

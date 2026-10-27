@@ -17,7 +17,12 @@ class CopperCompatibilityTest {
     void overlappingCraftingRecipesProduceVanillaItems() throws Exception {
         for (var entry : VanillaCopper.equivalents().entrySet()) {
             String id = entry.getKey().substring("basemetals:".length());
-            String recipeId = id.equals("copper_ingot") ? "copper_ingot_from_nuggets" : id;
+            String recipeId = switch (id) {
+                case "copper_ingot" -> "copper_ingot_from_nuggets";
+                case "copper_nugget" -> "copper_nuggets";
+                case "copper_horse_armor" -> "copper_horsearmor";
+                default -> id;
+            };
 
             assertEquals(entry.getValue(), recipe(recipeId).getAsJsonObject("result")
                     .get("id").getAsString(), recipeId);
@@ -31,7 +36,8 @@ class CopperCompatibilityTest {
         for (String item : VanillaCopper.equivalents().keySet()) {
             assertTrue(manifest.getAsJsonArray("items").toString().contains('"' + item + '"'), item);
 
-            if (!item.endsWith("_ingot")) {
+            if (java.util.List.of("block", "door", "trapdoor", "slab", "stairs", "bars")
+                    .contains(item.substring("basemetals:copper_".length()))) {
                 assertTrue(manifest.getAsJsonArray("blocks").toString().contains('"' + item + '"'), item);
             }
         }
@@ -79,6 +85,6 @@ class CopperCompatibilityTest {
     }
 
     private static JsonObject read(Path path) throws Exception {
-        return JsonParser.parseString(Files.readString(path)).getAsJsonObject();
+        return RecipeDataSemantics.normalize(JsonParser.parseString(Files.readString(path))).getAsJsonObject();
     }
 }

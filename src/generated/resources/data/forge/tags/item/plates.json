@@ -10,8 +10,12 @@
     "#forge:plates/coldiron",
     "#forge:plates/copper",
     "#forge:plates/cupronickel",
+    "#forge:plates/diamond",
     "#forge:plates/electrum",
+    "#forge:plates/emerald",
+    "#forge:plates/gold",
     "#forge:plates/invar",
+    "#forge:plates/iron",
     "#forge:plates/lead",
     "#forge:plates/mithril",
     "#forge:plates/nickel",
@@ -21,10 +25,6 @@
     "#forge:plates/starsteel",
     "#forge:plates/steel",
     "#forge:plates/tin",
-    "#forge:plates/zinc",
-    "#forge:plates/diamond",
-    "#forge:plates/emerald",
-    "#forge:plates/gold",
-    "#forge:plates/iron"
+    "#forge:plates/zinc"
   ]
 }

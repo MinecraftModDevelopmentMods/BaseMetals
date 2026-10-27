@@ -2,9 +2,7 @@
   "type": "basemetals:legacy_smelting",
   "cookingtime": 200,
   "experience": 0.45,
-  "ingredient": {
-    "item": "basemetals:bronze_shears"
-  },
+  "ingredient": "basemetals:bronze_shears",
   "result": {
     "count": 2,
     "id": "basemetals:bronze_ingot"

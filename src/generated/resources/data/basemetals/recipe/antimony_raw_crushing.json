@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:raw_materials/antimony"
-  },
+  "ingredient": "#forge:raw_materials/antimony",
   "result": {
     "id": "basemetals:antimony_powder"
   }

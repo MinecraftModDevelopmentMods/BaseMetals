@@ -1,8 +1,6 @@
 {
   "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "forge:nuggets/platinum"
-  },
+  "ingredient": "#forge:nuggets/platinum",
   "result": {
     "id": "basemetals:platinum_smallpowder"
   }

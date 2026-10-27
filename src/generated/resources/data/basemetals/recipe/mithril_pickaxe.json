@@ -5,12 +5,8 @@
     "category": "equipment",
     "group": "basemetals:mithril_pickaxe",
     "key": {
-      "S": {
-        "tag": "forge:rods/wooden"
-      },
-      "X": {
-        "tag": "forge:ingots/mithril"
-      }
+      "S": "#forge:rods/wooden",
+      "X": "#forge:ingots/mithril"
     },
     "pattern": [
       "XXX",

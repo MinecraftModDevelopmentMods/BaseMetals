@@ -5,15 +5,9 @@
     "category": "equipment",
     "group": "basemetals:electrum_arrow",
     "key": {
-      "F": {
-        "item": "minecraft:feather"
-      },
-      "N": {
-        "tag": "forge:nuggets/electrum"
-      },
-      "R": {
-        "tag": "forge:rods/electrum"
-      }
+      "F": "minecraft:feather",
+      "N": "#forge:nuggets/electrum",
+      "R": "#forge:rods/electrum"
     },
     "pattern": [
       "N",
