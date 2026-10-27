@@ -1,58 +1,69 @@
 name: Base Metals CI
 
-env:
-  JAVA_VERSION: '21'
-  BRANCH_NAME: 'master-1.21.1-neo'
-
 on:
   push:
     branches:
-      - BRANCH_NAME
+      - 'master-1.21.1-neo'
       - 'feature/**'
   pull_request:
     branches:
-      - BRANCH_NAME
+      - 'master-1.21.1-neo'
+
+env:
+  JAVA_VERSION: '21'
 
 permissions:
   contents: read
+  checks: write
+  pull-requests: write
 
 concurrency:
-  group: basemetals-1.21.1-neo-${{ github.workflow }}-${{ github.ref }}
+  group: basemetals-ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Build, test, and audit
+    name: Build & Test
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 20
 
     steps:
-      - name: Check out source
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Install Java 21 runtime and toolchain
-        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'microsoft'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Grant execute permission for Gradle
+      - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: ./gradlew assemble
 
-      - name: Upload audited release candidate
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - name: Run tests
+        run: ./gradlew check
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 14
           path: |
             build/libs/*.jar
-            build/libs/*-sources.jar
-            build/libs/*-javadoc.jar
             CHANGELOG.md
