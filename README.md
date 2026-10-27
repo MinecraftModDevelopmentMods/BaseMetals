@@ -18,7 +18,9 @@
     <img src="https://img.shields.io/badge/mc.moddev.zone-16181C?style=for-the-badge&logo=&logoColor=57Z29S" alt="Website link."/>
 </a>
 
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.21.1-neo)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.1-neo)
+<a href="https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.1-neo">
+    <img src="https://img.shields.io/github/actions/workflow/status/MinecraftModDevelopmentMods/BaseMetals/ci.yml?branch=master-1.21.1-neo&style=for-the-badge" alt="Build and test"/>
+</a>
 
 Base Metals adds historically common metals, useful alloys, and fantasy metals
 to Minecraft. Depending on the material, these are available as ores, storage
