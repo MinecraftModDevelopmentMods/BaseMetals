@@ -1,6 +1,6 @@
 # Supported versions
 
-Base Metals `3.0.1.115021` targets Minecraft `1.15.2`, Forge `31.2.57`, and
+Base Metals `3.0.2.115021` targets Minecraft `1.15.2`, Forge `31.2.57`, and
 Java 8. The Gradle build itself runs on Java `17.0.1+12` and uses ForgeGradle
 `7.0.34` with Gradle `9.6.1`; those build-time runtimes do not change the Java
 8 requirement of the released mod.
@@ -16,4 +16,4 @@ CI stages the same checksum-verified file in a temporary Maven repository.
 The schema-3 provider supports the OreSpawn versions in the runtime range above.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.0.1.115021`.
+`zone.moddev.mc.basemetals:BaseMetals:3.0.2.115021`.

@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and extra loot to find in chests.
 
-This is Base Metals `3.0.1.115021` for Minecraft 1.15.2. It brings the 1.14.4
+This is Base Metals `3.0.2.115021` for Minecraft 1.15.2. It brings the 1.14.4
 release forward while keeping the same blocks, items and recipes. MMDLib and
 Additional Loot Tables are no longer needed. OreSpawn places the ores, and
 Base Metals supplies the metals and their recipes.
@@ -29,7 +29,7 @@ Armorer, Weaponsmith and Toolsmith professions introduced in Minecraft 1.14.
 - Java 8
 - OreSpawn `[4.1.0.115021,5.0.0)` on both client and server
 
-Put `BaseMetals-3.0.1.115021.jar` and OreSpawn `4.1.0.115021` (or a later
+Put `BaseMetals-3.0.2.115021.jar` and OreSpawn `4.1.0.115021` (or a later
 compatible OreSpawn 4 build for 1.15.2) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
@@ -204,7 +204,7 @@ the temporary repository through `orespawnVerificationRepository`. Local
 candidate builds remain guarded against publication.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.0.1.115021`.
+`zone.moddev.mc.basemetals:BaseMetals:3.0.2.115021`.
 
 Report defects through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
