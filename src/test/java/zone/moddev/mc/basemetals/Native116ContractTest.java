@@ -9,9 +9,49 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
 class Native116ContractTest {
+    @Test
+    void keepsPatchVersionMetadataAndAuditsInSync() throws Exception {
+        Properties properties = new Properties();
+        try (InputStream input = Files.newInputStream(Paths.get("gradle.properties"))) {
+            properties.load(input);
+        }
+        String version = properties.getProperty("mod_version");
+        assertEquals("3.1.1.116051", version);
+        assertTrue(source("src/main/resources/META-INF/mods.toml").contains("version=\"" + version + "\""));
+        for (String sourceSet : new String[] {"integrationTest", "clientIntegrationTest"}) {
+            assertTrue(source("src/" + sourceSet + "/resources/META-INF/mods.toml")
+                    .contains("versionRange=\"[" + version + "]\""), sourceSet);
+        }
+        String artifacts = source("gradle/release/artifacts.gradle");
+        assertTrue(artifacts.contains("modVersion: '" + version + "'"));
+        assertTrue(artifacts.contains("contains('version=\"" + version + "\"')"));
+        for (String doc : new String[] {"README.md", "docs/VERSIONS.md", "docs/MIGRATION.md"}) {
+            String text = source(doc);
+            assertTrue(text.contains(version), doc);
+            assertFalse(text.contains("3.1.0.116051"), doc);
+        }
+        assertTrue(source("CHANGELOG.txt").startsWith("Base Metals " + version));
+    }
+
+    @Test
+    void collectsAndComparesOnlyTheStrictlyAuditedJarsInCi() throws Exception {
+        String ci = source(".github/workflows/ci.yml");
+        assertFalse(Pattern.compile("BaseMetals-\\d+\\.\\d+\\.\\d+\\.\\d+(?:-(?:sources|javadoc))?\\.jar")
+                .matcher(ci).find(), "CI must not pin artifact filenames to a previous patch");
+        assertTrue(ci.contains("cp build/libs/*.jar \"$first/\""));
+        assertTrue(ci.contains("for jar in build/libs/*.jar; do"));
+        assertTrue(ci.contains("cmp \"$RUNNER_TEMP/basemetals-first/${jar##*/}\" \"$jar\""));
+        assertTrue(ci.contains("            build/libs/*.jar"));
+        assertTrue(ci.indexOf("verifyReleaseArtifacts") < ci.indexOf("cp build/libs/*.jar"));
+        String artifacts = source("gradle/release/artifacts.gradle");
+        assertTrue(artifacts.contains("fileTree(libs) { include '*.jar' }"));
+        assertTrue(artifacts.contains("actualArtifacts != expectedReleaseNames.sort()"));
+    }
+
     @Test
     void targetsForge36InEveryModDescriptor() throws Exception {
         for (String sourceSet : new String[] {"main", "integrationTest", "clientIntegrationTest"}) {

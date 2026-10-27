@@ -4,9 +4,11 @@ Minecraft 1.13 introduced the flattening, which replaced numeric block and item
 identifiers with names and palette-based block states. Third-party numeric
 blocks cannot be reconstructed by Mojang's vanilla fixer alone, so Base Metals
 installs a narrowly scoped migration hook before Forge reads an old world.
+The hook is registered through queued common setup, after parallel mod loading.
+Only registration timing has changed; saved IDs and migration rules are unchanged.
 
 Always upgrade a copy and retain the original 1.10/1.12 world. Install Base
-Metals `3.1.0.116051`, OreSpawn `4.1.0.116051`, and any other 1.16.5 mods needed
+Metals `3.1.1.116051`, OreSpawn `4.1.0.116051`, and any other 1.16.5 mods needed
 by that world. Do not carry MMDLib, Additional Loot Tables, the OreSpawn 3
 plugin, or Base Metals' old fallback generator into the new instance.
 

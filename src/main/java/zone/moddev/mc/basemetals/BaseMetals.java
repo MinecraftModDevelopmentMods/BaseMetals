@@ -18,6 +18,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(BaseMetals.MOD_ID)
@@ -27,14 +28,19 @@ public final class BaseMetals {
 
     public BaseMetals() {
         ModTags.initialize();
-        LegacyWorldDataHook.register();
         ContentModeNetwork.register();
         ModContent.initializeFluids();
         ContentModeLootCondition.register();
         ModEntities.initialize();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BaseMetalsConfig::onConfigLoading);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(new BaseMetalsEvents());
         DistExecutor.runWhenOn(Dist.CLIENT, () -> ClientSetup::register);
+    }
+
+    private void commonSetup(FMLCommonSetupEvent event) {
+        // Forge's shared hook list cannot be mutated safely during parallel mod loading.
+        event.enqueueWork(LegacyWorldDataHook::register);
     }
 }
