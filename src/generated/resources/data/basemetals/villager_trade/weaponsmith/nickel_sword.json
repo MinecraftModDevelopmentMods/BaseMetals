@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "basemetals:nickel_sword"
+  },
+  "max_uses": 6,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:nickel_sword"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 2,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}

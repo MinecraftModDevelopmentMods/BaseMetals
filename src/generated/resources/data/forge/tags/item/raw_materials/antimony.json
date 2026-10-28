@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:antimony_raw"
+    "#c:raw_materials/antimony"
   ]
 }

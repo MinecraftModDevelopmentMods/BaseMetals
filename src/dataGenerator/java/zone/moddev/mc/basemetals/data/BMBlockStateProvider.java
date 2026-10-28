@@ -86,8 +86,10 @@ public final class BMBlockStateProvider implements DataProvider {
         }
 
         JsonObject faces = new JsonObject();
+        JsonArray uv = new JsonArray();
+        for (int coordinate : new int[] {0, 0, 16, 16}) uv.add(coordinate);
         for (String direction : List.of("down", "up", "north", "south", "west", "east")) {
-            faces.add(direction, object("texture", texture, "cullface", direction));
+            faces.add(direction, object("texture", texture, "cullface", direction, "uv", uv));
         }
 
         return object("from", start, "to", end, "faces", faces);

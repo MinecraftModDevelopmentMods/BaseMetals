@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:gold_ingot"
+    "#c:materials/gold"
   ]
 }

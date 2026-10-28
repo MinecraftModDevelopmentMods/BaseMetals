@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_ore",
-    "minecraft:copper_ore",
-    "minecraft:deepslate_copper_ore"
+    "#c:ores/copper"
   ]
 }

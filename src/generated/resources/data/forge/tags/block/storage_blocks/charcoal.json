@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:charcoal_block"
+    "#c:storage_blocks/charcoal"
   ]
 }

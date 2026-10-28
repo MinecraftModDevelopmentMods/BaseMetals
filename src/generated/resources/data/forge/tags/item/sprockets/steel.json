@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#forge:gears/steel"
+    "#c:sprockets/steel"
   ]
 }

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_pickaxe",
-    "minecraft:copper_pickaxe"
+    "#c:tools/pickaxes/copper"
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "basemetals:bismuth_crackhammer"
+  },
+  "max_uses": 6,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:bismuth_crackhammer"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 1,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}

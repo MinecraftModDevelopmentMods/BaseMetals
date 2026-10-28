@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:coldiron_ore"
+    "#c:ores/coldiron"
   ]
 }

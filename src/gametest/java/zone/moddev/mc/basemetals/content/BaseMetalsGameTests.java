@@ -60,7 +60,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
-import net.minecraft.world.entity.npc.villager.VillagerTrades.ItemListing;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -76,7 +75,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.gametest.GameTestNamespace;
 import net.minecraftforge.gametest.GameTestDontPrefix;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -274,7 +272,7 @@ public final class BaseMetalsGameTests {
         require(helper, recipe.orElseThrow().id().identifier().equals(
                 Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, "stone_crackhammer")),
                 "The legacy stone crackhammer pattern matched the wrong recipe");
-        ItemStack output = recipe.orElseThrow().value().assemble(crafting.asCraftInput(), net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack output = recipe.orElseThrow().value().assemble(crafting.asCraftInput());
         require(helper, output.is(ModContent.item("stone_crackhammer").get()),
                 "The legacy middle-column pattern returned the wrong item");
         helper.succeed();
@@ -595,15 +593,39 @@ public final class BaseMetalsGameTests {
 
     @GameTest(structure = EMPTY)
     public static void smithsRetainTheLegacyMercuryIngotSale(GameTestHelper helper) {
-        Int2ObjectOpenHashMap<List<ItemListing>> trades = new Int2ObjectOpenHashMap<>();
-        for (int level = 1; level <= 5; level++) trades.put(level, new ArrayList<>());
-        BaseMetalsTrades.add(new VillagerTradesEvent(trades, VillagerProfession.ARMORER));
         var trader = EntityType.VILLAGER.create(helper.getLevel(), net.minecraft.world.entity.EntitySpawnReason.COMMAND);
-        boolean found = trades.values().stream().flatMap(List::stream)
-                .map(listing -> listing.getOffer(helper.getLevel(), trader, net.minecraft.util.RandomSource.create(0L)))
-                .anyMatch(offer -> offer != null
-                        && offer.getResult().is(ModContent.item("mercury_ingot").get())
-                        && offer.getResult().getCount() == 12);
+        var parameters = new net.minecraft.world.level.storage.loot.LootParams.Builder(helper.getLevel())
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, trader.position())
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.THIS_ENTITY, trader)
+                .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ADDITIONAL_COST_COMPONENT_ALLOWED,
+                        net.minecraft.util.Unit.INSTANCE)
+                .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.VILLAGER_TRADE);
+        var context = new net.minecraft.world.level.storage.loot.LootContext.Builder(parameters)
+                .create(java.util.Optional.empty());
+        var trades = helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.VILLAGER_TRADE);
+        boolean found = false;
+
+        for (var definition : BaseMetalsTrades.offers()) {
+            var id = Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, definition.id());
+            var trade = trades.getOrThrow(net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.core.registries.Registries.VILLAGER_TRADE, id)).value();
+            var offer = trade.getOffer(context);
+            boolean permitted = zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(definition.item().toString());
+            require(helper, (offer != null) == permitted, "Trade policy changed for " + id);
+            if (offer == null) continue;
+
+            require(helper, ForgeRegistries.ITEMS.getKey(offer.getResult().getItem()).equals(definition.item())
+                    && offer.getResult().getCount() == definition.count(), "Trade result changed for " + id);
+            int price = offer.getBaseCostA().getCount();
+            require(helper, definition.enchanted()
+                    ? price >= Math.min(64, definition.emeralds() + 5) && price <= Math.min(64, definition.emeralds() + 19)
+                    : price == definition.emeralds(), "Trade price changed for " + id);
+            require(helper, offer.getMaxUses() == (definition.enchanted() ? 3 : 6)
+                    && offer.getXp() == (definition.enchanted() ? 15 : 5), "Trade use or experience changed for " + id);
+            if (definition.enchanted()) require(helper, offer.getResult().isEnchanted(), "Trade lost its enchantments: " + id);
+
+            if (definition.id().equals("armorer/mercury_ingot")) found = offer.getResult().getCount() == 12;
+        }
         require(helper, found, "Armorer lost the legacy 12-Mercury-ingot sale");
         helper.succeed();
     }
@@ -645,7 +667,7 @@ public final class BaseMetalsGameTests {
         if (!(recipe.orElseThrow().value() instanceof PlateRepairRecipe repair)) return;
         require(helper, repair.matches(crafting.asCraftInput(), helper.getLevel()),
                 "Plate-repair recipe rejected a damaged item and matching plate");
-        ItemStack output = repair.assemble(crafting.asCraftInput(), net.minecraft.core.RegistryAccess.EMPTY);
+        ItemStack output = repair.assemble(crafting.asCraftInput());
         require(helper, output.is(ModContent.item("adamantine_chestplate").get()),
                 "Plate repair returned the wrong armor item");
         require(helper, output.getDamageValue() == 0, "Plate repair did not fully restore durability");
@@ -898,11 +920,11 @@ public final class BaseMetalsGameTests {
         var recipe = helper.getLevel().getServer().getRecipeManager().getRecipeFor(
                 CrushingRecipe.TYPE.get(), new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No crushing recipe loaded for " + input);
-        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY), helper.getLevel().registryAccess());
+        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY));
         Identifier expectedId = expectedItem.contains(":")
                 ? Identifier.parse(expectedItem)
                 : Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, expectedItem);
-        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY), helper.getLevel().registryAccess()).getItem()).equals(
+        require(helper, ForgeRegistries.ITEMS.getKey(recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY)).getItem()).equals(
                 expectedId), input + " crushed to the wrong output");
         require(helper, result.getCount() == expectedCount,
                 input + " crushed to " + result.getCount() + " items instead of " + expectedCount);
@@ -924,7 +946,7 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY), helper.getLevel().registryAccess());
+        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY));
         Identifier actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());
         require(helper, actualItem.equals(Identifier.parse(expectedItem)),
                 input + " smelted to " + actualItem + " instead of " + expectedItem);
@@ -938,7 +960,7 @@ public final class BaseMetalsGameTests {
                 RecipeType.SMELTING, new net.minecraft.world.item.crafting.SingleRecipeInput(input), helper.getLevel());
         require(helper, recipe.isPresent(), "No furnace recipe loaded for " + input);
         if (recipe.isEmpty()) return;
-        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY), helper.getLevel().registryAccess());
+        ItemStack result = recipe.orElseThrow().value().assemble(new net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack.EMPTY));
         TagKey<net.minecraft.world.item.Item> tag = TagKey.create(
                 net.minecraft.core.registries.Registries.ITEM, Identifier.parse(expectedTag));
         Identifier actualItem = ForgeRegistries.ITEMS.getKey(result.getItem());

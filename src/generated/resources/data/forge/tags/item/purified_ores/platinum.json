@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_crushed_purified"
+    "#c:purified_ores/platinum"
   ]
 }

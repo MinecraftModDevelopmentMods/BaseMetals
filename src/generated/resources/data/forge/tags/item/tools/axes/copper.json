@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_axe",
-    "minecraft:copper_axe"
+    "#c:tools/axes/copper"
   ]
 }

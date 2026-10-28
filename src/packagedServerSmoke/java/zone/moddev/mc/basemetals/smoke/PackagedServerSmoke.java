@@ -40,7 +40,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.1.121111".equals(baseMetals) || !"4.1.0.121111".equals(oreSpawn)) {
+        if (!"3.1.1.2601021".equals(baseMetals) || !"4.1.0.2601021".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -67,7 +67,7 @@ public final class PackagedServerSmoke {
     }
 
     private static String version(String modId) {
-        return ModList.get().getModContainerById(modId)
+        return ModList.getModContainerById(modId)
                 .orElseThrow(() -> new IllegalStateException("Missing required packaged mod " + modId))
                 .getModInfo().getVersion().toString();
     }
@@ -93,7 +93,7 @@ public final class PackagedServerSmoke {
         if (enabled != policy.allows("basemetals:adamantine_bow")) {
             throw new IllegalStateException("The recipe book does not follow the active content mode");
         }
-        if (ModList.get().isLoaded("tconstruct")) verifyTinkers();
+        if (ModList.isLoaded("tconstruct")) verifyTinkers();
         try {
             verifyIntegrationRecipes(server);
         } catch (IOException exception) {
@@ -112,7 +112,7 @@ public final class PackagedServerSmoke {
             String mod = path.contains("/thermal/") ? "thermal_expansion"
                     : path.contains("/tconstruct/") ? "tconstruct"
                     : path.contains("/mekanism/") ? "mekanism" : "enderio";
-            if (!ModList.get().isLoaded(mod)) continue;
+            if (!ModList.isLoaded(mod)) continue;
             try (var input = server.getResourceManager().getResource(resource).orElseThrow().open()) {
                 var json = com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(
                         input, StandardCharsets.UTF_8)).getAsJsonObject();
@@ -176,7 +176,7 @@ public final class PackagedServerSmoke {
     }
 
     private static void verifyTinkers() {
-        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 1.21.11 build");
+        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 26.1.2 build");
     }
 
     private static void verifyModernFlatTerrain(net.minecraft.server.MinecraftServer server) {

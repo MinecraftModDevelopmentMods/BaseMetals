@@ -43,7 +43,6 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.world.level.block.Block;
@@ -82,25 +81,19 @@ public final class Legacy112WorldMigrator {
     private static final String MARKER = "BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt";
     private static final String BACKUP_DIRECTORY = "basemetals-1.12-region-backup";
     private static Path preparedWorld;
-    private static CompoundTag preparedPlayer;
-    private static int preparedVersion;
 
     private Legacy112WorldMigrator() {}
 
     static void beginWorldLoad() {
         preparedWorld = null;
-        preparedPlayer = null;
-        preparedVersion = 0;
     }
 
-    /** Keep the original player before Forge and vanilla read the old save. */
+    /** Keep this load's provenance before Minecraft rewrites level.dat. */
     static void prepareWorld(Path levelDat, CompoundTag root) {
         if (!isLegacyLevel(root)) return;
 
         CompoundTag data = root.getCompoundOrEmpty("Data");
         preparedWorld = levelDat.toAbsolutePath().normalize().getParent();
-        preparedVersion = data.getIntOr("DataVersion", 0);
-        preparedPlayer = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "Player", Tag.TAG_COMPOUND) ? data.getCompoundOrEmpty("Player").copy() : null;
     }
 
     private static boolean isLegacyLevel(CompoundTag root) {
@@ -156,8 +149,7 @@ public final class Legacy112WorldMigrator {
                 convertedDamageValues += result.convertedDamageValues();
             }
         }
-        ItemMigration looseItems = restoreRewrittenSingleplayerPlayer(root)
-                .plus(migrateLooseInventories(root));
+        ItemMigration looseItems = migrateLooseInventories(root);
         convertedBuckets += looseItems.convertedBuckets();
         convertedItemAliases += looseItems.convertedItemAliases();
         convertedDamageValues += looseItems.convertedDamageValues();
@@ -181,25 +173,6 @@ public final class Legacy112WorldMigrator {
         Files.writeString(root.resolve(MARKER), result + System.lineSeparator(), StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE_NEW);
         BaseMetals.LOGGER.info(result);
-    }
-
-    /**
-     * The integrated server reads the root Player tag before
-     * {@link net.minecraftforge.event.server.ServerAboutToStartEvent}. Reload
-     * that one tag from the corrected level.dat so the first upgraded
-     * single-player session receives the same item migration as playerdata.
-     */
-    public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
-        CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
-        if (loaded == null) return;
-        CompoundTag level = LegacyNbt.readCompressed(worldRoot.resolve("level.dat").toFile());
-        CompoundTag data = level.getCompoundOrEmpty("Data");
-        if (!zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(data, "Player", Tag.TAG_COMPOUND)) return;
-        int version = data.getIntOr("DataVersion", 0);
-        CompoundTag corrected = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                data.getCompoundOrEmpty("Player"), version);
-        for (String key : List.copyOf(loaded.keySet())) loaded.remove(key);
-        loaded.merge(corrected);
     }
 
     private static Map<Integer, String> oldBlockIds(CompoundTag level) {
@@ -307,7 +280,7 @@ public final class Legacy112WorldMigrator {
                 int compression = source[position + 4] & 0xff;
                 ChunkPos chunkPos = new ChunkPos(regionX * 32 + (index & 31), regionZ * 32 + (index >>> 5));
                 if ((compression & 128) != 0) {
-                    externalFiles.add(region.getParent().resolve("c." + chunkPos.x + "." + chunkPos.z + ".mcc"));
+                    externalFiles.add(region.getParent().resolve("c." + chunkPos.x() + "." + chunkPos.z() + ".mcc"));
                 }
 
                 CompoundTag chunk;
@@ -400,13 +373,15 @@ public final class Legacy112WorldMigrator {
     private static ItemMigration migrateLooseInventories(Path root) throws IOException {
         List<Path> files = new ArrayList<>();
         files.add(root.resolve("level.dat"));
-        Path playerData = root.resolve("playerdata");
-        if (Files.isDirectory(playerData)) {
-            try (var paths = Files.list(playerData)) {
-                paths.filter(Files::isRegularFile)
-                        .filter(path -> path.getFileName().toString().endsWith(".dat"))
-                        .sorted()
-                        .forEach(files::add);
+        for (String directory : List.of("playerdata", "players/data")) {
+            Path playerData = root.resolve(directory);
+            if (Files.isDirectory(playerData)) {
+                try (var paths = Files.list(playerData)) {
+                    paths.filter(Files::isRegularFile)
+                            .filter(path -> path.getFileName().toString().endsWith(".dat"))
+                            .sorted()
+                            .forEach(files::add);
+                }
             }
         }
 
@@ -423,33 +398,6 @@ public final class Legacy112WorldMigrator {
             converted = converted.plus(changed);
         }
         return converted;
-    }
-
-    /** Restore only the player captured from this load's original legacy save. */
-    private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root) throws IOException {
-        Path currentFile = root.resolve("level.dat");
-        if (!root.equals(preparedWorld) || preparedPlayer == null || !Files.isRegularFile(currentFile)) {
-            return ItemMigration.NONE;
-        }
-
-        CompoundTag current = LegacyNbt.readCompressed(currentFile.toFile());
-        CompoundTag currentData = current.getCompoundOrEmpty("Data");
-        if (currentData.getIntOr("DataVersion", 0) <= LAST_SUPPORTED_LEGACY_DATA_VERSION
-                || !zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(currentData, "Player", Tag.TAG_COMPOUND)) {
-            return ItemMigration.NONE;
-        }
-
-        CompoundTag player = preparedPlayer.copy();
-        ItemMigration migration = convertLegacyItems(player);
-        CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                player, preparedVersion);
-        currentData.put("Player", fixedPlayer);
-
-        Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(currentFile));
-        Files.createDirectories(backup.getParent());
-        if (!Files.exists(backup)) Files.copy(currentFile, backup, StandardCopyOption.COPY_ATTRIBUTES);
-        writeCompressedAtomically(currentFile, current);
-        return migration;
     }
 
     private static ItemMigration convertLegacyItems(Tag value) {
@@ -481,7 +429,7 @@ public final class Legacy112WorldMigrator {
                         convertedItemAliases++;
                     }
                     int damage = compound.getIntOr("Damage", 0);
-                    if (item != null && item.getDefaultInstance().isDamageableItem() && damage > 0
+                    if (item != null && keepsLegacyDurability(targetId) && damage > 0
                             && zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "Damage", 99)) {
                         CompoundTag itemTag = zone.moddev.mc.basemetals.migration.NbtCompat.containsTag(compound, "tag", Tag.TAG_COMPOUND)
                                 ? compound.getCompoundOrEmpty("tag") : new CompoundTag();
@@ -511,6 +459,15 @@ public final class Legacy112WorldMigrator {
             }
         }
         return new ItemMigration(convertedBuckets, convertedItemAliases, convertedDamageValues);
+    }
+
+    static boolean keepsLegacyDurability(Identifier item) {
+        // Item components are not bound yet when an old world first reaches this hook.
+        return switch (zone.moddev.mc.basemetals.config.MaterialForm.fromPath(item.getPath())) {
+            case AXE, BOOTS, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, FISHING_ROD,
+                    HELMET, HOE, LEGGINGS, PICKAXE, SCYTHE, SHEARS, SHIELD, SHOVEL, SWORD -> true;
+            default -> false;
+        };
     }
 
     private static void writeCompressedAtomically(Path file, CompoundTag data) throws IOException {

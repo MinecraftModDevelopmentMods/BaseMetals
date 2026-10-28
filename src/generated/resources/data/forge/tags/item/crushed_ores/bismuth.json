@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_crushed"
+    "#c:crushed_ores/bismuth"
   ]
 }

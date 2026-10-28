@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:flowing_steel",
-    "basemetals:steel"
+    "#c:molten_steel"
   ]
 }

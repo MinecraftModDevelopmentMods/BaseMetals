@@ -9,7 +9,6 @@ import zone.moddev.mc.basemetals.entity.ModEntities;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -87,7 +86,7 @@ public final class IntegratedWorldSmoke {
             String expectedMods = System.getProperty("basemetals.expectedSmokeMods", "");
             if (!expectedMods.isEmpty()) {
                 var expected = new java.util.TreeSet<>(java.util.List.of(expectedMods.split(",")));
-                var actual = new java.util.TreeSet<>(net.minecraftforge.fml.ModList.get().getMods().stream()
+                var actual = new java.util.TreeSet<>(net.minecraftforge.fml.ModList.getMods().stream()
                         .map(net.minecraftforge.forgespi.language.IModInfo::getModId).toList());
                 boolean allowDependencies = Boolean.getBoolean("basemetals.allowExtraSmokeMods");
                 if (allowDependencies ? !actual.containsAll(expected) : !actual.equals(expected)) {
@@ -111,13 +110,18 @@ public final class IntegratedWorldSmoke {
             verifyBarsModels(minecraft);
             creationStarted = true;
             String worldName = System.getProperty(WORLD_PROPERTY, "basemetals-integrated-smoke");
+            if (Boolean.getBoolean("basemetals.integratedExistingWorldSmoke")) {
+                minecraft.createWorldOpenFlows().openWorld(worldName, () -> {
+                    throw new IllegalStateException("The disposable upgrade world was not opened");
+                });
+                return;
+            }
+
             LevelSettings levelSettings = new LevelSettings(
                     "Base Metals Integrated Smoke",
                     GameType.CREATIVE,
-                    false,
-                    Difficulty.NORMAL,
+                    new LevelSettings.DifficultySettings(Difficulty.NORMAL, false, false),
                     true,
-                    new GameRules(net.minecraft.world.flag.FeatureFlags.DEFAULT_FLAGS),
                     net.minecraft.world.level.WorldDataConfiguration.DEFAULT);
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE creating world={}", worldName);
             minecraft.createWorldOpenFlows().createFreshLevel(worldName, levelSettings,
@@ -127,7 +131,9 @@ public final class IntegratedWorldSmoke {
 
         if (creationStarted && minecraft.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
             String title = minecraft.screen.getTitle().getString();
-            if (!title.toLowerCase(java.util.Locale.ROOT).contains("experimental")) {
+            boolean finishedUpgrade = Boolean.getBoolean("basemetals.integratedExistingWorldSmoke")
+                    && title.equals(net.minecraft.client.resources.language.I18n.get("upgradeWorld.done"));
+            if (!finishedUpgrade && !title.toLowerCase(java.util.Locale.ROOT).contains("experimental")) {
                 throw new IllegalStateException("Unexpected confirmation in the disposable world: " + title);
             }
             // Forge marks modded registries experimental. This applies only to the new smoke-test world.
@@ -135,11 +141,21 @@ public final class IntegratedWorldSmoke {
                     .map(net.minecraft.client.gui.components.Button.class::cast).findFirst().orElseThrow().onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
         }
 
+        if (creationStarted && Boolean.getBoolean("basemetals.integratedExistingWorldSmoke")
+                && minecraft.screen instanceof net.minecraft.client.gui.screens.BackupConfirmScreen backup) {
+            backup.children().stream().filter(net.minecraft.client.gui.components.Button.class::isInstance)
+                    .map(net.minecraft.client.gui.components.Button.class::cast)
+                    .filter(button -> button.getMessage().getString().equals(
+                            net.minecraft.client.gui.screens.BackupConfirmScreen.BACKUP_AND_JOIN.getString()))
+                    .findFirst().orElseThrow().onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
+        }
+
         if (minecraft.hasSingleplayerServer() && minecraft.getSingleplayerServer() != null
                 && minecraft.level != null && minecraft.player != null) {
             ServerLevel serverLevel = minecraft.getSingleplayerServer().getLevel(minecraft.level.dimension());
             if (serverLevel != null && serverLevel.getServer().isRunning()) {
                 if (!creativeBucketsChecked) {
+                    if (Boolean.getBoolean("basemetals.embeddedPlayerSmoke")) verifyEmbeddedPlayer(minecraft);
                     // Other mods may use server settings while building creative tooltips.
                     verifyCreativeBuckets(minecraft);
                     creativeBucketsChecked = true;
@@ -184,17 +200,37 @@ public final class IntegratedWorldSmoke {
         }
     }
 
-    private static java.util.List<net.minecraft.client.renderer.block.model.BakedQuad> quads(
-            net.minecraft.client.renderer.block.model.BlockStateModel model, net.minecraft.core.Direction face) {
-        var result = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
-        for (var part : model.collectParts(net.minecraft.util.RandomSource.create(0))) {
+    private static void verifyEmbeddedPlayer(Minecraft minecraft) {
+        var expected = java.util.List.of("adamantine_axe", "adamantine_bars", "adamantine_block",
+                "adamantine_boots", "adamantine_chestplate", "adamantine_crackhammer",
+                "adamantine_door", "adamantine_door", "adamantine_gear");
+        for (int slot = 0; slot < expected.size(); slot++) {
+            var stack = minecraft.player.getInventory().getItem(slot);
+            var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
+            var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if (!id.toString().equals("basemetals:" + expected.get(slot)) || data == null
+                    || data.copyTag().getCompoundOrEmpty("basemetals_fixture")
+                            .getStringOr("player_proof", "").isEmpty()) {
+                throw new IllegalStateException("Embedded player item was lost at slot " + slot + ": " + stack);
+            }
+        }
+        BaseMetals.LOGGER.info("BASEMETALS_EMBEDDED_PLAYER PASS inventory=9 custom_data=preserved");
+    }
+
+    private static java.util.List<net.minecraft.client.resources.model.geometry.BakedQuad> quads(
+            net.minecraft.client.renderer.block.dispatch.BlockStateModel model, net.minecraft.core.Direction face) {
+        var result = new java.util.ArrayList<net.minecraft.client.resources.model.geometry.BakedQuad>();
+        var parts = new java.util.ArrayList<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart>();
+        model.collectParts(net.minecraft.util.RandomSource.create(0), parts,
+                net.minecraftforge.client.model.data.ModelData.EMPTY);
+        for (var part : parts) {
             result.addAll(part.getQuads(face));
         }
 
         return result;
     }
 
-    private static int[] vertices(net.minecraft.client.renderer.block.model.BakedQuad quad) {
+    private static int[] vertices(net.minecraft.client.resources.model.geometry.BakedQuad quad) {
         int[] result = new int[32];
         for (int vertex = 0; vertex < 4; vertex++) {
             var position = quad.position(vertex);
@@ -211,7 +247,7 @@ public final class IntegratedWorldSmoke {
         for (var entry : ModContent.blocksById().entrySet()) {
             if (!entry.getKey().endsWith("_ore")) continue;
             var state = entry.getValue().get().defaultBlockState();
-            var model = minecraft.getBlockRenderer().getBlockModel(state);
+            var model = minecraft.getModelManager().getBlockStateModelSet().get(state);
             for (var face : net.minecraft.core.Direction.values()) {
                 var quads = quads(model, face);
                 if (quads.size() != 2) throw new IllegalStateException("Ore model lost a layer: " + entry.getKey());
@@ -227,9 +263,9 @@ public final class IntegratedWorldSmoke {
                 });
                 if (!offset) throw new IllegalStateException("Ore overlay is flush with its host: " + entry.getKey());
             }
-            var layers = model.getRenderTypes(state, net.minecraft.util.RandomSource.create(0),
-                    net.minecraftforge.client.model.data.ModelData.EMPTY);
-            if (!layers.contains(ChunkSectionLayer.CUTOUT) || layers.contains(ChunkSectionLayer.SOLID)) {
+            var layers = renderLayers(model);
+            if (!layers.contains(ChunkSectionLayer.CUTOUT) || !layers.contains(ChunkSectionLayer.SOLID)
+                    || layers.contains(ChunkSectionLayer.TRANSLUCENT)) {
                 throw new IllegalStateException("Ore overlay is not cutout: " + entry.getKey());
             }
             ores++;
@@ -260,7 +296,7 @@ public final class IntegratedWorldSmoke {
                     continue;
                 }
 
-                var model = minecraft.getBlockRenderer().getBlockModel(state);
+                var model = minecraft.getModelManager().getBlockStateModelSet().get(state);
                 var quads = new java.util.ArrayList<>(quads(model, null));
                 for (var face : net.minecraft.core.Direction.values()) {
                     quads.addAll(quads(model, face));
@@ -324,23 +360,25 @@ public final class IntegratedWorldSmoke {
         int trapdoors = 0;
         for (var reference : ModContent.blocksById().values()) {
             Block block = reference.get();
-            ChunkSectionLayer expected = null;
+            boolean check = false;
             if (block instanceof IronBarsBlock) {
-                expected = ChunkSectionLayer.CUTOUT;
+                check = true;
                 bars++;
             } else if (block instanceof DoorBlock) {
-                expected = ChunkSectionLayer.CUTOUT;
+                check = true;
                 doors++;
             } else if (block instanceof TrapDoorBlock) {
-                expected = ChunkSectionLayer.CUTOUT;
+                check = true;
                 trapdoors++;
             }
-            var state = block.defaultBlockState();
-            var layers = minecraft.getBlockRenderer().getBlockModel(state).getRenderTypes(state,
-                    net.minecraft.util.RandomSource.create(0), net.minecraftforge.client.model.data.ModelData.EMPTY);
-            if (expected != null && (!layers.contains(expected) || layers.contains(ChunkSectionLayer.SOLID))) {
-                throw new IllegalStateException("BASEMETALS_INTEGRATED_SMOKE FAIL: wrong render layer for "
-                        + net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block));
+
+            if (check) {
+                for (var state : block.getStateDefinition().getPossibleStates()) {
+                    var model = minecraft.getModelManager().getBlockStateModelSet().get(state);
+                    var faces = new java.util.ArrayList<>(quads(model, null));
+                    for (var direction : net.minecraft.core.Direction.values()) faces.addAll(quads(model, direction));
+                    for (var quad : faces) verifyQuadTransparency(quad);
+                }
             }
         }
         if (bars != 26 || doors != 26 || trapdoors != 26) {
@@ -351,6 +389,48 @@ public final class IntegratedWorldSmoke {
         BaseMetals.LOGGER.info(
                 "BASEMETALS_INTEGRATED_SMOKE render layers PASS bars={} doors={} trapdoors={}",
                 bars, doors, trapdoors);
+    }
+
+    private static void verifyQuadTransparency(net.minecraft.client.resources.model.geometry.BakedQuad quad) {
+        var sprite = quad.materialInfo().sprite();
+        if (sprite.contents().name().getPath().equals("missingno")) {
+            throw new IllegalStateException("Missing transparent-block sprite");
+        }
+
+        float minU = 1, minV = 1, maxU = 0, maxV = 0;
+        for (int vertex = 0; vertex < 4; vertex++) {
+            float u = net.minecraft.client.model.geom.builders.UVPair.unpackU(quad.packedUV(vertex));
+            float v = net.minecraft.client.model.geom.builders.UVPair.unpackV(quad.packedUV(vertex));
+            u = Math.clamp((u - sprite.getU0()) / (sprite.getU1() - sprite.getU0()), 0, 1);
+            v = Math.clamp((v - sprite.getV0()) / (sprite.getV1() - sprite.getV0()), 0, 1);
+            minU = Math.min(minU, u);
+            minV = Math.min(minV, v);
+            maxU = Math.max(maxU, u);
+            maxV = Math.max(maxV, v);
+        }
+
+        // Undo atlas rounding at pixel edges before checking the pixels used by this face.
+        int width = sprite.contents().width();
+        int height = sprite.contents().height();
+        minU = Math.round(minU * width) / (float) width;
+        maxU = Math.round(maxU * width) / (float) width;
+        minV = Math.round(minV * height) / (float) height;
+        maxV = Math.round(maxV * height) / (float) height;
+        var expected = ChunkSectionLayer.byTransparency(sprite.contents().computeTransparency(minU, minV, maxU, maxV));
+        if (quad.materialInfo().layer() != expected || expected == ChunkSectionLayer.TRANSLUCENT) {
+            throw new IllegalStateException("Wrong face transparency for " + sprite.contents().name()
+                    + ": expected=" + expected + ", actual=" + quad.materialInfo().layer());
+        }
+    }
+
+    private static java.util.Set<ChunkSectionLayer> renderLayers(
+            net.minecraft.client.renderer.block.dispatch.BlockStateModel model) {
+        var layers = java.util.EnumSet.noneOf(ChunkSectionLayer.class);
+        quads(model, null).forEach(quad -> layers.add(quad.materialInfo().layer()));
+        for (var face : net.minecraft.core.Direction.values()) {
+            quads(model, face).forEach(quad -> layers.add(quad.materialInfo().layer()));
+        }
+        return layers;
     }
 
     private static void verifyCreativeBuckets(Minecraft minecraft) {
@@ -385,6 +465,20 @@ public final class IntegratedWorldSmoke {
         java.util.List<ItemStack> bucketSearch = minecraft.getConnection().searchTrees()
                 .creativeNameSearch().search("bucket");
         for (var fluid : ModContent.fluids().entrySet()) {
+            var appearance = net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
+                    .of(fluid.getValue().source().get());
+            for (var kind : java.util.List.of(fluid.getValue().source().get(), fluid.getValue().flowing().get())) {
+                var baked = minecraft.getModelManager().getFluidStateModelSet().get(kind.defaultFluidState());
+                if (baked.layer() != ChunkSectionLayer.TRANSLUCENT
+                        || !baked.stillMaterial().sprite().contents().name().equals(appearance.getStillTexture())
+                        || !baked.flowingMaterial().sprite().contents().name().equals(appearance.getFlowingTexture())
+                        || baked.tintSource() == null
+                        || baked.tintSource().color(fluid.getValue().block().get().defaultBlockState())
+                                != appearance.getTintColor()) {
+                    throw new IllegalStateException("Wrong native fluid model for " + fluid.getKey());
+                }
+            }
+
             net.minecraft.world.item.Item bucket = fluid.getValue().bucket().get();
             ItemStack bucketStack = bucket.getDefaultInstance();
             if (itemsTab.stream().noneMatch(stack -> stack.is(bucket))
@@ -407,14 +501,18 @@ public final class IntegratedWorldSmoke {
             var quads = itemQuads(model);
             var still = net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
                     .of(fluid.getValue().source().get()).getStillTexture();
-            if (quads.stream().noneMatch(quad -> quad.tintIndex() == 1
-                    && quad.sprite().contents().name().equals(still))) {
+            var bucketStill = still.withPath(still.getPath().replaceFirst("^block/", "item/"));
+            if (quads.stream().noneMatch(quad -> quad.materialInfo().tintIndex() == 1
+                    && quad.materialInfo().sprite().contents().name().equals(bucketStill)
+                    && quad.materialInfo().sprite().atlasLocation().equals(
+                            net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_ITEMS))) {
                 throw new IllegalStateException("Bucket has no tinted fluid layer: " + fluid.getKey());
             }
         }
         BaseMetals.LOGGER.info(
                 "BASEMETALS_INTEGRATED_SMOKE creative buckets PASS count={}",
                 ModContent.fluids().size());
+        BaseMetals.LOGGER.info("BASEMETALS_FLUID_MODELS PASS source_and_flowing=72");
     }
 
     private static void verifyItemModels(Minecraft minecraft) {
@@ -426,7 +524,7 @@ public final class IntegratedWorldSmoke {
             var quads = itemQuads(state);
 
             if (state.isEmpty() || quads.isEmpty() || quads.stream().anyMatch(quad ->
-                    quad.sprite().contents().name().getPath().equals("missingno"))) {
+                    quad.materialInfo().sprite().contents().name().getPath().equals("missingno"))) {
                 throw new IllegalStateException("Missing item model or texture: " + entry.getKey());
             }
         }
@@ -434,7 +532,7 @@ public final class IntegratedWorldSmoke {
         BaseMetals.LOGGER.info("BASEMETALS_ITEM_MODELS PASS items={}", ModContent.itemsById().size());
     }
 
-    private static java.util.List<net.minecraft.client.renderer.block.model.BakedQuad> itemQuads(
+    private static java.util.List<net.minecraft.client.resources.model.geometry.BakedQuad> itemQuads(
             net.minecraft.client.renderer.item.ItemStackRenderState state) {
         try {
             var layersField = state.getClass().getDeclaredField("layers");
@@ -443,7 +541,7 @@ public final class IntegratedWorldSmoke {
             countField.setAccessible(true);
             var layers = (net.minecraft.client.renderer.item.ItemStackRenderState.LayerRenderState[])
                     layersField.get(state);
-            var result = new java.util.ArrayList<net.minecraft.client.renderer.block.model.BakedQuad>();
+            var result = new java.util.ArrayList<net.minecraft.client.resources.model.geometry.BakedQuad>();
 
             for (int index = 0; index < countField.getInt(state); index++) {
                 result.addAll(layers[index].prepareQuadList());

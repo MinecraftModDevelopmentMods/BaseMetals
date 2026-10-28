@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_chestplate",
-    "minecraft:copper_chestplate"
+    "#c:armors/chestplates/copper"
   ]
 }

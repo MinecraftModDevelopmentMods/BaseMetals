@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:toolsmith/brass_crackhammer_enchanted",
+    "basemetals:toolsmith/cupronickel_axe_enchanted",
+    "basemetals:toolsmith/cupronickel_hoe_enchanted",
+    "basemetals:toolsmith/cupronickel_shovel_enchanted",
+    "basemetals:toolsmith/cupronickel_pickaxe_enchanted",
+    "basemetals:toolsmith/electrum_axe_enchanted",
+    "basemetals:toolsmith/electrum_hoe_enchanted",
+    "basemetals:toolsmith/electrum_shovel_enchanted",
+    "basemetals:toolsmith/electrum_pickaxe_enchanted",
+    "basemetals:toolsmith/nickel_crackhammer_enchanted",
+    "basemetals:toolsmith/silver_crackhammer_enchanted"
+  ]
+}

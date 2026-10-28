@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:antimony_crushed"
+    "#c:crushed_ores/antimony"
   ]
 }

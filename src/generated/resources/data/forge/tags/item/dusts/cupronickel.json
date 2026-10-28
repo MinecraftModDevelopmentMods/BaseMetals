@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:cupronickel_powder"
+    "#c:dusts/cupronickel"
   ]
 }

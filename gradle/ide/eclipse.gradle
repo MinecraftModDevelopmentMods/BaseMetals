@@ -5,13 +5,31 @@ import groovy.xml.XmlUtil
 def eclipseWorkspaceProjectName = projectDir.name
 
 // ForgeGradle 7 Eclipse launches are normalized after generation: they use the
-// configured Gradle cache and Java 21, load only bin/main, and exclude all unit,
+// configured Gradle cache and Java 25, load only bin/main, and exclude all unit,
 // GameTest, integrated-smoke, and upgrade-smoke code from production launches.
 eclipse {
     classpath {
         downloadSources = true
         downloadJavadoc = true
+        defaultOutputDir = file('bin/default')
         file.whenMerged { classpath ->
+            classpath.entries.findAll { it instanceof org.gradle.plugins.ide.eclipse.model.Output }.each {
+                it.path = 'bin/default'
+            }
+            classpath.entries.removeAll { entry ->
+                entry instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder
+                        && entry.path in ['src/main/resources', 'src/generated/resources']
+            }
+            String processedPath = relativePath(sourceSets.main.output.resourcesDir).replace('\\', '/')
+            if (!classpath.entries.any { it.path == processedPath }) {
+                classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.SourceFolder(processedPath, 'bin/main'))
+            }
+            classpath.entries.findAll {
+                it instanceof org.gradle.plugins.ide.eclipse.model.SourceFolder
+            }.each { entry ->
+                entry.output = entry.path == 'src/main/java' || entry.path == processedPath
+                        ? 'bin/main' : "bin/${entry.path.split('/')[1]}"
+            }
             classpath.entries.findAll { entry ->
                 String path = entry.path?.replace('\\', '/') ?: ''
                 path.startsWith('src/test/') || path.startsWith('src/gametest/')
@@ -73,7 +91,7 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 || optionalDevelopmentArtifacts.any { expected ->
                     !optionalClient.classpath.files.any { it.name.contains("${expected.module}-${expected.file}") }
                 }) {
-            throw new GradleException('The optional client must load the pinned 1.21.11 dependencies')
+            throw new GradleException('The optional client must load the pinned 26.1.2 dependencies')
         }
     }
 }
@@ -110,10 +128,9 @@ def syncForgeEclipseLaunches = tasks.register('syncForgeEclipseLaunches') {
                 ''
         ].join('\r\n'), 'UTF-8')
 
-        File processedResources = layout.buildDirectory.dir('resources/main').get().asFile
         copy {
-            from processedResources
-            from sourceSets.main.output.classesDirs
+            from sourceSets.main.output
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
             into mainOutput
         }
         ['Client', 'Server', 'OptionalModsClient'].each { String runName ->
@@ -306,7 +323,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
 
         }
-        File processed = layout.buildDirectory.dir('resources/main').get().asFile
+        File processed = sourceSets.main.output.resourcesDir
         ['META-INF/mods.toml', 'data/basemetals/orespawn/provider.json',
          'data/basemetals/recipe/stone_crackhammer.json'].each { name ->
             File expected = new File(processed, name)
@@ -317,7 +334,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.1.121111"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.1.2601021"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }

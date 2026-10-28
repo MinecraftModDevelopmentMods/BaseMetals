@@ -7,18 +7,20 @@ import io
 import json
 import struct
 import zlib
+import uuid
 from collections import Counter
 from pathlib import Path
 
 import nbtlib
 
 from compare_world_terrain import block_names, chunks
+from world_paths import dimensions, player_files
 
 
 def saved_entities(world):
     # Newer Minecraft saves entities separately from the terrain chunks.
-    for dimension in ('', 'DIM-1', 'DIM1'):
-        for region in (world / dimension / 'entities').glob('*.mca'):
+    for dimension, folder in dimensions(world):
+        for region in (folder / 'entities').glob('*.mca'):
             data = region.read_bytes()
             for slot in range(1024):
                 offset = int.from_bytes(data[slot * 4:slot * 4 + 3], 'big') * 4096
@@ -169,12 +171,26 @@ def snapshot(world):
     for entity in saved_entities(world):
         items(entity)
 
-    items(canonical_player(nbtlib.load(world / "level.dat")["Data"].get("Player", {})))
-    for player in (world / "playerdata").glob("*.dat"):
-        items(canonical_player(nbtlib.load(player)))
+    players = {file.stem: nbtlib.load(file) for file in player_files(world, "data", ".dat")}
+    embedded = nbtlib.load(world / "level.dat")["Data"].get("Player", {})
+    identity = None
+    if "UUID" in embedded:
+        value = embedded["UUID"]
+        if isinstance(value, nbtlib.IntArray) and len(value) == 4:
+            identity = str(uuid.UUID(int=sum((int(part) & 0xffffffff) << (96 - index * 32)
+                                             for index, part in enumerate(value))))
+        else:
+            identity = str(uuid.UUID(str(value)))
+    elif "UUIDMost" in embedded and "UUIDLeast" in embedded:
+        identity = str(uuid.UUID(int=((int(embedded["UUIDMost"]) & ((1 << 64) - 1)) << 64)
+                                 | (int(embedded["UUIDLeast"]) & ((1 << 64) - 1))))
+    if identity not in players:
+        items(canonical_player(embedded))
+    for player in players.values():
+        items(canonical_player(player))
 
     advancements = {}
-    for file in (world / "advancements").glob("*.json"):
+    for file in player_files(world, "advancements", ".json"):
         progress = json.loads(file.read_text(encoding="utf8"))
         advancements[file.name] = {key: value for key, value in progress.items() if key.startswith("basemetals:")}
     return blocks, stacks, advancements

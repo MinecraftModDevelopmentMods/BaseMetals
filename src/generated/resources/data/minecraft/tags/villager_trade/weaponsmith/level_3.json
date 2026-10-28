@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:weaponsmith/cupronickel_sword_enchanted",
+    "basemetals:weaponsmith/cupronickel_crossbow_enchanted",
+    "basemetals:weaponsmith/cupronickel_bow_enchanted",
+    "basemetals:weaponsmith/electrum_sword_enchanted",
+    "basemetals:weaponsmith/electrum_crossbow_enchanted",
+    "basemetals:weaponsmith/electrum_bow_enchanted"
+  ]
+}

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:brass",
-    "basemetals:flowing_brass"
+    "#c:molten_brass"
   ]
 }

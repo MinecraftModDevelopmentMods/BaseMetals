@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:wood_gear"
+    "#c:gears/wood"
   ]
 }

@@ -40,8 +40,6 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.listener.Priority;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import zone.moddev.mc.basemetals.trade.BaseMetalsTrades;
 import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -59,7 +57,6 @@ public final class BaseMetalsEvents {
         PlayerEvent.ItemCraftedEvent.BUS.addListener(handlers::onItemCrafted);
         PlayerEvent.ItemSmeltedEvent.BUS.addListener(handlers::onItemSmelted);
         BlockEvent.EntityPlaceEvent.BUS.addListener(handlers::onBlockPlaced);
-        VillagerTradesEvent.BUS.addListener(handlers::onVillagerTrades);
     }
 
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
@@ -82,7 +79,6 @@ public final class BaseMetalsEvents {
         try {
             java.nio.file.Path worldRoot = event.getServer().getWorldPath(LevelResource.ROOT);
             Legacy112WorldMigrator.migrateIfNeeded(worldRoot);
-            Legacy112WorldMigrator.refreshLoadedSingleplayerPlayer(event.getServer(), worldRoot);
         } catch (java.io.IOException exception) {
             throw new IllegalStateException(
                     "Base Metals could not safely pre-flatten the legacy Forge 1.10/1.12 world", exception);
@@ -203,7 +199,7 @@ public final class BaseMetalsEvents {
                 if (target.fireImmune()) event.setAmount(event.getAmount() + 3.0F);
             }
             case "mithril" -> {
-                if (target.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
+                if (target.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
                     target.addEffect(new MobEffectInstance(MobEffects.WITHER, 60, 3));
                     target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 1));
                 }
@@ -269,7 +265,4 @@ public final class BaseMetalsEvents {
         }
     }
 
-    public void onVillagerTrades(VillagerTradesEvent event) {
-        BaseMetalsTrades.add(event);
-    }
 }

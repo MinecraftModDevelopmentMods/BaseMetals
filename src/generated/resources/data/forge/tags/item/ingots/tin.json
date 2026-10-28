@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:tin_ingot"
+    "#c:ingots/tin"
   ]
 }

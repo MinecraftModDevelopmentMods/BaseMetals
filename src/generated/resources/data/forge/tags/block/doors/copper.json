@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_door",
-    "minecraft:copper_door"
+    "#c:doors/copper"
   ]
 }

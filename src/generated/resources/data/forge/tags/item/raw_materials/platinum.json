@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_raw"
+    "#c:raw_materials/platinum"
   ]
 }

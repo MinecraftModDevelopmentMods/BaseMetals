@@ -6,13 +6,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import zone.moddev.mc.basemetals.BaseMetals;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -30,20 +26,24 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
     public static final RegistryObject<RecipeType<CrushingRecipe>> TYPE = TYPES
             .<RecipeType<CrushingRecipe>>register("crushing", CrushingRecipeType::new);
     public static final RegistryObject<RecipeSerializer<CrushingRecipe>> SERIALIZER = SERIALIZERS.register(
-            "crushing", Serializer::new);
+            "crushing", Serializer::create);
     public static final RegistryObject<RecipeSerializer<LegacySmeltingRecipe>> LEGACY_SMELTING_SERIALIZER =
-            SERIALIZERS.register("legacy_smelting", LegacySmeltingRecipe.Serializer::new);
+            SERIALIZERS.register("legacy_smelting", LegacySmeltingRecipe.Serializer::create);
     public static final RegistryObject<RecipeSerializer<PlateRepairRecipe>> PLATE_REPAIR_SERIALIZER =
-            SERIALIZERS.register("plate_repair", PlateRepairRecipe.Serializer::new);
+            SERIALIZERS.register("plate_repair", PlateRepairRecipe.Serializer::create);
     public static final RegistryObject<RecipeSerializer<ContentCraftingRecipe>> CONTENT_CRAFTING_SERIALIZER =
             SERIALIZERS.register("content_crafting", () -> ContentCraftingRecipe.SERIALIZER);
 
     private final Ingredient ingredient;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
+
+    public CrushingRecipe(Ingredient ingredient, ItemStackTemplate result) {
+        this.ingredient = ingredient;
+        this.result = result;
+    }
 
     public CrushingRecipe(Ingredient ingredient, ItemStack result) {
-        this.ingredient = ingredient;
-        this.result = result.copy();
+        this(ingredient, ItemStackTemplate.fromNonEmptyStack(result));
     }
 
     @Override
@@ -52,19 +52,53 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public ItemStack assemble(SingleRecipeInput input, net.minecraft.core.HolderLookup.Provider registries) {
-        return result.copy();
+    public ItemStack assemble(SingleRecipeInput input) {
+        return result.create();
     }
-    public boolean canCraftInDimensions(int width, int height) { return width * height >= 1; }
-    public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) { return result.copy(); }
-    @Override public RecipeSerializer<CrushingRecipe> getSerializer() { return SERIALIZER.get(); }
-    @Override public RecipeType<CrushingRecipe> getType() { return TYPE.get(); }
-    public java.util.List<Ingredient> getIngredients() { return java.util.List.of(ingredient); }
-    @Override public boolean isSpecial() { return true; }
-    @Override public net.minecraft.world.item.crafting.PlacementInfo placementInfo() {
+
+    public boolean canCraftInDimensions(int width, int height) {
+        return width * height >= 1;
+    }
+
+    public ItemStack getResultItem(net.minecraft.core.HolderLookup.Provider registries) {
+        return result.create();
+    }
+
+    @Override
+    public RecipeSerializer<CrushingRecipe> getSerializer() {
+        return SERIALIZER.get();
+    }
+
+    @Override
+    public RecipeType<CrushingRecipe> getType() {
+        return TYPE.get();
+    }
+
+    public java.util.List<Ingredient> getIngredients() {
+        return java.util.List.of(ingredient);
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+
+    @Override
+    public boolean showNotification() {
+        return true;
+    }
+
+    @Override
+    public String group() {
+        return "";
+    }
+
+    @Override
+    public net.minecraft.world.item.crafting.PlacementInfo placementInfo() {
         return net.minecraft.world.item.crafting.PlacementInfo.NOT_PLACEABLE;
     }
-    @Override public net.minecraft.world.item.crafting.RecipeBookCategory recipeBookCategory() {
+    @Override
+    public net.minecraft.world.item.crafting.RecipeBookCategory recipeBookCategory() {
         return net.minecraft.world.item.crafting.RecipeBookCategories.CRAFTING_MISC;
     }
 
@@ -75,20 +109,21 @@ public final class CrushingRecipe implements Recipe<SingleRecipeInput> {
         }
     }
 
-    public static final class Serializer implements RecipeSerializer<CrushingRecipe> {
+    public static final class Serializer {
         private static final MapCodec<CrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
                         Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-                        ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result))
+                        ItemStackTemplate.CODEC.fieldOf("result").forGetter(recipe -> recipe.result))
                         .apply(instance, CrushingRecipe::new));
 
         private static final StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> STREAM_CODEC =
                 StreamCodec.composite(
                         Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.ingredient,
-                        ItemStack.STREAM_CODEC, recipe -> recipe.result,
+                        ItemStackTemplate.STREAM_CODEC, recipe -> recipe.result,
                         CrushingRecipe::new);
 
-        @Override public MapCodec<CrushingRecipe> codec() { return CODEC; }
-        @Override public StreamCodec<RegistryFriendlyByteBuf, CrushingRecipe> streamCodec() { return STREAM_CODEC; }
+        public static RecipeSerializer<CrushingRecipe> create() {
+            return new RecipeSerializer<>(CODEC, STREAM_CODEC);
+        }
     }
 }

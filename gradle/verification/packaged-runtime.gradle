@@ -6,8 +6,8 @@ def releaseJar = release.releaseJar
 def packagedServerSmokeProbe = release.packagedServerSmokeProbe
 def packagedClientSmokeProbe = release.packagedClientSmokeProbe
 
-def java21Launcher = javaToolchains.launcherFor {
-    languageVersion = JavaLanguageVersion.of(21)
+def java25Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(25)
     vendor = JvmVendorSpec.ADOPTIUM
 }
 
@@ -134,8 +134,8 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
     doFirst {
         File runtime = requireRuntimeDirectory(packagedForgeServerRuntime, 'packagedForgeServerRuntime')
         File libraries = new File(runtime, 'libraries')
-        File forgeDirectory = new File(libraries, 'net/minecraftforge/forge/1.21.11-61.1.0')
-        File launcher = new File(forgeDirectory, 'forge-1.21.11-61.1.0-server.jar')
+        File forgeDirectory = new File(libraries, 'net/minecraftforge/forge/26.1.2-64.0.9')
+        File launcher = new File(forgeDirectory, 'forge-26.1.2-64.0.9-server.jar')
         File sourceArguments = new File(forgeDirectory,
                 System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')
                         ? 'win_args.txt' : 'unix_args.txt')
@@ -165,7 +165,7 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
             }
         }
         workingDir runDirectory
-        commandLine java21Launcher.get().executablePath.asFile.absolutePath,
+        commandLine java25Launcher.get().executablePath.asFile.absolutePath,
                 '-Xms512m', '-Xmx2g', "@${absoluteArguments.absolutePath}", 'nogui'
     }
     doLast {
@@ -174,9 +174,9 @@ def packagedServerStartupSmoke = tasks.register('packagedServerStartupSmoke', Ex
         if (!marker.isFile()) throw new GradleException('Packaged dedicated-server completion marker is missing')
         Properties values = new Properties()
         marker.withInputStream { values.load(it) }
-        if (values.getProperty('basemetals') != '3.1.1.121111'
-                || values.getProperty('orespawn') != '4.1.0.121111'
-                || values.getProperty('forge') != '61.1.0') {
+        if (values.getProperty('basemetals') != '3.1.1.2601021'
+                || values.getProperty('orespawn') != '4.1.0.2601021'
+                || values.getProperty('forge') != '64.0.9') {
             throw new GradleException("Packaged dedicated-server versions are wrong: ${values}")
         }
         verifyPackagedLog(runDirectory, 'BASEMETALS_PACKAGED_SERVER_SMOKE PASS',
@@ -219,7 +219,7 @@ def preparePackagedClientSmoke = tasks.register('preparePackagedClientSmoke') {
             File hostPack = new File(runDirectory, 'resourcepacks/basemetals-host-test')
             File texture = new File(hostPack, 'assets/minecraft/textures/block/stone.png')
             texture.parentFile.mkdirs()
-            new java.util.zip.ZipFile(new File(runtime, 'versions/1.21.11/1.21.11.jar')).withCloseable { zip ->
+            new java.util.zip.ZipFile(new File(runtime, 'versions/26.1.2/26.1.2.jar')).withCloseable { zip ->
                 texture.bytes = zip.getInputStream(zip.getEntry('assets/minecraft/textures/block/dirt.png')).bytes
             }
             new File(hostPack, 'pack.mcmeta').setText(
@@ -243,13 +243,13 @@ def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Ex
     dependsOn preparePackagedClientSmoke
     doFirst {
         File runtime = requireRuntimeDirectory(packagedForgeClientRuntime, 'packagedForgeClientRuntime')
-        String forgeVersionId = ['1.21.11-forge-61.1.0', 'forge-61.1.0'].find { candidate ->
+        String forgeVersionId = ['26.1.2-forge-64.0.9', 'forge-64.0.9'].find { candidate ->
             new File(runtime, "versions/${candidate}/${candidate}.json").isFile()
         }
-        if (forgeVersionId == null) throw new GradleException('Official client runtime has no Forge 61.1.0 profile')
+        if (forgeVersionId == null) throw new GradleException('Official client runtime has no Forge 64.0.9 profile')
         File forgeJsonFile = new File(runtime, "versions/${forgeVersionId}/${forgeVersionId}.json")
-        File baseJsonFile = new File(runtime, 'versions/1.21.11/1.21.11.json')
-        File baseJar = new File(runtime, 'versions/1.21.11/1.21.11.jar')
+        File baseJsonFile = new File(runtime, 'versions/26.1.2/26.1.2.json')
+        File baseJar = new File(runtime, 'versions/26.1.2/26.1.2.jar')
         File nativesDirectory = new File(runtime, "natives/${forgeVersionId}")
         [forgeJsonFile, baseJsonFile, baseJar, new File(runtime, 'libraries'),
                 new File(runtime, 'assets'), nativesDirectory].each {
@@ -312,7 +312,7 @@ def packagedClientStartupSmoke = tasks.register('packagedClientStartupSmoke', Ex
         File runDirectory = packagedClientRunDirectory.get().asFile
         workingDir runDirectory
         File clientJava = packagedClientJavaExecutable.isPresent()
-                ? file(packagedClientJavaExecutable.get()) : java21Launcher.get().executablePath.asFile
+                ? file(packagedClientJavaExecutable.get()) : java25Launcher.get().executablePath.asFile
         if (!clientJava.isFile()) {
             throw new GradleException("packagedClientJavaExecutable does not name a Java executable: ${clientJava}")
         }

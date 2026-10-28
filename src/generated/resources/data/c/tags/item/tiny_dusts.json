@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "#c:tiny_dusts/adamantine",
+    "#c:tiny_dusts/antimony",
+    "#c:tiny_dusts/aquarium",
+    "#c:tiny_dusts/bismuth",
+    "#c:tiny_dusts/brass",
+    "#c:tiny_dusts/bronze",
+    "#c:tiny_dusts/coldiron",
+    "#c:tiny_dusts/copper",
+    "#c:tiny_dusts/cupronickel",
+    "#c:tiny_dusts/electrum",
+    "#c:tiny_dusts/invar",
+    "#c:tiny_dusts/lead",
+    "#c:tiny_dusts/mercury",
+    "#c:tiny_dusts/mithril",
+    "#c:tiny_dusts/nickel",
+    "#c:tiny_dusts/pewter",
+    "#c:tiny_dusts/platinum",
+    "#c:tiny_dusts/silver",
+    "#c:tiny_dusts/starsteel",
+    "#c:tiny_dusts/steel",
+    "#c:tiny_dusts/tin",
+    "#c:tiny_dusts/zinc"
+  ]
+}

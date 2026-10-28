@@ -33,7 +33,7 @@ public final class CompatibilityRecipeGameTests {
 
     private static void requireRecipeCount(GameTestHelper helper, String modId,
             String recipeFolder, long expected) {
-        if (!ModList.get().isLoaded(modId)) {
+        if (!ModList.isLoaded(modId)) {
             helper.succeed();
             return;
         }

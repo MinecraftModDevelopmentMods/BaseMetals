@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:zinc_raw"
+    "#c:raw_materials/zinc"
   ]
 }

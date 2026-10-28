@@ -1,13 +1,13 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 1.21.11 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 26.1.2 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
-An optional `forgeVersion` selects another installed Forge 1.21.11 build for
-compatibility checks; the default is the compilation target, `61.1.0`.
+An optional `forgeVersion` selects another installed Forge 26.1.2 build for
+compatibility checks; the default is the compilation target, `64.0.9`.
 
-Pass a local JSON specification containing `java` (the Java 21 executable), `serverRuntime`, `output`,
+Pass a local JSON specification containing `java` (the Java 25 executable), `serverRuntime`, `output`,
 `modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
 Each profile needs an `id`, `world` path and expected log `marker`. Captured
 fixtures include a registry manifest so the probe can check each block state,
@@ -50,7 +50,7 @@ It checks unchanged older configs, missing configs, matching Low Fantasy modes,
 and both kinds of mismatch. Matching clients disconnect and rejoin three times
 to check repeated connections. Existing gameplay switches must keep their values.
 
-Its local specification needs `java` (the Java 21 executable), `serverRuntime`, `clientRuntime`,
+Its local specification needs `java` (the Java 25 executable), `serverRuntime`, `clientRuntime`,
 `output`, `modJar`, `serverProbe`, `clientProbe`, and the same checksum-pinned
 `oreSpawn` object used by the world tests. The test uses localhost only and
 chooses a free port; no public Minecraft server is involved.

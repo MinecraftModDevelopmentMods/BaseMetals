@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_smallpowder"
+    "#c:tiny_dusts/bismuth"
   ]
 }

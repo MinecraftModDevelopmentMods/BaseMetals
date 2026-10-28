@@ -24,18 +24,36 @@ import org.junit.jupiter.api.Test;
 /** Catches renamed injection targets before a packaged world is opened. */
 class NativeMigrationHooksTest {
     @Test
-    void levelCaptureStillRunsBeforeVanillaConversion() throws Exception {
-        var method = LevelStorageSource.class.getDeclaredMethod(
-                "readLevelDataTagFixed", Path.class, DataFixer.class);
+    void legacyDurabilityDoesNotRequireAnEarlyItemStack() throws Exception {
+        for (var form : zone.moddev.mc.basemetals.config.MaterialForm.values()) {
+            boolean expected = java.util.Set.of("axe", "boots", "bow", "chestplate", "crackhammer",
+                    "crossbow", "fishing_rod", "helmet", "hoe", "leggings", "pickaxe", "scythe",
+                    "shears", "shield", "shovel", "sword").contains(form.name().toLowerCase(java.util.Locale.ROOT));
+            var item = net.minecraft.resources.Identifier.parse(
+                    "basemetals:steel_" + form.name().toLowerCase(java.util.Locale.ROOT));
 
-        assertTrue(Modifier.isStatic(method.getModifiers()));
+            assertEquals(expected, Legacy112WorldMigrator.keepsLegacyDurability(item), form.name());
+        }
+
+        String source = java.nio.file.Files.readString(Path.of(
+                "src/main/java/zone/moddev/mc/basemetals/migration/Legacy112WorldMigrator.java"));
+        assertTrue(!source.contains("getDefaultInstance()"));
+    }
+
+    @Test
+    void levelCaptureStillRunsBeforeVanillaConversion() throws Exception {
+        var method = LevelStorageSource.LevelStorageAccess.class.getDeclaredMethod(
+                "getUnfixedDataTag", boolean.class);
+
+        assertTrue(Modifier.isPublic(method.getModifiers()));
+        assertTrue(!Modifier.isStatic(method.getModifiers()));
         assertEquals(Dynamic.class, method.getReturnType());
     }
 
     @Test
     void chunkAndTerrainTargetsKeepTheirNativeSignatures() throws Exception {
         var upgrade = SimpleRegionStorage.class.getDeclaredMethod(
-                "upgradeChunkTag", CompoundTag.class, int.class, CompoundTag.class);
+                "upgradeChunkTag", CompoundTag.class, int.class, CompoundTag.class, int.class);
         var write = WorldGenRegion.class.getDeclaredMethod("ensureCanWrite", BlockPos.class);
 
         assertEquals(CompoundTag.class, upgrade.getReturnType());
@@ -69,7 +87,7 @@ class NativeMigrationHooksTest {
     @Test
     void anvilWearHookTargetsOnlyTheNativeTakeCallback() throws Exception {
         var callback = AnvilMenu.class.getDeclaredMethod(
-                "lambda$onTake$2", Player.class, float.class, Level.class, BlockPos.class);
+                "lambda$onTake$0", Player.class, float.class, Level.class, BlockPos.class);
 
         assertTrue(Modifier.isStatic(callback.getModifiers()));
         assertEquals(void.class, callback.getReturnType());

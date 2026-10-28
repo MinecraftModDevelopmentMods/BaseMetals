@@ -122,7 +122,7 @@ public final class ForwardPortGameTests {
             var recipe = level.getServer().getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, Identifier.fromNamespaceAndPath(
                     BaseMetals.MOD_ID, recipeId))).orElseThrow();
             require(helper, ((net.minecraft.world.item.crafting.CraftingRecipe) recipe.value()).assemble(
-                    net.minecraft.world.item.crafting.CraftingInput.EMPTY, level.registryAccess()).is(vanilla),
+                    net.minecraft.world.item.crafting.CraftingInput.EMPTY).is(vanilla),
                     recipeId + " still crafts the old duplicate item");
         }
 
@@ -131,7 +131,7 @@ public final class ForwardPortGameTests {
             var input = CraftingInput.of(3, 1,
                     List.of(ingot.copy(), ingot.copy(), ingot.copy()));
             var plate = level.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING,
-                    input, level).orElseThrow().value().assemble(input, level.registryAccess());
+                    input, level).orElseThrow().value().assemble(input);
             require(helper, plate.is(ModContent.item("copper_plate").get()) && plate.getCount() == 3,
                     "Copper plate crafting rejected a supported ingot");
         }
@@ -140,7 +140,7 @@ public final class ForwardPortGameTests {
                 ModContent.item("copper_trapdoor").get(), 4).entrySet()) {
             var input = new SingleRecipeInput(entry.getKey().getDefaultInstance());
             ItemStack recycled = level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING,
-                    input, level).orElseThrow().value().assemble(input, level.registryAccess());
+                    input, level).orElseThrow().value().assemble(input);
             require(helper, recycled.is(Items.COPPER_INGOT) && recycled.getCount() == entry.getValue(),
                     "Copper trapdoor recycling used the wrong material value");
         }

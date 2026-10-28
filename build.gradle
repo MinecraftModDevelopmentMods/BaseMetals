@@ -9,14 +9,14 @@ plugins {
 ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
         'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
 ext.mavenizerCompatibilitySha256 =
-        'B36CA046DB72E30F27BD38E02B4AE34274ADB51AE1D65BAF9E1D07763755682E'
+        'BB0DACB3DEB2A711CA67DD402D5FDAB5A9847C37C7B9B596DEC7CF37378FA085'
 
 ext.mavenizerFixtureChecksums = [
         'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
-        'minecraft-source-compatibility.json': '88F2EE4C6B7C903EB1C7D693C0BEEFC0EFC601C1023FB197F7CBA187B1142DB7',
-        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': '88F9035C8545CF1CBC7342C14F2F95076C4E415EDB7A74D585409CFC3F1BDD5C',
+        'minecraft-source-compatibility.json': '21D1F5984E735BCEA1B1EFB9F965655796B39538FC91AAED1C3474004710423D',
+        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': '7C8EC895E79DF31AFD2CA3B505B43573C7052718A24050832189AAA2D3CC6137',
         'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331',
-        'README.md': 'A097E126C606BDC86B34F5DDFB9580228A7C5BC866C6509C6BB362152EBACED7'
+        'README.md': '7686880D2B0F6BD6ACAFA4F0AB7585189767813174BC36DB675FEC0142440A77'
 ]
 // Mavenizer runs during configuration, so verify its inputs before configuring Forge.
 mavenizerFixtureChecksums.each { name, expected ->
@@ -27,7 +27,7 @@ mavenizerFixtureChecksums.each { name, expected ->
     }
 }
 
-// Forge 61 needs no source repairs. The sealed fixture records that result
+// Forge 64 needs no source repairs. The sealed fixture records that result
 // and stays separate from the mod and its runtime dependencies.
 fgtools.configure('mavenizer') {
     classpath.from(mavenizerCompatibilityJar)
@@ -67,20 +67,28 @@ ext.release_tag = project.mod_version
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
         vendor = JvmVendorSpec.ADOPTIUM
     }
     withSourcesJar()
     withJavadocJar()
 }
 
+// Keep the development launcher on the same JDK as Minecraft and Gradle.
+fgtools.configure('slimelauncher') {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.ADOPTIUM
+    })
+}
+
 tasks.withType(JavaCompile).configureEach {
     javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
         vendor = JvmVendorSpec.ADOPTIUM
     }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
     options.encoding = 'UTF-8'
     options.compilerArgs.addAll(['-Xmaxerrs', '1000'])
 }
@@ -369,6 +377,7 @@ sourceSets.main.resources {
 }
 
 // Keep the top-level build readable; each script owns one build concern.
+apply from: 'gradle/ide/merged-output.gradle'
 apply from: 'gradle/dependencies.gradle'
 apply from: 'gradle/release/artifacts.gradle'
 apply from: 'gradle/release/publishing.gradle'

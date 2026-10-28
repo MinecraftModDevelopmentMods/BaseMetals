@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:copper_slab",
+    "minecraft:cut_copper_slab"
+  ]
+}

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:flowing_pewter",
-    "basemetals:pewter"
+    "#c:molten_pewter"
   ]
 }

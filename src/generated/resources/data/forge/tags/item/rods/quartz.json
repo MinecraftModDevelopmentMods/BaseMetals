@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:quartz_rod"
+    "#c:rods/quartz"
   ]
 }

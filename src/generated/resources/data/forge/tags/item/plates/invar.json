@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:invar_plate"
+    "#c:plates/invar"
   ]
 }
