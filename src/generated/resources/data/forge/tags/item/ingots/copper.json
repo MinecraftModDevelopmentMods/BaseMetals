@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_ingot",
-    "minecraft:copper_ingot"
+    "#c:ingots/copper"
   ]
 }

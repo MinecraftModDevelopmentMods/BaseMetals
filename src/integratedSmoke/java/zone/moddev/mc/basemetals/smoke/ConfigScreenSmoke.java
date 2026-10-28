@@ -25,7 +25,7 @@ final class ConfigScreenSmoke {
     }
 
     private static void verifyOnce(Minecraft minecraft, Screen parent) {
-        var mod = ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow().getModInfo();
+        var mod = ModList.getModContainerById(BaseMetals.MOD_ID).orElseThrow().getModInfo();
         Screen forgeScreen = ConfigScreenHandler.getScreenFactoryFor(mod).orElseThrow().apply(minecraft, parent);
         require(forgeScreen instanceof BaseMetalsConfigScreen, "Forge Config button has the wrong screen");
 

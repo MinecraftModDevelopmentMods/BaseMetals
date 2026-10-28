@@ -1,0 +1,19 @@
+// Compile away from Forge's merged resource root so either task can clean its output safely.
+sourceSets.configureEach { sourceSet ->
+    def compiledClasses = layout.buildDirectory.dir("compiled-classes/${sourceSet.name}")
+    tasks.named(sourceSet.compileJavaTaskName, JavaCompile).configure {
+        destinationDirectory.set(compiledClasses)
+    }
+
+    def mergeClasses = tasks.register("merge${sourceSet.name.capitalize()}Classes") {
+        dependsOn tasks.named(sourceSet.compileJavaTaskName)
+        dependsOn tasks.named(sourceSet.processResourcesTaskName)
+        doLast {
+            copy {
+                from compiledClasses
+                into sourceSet.output.resourcesDir
+            }
+        }
+    }
+    tasks.named(sourceSet.classesTaskName).configure { dependsOn mergeClasses }
+}

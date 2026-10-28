@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "#c:raw_materials/adamantine",
+    "#c:raw_materials/antimony",
+    "#c:raw_materials/bismuth",
+    "#c:raw_materials/coldiron",
+    "#c:raw_materials/copper",
+    "#c:raw_materials/gold",
+    "#c:raw_materials/iron",
+    "#c:raw_materials/lead",
+    "#c:raw_materials/mercury",
+    "#c:raw_materials/nickel",
+    "#c:raw_materials/platinum",
+    "#c:raw_materials/silver",
+    "#c:raw_materials/starsteel",
+    "#c:raw_materials/tin",
+    "#c:raw_materials/zinc"
+  ]
+}

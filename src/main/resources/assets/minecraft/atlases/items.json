@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "minecraft:item/bucket",
+      "sprite": "basemetals:item/bucket_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "forge:item/mask/bucket_fluid",
+      "sprite": "basemetals:item/bucket_fluid"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "forge:item/mask/bucket_fluid_cover",
+      "sprite": "basemetals:item/bucket_cover"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "basemetals:block/molten_metal_still",
+      "sprite": "basemetals:item/molten_metal_still"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "basemetals:block/mercury_still",
+      "sprite": "basemetals:item/mercury_still"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "#c:rods/adamantine",
+    "#c:rods/antimony",
+    "#c:rods/aquarium",
+    "#c:rods/bismuth",
+    "#c:rods/brass",
+    "#c:rods/bronze",
+    "#c:rods/coldiron",
+    "#c:rods/copper",
+    "#c:rods/cupronickel",
+    "#c:rods/diamond",
+    "#c:rods/electrum",
+    "#c:rods/emerald",
+    "#c:rods/gold",
+    "#c:rods/invar",
+    "#c:rods/iron",
+    "#c:rods/lead",
+    "#c:rods/mithril",
+    "#c:rods/nickel",
+    "#c:rods/obsidian",
+    "#c:rods/pewter",
+    "#c:rods/platinum",
+    "#c:rods/quartz",
+    "#c:rods/silver",
+    "#c:rods/starsteel",
+    "#c:rods/steel",
+    "#c:rods/tin",
+    "#c:rods/zinc"
+  ]
+}

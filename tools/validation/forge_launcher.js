@@ -33,7 +33,8 @@ function serverArguments(runtime, directory, version, forge) {
     }
     const staged = path.join(directory, 'forge-arguments.txt');
     fs.writeFileSync(staged, contents);
-    return ['--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED', '@' + staged, 'nogui'];
+    return ['-Dterminal.jline=false', '-Dterminal.ansi=false',
+        '--add-opens', 'java.base/java.lang.invoke=ALL-UNNAMED', '@' + staged, 'nogui'];
 }
 
 function clientLaunch(runtime, version, forge) {

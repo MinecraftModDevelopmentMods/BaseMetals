@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:tin_raw"
+    "#c:raw_materials/tin"
   ]
 }

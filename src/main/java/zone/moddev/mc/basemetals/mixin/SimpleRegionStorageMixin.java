@@ -11,17 +11,17 @@ import zone.moddev.mc.basemetals.migration.LegacyWorldDataHook;
 /** Restores legacy mod identities on either side of vanilla's chunk conversion. */
 @Mixin(SimpleRegionStorage.class)
 abstract class SimpleRegionStorageMixin {
-    @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;ILnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+    @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;ILnet/minecraft/nbt/CompoundTag;I)Lnet/minecraft/nbt/CompoundTag;",
             at = @At("HEAD"))
     private void basemetals$prepareChunk(CompoundTag chunk, int fallbackVersion,
-            CompoundTag context, CallbackInfoReturnable<CompoundTag> callback) {
+            CompoundTag context, int targetVersion, CallbackInfoReturnable<CompoundTag> callback) {
         LegacyWorldDataHook.prepareLegacyChunk(chunk);
     }
 
-    @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;ILnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+    @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;ILnet/minecraft/nbt/CompoundTag;I)Lnet/minecraft/nbt/CompoundTag;",
             at = @At("RETURN"), cancellable = true)
     private void basemetals$finishChunk(CompoundTag chunk, int fallbackVersion,
-            CompoundTag context, CallbackInfoReturnable<CompoundTag> callback) {
+            CompoundTag context, int targetVersion, CallbackInfoReturnable<CompoundTag> callback) {
         callback.setReturnValue(LegacyWorldDataHook.finalizeLegacyChunk(callback.getReturnValue()));
     }
 }

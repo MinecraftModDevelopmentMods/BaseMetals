@@ -1,0 +1,29 @@
+{
+  "given_item_modifiers": [
+    {
+      "function": "minecraft:enchant_with_levels",
+      "include_additional_cost_component": true,
+      "levels": {
+        "type": "minecraft:uniform",
+        "max": 19,
+        "min": 5
+      },
+      "options": "#minecraft:on_random_loot"
+    }
+  ],
+  "gives": {
+    "count": 1,
+    "id": "basemetals:silver_chestplate"
+  },
+  "max_uses": 3,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:silver_chestplate"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 12,
+    "id": "minecraft:emerald"
+  },
+  "xp": 15
+}

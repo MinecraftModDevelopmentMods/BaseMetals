@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:mercury_ingot"
+    "#c:ingots/mercury"
   ]
 }

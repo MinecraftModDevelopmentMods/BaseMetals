@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "#c:storage_blocks/adamantine",
+    "#c:storage_blocks/antimony",
+    "#c:storage_blocks/aquarium",
+    "#c:storage_blocks/bismuth",
+    "#c:storage_blocks/brass",
+    "#c:storage_blocks/bronze",
+    "#c:storage_blocks/coldiron",
+    "#c:storage_blocks/copper",
+    "#c:storage_blocks/cupronickel",
+    "#c:storage_blocks/electrum",
+    "#c:storage_blocks/invar",
+    "#c:storage_blocks/lead",
+    "#c:storage_blocks/mithril",
+    "#c:storage_blocks/nickel",
+    "#c:storage_blocks/pewter",
+    "#c:storage_blocks/platinum",
+    "#c:storage_blocks/silver",
+    "#c:storage_blocks/starsteel",
+    "#c:storage_blocks/steel",
+    "#c:storage_blocks/tin",
+    "#c:storage_blocks/zinc"
+  ]
+}

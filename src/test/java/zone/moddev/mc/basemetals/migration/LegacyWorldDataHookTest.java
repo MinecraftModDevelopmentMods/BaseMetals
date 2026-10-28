@@ -18,11 +18,12 @@ class LegacyWorldDataHookTest {
     void levelHookPassesTheFileBeforeComponentConversion() throws IOException {
         String hook = Files.readString(Path.of(
                 "src/main/java/zone/moddev/mc/basemetals/mixin/LevelStorageSourceMixin.java"));
-        assertTrue(hook.contains("method = \"readLevelDataTagFixed\""));
-        assertTrue(hook.contains("at = @At(\"HEAD\")"));
-        assertTrue(hook.contains("prepareLegacyWorld(file.toFile())"));
-        assertTrue(hook.contains("file.getFileName().toString().equals(\"level.dat\")"));
-        assertFalse(hook.contains("getParent"));
+        assertTrue(hook.contains("@Mixin(LevelStorageSource.LevelStorageAccess.class)"));
+        assertTrue(hook.contains("method = \"getUnfixedDataTag\""));
+        assertTrue(hook.contains("at = @At(value = \"INVOKE\""));
+        assertTrue(hook.contains("prepareSelectedWorld(getLevelPath(LevelResource.LEVEL_DATA_FILE))"));
+        assertTrue(hook.contains("if (!useFallback)"));
+        assertFalse(hook.contains("@Mixin(LevelStorageSource.class)"));
     }
 
     @Test

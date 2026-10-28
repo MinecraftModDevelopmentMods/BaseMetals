@@ -88,6 +88,91 @@ public final class LegacyWorldDataHook {
 
     private LegacyWorldDataHook() {}
 
+    /** Normalize old data before Minecraft moves files and converts item components. */
+    public static synchronized void prepareSelectedWorld(Path levelDat) {
+        prepareLegacyWorld(levelDat.toFile());
+
+        try {
+            Legacy112WorldMigrator.migrateIfNeeded(levelDat.getParent());
+            preserveEmbeddedPlayer(levelDat);
+            copyOlderWorldCapabilities(levelDat);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Could not safely prepare the saved world " + levelDat, exception);
+        }
+    }
+
+    private static void preserveEmbeddedPlayer(Path levelDat) throws IOException {
+        if (!Files.isRegularFile(levelDat)) return;
+
+        CompoundTag root = LegacyNbt.readCompressed(levelDat.toFile());
+        CompoundTag data = root.getCompoundOrEmpty("Data");
+        int sourceVersion = data.getIntOr("DataVersion", 0);
+        if (sourceVersion <= 0 || sourceVersion >= 4772
+                || !NbtCompat.containsTag(data, "Player", Tag.TAG_COMPOUND)) return;
+
+        CompoundTag player = data.getCompoundOrEmpty("Player").copy();
+        java.util.UUID uuid = player.contains("UUID")
+                ? net.minecraft.core.UUIDUtil.LENIENT_CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, player.get("UUID"))
+                        .result().orElse(null) : null;
+        if (uuid == null && NbtCompat.containsTag(player, "UUIDMost", 99)
+                && NbtCompat.containsTag(player, "UUIDLeast", 99)) {
+            uuid = new java.util.UUID(player.getLongOr("UUIDMost", 0), player.getLongOr("UUIDLeast", 0));
+        }
+        if (uuid == null) return;
+
+        Path world = levelDat.getParent();
+        Path file = world.resolve("playerdata/" + uuid + ".dat");
+        if (Files.exists(file) || Files.exists(world.resolve("players/data/" + uuid + ".dat"))) return;
+
+        // The native file fixer discards an embedded player with a UUID, expecting its disk file to exist.
+        if (!NbtCompat.containsTag(player, "DataVersion", 99)) player.putInt("DataVersion", sourceVersion);
+        Files.createDirectories(file.getParent());
+        Path temporary = Files.createTempFile(file.getParent(), "basemetals-player-", ".tmp");
+        LegacyNbt.writeCompressed(player, temporary.toFile());
+        try {
+            Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE);
+        } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
+            Files.move(temporary, file);
+        }
+    }
+
+    private static void copyOlderWorldCapabilities(Path levelDat) throws IOException {
+        if (!Files.isRegularFile(levelDat)) return;
+
+        CompoundTag root = LegacyNbt.readCompressed(levelDat.toFile());
+        CompoundTag data = root.getCompoundOrEmpty("Data");
+        int sourceVersion = data.getIntOr("DataVersion", 0);
+        if (sourceVersion <= 0 || sourceVersion >= 4772) return;
+
+        Path world = levelDat.getParent();
+        copyCapabilities(world.resolve("data/capabilities.dat"),
+                world.resolve("dimensions/minecraft/overworld/data/forge/capabilities.dat"));
+        copyCapabilities(world.resolve("DIM-1/data/capabilities.dat"),
+                world.resolve("dimensions/minecraft/the_nether/data/forge/capabilities.dat"));
+        copyCapabilities(world.resolve("DIM1/data/capabilities.dat"),
+                world.resolve("dimensions/minecraft/the_end/data/forge/capabilities.dat"));
+
+        Path dimensions = world.resolve("dimensions");
+        if (Files.isDirectory(dimensions)) {
+            try (var paths = Files.walk(dimensions)) {
+                for (Path source : paths.filter(Files::isRegularFile)
+                        .filter(path -> path.getFileName().toString().equals("capabilities.dat"))
+                        .filter(path -> path.getParent().getFileName().toString().equals("data")).toList()) {
+                    copyCapabilities(source, source.getParent().resolve("forge/capabilities.dat"));
+                }
+            }
+        }
+    }
+
+    private static void copyCapabilities(Path source, Path destination) throws IOException {
+        if (!Files.isRegularFile(source) || Files.exists(destination)) return;
+
+        // Keep the old file as a recovery copy; never replace native 26.1 data.
+        LegacyNbt.readCompressed(source.toFile());
+        Files.createDirectories(destination.getParent());
+        Files.copy(source, destination);
+    }
+
     /** Captures the current level.dat before vanilla converts it. */
     public static synchronized void prepareLegacyWorld(File levelDat) {
         Legacy112WorldMigrator.beginWorldLoad();
@@ -569,14 +654,17 @@ public final class LegacyWorldDataHook {
     private static void migrateLoosePlayerData(File levelDat, CompoundTag root) throws IOException {
         CompoundTag current = levelDat.isFile() ? LegacyNbt.readCompressed(levelDat) : root;
         if (migrateLegacyItems(current) > 0 && levelDat.isFile()) writeWithBackup(levelDat, current);
-        File playerData = new File(levelDat.getParentFile(), "playerdata");
-        File[] files = playerData.listFiles((directory, name) -> name.endsWith(".dat"));
-        if (files == null) return;
-        Arrays.sort(files);
-        for (File file : files) {
-            try (FileInputStream input = new FileInputStream(file)) {
-                CompoundTag player = LegacyNbt.readCompressed(input);
-                if (migrateLegacyItems(player) > 0) writeWithBackup(file, player);
+        for (String directory : List.of("playerdata", "players/data")) {
+            File[] files = new File(levelDat.getParentFile(), directory)
+                    .listFiles((parent, name) -> name.endsWith(".dat"));
+            if (files == null) continue;
+
+            Arrays.sort(files);
+            for (File file : files) {
+                try (FileInputStream input = new FileInputStream(file)) {
+                    CompoundTag player = LegacyNbt.readCompressed(input);
+                    if (migrateLegacyItems(player) > 0) writeWithBackup(file, player);
+                }
             }
         }
     }

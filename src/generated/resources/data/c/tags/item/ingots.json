@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "#c:ingots/adamantine",
+    "#c:ingots/antimony",
+    "#c:ingots/aquarium",
+    "#c:ingots/bismuth",
+    "#c:ingots/brass",
+    "#c:ingots/bronze",
+    "#c:ingots/coldiron",
+    "#c:ingots/copper",
+    "#c:ingots/cupronickel",
+    "#c:ingots/electrum",
+    "#c:ingots/invar",
+    "#c:ingots/lead",
+    "#c:ingots/mercury",
+    "#c:ingots/mithril",
+    "#c:ingots/nickel",
+    "#c:ingots/pewter",
+    "#c:ingots/platinum",
+    "#c:ingots/silver",
+    "#c:ingots/starsteel",
+    "#c:ingots/steel",
+    "#c:ingots/tin",
+    "#c:ingots/zinc"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:obsidian"
+    "#c:storage_blocks/obsidian"
   ]
 }

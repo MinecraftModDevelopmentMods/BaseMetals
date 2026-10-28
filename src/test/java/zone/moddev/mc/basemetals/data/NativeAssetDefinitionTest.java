@@ -42,9 +42,16 @@ class NativeAssetDefinitionTest {
     }
 
     @Test
-    void filledBucketsKeepTheirSpritesOnTheBlockAtlas() throws Exception {
-        var atlas = read(Path.of("src/main/resources/assets/minecraft/atlases/blocks.json"));
-        assertEquals(3, atlas.getAsJsonArray("sources").size());
+    void filledBucketsKeepTheirSpritesOnTheItemAtlas() throws Exception {
+        var atlas = read(Path.of("src/main/resources/assets/minecraft/atlases/items.json"));
+        assertEquals(5, atlas.getAsJsonArray("sources").size());
+        assertFalse(Files.exists(Path.of("src/main/resources/assets/minecraft/atlases/blocks.json")));
+
+        for (var source : atlas.getAsJsonArray("sources")) {
+            var alias = source.getAsJsonObject();
+            assertTrue(alias.get("sprite").getAsString().startsWith("basemetals:item/"));
+            assertEquals("minecraft:single", alias.get("type").getAsString());
+        }
 
         try (var files = Files.list(ASSETS.resolve("models/item"))) {
             var buckets = files.filter(file -> file.getFileName().toString().endsWith("_bucket.json")).toList();
@@ -52,8 +59,9 @@ class NativeAssetDefinitionTest {
 
             for (Path file : buckets) {
                 var textures = read(file).getAsJsonObject("textures");
-                assertEquals("basemetals:block/bucket_base", textures.get("base").getAsString());
-                assertEquals("basemetals:block/bucket_cover", textures.get("cover").getAsString());
+                assertEquals("basemetals:item/bucket_base", textures.get("base").getAsString());
+                assertEquals("basemetals:item/bucket_fluid", textures.get("fluid").getAsString());
+                assertEquals("basemetals:item/bucket_cover", textures.get("cover").getAsString());
                 assertEquals("#base", textures.get("particle").getAsString());
             }
         }

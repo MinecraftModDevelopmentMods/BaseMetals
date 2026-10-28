@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_smallpowder"
+    "#c:tiny_dusts/copper"
   ]
 }

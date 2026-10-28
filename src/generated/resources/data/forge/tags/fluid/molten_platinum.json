@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:flowing_platinum",
-    "basemetals:platinum"
+    "#c:molten_platinum"
   ]
 }

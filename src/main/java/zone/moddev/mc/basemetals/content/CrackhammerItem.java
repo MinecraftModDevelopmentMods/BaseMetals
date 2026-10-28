@@ -88,7 +88,7 @@ public final class CrackhammerItem extends Item implements MaterialBacked {
             context.getLevel().playSound(null, context.getClickedPos(),
                     net.minecraft.sounds.SoundEvents.GRAVEL_BREAK,
                     net.minecraft.sounds.SoundSource.BLOCKS, 0.5F,
-                    0.5F + (context.getLevel().random.nextFloat() * 0.3F));
+                    0.5F + (context.getLevel().getRandom().nextFloat() * 0.3F));
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;

@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:invar_smallpowder"
+    "#c:tiny_dusts/invar"
   ]
 }

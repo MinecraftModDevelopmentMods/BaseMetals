@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:pewter_plate"
+    "#c:plates/pewter"
   ]
 }

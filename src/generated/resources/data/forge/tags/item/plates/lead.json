@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:lead_plate"
+    "#c:plates/lead"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:gold_blend"
+    "#c:blends/gold"
   ]
 }

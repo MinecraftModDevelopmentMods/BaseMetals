@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_stairs",
-    "minecraft:cut_copper_stairs"
+    "#c:stairs/copper"
   ]
 }

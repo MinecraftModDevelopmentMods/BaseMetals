@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:electrum_smallpowder"
+    "#c:tiny_dusts/electrum"
   ]
 }

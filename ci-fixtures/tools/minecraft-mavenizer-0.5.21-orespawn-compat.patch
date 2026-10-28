@@ -371,7 +371,7 @@ index 0000000..702d759
 +{
 +  "schema": 1,
 +  "targets": {
-+    "net.minecraftforge:forge:1.21.11-61.1.0": {
++    "net.minecraftforge:forge:26.1.2-64.0.9": {
 +      "expectedApplications": 0,
 +      "rules": []
 +    }

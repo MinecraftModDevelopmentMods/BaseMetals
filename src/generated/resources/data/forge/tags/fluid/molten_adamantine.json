@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:adamantine",
-    "basemetals:flowing_adamantine"
+    "#c:molten_adamantine"
   ]
 }

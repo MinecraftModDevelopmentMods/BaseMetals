@@ -82,6 +82,7 @@ final class GeneratedData implements DataProvider {
             writeFluidBlockstates(cache);
             writeLoot(cache);
             writeTags(cache);
+            writeCommonTagAliases(cache);
             writeRecipes(cache);
             writeRawProcessing(cache);
             writeTinkersMaterials(cache);
@@ -294,14 +295,20 @@ final class GeneratedData implements DataProvider {
                 addAggregate(families, "enchantable/bow", name);
             }
             if (item instanceof FishingRodItem) addAggregate(families, "enchantable/fishing", name);
-            if (item.getDefaultInstance().isDamageableItem()) addAggregate(families, "enchantable/durability", name);
+            var form = zone.moddev.mc.basemetals.config.MaterialForm.fromPath(id);
+            boolean damageable = switch (form) {
+                case AXE, BOOTS, BOW, CHESTPLATE, CRACKHAMMER, CROSSBOW, FISHING_ROD,
+                        HELMET, HOE, LEGGINGS, PICKAXE, SCYTHE, SHEARS, SHIELD, SHOVEL, SWORD -> true;
+                default -> false;
+            };
+            if (damageable) addAggregate(families, "enchantable/durability", name);
 
             if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Armor) {
-                String family = switch (item.components().get(net.minecraft.core.component.DataComponents.EQUIPPABLE).slot()) {
-                    case HEAD -> "head_armor";
-                    case CHEST -> "chest_armor";
-                    case LEGS -> "leg_armor";
-                    case FEET -> "foot_armor";
+                String family = switch (form) {
+                    case HELMET -> "head_armor";
+                    case CHESTPLATE -> "chest_armor";
+                    case LEGGINGS -> "leg_armor";
+                    case BOOTS -> "foot_armor";
                     default -> null;
                 };
                 if (family != null) addAggregate(families, family, name);
@@ -1614,7 +1621,7 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 1.21.11 catalogue");
+        root.addProperty("source", "Base Metals 26.1.2 catalogue");
         root.add("blocks", array(blocks));
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
@@ -1664,8 +1671,36 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("replace", false);
-        root.add("values", array(List.copyOf(compatible)));
-        save(cache, root, "data/" + namespace + "/tags/" + path + ".json");
+        if (namespace.equals("forge")) {
+            root.add("values", array(compatible.stream().map(value ->
+                    value.startsWith("#forge:") ? "#c:" + value.substring(7) : value).toList()));
+            save(cache, root, "data/c/tags/" + path + ".json");
+            save(cache, object("replace", false, "values", array(List.of("#c:" + path.substring(path.indexOf('/') + 1)))),
+                    "data/forge/tags/" + path + ".json");
+        } else {
+            root.add("values", array(List.copyOf(compatible)));
+            save(cache, root, "data/" + namespace + "/tags/" + path + ".json");
+        }
+    }
+
+    private void writeCommonTagAliases(CachedOutput cache) throws IOException {
+        for (String path : List.of("rods/wooden", "ores/netherite_scrap", "storage_blocks/coal", "ores/coal",
+                "gems/diamond", "ores/diamond", "gems/emerald", "ores/emerald", "nuggets/gold", "ingots/gold",
+                "ores/gold", "nuggets/iron", "ingots/iron", "ores/iron", "storage_blocks/lapis", "ores/lapis",
+                "gems/quartz", "ores/quartz", "storage_blocks/redstone", "ores/redstone")) {
+            save(cache, object("replace", false, "values", array(List.of("#c:" + path))),
+                    "data/forge/tags/item/" + path + ".json");
+            if (path.startsWith("ores/") || path.startsWith("storage_blocks/")) {
+                save(cache, object("replace", false, "values", array(List.of("#c:" + path))),
+                        "data/forge/tags/block/" + path + ".json");
+            }
+        }
+        for (String kind : List.of("item", "block")) {
+            for (var alias : Map.of("cobblestone", "cobblestones", "gravel", "gravels", "stone", "stones").entrySet()) {
+                save(cache, object("replace", false, "values", array(List.of("#c:" + alias.getValue()))),
+                        "data/forge/tags/" + kind + "/" + alias.getKey() + ".json");
+            }
+        }
     }
     private void uncheckedTag(CachedOutput cache, String namespace, String path, List<String> values) {
         try { tag(cache, namespace, path, values); } catch (IOException e) { throw new RuntimeException(e); }

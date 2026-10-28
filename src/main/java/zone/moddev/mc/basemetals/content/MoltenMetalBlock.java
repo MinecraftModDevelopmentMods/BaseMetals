@@ -27,7 +27,7 @@ public final class MoltenMetalBlock extends LiquidBlock {
             net.minecraft.world.entity.InsideBlockEffectApplier effects, boolean intersects) {
         super.entityInside(state, level, pos, entity, effects, intersects);
         if (mercury && !level.isClientSide() && BaseMetalsConfig.MERCURY_EFFECTS.get()
-                && entity instanceof LivingEntity living && level.random.nextInt(32) == 0) {
+                && entity instanceof LivingEntity living && level.getRandom().nextInt(32) == 0) {
             living.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 30 * 20, 2));
         }
     }

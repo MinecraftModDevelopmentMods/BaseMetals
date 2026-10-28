@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:quartz_gear"
+    "#c:gears/quartz"
   ]
 }

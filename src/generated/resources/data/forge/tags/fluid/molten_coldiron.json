@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:coldiron",
-    "basemetals:flowing_coldiron"
+    "#c:molten_coldiron"
   ]
 }

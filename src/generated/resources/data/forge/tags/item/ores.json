@@ -1,18 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#forge:ores/adamantine",
-    "#forge:ores/antimony",
-    "#forge:ores/bismuth",
-    "#forge:ores/coldiron",
-    "#forge:ores/copper",
-    "#forge:ores/lead",
-    "#forge:ores/mercury",
-    "#forge:ores/nickel",
-    "#forge:ores/platinum",
-    "#forge:ores/silver",
-    "#forge:ores/starsteel",
-    "#forge:ores/tin",
-    "#forge:ores/zinc"
+    "#c:ores"
   ]
 }

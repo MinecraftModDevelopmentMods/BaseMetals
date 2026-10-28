@@ -32,9 +32,9 @@ class RawMaterialResourceTest {
                 assertEquals("basemetals:" + metal + "_ingot", recipe.getAsJsonObject("result").get("id").getAsString());
             }
 
-            String rawTag = Files.readString(GENERATED.resolve("data/forge/tags/item/raw_materials/" + metal + ".json"));
+            String rawTag = Files.readString(GENERATED.resolve("data/c/tags/item/raw_materials/" + metal + ".json"));
             assertTrue(rawTag.contains("basemetals:" + metal + "_raw"));
-            assertFalse(Files.readString(GENERATED.resolve("data/forge/tags/item/dusts/" + metal + ".json")).contains("_raw"));
+            assertFalse(Files.readString(GENERATED.resolve("data/c/tags/item/dusts/" + metal + ".json")).contains("_raw"));
         }
 
         try (Stream<Path> recipes = Files.list(GENERATED.resolve("data/basemetals/recipe"))) {

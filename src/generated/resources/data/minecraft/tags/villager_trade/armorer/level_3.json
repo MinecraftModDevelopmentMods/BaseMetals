@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:armorer/cupronickel_helmet_enchanted",
+    "basemetals:armorer/cupronickel_chestplate_enchanted",
+    "basemetals:armorer/cupronickel_leggings_enchanted",
+    "basemetals:armorer/cupronickel_boots_enchanted",
+    "basemetals:armorer/electrum_helmet_enchanted",
+    "basemetals:armorer/electrum_chestplate_enchanted",
+    "basemetals:armorer/electrum_leggings_enchanted",
+    "basemetals:armorer/electrum_boots_enchanted"
+  ]
+}

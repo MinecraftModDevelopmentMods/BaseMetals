@@ -100,7 +100,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void modernLz4Chunk() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11"), "Native LZ4 is not available on older targets");
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.1.2"), "Native LZ4 is not available on older targets");
         Path world = world("lz4", false);
         Path file = region(world, false, true);
         assertTrue(nativeAccepts(file, false));
@@ -177,7 +177,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void savedRegistryCanBeScannedWithLz4Chunks() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11"));
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.1.2"));
         Path world = world("saved-registry-lz4", false);
         writeRegistry(world.resolve("basemetals-legacy-registry.dat"));
         Path file = region(world, false, true);
@@ -190,18 +190,19 @@ class LegacyMigrationSafetyTest {
     }
 
     @Test
-    void firstUpgradeUsesThePlayerCapturedBeforeForgeReadsTheWorld() throws Exception {
+    void firstUpgradePreparesThePlayerBeforeNativeFileFixingAndNeverRestoresAnOlderCopy() throws Exception {
         Path world = world("first-legacy-upgrade", true);
         writeLevel(world.resolve("level.dat"), 1343, true, 7);
-        LegacyWorldDataHook.prepareLegacyWorld(world.resolve("level.dat").toFile());
+        LegacyWorldDataHook.prepareSelectedWorld(world.resolve("level.dat"));
+        assertEquals(7, experience(world.resolve("level.dat")));
+        assertTrue(Files.exists(world.resolve(MARKER)));
 
-        // Forge has now rewritten level.dat. Its backup is not our source of player data.
+        // A later native save is authoritative, even if an older backup still exists.
         writeLevel(world.resolve("level.dat"), DATA_VERSION, true, 37);
         writeLevel(world.resolve("level.dat_old"), 1343, true, 3);
         runEntry(world);
 
-        assertEquals(7, experience(world.resolve("level.dat")));
-        assertTrue(Files.exists(world.resolve("basemetals-1.12-region-backup/level.dat")));
+        assertEquals(37, experience(world.resolve("level.dat")));
         assertTrue(Files.exists(world.resolve(MARKER)));
 
         writeLevel(world.resolve("level.dat"), DATA_VERSION, true, 38);
@@ -211,7 +212,7 @@ class LegacyMigrationSafetyTest {
     }
 
     @Test
-    void openingAnotherWorldClearsTheCapturedPlayer() throws Exception {
+    void openingAnotherWorldDoesNotCarryOverLegacyProvenance() throws Exception {
         Path oldWorld = world("old-world", true);
         writeLevel(oldWorld.resolve("level.dat"), 1343, true, 7);
         LegacyWorldDataHook.prepareLegacyWorld(oldWorld.resolve("level.dat").toFile());

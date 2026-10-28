@@ -3,8 +3,6 @@ package zone.moddev.mc.basemetals.recipe;
 import java.util.List;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -22,7 +20,7 @@ import zone.moddev.mc.basemetals.config.ContentPolicy;
 
 /** Keeps recipe IDs stable while hiding recipes that the selected mode does not allow. */
 public final class ContentCraftingRecipe implements CraftingRecipe {
-    public static final RecipeSerializer<ContentCraftingRecipe> SERIALIZER = new Serializer();
+    public static final RecipeSerializer<ContentCraftingRecipe> SERIALIZER = Serializer.create();
     private final CraftingRecipe plain;
 
     private ContentCraftingRecipe(CraftingRecipe plain) {
@@ -30,7 +28,7 @@ public final class ContentCraftingRecipe implements CraftingRecipe {
     }
 
     private boolean allowed() {
-        ItemStack result = plain.assemble(CraftingInput.EMPTY, RegistryAccess.EMPTY);
+        ItemStack result = plain.assemble(CraftingInput.EMPTY);
         return ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(result.getItem()).toString());
     }
 
@@ -48,8 +46,8 @@ public final class ContentCraftingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
-        return allowed() ? plain.assemble(input, registries) : ItemStack.EMPTY;
+    public ItemStack assemble(CraftingInput input) {
+        return allowed() ? plain.assemble(input) : ItemStack.EMPTY;
     }
 
     @Override
@@ -87,7 +85,7 @@ public final class ContentCraftingRecipe implements CraftingRecipe {
         return SERIALIZER;
     }
 
-    private static final class Serializer implements RecipeSerializer<ContentCraftingRecipe> {
+    private static final class Serializer {
         private static final MapCodec<ContentCraftingRecipe> CODEC = Recipe.CODEC.fieldOf("recipe")
                 .xmap(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
         // Preserve empty pattern slots and tag names instead of flattening the ingredients.
@@ -95,14 +93,8 @@ public final class ContentCraftingRecipe implements CraftingRecipe {
                 ByteBufCodecs.fromCodecWithRegistries(Recipe.CODEC)
                         .map(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
 
-        @Override
-        public MapCodec<ContentCraftingRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, ContentCraftingRecipe> streamCodec() {
-            return STREAM_CODEC;
+        private static RecipeSerializer<ContentCraftingRecipe> create() {
+            return new RecipeSerializer<>(CODEC, STREAM_CODEC);
         }
     }
 }

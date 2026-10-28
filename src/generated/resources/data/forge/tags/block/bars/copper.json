@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_bars",
-    "minecraft:copper_bars"
+    "#c:bars/copper"
   ]
 }

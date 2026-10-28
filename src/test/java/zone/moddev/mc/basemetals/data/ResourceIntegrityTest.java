@@ -314,10 +314,10 @@ class ResourceIntegrityTest {
         assertCrushingRecipe("tin_nugget_crushing", "tag", "forge:nuggets/tin",
                 "basemetals:tin_smallpowder", 1);
 
-        JsonObject adamantAlias = read(resource("data/forge/tags/item/ingots/adamantium.json")).getAsJsonObject();
-        assertTrue(strings(adamantAlias.getAsJsonArray("values")).contains("#forge:ingots/adamantine"));
-        JsonObject sprocket = read(resource("data/forge/tags/item/sprockets/steel.json")).getAsJsonObject();
-        assertTrue(strings(sprocket.getAsJsonArray("values")).contains("#forge:gears/steel"));
+        JsonObject adamantAlias = read(resource("data/c/tags/item/ingots/adamantium.json")).getAsJsonObject();
+        assertTrue(strings(adamantAlias.getAsJsonArray("values")).contains("#c:ingots/adamantine"));
+        JsonObject sprocket = read(resource("data/c/tags/item/sprockets/steel.json")).getAsJsonObject();
+        assertTrue(strings(sprocket.getAsJsonArray("values")).contains("#c:gears/steel"));
 
         assertConditionalRecipe("compat/mekanism/adamantine/ore_to_dirty_slurry", "mekanism");
         assertConditionalRecipe("compat/thermal/alloys/bronze", "thermal_expansion");
@@ -712,19 +712,25 @@ class ResourceIntegrityTest {
 
             try {
                 var sources = JsonParser.parseString(Files.readString(
-                        MAIN.resolve("assets/minecraft/atlases/blocks.json")))
+                        MAIN.resolve("assets/minecraft/atlases/items.json")))
                         .getAsJsonObject().getAsJsonArray("sources");
 
                 for (var source : sources) {
                     var alias = source.getAsJsonObject();
                     if (alias.has("sprite") && alias.get("sprite").getAsString().equals(sprite)) {
                         assertEquals("minecraft:single", alias.get("type").getAsString());
-                        assertTrue(alias.get("resource").getAsString().matches("(?:minecraft|forge):[a-z0-9_./-]+"));
+                        String sourceSprite = alias.get("resource").getAsString();
+                        if (sourceSprite.startsWith("basemetals:")) {
+                            assertTrue(Files.isRegularFile(MAIN.resolve("assets/basemetals/textures/"
+                                    + sourceSprite.substring("basemetals:".length()) + ".png")));
+                        } else {
+                            assertTrue(sourceSprite.matches("(?:minecraft|forge):[a-z0-9_./-]+"));
+                        }
                         return;
                     }
                 }
             } catch (IOException exception) {
-                throw new AssertionError("Could not read the block-atlas aliases", exception);
+                throw new AssertionError("Could not read the item-atlas aliases", exception);
             }
         }
 

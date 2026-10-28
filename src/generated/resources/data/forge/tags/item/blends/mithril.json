@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:mithril_blend"
+    "#c:blends/mithril"
   ]
 }

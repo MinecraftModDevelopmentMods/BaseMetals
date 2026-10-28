@@ -43,6 +43,9 @@ public final class BaseMetalsDataGenerators implements DataProvider {
             generator.addProvider(true, new BaseMetalsDataGenerators(generator.getPackOutput()));
         }
         generator.addProvider(true, new GeneratedData(generator.getPackOutput()));
+        if (event.includeServer()) {
+            generator.addProvider(true, new SmithTradeProvider(generator.getPackOutput()));
+        }
     }
 
     @Override
@@ -160,12 +163,12 @@ public final class BaseMetalsDataGenerators implements DataProvider {
             if (id.endsWith("_bucket")) {
                 String fluidName = id.substring(0, id.length() - 7);
 
-                // Keep the bucket and its fluid on one atlas. The aliases still use resource-pack textures.
+                // The bucket and fluid share the item atlas; aliases still follow resource packs.
                 save(cache, object("parent", "forge:item/bucket", "fluid", "basemetals:" + fluidName,
                         "loader", "forge:fluid_container", "textures", object(
-                                "base", "basemetals:block/bucket_base",
-                                "fluid", "basemetals:block/bucket_fluid",
-                                "cover", "basemetals:block/bucket_cover",
+                                "base", "basemetals:item/bucket_base",
+                                "fluid", "basemetals:item/bucket_fluid",
+                                "cover", "basemetals:item/bucket_cover",
                                 "particle", "#base")), "models/item/" + id + ".json");
                 int colour = ((MetalFluidType) ModContent.fluids().get(fluidName)
                         .source().get().getFluidType()).colour();

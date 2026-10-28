@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:weaponsmith/brass_sword_enchanted",
+    "basemetals:weaponsmith/brass_crossbow_enchanted",
+    "basemetals:weaponsmith/brass_bow_enchanted",
+    "basemetals:weaponsmith/cupronickel_ingot",
+    "basemetals:weaponsmith/cupronickel_sword",
+    "basemetals:weaponsmith/cupronickel_bow",
+    "basemetals:weaponsmith/cupronickel_crossbow",
+    "basemetals:weaponsmith/electrum_ingot",
+    "basemetals:weaponsmith/electrum_sword",
+    "basemetals:weaponsmith/electrum_bow",
+    "basemetals:weaponsmith/electrum_crossbow",
+    "basemetals:weaponsmith/invar_ingot",
+    "basemetals:weaponsmith/invar_sword",
+    "basemetals:weaponsmith/invar_bow",
+    "basemetals:weaponsmith/invar_crossbow",
+    "basemetals:weaponsmith/nickel_sword_enchanted",
+    "basemetals:weaponsmith/nickel_crossbow_enchanted",
+    "basemetals:weaponsmith/nickel_bow_enchanted",
+    "basemetals:weaponsmith/silver_sword_enchanted",
+    "basemetals:weaponsmith/silver_crossbow_enchanted",
+    "basemetals:weaponsmith/silver_bow_enchanted",
+    "basemetals:weaponsmith/steel_ingot",
+    "basemetals:weaponsmith/steel_sword",
+    "basemetals:weaponsmith/steel_bow",
+    "basemetals:weaponsmith/steel_crossbow"
+  ]
+}

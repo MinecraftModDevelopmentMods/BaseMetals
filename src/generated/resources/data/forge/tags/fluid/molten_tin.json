@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:flowing_tin",
-    "basemetals:tin"
+    "#c:molten_tin"
   ]
 }

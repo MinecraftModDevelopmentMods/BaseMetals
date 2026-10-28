@@ -71,6 +71,8 @@ class OreOverlayModelTest {
         for (Map.Entry<String, JsonElement> face : faces.entrySet()) {
             assertEquals(texture, face.getValue().getAsJsonObject().get("texture").getAsString());
             assertEquals(face.getKey(), face.getValue().getAsJsonObject().get("cullface").getAsString());
+            assertEquals(JsonParser.parseString("[0,0,16,16]"), face.getValue().getAsJsonObject().get("uv"),
+                    "Inflating the geometry must not sample pixels outside the sprite");
         }
     }
 }

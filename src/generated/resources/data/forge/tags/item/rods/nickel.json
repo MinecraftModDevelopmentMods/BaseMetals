@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:nickel_rod"
+    "#c:rods/nickel"
   ]
 }

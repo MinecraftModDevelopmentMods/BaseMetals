@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:iron_smallblend"
+    "#c:small_blends/iron"
   ]
 }

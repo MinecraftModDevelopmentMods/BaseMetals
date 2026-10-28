@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "basemetals:electrum_axe"
+  },
+  "max_uses": 6,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:electrum_axe"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 4,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}

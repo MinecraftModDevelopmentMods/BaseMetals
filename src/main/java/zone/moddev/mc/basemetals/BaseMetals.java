@@ -38,6 +38,7 @@ public final class BaseMetals {
         CrushingRecipe.SERIALIZERS.register(modBus);
         ModEntities.register(modBus);
         ModLoot.register(modBus);
+        zone.moddev.mc.basemetals.trade.TradeEnabledCondition.register(modBus);
         context.registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
         if (net.minecraftforge.fml.loading.FMLEnvironment.dist == net.minecraftforge.api.distmarker.Dist.CLIENT) {
             zone.moddev.mc.basemetals.client.ClientSetup.register(context);

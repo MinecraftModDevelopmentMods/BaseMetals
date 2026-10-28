@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:cupronickel",
-    "basemetals:flowing_cupronickel"
+    "#c:molten_cupronickel"
   ]
 }

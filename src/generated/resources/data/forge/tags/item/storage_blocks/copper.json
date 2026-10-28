@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_block",
-    "minecraft:copper_block"
+    "#c:storage_blocks/copper"
   ]
 }

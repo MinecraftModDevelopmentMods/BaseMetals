@@ -9,6 +9,7 @@ import zlib
 from pathlib import Path
 
 import nbtlib
+from world_paths import dimensions
 
 
 LEGACY_TERRAIN = {
@@ -35,8 +36,8 @@ FALL_THROUGH = AIR | {"minecraft:water", "minecraft:lava", "minecraft:grass", "m
 
 def chunks(world):
     result = {}
-    for dimension in ["", "DIM-1", "DIM1"]:
-        for region in (world / dimension / "region").glob("*.mca"):
+    for dimension, folder in dimensions(world):
+        for region in (folder / "region").glob("*.mca"):
             data = region.read_bytes()
             for slot in range(1024):
                 offset = int.from_bytes(data[slot * 4:slot * 4 + 3], "big") * 4096
@@ -124,8 +125,8 @@ def falling_blocks(world, loaded_chunks, dropped_items=None):
 
     for (dimension, _, _), chunk in loaded_chunks.items():
         collect(dimension, chunk.get("Entities", []))
-    for dimension in ["", "DIM-1", "DIM1"]:
-        for region in (world / dimension / "entities").glob("*.mca"):
+    for dimension, folder in dimensions(world):
+        for region in (folder / "entities").glob("*.mca"):
             data = region.read_bytes()
             for slot in range(1024):
                 offset = int.from_bytes(data[slot * 4:slot * 4 + 3], "big") * 4096

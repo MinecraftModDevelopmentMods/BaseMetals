@@ -8,14 +8,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.registries.BuiltInRegistries;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -30,7 +25,6 @@ public final class PlateRepairRecipe extends CustomRecipe {
     private final Ingredient plate;
 
     public PlateRepairRecipe(Item target, Ingredient plate) {
-        super(net.minecraft.world.item.crafting.CraftingBookCategory.MISC);
         this.target = target;
         this.plate = plate;
     }
@@ -55,7 +49,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput container, net.minecraft.core.HolderLookup.Provider registries) {
+    public ItemStack assemble(CraftingInput container) {
         if (!matches(container, null)) return ItemStack.EMPTY;
         for (int slot = 0; slot < container.size(); slot++) {
             ItemStack stack = container.getItem(slot);
@@ -95,7 +89,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
         return CrushingRecipe.PLATE_REPAIR_SERIALIZER.get();
     }
 
-    public static final class Serializer implements RecipeSerializer<PlateRepairRecipe> {
+    public static final class Serializer {
         private static final MapCodec<PlateRepairRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
                         BuiltInRegistries.ITEM.byNameCodec().fieldOf("target").forGetter(recipe -> recipe.target),
@@ -108,7 +102,8 @@ public final class PlateRepairRecipe extends CustomRecipe {
                         Ingredient.CONTENTS_STREAM_CODEC, recipe -> recipe.plate,
                         PlateRepairRecipe::new);
 
-        @Override public MapCodec<PlateRepairRecipe> codec() { return CODEC; }
-        @Override public StreamCodec<RegistryFriendlyByteBuf, PlateRepairRecipe> streamCodec() { return STREAM_CODEC; }
+        public static RecipeSerializer<PlateRepairRecipe> create() {
+            return new RecipeSerializer<>(CODEC, STREAM_CODEC);
+        }
     }
 }

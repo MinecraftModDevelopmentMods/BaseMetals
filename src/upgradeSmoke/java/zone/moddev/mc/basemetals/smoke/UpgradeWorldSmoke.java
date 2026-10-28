@@ -309,7 +309,7 @@ public final class UpgradeWorldSmoke {
     public static void onServerTick(net.minecraftforge.event.TickEvent.ServerTickEvent.Post event) {
         if (pending == null || ++waitTicks < 20) return;
         var server = pending.getServer();
-        boolean loaded = equipmentChunks.stream().allMatch(chunk -> server.overworld().areEntitiesLoaded(chunk.toLong()));
+        boolean loaded = equipmentChunks.stream().allMatch(chunk -> server.overworld().areEntitiesLoaded(chunk.pack()));
         if (!loaded && waitTicks < 200) return;
         if (!loaded) throw new IllegalStateException("Timed out loading upgrade equipment chunks");
         ServerStartedEvent started = pending;
@@ -317,7 +317,7 @@ public final class UpgradeWorldSmoke {
         equipmentReady = true;
         onServerStarted(started);
         server.saveAllChunks(true, true, false);
-        equipmentChunks.forEach(chunk -> server.overworld().setChunkForced(chunk.x, chunk.z, false));
+        equipmentChunks.forEach(chunk -> server.overworld().setChunkForced(chunk.x(), chunk.z(), false));
     }
 
     private static void verifySavedAdvancements(net.minecraft.server.MinecraftServer server,
@@ -351,8 +351,8 @@ public final class UpgradeWorldSmoke {
             JsonObject saved) {
         if (!saved.has("saved_properties")) return true;
         var current = new java.util.LinkedHashMap<String, String>();
-        actual.getValues().forEach((property, value) -> current.put(property.getName(),
-                value.toString().toLowerCase(java.util.Locale.ROOT)));
+        actual.getValues().forEach(value -> current.put(value.property().getName(),
+                value.value().toString().toLowerCase(java.util.Locale.ROOT)));
         for (var entry : saved.getAsJsonObject("saved_properties").entrySet()) {
             String key = entry.getKey();
             if (actual.getBlock() instanceof net.minecraft.world.level.block.SlabBlock && "half".equals(key)) key = "type";

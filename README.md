@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-1.21.11)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.11)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-26.1.2)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-26.1.2)
 
 # Base Metals
 
@@ -12,23 +12,23 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.11 Forge version, `3.1.1.121111`. It keeps the
-fixes and features from the released 1.21.1 version, including raw metals, ore
+This is the Minecraft 26.1.2 Forge version, `3.1.1.2601021`. It keeps the
+fixes and features from the released 1.21.11 version, including raw metals, ore
 texture overlays and High/Low Fantasy modes. Existing Base Metals items and
 blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
 Additional Loot Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `1.21.11`
-- Forge `61.1.0` or newer in the Minecraft 1.21.11 Forge 61 line
-- A current Java 21 runtime
-- OreSpawn `[4.1.0.121111,5.0.0)` on both client and server
+- Minecraft `26.1.2`
+- Forge `64.0.9` or newer in the Minecraft 26.1.2 Forge 64 line
+- A current Java 25 runtime
+- OreSpawn `[4.1.0.2601021,5.0.0)` on both client and server
 
-The port has also been checked against Forge `61.2.4`.
+The build uses Forge `64.0.9` and is also tested on `64.1.5`.
 
-This version uses OreSpawn `4.1.0.121111`. Put
-`BaseMetals-3.1.1.121111.jar` and a compatible OreSpawn JAR in the `mods`
+This version uses OreSpawn `4.1.0.2601021`. Put
+`BaseMetals-3.1.1.2601021.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -42,9 +42,9 @@ Base Metals provides 22 materials:
 - Fantasy materials: Adamantine, Aquarium, Cold Iron, Mithril, and Starsteel.
 
 All existing items and blocks stay registered, including when Low Fantasy
-limits which items you can make. Recipes use Forge tags, so compatible ores,
-ingots, powders, plates, rods, gears and other components from different mods
-can be used together.
+limits which items you can make. Recipes use shared common tags, with legacy
+Forge tag names kept as aliases. Compatible ores, ingots, powders, plates,
+rods, gears and other components from different mods can be used together.
 
 Where vanilla has the same copper forms, recipes now produce vanilla ingots,
 blocks, nuggets, tools, armour, horse armour, bars, doors, trapdoors, cut-copper
@@ -150,7 +150,7 @@ Forge item, block, and fluid tags are Base Metals' public compatibility API.
 
 Compatible tags and the existing recipe data for Mekanism, Thermal, Tinkers'
 Construct and Ender IO are retained, but their Java integrations are not enabled
-in this Forge 1.21.11 port. Do not add jars made for older Minecraft versions or
+in this Forge 26.1.2 port. Do not add jars made for older Minecraft versions or
 NeoForge to this instance. No optional integration API is required to compile
 or launch Base Metals.
 
@@ -164,9 +164,7 @@ contracts.
 ## Building and contributing
 
 Base Metals uses ForgeGradle `7.0.34`, Gradle `9.6.1`, official Minecraft
-mappings, and the Java 21 toolchain. Initial Minecraft setup also uses Java 25
-for Mavenizer. ForgeGradle also needs Java 8 for its setup helper; it does not
-compile the mod or run Minecraft with Java 8. A normal command-line
+mappings, and Java 25 for the build tools and Minecraft. A normal command-line
 build resolves the published OreSpawn release from CurseMaven:
 
 ```text
@@ -179,7 +177,7 @@ Generate and verify Eclipse launches with:
 ./gradlew prepareEclipse
 ```
 
-IntelliJ users can import the Gradle project with Java 21 and run
+IntelliJ users can import the Gradle project with Java 25 and run
 `./gradlew prepareIntelliJ` to add client and server configurations. Both IDEs
 use the same Gradle-managed Forge bootstrap and assets.
 
@@ -203,7 +201,7 @@ early splash window. Minecraft still opens its game window and runs the full
 world check. Ordinary client launches keep the normal splash screen.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.121111`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.1.2601021`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

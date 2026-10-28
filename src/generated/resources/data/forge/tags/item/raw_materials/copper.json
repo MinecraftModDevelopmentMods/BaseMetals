@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "minecraft:raw_copper"
+    "#c:raw_materials/copper"
   ]
 }

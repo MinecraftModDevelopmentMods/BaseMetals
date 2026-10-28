@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.1 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 1.21.11 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 26.1.2 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -126,8 +126,8 @@ Modern worlds do not need the old numeric-ID conversion. Base Metals only runs
 it after confirming an older source save. A leftover `level.dat_old` does not
 replace the current player or turn on legacy terrain protection.
 
-For a genuine upgrade, the original single-player record is captured before
-Minecraft reads it. The world-local migration sidecar keeps the source version
+For a genuine upgrade, legacy inventories are normalized before Minecraft moves
+the player files and converts their item data. The world-local migration sidecar keeps the source version
 and saved registry map for reloads and chunks opened later; it does not store
 a player record. A saved registry map from an earlier upgrade takes precedence
 over an older backup.
@@ -135,3 +135,19 @@ over an older backup.
 Chunk reading uses Minecraft's supported region formats. Empty region files
 are left alone, and backups include external chunk files when their region
 needs conversion.
+
+## Minecraft 26.1 storage changes
+
+Minecraft moves default dimensions into `dimensions/minecraft` and player files
+into `players/data`. Base Metals prepares legacy items before that move, rather
+than restoring an older player record afterward. Current player data and an
+existing native capability file always take precedence over older copies.
+
+Older Forge world-capability files are copied into the new namespaced location
+when the current world metadata confirms an upgrade from the previous storage
+format. The source files are kept for recovery. A modern world with leftover
+old files does not activate this step.
+
+If an older single-player save has its player only in `level.dat`, Base Metals
+preserves a separate player file before Minecraft converts the folders. An
+existing player file always wins; a stale backup cannot restore an older player.

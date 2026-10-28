@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "basemetals:bronze_helmet"
+  },
+  "max_uses": 6,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:bronze_helmet"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 7,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}

@@ -3,9 +3,9 @@
   "fluid": "basemetals:adamantine",
   "loader": "forge:fluid_container",
   "textures": {
-    "base": "basemetals:block/bucket_base",
-    "cover": "basemetals:block/bucket_cover",
-    "fluid": "basemetals:block/bucket_fluid",
+    "base": "basemetals:item/bucket_base",
+    "cover": "basemetals:item/bucket_cover",
+    "fluid": "basemetals:item/bucket_fluid",
     "particle": "#base"
   }
 }

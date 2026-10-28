@@ -1,9 +1,12 @@
 # Optional compatibility
 
-Base Metals' permanent public contract is data-driven. Recipes consume Forge
-tags for ingots, nuggets, ores, storage blocks, dusts, small dusts, blends,
+Base Metals' permanent public contract is data-driven. The current `c:` common
+tags and the retained `forge:` aliases cover ingots, nuggets, ores, storage blocks, dusts, small dusts, blends,
 plates, rods, gears, casings, dense plates, crushed and purified ores, crystals,
 shards, clumps, dirty dusts, and molten fluids.
+
+Both names lead to the same material entries. Existing recipes using the old
+Forge names still work, while other mods can use the current common tags.
 
 Adamantite, Adamantium, Adamant, Quicksilver, and steel-sprocket names are
 forwarding tags. Copper-consuming recipes accept `forge:ingots/copper`.
@@ -20,7 +23,7 @@ recycling recipes also accept the appropriate vanilla equivalent.
 
 The tags and existing integration data for Mekanism, Thermal, Tinkers' Construct
 and Ender IO remain available for future compatibility work. Their Java API hooks
-and runtime jars are not included in this Forge 1.21.11 port. Do not substitute
+and runtime jars are not included in this Forge 26.1.2 port. Do not substitute
 jars made for older Minecraft versions or NeoForge.
 
 Other processors can use the shared Forge tags without a direct Java integration.

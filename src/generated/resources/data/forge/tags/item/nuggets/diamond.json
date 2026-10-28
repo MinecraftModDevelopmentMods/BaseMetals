@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:diamond_nugget"
+    "#c:nuggets/diamond"
   ]
 }

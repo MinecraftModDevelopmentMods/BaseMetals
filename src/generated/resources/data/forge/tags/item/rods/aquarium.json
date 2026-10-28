@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:aquarium_rod"
+    "#c:rods/aquarium"
   ]
 }

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:aquarium",
-    "basemetals:flowing_aquarium"
+    "#c:molten_aquarium"
   ]
 }

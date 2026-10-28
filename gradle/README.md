@@ -13,6 +13,7 @@ the remaining build concerns small enough to review independently.
 - `ide/eclipse.gradle` normalizes ForgeGradle's Eclipse launches and checks
   that production runs cannot see validation-only code.
 - `ide/intellij.gradle` generates Gradle-backed client and server configurations.
+- `ide/merged-output.gradle` stages compiled classes before merging Forge's mod output.
 
 Applied-script order is intentional. Artifact setup publishes an immutable
 `baseMetalsRelease` map consumed by publishing and packaged-runtime checks.
@@ -31,13 +32,13 @@ flower, sapling and leaf tags include suitable new plants.
 
 Normal client and server launches load only Base Metals and OreSpawn. The
 optional-mod profile has its own run folder, but no optional integration mods
-are pinned for Forge 1.21.11. The Mekanism, Tinkers, Thermal and Ender IO Java
+are pinned for Forge 26.1.2. The Mekanism, Tinkers, Thermal and Ender IO Java
 integrations are not enabled here; their dormant data remains available for
 future integration work.
 
-Filled buckets use three atlas aliases from the vanilla bucket and Forge masks.
-They keep the bucket and molten fluid on the block atlas without copying those
-textures, so resource packs can still replace them.
+Filled buckets use item-atlas aliases for the vanilla bucket, Forge masks and
+molten fluids. The fluid blocks keep their own block-atlas sprites. Neither
+path copies the textures, so resource packs can still replace them.
 
 Run `prepareEclipse` after importing the project or refreshing Gradle. It
 generates the launches, copies processed resources and checks that ordinary

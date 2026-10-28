@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:cupronickel_smallblend"
+    "#c:small_blends/cupronickel"
   ]
 }

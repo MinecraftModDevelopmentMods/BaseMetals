@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:electrum_block"
+    "#c:storage_blocks/electrum"
   ]
 }

@@ -3,7 +3,7 @@ package zone.moddev.mc.basemetals.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -121,10 +121,10 @@ public final class BaseMetalsConfigScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(graphics, mouseX, mouseY, partialTicks);
-        super.render(graphics, mouseX, mouseY, partialTicks);
-        graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFFFF);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        extractBackground(graphics, mouseX, mouseY, partialTicks);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTicks);
+        graphics.centeredText(font, title, width / 2, 12, 0xFFFFFFFF);
 
         for (net.minecraft.client.gui.components.events.GuiEventListener child : children()) {
             if (child instanceof OptionButton && ((OptionButton) child).isHoveredOrFocused()) {

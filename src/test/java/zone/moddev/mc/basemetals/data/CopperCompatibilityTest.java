@@ -47,7 +47,10 @@ class CopperCompatibilityTest {
     void downstreamIngredientsAcceptOldAndVanillaCopper() throws Exception {
         for (var entry : VanillaCopper.equivalents().entrySet()) {
             String tag = VanillaCopper.ingredientTag(entry.getKey()).substring("forge:".length());
-            var values = read(Path.of("src/generated/resources/data/forge/tags/item/" + tag + ".json"))
+            var alias = read(Path.of("src/generated/resources/data/forge/tags/item/" + tag + ".json"))
+                    .getAsJsonArray("values").toString();
+            assertTrue(alias.contains("#c:" + tag), tag);
+            var values = read(Path.of("src/generated/resources/data/c/tags/item/" + tag + ".json"))
                     .getAsJsonArray("values").toString();
 
             assertTrue(values.contains('"' + entry.getKey() + '"'), entry.getKey());

@@ -1,34 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#forge:gears/adamantine",
-    "#forge:gears/antimony",
-    "#forge:gears/aquarium",
-    "#forge:gears/bismuth",
-    "#forge:gears/brass",
-    "#forge:gears/bronze",
-    "#forge:gears/coldiron",
-    "#forge:gears/copper",
-    "#forge:gears/cupronickel",
-    "#forge:gears/diamond",
-    "#forge:gears/electrum",
-    "#forge:gears/emerald",
-    "#forge:gears/gold",
-    "#forge:gears/invar",
-    "#forge:gears/iron",
-    "#forge:gears/lead",
-    "#forge:gears/mithril",
-    "#forge:gears/nickel",
-    "#forge:gears/obsidian",
-    "#forge:gears/pewter",
-    "#forge:gears/platinum",
-    "#forge:gears/quartz",
-    "#forge:gears/silver",
-    "#forge:gears/starsteel",
-    "#forge:gears/steel",
-    "#forge:gears/stone",
-    "#forge:gears/tin",
-    "#forge:gears/wood",
-    "#forge:gears/zinc"
+    "#c:gears"
   ]
 }

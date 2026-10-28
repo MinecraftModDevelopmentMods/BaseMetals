@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_dense_plate"
+    "#c:dense_plates/platinum"
   ]
 }

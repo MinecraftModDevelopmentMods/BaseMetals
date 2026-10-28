@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "basemetals:copper_helmet",
-    "minecraft:copper_helmet"
+    "#c:armors/helmets/copper"
   ]
 }

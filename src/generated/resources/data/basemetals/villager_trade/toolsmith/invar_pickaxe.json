@@ -1,0 +1,17 @@
+{
+  "gives": {
+    "count": 1,
+    "id": "basemetals:invar_pickaxe"
+  },
+  "max_uses": 6,
+  "merchant_predicate": {
+    "condition": "basemetals:trade_enabled",
+    "item": "basemetals:invar_pickaxe"
+  },
+  "reputation_discount": 0.2,
+  "wants": {
+    "count": 5,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}
