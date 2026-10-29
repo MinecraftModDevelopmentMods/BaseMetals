@@ -54,6 +54,21 @@ class LegacyWorldStorageTest {
     }
 
     @Test
+    void firstNativeStorageVersionDoesNotImportStaleFiles() throws Exception {
+        embeddedPlayer(42);
+        CompoundTag root = LegacyNbt.readCompressed(world.resolve("level.dat").toFile());
+        root.getCompoundOrEmpty("Data").putInt("DataVersion", 4772);
+        LegacyNbt.writeCompressed(root, world.resolve("level.dat").toFile());
+        capability("data/capabilities.dat", 1);
+
+        prepare();
+
+        assertFalse(Files.exists(world.resolve("playerdata")));
+        assertFalse(Files.exists(world.resolve("dimensions/minecraft/overworld/data/forge/capabilities.dat")));
+        assertFalse(Files.exists(world.resolve("basemetals-legacy-registry.dat")));
+    }
+
+    @Test
     void metadataWithoutAPositiveVersionDoesNotActivateStorageMigration() throws Exception {
         try (var output = Files.newOutputStream(world.resolve("level.dat"))) {
             LegacyNbt.writeCompressed(new CompoundTag(), output);

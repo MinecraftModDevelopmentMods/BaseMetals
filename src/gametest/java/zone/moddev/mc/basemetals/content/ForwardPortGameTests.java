@@ -136,7 +136,7 @@ public final class ForwardPortGameTests {
                     "Copper plate crafting rejected a supported ingot");
         }
 
-        for (var entry : java.util.Map.of(Items.COPPER_TRAPDOOR, 3,
+        for (var entry : java.util.Map.of(Items.COPPER_TRAPDOOR.weathering().unaffected(), 3,
                 ModContent.item("copper_trapdoor").get(), 4).entrySet()) {
             var input = new SingleRecipeInput(entry.getKey().getDefaultInstance());
             ItemStack recycled = level.getServer().getRecipeManager().getRecipeFor(RecipeType.SMELTING,

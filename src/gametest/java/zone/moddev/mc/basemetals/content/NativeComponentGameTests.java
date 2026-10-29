@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.Recipe;
@@ -197,8 +197,8 @@ public final class NativeComponentGameTests {
     public static void projectilesKeepWeaponEnchantmentsAfterReload(GameTestHelper helper) {
         var level = helper.getLevel();
         var enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-        var shooter = EntityType.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
-        var target = EntityType.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+        var shooter = EntityTypes.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+        var target = EntityTypes.ZOMBIE.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
 
         for (boolean bolt : new boolean[] {false, true}) {
             ItemStack weapon = ModContent.item("steel_" + (bolt ? "crossbow" : "bow")).get().getDefaultInstance();

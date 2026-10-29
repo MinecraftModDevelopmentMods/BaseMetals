@@ -77,8 +77,8 @@ public final class IntegratedWorldSmoke {
 
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.options.pauseOnLostFocus = false;
-        if (minecraft.screen instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
-            minecraft.screen.onClose();
+        if (minecraft.gui.screen() instanceof net.minecraft.client.gui.screens.AccessibilityOnboardingScreen) {
+            minecraft.gui.screen().onClose();
             return;
         }
         elapsedTicks++;
@@ -95,17 +95,17 @@ public final class IntegratedWorldSmoke {
                 BaseMetals.LOGGER.info("BASEMETALS_CLIENT_PROFILE PASS mods={}", actual);
             }
         }
-        if (!renderLayersChecked && minecraft.screen instanceof TitleScreen) {
+        if (!renderLayersChecked && minecraft.gui.screen() instanceof TitleScreen) {
             verifyBlockRenderLayers(minecraft);
             renderLayersChecked = true;
         }
         if (!creationStarted && elapsedTicks % 200 == 0) {
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE waiting for title screen current={} overlay={}",
-                    minecraft.screen == null ? "none" : minecraft.screen.getClass().getName(),
-                    minecraft.getOverlay() == null ? "none" : minecraft.getOverlay().getClass().getName());
+                    minecraft.gui.screen() == null ? "none" : minecraft.gui.screen().getClass().getName(),
+                    minecraft.gui.overlay() == null ? "none" : minecraft.gui.overlay().getClass().getName());
         }
-        if (!creationStarted && minecraft.screen instanceof TitleScreen && minecraft.getOverlay() == null) {
-            ConfigScreenSmoke.verify(minecraft, minecraft.screen);
+        if (!creationStarted && minecraft.gui.screen() instanceof TitleScreen && minecraft.gui.overlay() == null) {
+            ConfigScreenSmoke.verify(minecraft, minecraft.gui.screen());
             verifyOreOverlayModels(minecraft);
             verifyBarsModels(minecraft);
             creationStarted = true;
@@ -126,23 +126,23 @@ public final class IntegratedWorldSmoke {
             BaseMetals.LOGGER.info("BASEMETALS_INTEGRATED_SMOKE creating world={}", worldName);
             minecraft.createWorldOpenFlows().createFreshLevel(worldName, levelSettings,
                     new net.minecraft.world.level.levelgen.WorldOptions(0L, true, false),
-                    net.minecraft.world.level.levelgen.presets.WorldPresets::createNormalWorldDimensions, minecraft.screen);
+                    net.minecraft.world.level.levelgen.presets.WorldPresets::createNormalWorldDimensions, minecraft.gui.screen());
         }
 
-        if (creationStarted && minecraft.screen instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
-            String title = minecraft.screen.getTitle().getString();
+        if (creationStarted && minecraft.gui.screen() instanceof net.minecraft.client.gui.screens.ConfirmScreen) {
+            String title = minecraft.gui.screen().getTitle().getString();
             boolean finishedUpgrade = Boolean.getBoolean("basemetals.integratedExistingWorldSmoke")
                     && title.equals(net.minecraft.client.resources.language.I18n.get("upgradeWorld.done"));
             if (!finishedUpgrade && !title.toLowerCase(java.util.Locale.ROOT).contains("experimental")) {
                 throw new IllegalStateException("Unexpected confirmation in the disposable world: " + title);
             }
             // Forge marks modded registries experimental. This applies only to the new smoke-test world.
-            minecraft.screen.children().stream().filter(net.minecraft.client.gui.components.Button.class::isInstance)
+            minecraft.gui.screen().children().stream().filter(net.minecraft.client.gui.components.Button.class::isInstance)
                     .map(net.minecraft.client.gui.components.Button.class::cast).findFirst().orElseThrow().onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
         }
 
         if (creationStarted && Boolean.getBoolean("basemetals.integratedExistingWorldSmoke")
-                && minecraft.screen instanceof net.minecraft.client.gui.screens.BackupConfirmScreen backup) {
+                && minecraft.gui.screen() instanceof net.minecraft.client.gui.screens.BackupConfirmScreen backup) {
             backup.children().stream().filter(net.minecraft.client.gui.components.Button.class::isInstance)
                     .map(net.minecraft.client.gui.components.Button.class::cast)
                     .filter(button -> button.getMessage().getString().equals(

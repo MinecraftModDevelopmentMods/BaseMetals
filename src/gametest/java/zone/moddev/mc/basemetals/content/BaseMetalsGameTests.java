@@ -38,7 +38,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -137,7 +137,7 @@ public final class BaseMetalsGameTests {
     public static void humanDetectorIgnoresNonPlayers(GameTestHelper helper) {
         HumanDetectorBlock detector = (HumanDetectorBlock) ModContent.HUMAN_DETECTOR.get();
         BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
-        helper.spawnWithNoFreeWill(EntityType.COW, 1.5F, 1.0F, 1.5F);
+        helper.spawnWithNoFreeWill(EntityTypes.COW, 1.5F, 1.0F, 1.5F);
         require(helper, detector.getSignalStrength(helper.getLevel(), position) == 0,
                 "Human detector responded to a non-player entity");
 
@@ -593,7 +593,7 @@ public final class BaseMetalsGameTests {
 
     @GameTest(structure = EMPTY)
     public static void smithsRetainTheLegacyMercuryIngotSale(GameTestHelper helper) {
-        var trader = EntityType.VILLAGER.create(helper.getLevel(), net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+        var trader = EntityTypes.VILLAGER.create(helper.getLevel(), net.minecraft.world.entity.EntitySpawnReason.COMMAND);
         var parameters = new net.minecraft.world.level.storage.loot.LootParams.Builder(helper.getLevel())
                 .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, trader.position())
                 .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.THIS_ENTITY, trader)
@@ -808,7 +808,7 @@ public final class BaseMetalsGameTests {
         require(helper, armor.getDamageValue() == 5,
                 "Starsteel armor regenerated despite the armor exclusion");
 
-        LivingEntity target = helper.spawnWithNoFreeWill(EntityType.IRON_GOLEM, 2.0F, 1.0F, 2.0F);
+        LivingEntity target = helper.spawnWithNoFreeWill(EntityTypes.IRON_GOLEM, 2.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("adamantine_sword").get().getDefaultInstance());
         LivingHurtEvent hurt = new LivingHurtEvent(target, player.damageSources().playerAttack(player), 3.0F);
@@ -863,7 +863,7 @@ public final class BaseMetalsGameTests {
         BaseMetalsEvents events = new BaseMetalsEvents();
         ServerPlayer player = survivalPlayer(helper);
 
-        LivingEntity aquatic = helper.spawnWithNoFreeWill(EntityType.COD, 2.0F, 1.0F, 2.0F);
+        LivingEntity aquatic = helper.spawnWithNoFreeWill(EntityTypes.COD, 2.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("aquarium_sword").get().getDefaultInstance());
         LivingHurtEvent aquariumHit = new LivingHurtEvent(aquatic, player.damageSources().playerAttack(player), 3.0F);
@@ -871,7 +871,7 @@ public final class BaseMetalsGameTests {
         require(helper, aquariumHit.getAmount() == 7.0F,
                 "Aquarium melee bonus did not use the target's water-breathing identity");
 
-        LivingEntity blaze = helper.spawnWithNoFreeWill(EntityType.BLAZE, 3.0F, 1.0F, 2.0F);
+        LivingEntity blaze = helper.spawnWithNoFreeWill(EntityTypes.BLAZE, 3.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("coldiron_sword").get().getDefaultInstance());
         LivingHurtEvent coldIronHit = new LivingHurtEvent(blaze, player.damageSources().playerAttack(player), 3.0F);
@@ -879,7 +879,7 @@ public final class BaseMetalsGameTests {
         require(helper, coldIronHit.getAmount() == 6.0F,
                 "Cold Iron melee bonus did not use the target's fire immunity");
 
-        LivingEntity undead = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, 4.0F, 1.0F, 2.0F);
+        LivingEntity undead = helper.spawnWithNoFreeWill(EntityTypes.ZOMBIE, 4.0F, 1.0F, 2.0F);
         player.setItemInHand(InteractionHand.MAIN_HAND,
                 ModContent.item("mithril_sword").get().getDefaultInstance());
         LivingHurtEvent mithrilHit = new LivingHurtEvent(undead, player.damageSources().playerAttack(player), 3.0F);
@@ -1122,7 +1122,7 @@ public final class BaseMetalsGameTests {
                     MaterialProjectile projectile = projectiles.getFirst();
                     require(helper, projectile.isOnFire() == (power > 0),
                             launcher + " did not apply Flame at launch");
-                    var target = EntityType.ZOMBIE.create(helper.getLevel(), net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                    var target = EntityTypes.ZOMBIE.create(helper.getLevel(), net.minecraft.world.entity.EntitySpawnReason.COMMAND);
                     double damage = EnchantmentHelper.modifyDamage(helper.getLevel(), projectile.getWeaponItem(), target,
                             helper.getLevel().damageSources().arrow(projectile, player), (float) baseDamage);
                     var vanilla = ((net.minecraft.world.item.ArrowItem) Items.ARROW)

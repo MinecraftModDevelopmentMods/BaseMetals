@@ -54,12 +54,12 @@ dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
 
     // OreSpawn remains an ordinary hard mod dependency in metadata and is
-    // never shaded into Base Metals. Use the published 26.1.2 release in
+    // never shaded into Base Metals. Use the published 26.2 release in
     // development so clean checkouts exercise the same artifact as players.
     implementation "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
     orespawnRelease "curse.maven:mmd-orespawn-${orespawn_curse_project_id}:${orespawn_curse_file_id}"
 
-    // Optional Java integrations are not enabled in this Forge 26.1.2 port.
+    // Optional Java integrations are not enabled in this Forge 26.2 port.
     testImplementation platform('org.junit:junit-bom:5.10.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'

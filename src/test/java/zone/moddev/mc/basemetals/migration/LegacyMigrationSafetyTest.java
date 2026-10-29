@@ -100,7 +100,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void modernLz4Chunk() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.1.2"), "Native LZ4 is not available on older targets");
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.2"), "Native LZ4 is not available on older targets");
         Path world = world("lz4", false);
         Path file = region(world, false, true);
         assertTrue(nativeAccepts(file, false));
@@ -177,7 +177,7 @@ class LegacyMigrationSafetyTest {
 
     @Test
     void savedRegistryCanBeScannedWithLz4Chunks() throws Exception {
-        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.1.2"));
+        assumeTrue(VERSION.equals("1.20.6") || VERSION.equals("1.21.11") || VERSION.equals("26.2"));
         Path world = world("saved-registry-lz4", false);
         writeRegistry(world.resolve("basemetals-legacy-registry.dat"));
         Path file = region(world, false, true);

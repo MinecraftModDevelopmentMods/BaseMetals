@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "targets": {
-    "net.minecraftforge:forge:26.1.2-64.0.9": {
+    "net.minecraftforge:forge:26.2-65.1.0": {
       "expectedApplications": 0,
       "rules": []
     }

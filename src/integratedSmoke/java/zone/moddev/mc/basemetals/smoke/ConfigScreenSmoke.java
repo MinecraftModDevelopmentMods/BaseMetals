@@ -38,7 +38,7 @@ final class ConfigScreenSmoke {
         String originalMode = BaseMetalsConfig.CONTENT_MODE.get();
         boolean originalEffects = BaseMetalsConfig.SPECIAL_EFFECTS.get();
         ContentMode activeMode = BaseMetalsConfig.activeMode();
-        minecraft.setScreen(screen);
+        minecraft.gui.setScreen(screen);
         require(buttons(screen).size() == 9, "Expected the mode, four switches and four action buttons");
         String initialLabel = buttons(screen).get(0).getMessage().getString();
         buttons(screen).get(0).onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
@@ -49,23 +49,23 @@ final class ConfigScreenSmoke {
         require(buttons(screen).get(0).getMessage().getString().contains(I18n.get(ContentMode.HIGH_FANTASY.translationKey())),
                 "Defaults must select High Fantasy");
         screen.onClose();
-        require(minecraft.screen == parent, "Cancel did not return to the parent screen");
+        require(minecraft.gui.screen() == parent, "Cancel did not return to the parent screen");
         require(originalMode.equals(BaseMetalsConfig.CONTENT_MODE.get()), "Cancel saved pending edits");
 
         screen = extensions.get(0).createScreen(parent);
-        minecraft.setScreen(screen);
+        minecraft.gui.setScreen(screen);
         buttons(screen).get(1).onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
         button(screen, "gui.done").onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
-        require(minecraft.screen == parent, "Done did not return to the parent screen");
+        require(minecraft.gui.screen() == parent, "Done did not return to the parent screen");
         require(BaseMetalsConfig.SPECIAL_EFFECTS.get() != originalEffects, "Done did not save a boolean edit");
 
         screen = extensions.get(0).createScreen(parent);
-        minecraft.setScreen(screen);
+        minecraft.gui.setScreen(screen);
         buttons(screen).get(0).onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
         button(screen, "gui.done").onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
-        require(minecraft.screen instanceof ConfirmScreen, "A mode change needs restart confirmation");
-        button(minecraft.screen, "gui.yes").onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
-        require(minecraft.screen == parent, "Confirmation did not return to the parent screen");
+        require(minecraft.gui.screen() instanceof ConfirmScreen, "A mode change needs restart confirmation");
+        button(minecraft.gui.screen(), "gui.yes").onPress(new net.minecraft.client.input.KeyEvent(257, 0, 0));
+        require(minecraft.gui.screen() == parent, "Confirmation did not return to the parent screen");
         require(!originalMode.equals(BaseMetalsConfig.CONTENT_MODE.get()), "Done did not save the mode edit");
         require(BaseMetalsConfig.activeMode() == activeMode, "A GUI edit changed the running content mode");
 

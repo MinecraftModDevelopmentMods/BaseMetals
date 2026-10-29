@@ -1,11 +1,11 @@
 # World upgrade checks
 
-`test_legacy_worlds.js` starts the packaged Forge 26.1.2 server against a fresh
+`test_legacy_worlds.js` starts the packaged Forge 26.2 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every
 source world before and after the test.
-An optional `forgeVersion` selects another installed Forge 26.1.2 build for
-compatibility checks; the default is the compilation target, `64.0.9`.
+An optional `forgeVersion` selects another installed Forge 26.2 build for
+compatibility checks; the default is the compilation target, `65.1.0`.
 
 Pass a local JSON specification containing `java` (the Java 25 executable), `serverRuntime`, `output`,
 `modJar`, `probeJar`, `oreSpawn` (a `path` and `sha256`), and a `profiles` list.
@@ -24,6 +24,11 @@ OreSpawn profile and verifies that those values survive both starts.
 The log check accepts known vanilla registry changes, including paintings moved
 to data files. Unknown or modded entries still fail the test. Check that boundary
 with `node --test tools/validation/test_painting_registry.js`.
+
+On Windows, the exact missing-Perflib-counter diagnostic from Minecraft's system
+probe is reported separately. It is not accepted on Linux, from another logger
+or as a fatal error. Run `node --test tools/validation/test_runtime_log.js` to
+check those limits; other runtime errors still fail the suite.
 
 `compare_world_terrain.py` checks fixed vanilla terrain before and after
 conversion. It accepts Minecraft's new underground floor and accounts for
