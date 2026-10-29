@@ -91,7 +91,7 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     private void done() {
         if (edits.modeChanged()) {
-            minecraft.setScreen(new ConfirmScreen(this::confirmResult,
+            minecraft.gui.setScreen(new ConfirmScreen(this::confirmResult,
                     Component.translatable(PREFIX + "confirm.title"),
                     Component.translatable(PREFIX + "confirm.message")));
         } else {
@@ -103,7 +103,7 @@ public final class BaseMetalsConfigScreen extends Screen {
         if (accepted) {
             saveAndClose();
         } else {
-            minecraft.setScreen(this);
+            minecraft.gui.setScreen(this);
         }
     }
 
@@ -117,7 +117,7 @@ public final class BaseMetalsConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        minecraft.setScreen(parent);
+        minecraft.gui.setScreen(parent);
     }
 
     @Override

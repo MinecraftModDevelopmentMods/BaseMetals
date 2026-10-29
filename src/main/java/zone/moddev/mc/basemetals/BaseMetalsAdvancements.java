@@ -70,7 +70,8 @@ final class BaseMetalsAdvancements {
     static void onPlaced(ServerPlayer player, BlockState state) {
         Identifier id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
         if (id != null && (id.getNamespace().equals(BaseMetals.MOD_ID)
-                || state.is(net.minecraft.world.level.block.Blocks.COPPER_BLOCK)) && state.is(STORAGE_BLOCKS)) {
+                || state.is(net.minecraft.world.level.block.Blocks.COPPER_BLOCK.weathering().unaffected()))
+                && state.is(STORAGE_BLOCKS)) {
             award(player, "blocktastic");
         }
     }

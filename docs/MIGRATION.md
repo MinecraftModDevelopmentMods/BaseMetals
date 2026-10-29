@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.1 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 26.1.2 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 26.2 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -147,6 +147,11 @@ Older Forge world-capability files are copied into the new namespaced location
 when the current world metadata confirms an upgrade from the previous storage
 format. The source files are kept for recovery. A modern world with leftover
 old files does not activate this step.
+
+Minecraft 26.2 also moves world-generation settings, game rules and world clocks
+out of `level.dat` into separate saved-data files. Minecraft handles that move
+during the upgrade. Keep the whole world folder together rather than copying
+an older `level.dat` over the upgraded save.
 
 If an older single-player save has its player only in `level.dat`, Base Metals
 preserves a separate player file before Minecraft converts the folders. An

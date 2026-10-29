@@ -32,7 +32,7 @@ flower, sapling and leaf tags include suitable new plants.
 
 Normal client and server launches load only Base Metals and OreSpawn. The
 optional-mod profile has its own run folder, but no optional integration mods
-are pinned for Forge 26.1.2. The Mekanism, Tinkers, Thermal and Ender IO Java
+are pinned for Forge 26.2. The Mekanism, Tinkers, Thermal and Ender IO Java
 integrations are not enabled here; their dormant data remains available for
 future integration work.
 

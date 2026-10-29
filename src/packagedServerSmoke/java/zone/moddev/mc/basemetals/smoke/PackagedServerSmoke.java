@@ -40,7 +40,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.1.2601021".equals(baseMetals) || !"4.1.0.2601021".equals(oreSpawn)) {
+        if (!"3.1.1.2602001".equals(baseMetals) || !"4.1.0.2602001".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -176,7 +176,7 @@ public final class PackagedServerSmoke {
     }
 
     private static void verifyTinkers() {
-        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 26.1.2 build");
+        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 26.2 build");
     }
 
     private static void verifyModernFlatTerrain(net.minecraft.server.MinecraftServer server) {

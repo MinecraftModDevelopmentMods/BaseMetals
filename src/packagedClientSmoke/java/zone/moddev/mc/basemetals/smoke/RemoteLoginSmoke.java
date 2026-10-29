@@ -28,15 +28,15 @@ public final class RemoteLoginSmoke {
         if (completed || !Boolean.getBoolean("basemetals.remoteLoginSmoke")) return;
         Minecraft minecraft = Minecraft.getInstance();
         if (++ticks > 3600) throw new IllegalStateException("MODE_LOGIN_SMOKE FAIL: timed out at "
-                + (minecraft.screen == null ? "gameplay" : minecraft.screen.getClass().getName()));
+                + (minecraft.gui.screen() == null ? "gameplay" : minecraft.gui.screen().getClass().getName()));
         boolean reject = Boolean.getBoolean("basemetals.expectModeReject");
-        if (!connecting && minecraft.screen instanceof TitleScreen) {
+        if (!connecting && minecraft.gui.screen() instanceof TitleScreen) {
             // Wait until the loading overlay is gone, as a player would have to.
-            if (minecraft.getOverlay() != null || ++titleTicks < 20) return;
+            if (minecraft.gui.overlay() != null || ++titleTicks < 20) return;
 
             connecting = true;
             String address = System.getProperty("basemetals.remoteAddress");
-            ConnectScreen.startConnecting(minecraft.screen, minecraft, ServerAddress.parseString(address),
+            ConnectScreen.startConnecting(minecraft.gui.screen(), minecraft, ServerAddress.parseString(address),
                     new net.minecraft.client.multiplayer.ServerData("Base Metals smoke", address,
                             net.minecraft.client.multiplayer.ServerData.Type.OTHER), false, null);
         }
@@ -57,7 +57,7 @@ public final class RemoteLoginSmoke {
             } else {
                 finish(minecraft, "connected");
             }
-        } else if (minecraft.screen instanceof DisconnectedScreen disconnected) {
+        } else if (minecraft.gui.screen() instanceof DisconnectedScreen disconnected) {
             String reason = disconnected.getNarrationMessage().getString();
 
             if (!reject || !reason.contains("Base Metals")

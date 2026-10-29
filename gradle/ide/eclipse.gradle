@@ -91,7 +91,7 @@ def verifyDevelopmentRunProfiles = tasks.register('verifyDevelopmentRunProfiles'
                 || optionalDevelopmentArtifacts.any { expected ->
                     !optionalClient.classpath.files.any { it.name.contains("${expected.module}-${expected.file}") }
                 }) {
-            throw new GradleException('The optional client must load the pinned 26.1.2 dependencies')
+            throw new GradleException('The optional client must load the pinned 26.2 dependencies')
         }
     }
 }
@@ -334,7 +334,7 @@ def verifyEclipseProductionClasspath = tasks.register('verifyEclipseProductionCl
             }
         }
         String metadata = new File(projectDir, 'bin/main/META-INF/mods.toml').getText('UTF-8')
-        if (metadata.contains('${') || !metadata.contains('version="3.1.1.2601021"')) {
+        if (metadata.contains('${') || !metadata.contains('version="3.1.1.2602001"')) {
             throw new GradleException('Eclipse output contains unresolved or invalid Base Metals version metadata')
         }
     }
