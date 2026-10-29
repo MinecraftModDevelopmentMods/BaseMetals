@@ -9,7 +9,7 @@ tasks.withType(Jar).configureEach {
     filteringCharset = 'UTF-8'
     filesMatching(['**/*.java', '**/*.json', '**/*.lang', '**/*.mcmeta', '**/*.md',
                    '**/*.txt', '**/*.cfg', '**/*.properties', '**/*.xml', '**/*.html',
-                   '**/*.css', '**/*.js', '**/element-list', '**/package-list']) {
+                   '**/*.css', '**/*.js', '**/*.svg', '**/element-list', '**/package-list']) {
         filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'),
                 eof: FixCrLfFilter.AddAsisRemove.newInstance('asis'))
     }
@@ -284,6 +284,12 @@ tasks.register('verifyReleaseArtifacts') {
                 def leaked = zip.entries().toList().find { forbiddenReleasePath(it.name) }
                 if (leaked != null) {
                     throw new GradleException("${artifactName} contains validation, fixture, legacy, or agent-only path ${leaked.name}")
+                }
+
+                zip.entries().toList().findAll { it.name.endsWith('.svg') }.each { entry ->
+                    if (zip.getInputStream(entry).getText('UTF-8').contains('\r')) {
+                        throw new GradleException("${artifactName} contains non-LF SVG text: ${entry.name}")
+                    }
                 }
             }
         }

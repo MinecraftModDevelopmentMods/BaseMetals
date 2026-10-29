@@ -4,6 +4,7 @@ Base Metals 3.1.1.2602001
 - Keep raw metals, ore overlays, filled buckets, High/Low Fantasy and the existing gameplay fixes.
 - Use published OreSpawn 4.1.0.2602001 with the same eleven rules and copper defaults.
 - Keep existing world profiles, saved items and legacy-upgrade protections.
+- Keep generated Javadoc icons consistent between Windows and Linux builds.
 
 Base Metals 3.1.1.2601021
 
