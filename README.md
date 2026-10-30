@@ -201,7 +201,9 @@ are isolated from the published JAR.
 
 Virtual-display client checks use `-PvirtualDisplaySmoke=true` to skip Forge's
 early splash window. Minecraft still opens its game window and runs the full
-world check. Ordinary client launches keep the normal splash screen.
+world check. Linux CI uses Ubuntu 26.04 with Mesa software rendering and checks
+the SDL/OpenGL context before starting Minecraft. Ordinary client launches keep
+the normal splash screen and graphics settings.
 
 Release artifacts use Maven coordinate
 `zone.moddev.mc.basemetals:BaseMetals:3.1.1.2603001`.

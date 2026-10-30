@@ -1,5 +1,10 @@
 # World upgrade checks
 
+The Linux client checks use Ubuntu 26.04, Xvfb and Mesa software rendering.
+`check_sdl_graphics.py` first checks the same OpenGL 3.3 core and sRGB window
+requirements as Minecraft. An unusable display fails immediately instead of
+leaving the client waiting at a graphics error dialog. Normal launches are unchanged.
+
 `test_legacy_worlds.js` starts the packaged Forge 26.3 server against a fresh
 copy of each supplied world, then starts it again to check the saved result.
 It refuses to overwrite an existing test directory and fingerprints every

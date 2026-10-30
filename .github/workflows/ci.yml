@@ -19,8 +19,11 @@ concurrency:
 jobs:
   build:
     name: Build, test, and audit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
+    env:
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      SDL_VIDEO_DRIVER: x11
 
     steps:
       - name: Check out source
@@ -108,6 +111,11 @@ jobs:
           -PpackagedForgeServerRuntime=${{ steps.forge-runtimes.outputs.server_runtime }}
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
           --no-daemon --stacktrace
+
+      - name: Check the virtual display supports Minecraft's OpenGL context
+        run: >-
+          xvfb-run -a python3 tools/validation/check_sdl_graphics.py
+          "${{ steps.forge-runtimes.outputs.client_runtime }}/libraries/org/lwjgl/lwjgl-sdl/3.4.3/lwjgl-sdl-3.4.3-natives-linux.jar"
 
       - name: Run exact packaged integrated-world client smoke
         run: >-
