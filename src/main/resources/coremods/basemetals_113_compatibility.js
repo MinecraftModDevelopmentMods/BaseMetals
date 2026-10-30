@@ -14,8 +14,17 @@ function initializeCoreMod() {
                 var patched = false;
                 for (var i = 0; i < classNode.methods.size(); ++i) {
                     var method = classNode.methods.get(i);
+                    if (method.desc !== '(Lcom/mojang/datafixers/Typed;)Lcom/mojang/datafixers/Typed;') continue;
                     for (var instruction = method.instructions.getFirst(); instruction !== null;
                             instruction = instruction.getNext()) {
+                        // Some Forge installations already contain the corrected erased overload.
+                        if (instruction.getOpcode() === Opcodes.INVOKEVIRTUAL
+                                && instruction.owner === 'com/mojang/datafixers/Typed' && instruction.name === 'set'
+                                && instruction.desc === '(Lcom/mojang/datafixers/OpticFinder;' +
+                                        'Ljava/lang/Object;)Lcom/mojang/datafixers/Typed;') {
+                            patched = true;
+                            continue;
+                        }
                         if (instruction.getOpcode() !== Opcodes.CHECKCAST
                                 || instruction.desc !== 'com/mojang/datafixers/Typed') continue;
                         var call = instruction.getNext();
