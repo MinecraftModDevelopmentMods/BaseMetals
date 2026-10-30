@@ -1,3 +1,10 @@
+Unreleased 1.13.2 migration repair
+
+- Leave an already-correct Forge leaves data fixer unchanged instead of logging
+  a transformer failure.
+- Still reject unrecognised fixer bytecode, and check both repair and repeat-load
+  paths.
+
 Base Metals 3.0.1.113021
 
 - Add the configuration screen to Forge's Mods list and OreSpawn's cog, with
