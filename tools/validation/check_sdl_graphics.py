@@ -14,6 +14,8 @@ def check_context(library: Path) -> None:
     sdl.SDL_Init.restype = ctypes.c_bool
     sdl.SDL_GL_LoadLibrary.argtypes = [ctypes.c_char_p]
     sdl.SDL_GL_LoadLibrary.restype = ctypes.c_bool
+    sdl.SDL_GL_GetProcAddress.argtypes = [ctypes.c_char_p]
+    sdl.SDL_GL_GetProcAddress.restype = ctypes.c_void_p
     sdl.SDL_GL_SetAttribute.argtypes = [ctypes.c_int, ctypes.c_int]
     sdl.SDL_GL_SetAttribute.restype = ctypes.c_bool
     sdl.SDL_CreateWindow.argtypes = [ctypes.c_char_p, ctypes.c_int, ctypes.c_int, ctypes.c_uint64]
@@ -35,6 +37,13 @@ def check_context(library: Path) -> None:
     try:
         require(sdl.SDL_Init(0x20), 'SDL video initialization failed')
         require(sdl.SDL_GL_LoadLibrary(b'libGL.so.1'), 'OpenGL library could not load')
+
+        # Minecraft also checks that SDL and LWJGL resolve the same OpenGL functions.
+        opengl = ctypes.CDLL('libGL.so.1')
+        opengl.glXGetProcAddress.argtypes = [ctypes.c_char_p]
+        opengl.glXGetProcAddress.restype = ctypes.c_void_p
+        if opengl.glXGetProcAddress(b'glGetError') != sdl.SDL_GL_GetProcAddress(b'glGetError'):
+            raise RuntimeError('SDL and the OpenGL loader resolve different glGetError functions')
 
         # Match GlBackend: OpenGL 3.3 core, forward-compatible, with an sRGB framebuffer.
         for attribute, value in ((17, 3), (18, 3), (20, 1), (19, 2), (22, 1)):

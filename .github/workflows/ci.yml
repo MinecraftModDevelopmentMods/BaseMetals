@@ -25,6 +25,7 @@ jobs:
       LIBGL_ALWAYS_SOFTWARE: '1'
       GALLIUM_DRIVER: llvmpipe
       SDL_VIDEO_DRIVER: x11
+      SDL_VIDEO_FORCE_EGL: '1'
 
     steps:
       - name: Check out source
