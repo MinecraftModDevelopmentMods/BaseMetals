@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_horsearmor"
+        "recipes": [
+          "basemetals:electrum_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

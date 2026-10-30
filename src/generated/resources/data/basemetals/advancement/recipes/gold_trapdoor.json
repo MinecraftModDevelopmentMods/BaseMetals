@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_trapdoor"
+        "recipes": [
+          "basemetals:gold_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

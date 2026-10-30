@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_shears"
+        "recipes": [
+          "basemetals:antimony_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

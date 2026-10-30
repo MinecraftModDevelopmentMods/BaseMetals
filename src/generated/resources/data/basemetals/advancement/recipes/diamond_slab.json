@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_slab"
+        "recipes": [
+          "basemetals:diamond_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

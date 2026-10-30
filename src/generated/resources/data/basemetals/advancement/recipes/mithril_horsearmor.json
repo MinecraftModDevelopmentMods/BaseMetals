@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_horsearmor"
+        "recipes": [
+          "basemetals:mithril_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

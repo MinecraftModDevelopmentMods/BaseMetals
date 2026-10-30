@@ -541,10 +541,14 @@ public final class IntegratedWorldSmoke {
             countField.setAccessible(true);
             var layers = (net.minecraft.client.renderer.item.ItemStackRenderState.LayerRenderState[])
                     layersField.get(state);
+            var quadsField = net.minecraft.client.renderer.item.ItemStackRenderState.LayerRenderState.class
+                    .getDeclaredField("quads");
+            quadsField.setAccessible(true);
             var result = new java.util.ArrayList<net.minecraft.client.resources.model.geometry.BakedQuad>();
 
             for (int index = 0; index < countField.getInt(state); index++) {
-                result.addAll(layers[index].prepareQuadList());
+                var quads = (net.minecraft.client.resources.model.geometry.ItemQuads) quadsField.get(layers[index]);
+                result.addAll(quads.all());
             }
 
             return result;

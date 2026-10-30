@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_helmet"
+        "recipes": [
+          "basemetals:cupronickel_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

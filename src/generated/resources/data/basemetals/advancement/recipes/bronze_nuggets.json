@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_nuggets"
+        "recipes": [
+          "basemetals:bronze_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

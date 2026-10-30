@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_slab"
+        "recipes": [
+          "basemetals:nickel_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

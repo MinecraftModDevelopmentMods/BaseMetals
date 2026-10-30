@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_hoe"
+        "recipes": [
+          "basemetals:brass_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

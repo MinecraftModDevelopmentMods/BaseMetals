@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_leggings"
+        "recipes": [
+          "basemetals:obsidian_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

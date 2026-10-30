@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_axe"
+        "recipes": [
+          "basemetals:copper_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

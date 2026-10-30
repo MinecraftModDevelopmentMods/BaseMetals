@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_pickaxe"
+        "recipes": [
+          "basemetals:quartz_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

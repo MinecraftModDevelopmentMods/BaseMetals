@@ -1,30 +1,50 @@
-name: Base Metals 26.2 CI
+name: Base Metals 26.3 CI
 
 on:
   push:
     branches:
-      - master-26.2
+      - master-26.3
       - 'feature/**'
   pull_request:
     branches:
-      - master-26.2
+      - master-26.3
 
 permissions:
   contents: read
 
 concurrency:
-  group: basemetals-26.2-${{ github.workflow }}-${{ github.ref }}
+  group: basemetals-26.3-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
     name: Build, test, and audit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 90
+    env:
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      GALLIUM_DRIVER: llvmpipe
+      SDL_VIDEO_DRIVER: x11
+      SDL_VIDEO_FORCE_EGL: '1'
 
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Prepare Mesa software rendering
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libgl1-mesa-dri libglx-mesa0 mesa-utils
+          xvfb-run -a -s '-screen 0 1280x1024x24 +extension GLX +render -noreset' glxinfo -B
+
+      - name: Check the virtual display supports Minecraft's OpenGL context
+        run: |
+          native="$RUNNER_TEMP/basemetals-sdl-linux.jar"
+          curl --fail --location --retry 3 --output "$native" \
+            https://libraries.minecraft.net/org/lwjgl/lwjgl-sdl/3.4.3/lwjgl-sdl-3.4.3-natives-linux.jar
+          echo "E1880683A4AF33299E9A1B8D7EC1799BED8FB709064EA08DCC2A15CD1101C0B3  $native" | sha256sum --check --strict
+          timeout 30s xvfb-run -a -s '-screen 0 1280x1024x24 +extension GLX +render -noreset' \
+            python3 tools/validation/check_sdl_graphics.py "$native"
 
       - name: Install pinned Java 25 runtime and toolchain
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
@@ -49,7 +69,7 @@ jobs:
           "$RUNNER_TEMP/nbt-tests/bin/python" -m unittest discover -s tools/validation -p 'test_*.py'
 
       - name: Test upgrade log boundaries
-        run: node --test tools/validation/test_painting_registry.js tools/validation/test_runtime_log.js
+        run: node --test tools/validation/test_painting_registry.js tools/validation/test_runtime_log.js tools/validation/test_vanilla_registry.js
 
       - name: Build, test, and audit first candidate
         run: |
@@ -59,9 +79,9 @@ jobs:
             --no-daemon --stacktrace
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.1.1.2602001.jar "$first/"
-          cp build/libs/BaseMetals-3.1.1.2602001-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.1.1.2602001-javadoc.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.2603001.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.2603001-sources.jar "$first/"
+          cp build/libs/BaseMetals-3.1.1.2603001-javadoc.jar "$first/"
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -69,9 +89,9 @@ jobs:
           ./gradlew clean assemble verifyReleaseArtifacts writeReleaseChecksums \
             -PorespawnVerificationRepository="${{ steps.orespawn.outputs.repository }}" \
             --no-daemon --stacktrace
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2602001.jar" build/libs/BaseMetals-3.1.1.2602001.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2602001-sources.jar" build/libs/BaseMetals-3.1.1.2602001-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2602001-javadoc.jar" build/libs/BaseMetals-3.1.1.2602001-javadoc.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2603001.jar" build/libs/BaseMetals-3.1.1.2603001.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2603001-sources.jar" build/libs/BaseMetals-3.1.1.2603001-sources.jar
+          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.1.1.2603001-javadoc.jar" build/libs/BaseMetals-3.1.1.2603001-javadoc.jar
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run all required GameTests
@@ -83,14 +103,14 @@ jobs:
       - name: Install official Forge packaged runtimes
         id: forge-runtimes
         run: |
-          server_runtime="$RUNNER_TEMP/forge-26.2-65.1.0-server"
-          client_runtime="$RUNNER_TEMP/forge-26.2-65.1.0-client"
-          installer="$RUNNER_TEMP/forge-26.2-65.1.0-installer.jar"
+          server_runtime="$RUNNER_TEMP/forge-26.3-66.0.0-server"
+          client_runtime="$RUNNER_TEMP/forge-26.3-66.0.0-client"
+          installer="$RUNNER_TEMP/forge-26.3-66.0.0-installer.jar"
           mkdir -p "$server_runtime" "$client_runtime"
           curl --fail --location --retry 3 \
             --output "$installer" \
-            https://maven.minecraftforge.net/net/minecraftforge/forge/26.2-65.1.0/forge-26.2-65.1.0-installer.jar
-          echo "813FBBFECC3086A492783B9F5023AE15007737B42E17AAB75F48BA77403314DF  $installer" | sha256sum --check --strict
+            https://maven.minecraftforge.net/net/minecraftforge/forge/26.3-66.0.0/forge-26.3-66.0.0-installer.jar
+          echo "C6173EEA56AED0B947722F314542196E28A35285844961D517C7FB571492BBE3  $installer" | sha256sum --check --strict
           (
             cd "$server_runtime"
             java -jar "$installer" --installServer
@@ -111,7 +131,9 @@ jobs:
 
       - name: Run exact packaged integrated-world client smoke
         run: >-
-          timeout --kill-after=30s 15m xvfb-run -a ./gradlew packagedClientStartupSmoke
+          timeout --kill-after=30s 15m xvfb-run -a
+          -s '-screen 0 1280x1024x24 +extension GLX +render -noreset'
+          ./gradlew packagedClientStartupSmoke
           -PvirtualDisplaySmoke=true
           -PpackagedForgeClientRuntime=${{ steps.forge-runtimes.outputs.client_runtime }}
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
@@ -119,7 +141,9 @@ jobs:
 
       - name: Run bounded development integrated-world client smoke
         run: >-
-          timeout --kill-after=30s 15m xvfb-run -a ./gradlew runClient
+          timeout --kill-after=30s 15m xvfb-run -a
+          -s '-screen 0 1280x1024x24 +extension GLX +render -noreset'
+          ./gradlew runClient
           -PvirtualDisplaySmoke=true
           -PintegratedWorldSmoke=true
           -PintegratedWorldSmokeName=basemetals-ci-${{ github.run_id }}
@@ -135,13 +159,13 @@ jobs:
       - name: Upload audited release candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-26.2-${{ github.sha }}
+          name: BaseMetals-26.3-${{ github.sha }}
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.1.1.2602001.jar
-            build/libs/BaseMetals-3.1.1.2602001-sources.jar
-            build/libs/BaseMetals-3.1.1.2602001-javadoc.jar
+            build/libs/BaseMetals-3.1.1.2603001.jar
+            build/libs/BaseMetals-3.1.1.2603001-sources.jar
+            build/libs/BaseMetals-3.1.1.2603001-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
@@ -149,7 +173,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-26.2-diagnostics-${{ github.sha }}
+          name: BaseMetals-26.3-diagnostics-${{ github.sha }}
           if-no-files-found: ignore
           retention-days: 14
           path: |

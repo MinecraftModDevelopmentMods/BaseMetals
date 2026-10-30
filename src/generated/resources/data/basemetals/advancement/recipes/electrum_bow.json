@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_bow"
+        "recipes": [
+          "basemetals:electrum_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

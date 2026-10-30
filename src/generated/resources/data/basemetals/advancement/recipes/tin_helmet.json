@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_helmet"
+        "recipes": [
+          "basemetals:tin_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

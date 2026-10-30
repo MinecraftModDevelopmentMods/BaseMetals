@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_fishingrod"
+        "recipes": [
+          "basemetals:electrum_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

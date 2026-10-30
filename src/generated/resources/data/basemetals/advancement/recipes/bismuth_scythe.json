@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_scythe"
+        "recipes": [
+          "basemetals:bismuth_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_shovel"
+        "recipes": [
+          "basemetals:brass_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

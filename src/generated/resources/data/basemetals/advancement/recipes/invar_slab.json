@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_slab"
+        "recipes": [
+          "basemetals:invar_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

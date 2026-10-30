@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_smallblend"
+        "recipes": [
+          "basemetals:mithril_smallblend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

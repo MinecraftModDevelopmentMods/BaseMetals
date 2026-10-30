@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_pressure_plate"
+        "recipes": [
+          "basemetals:quartz_pressure_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_wall"
+        "recipes": [
+          "basemetals:silver_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

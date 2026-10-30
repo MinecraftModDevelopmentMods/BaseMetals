@@ -2,7 +2,7 @@
   "type": "basemetals:add_table",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
+      "type": "forge:loot_table_id",
       "loot_table_id": "minecraft:chests/village/village_weaponsmith"
     }
   ],

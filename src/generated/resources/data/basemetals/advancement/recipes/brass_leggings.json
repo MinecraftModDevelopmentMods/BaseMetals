@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_leggings"
+        "recipes": [
+          "basemetals:brass_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

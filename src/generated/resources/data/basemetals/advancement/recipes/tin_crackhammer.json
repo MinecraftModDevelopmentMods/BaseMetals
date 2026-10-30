@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_crackhammer"
+        "recipes": [
+          "basemetals:tin_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

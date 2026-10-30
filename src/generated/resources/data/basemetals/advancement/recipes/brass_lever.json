@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_lever"
+        "recipes": [
+          "basemetals:brass_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

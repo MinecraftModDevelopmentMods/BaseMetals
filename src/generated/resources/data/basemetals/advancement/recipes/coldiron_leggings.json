@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_leggings"
+        "recipes": [
+          "basemetals:coldiron_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

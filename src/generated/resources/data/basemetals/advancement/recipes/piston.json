@@ -53,7 +53,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:piston"
+        "recipes": [
+          "basemetals:piston"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

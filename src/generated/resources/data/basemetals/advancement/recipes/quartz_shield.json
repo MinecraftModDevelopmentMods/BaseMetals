@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_shield"
+        "recipes": [
+          "basemetals:quartz_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

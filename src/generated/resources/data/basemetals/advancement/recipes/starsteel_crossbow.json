@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_crossbow"
+        "recipes": [
+          "basemetals:starsteel_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

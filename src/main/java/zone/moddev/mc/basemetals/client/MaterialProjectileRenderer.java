@@ -45,11 +45,11 @@ public final class MaterialProjectileRenderer
     @Override
     public void submit(State state, PoseStack poses, SubmitNodeCollector collector, CameraRenderState camera) {
         poses.pushPose();
-        poses.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
-        poses.mulPose(Axis.ZP.rotationDegrees(state.xRot));
+        poses.rotateDegrees(Axis.YP, state.yRot - 90.0F);
+        poses.rotateDegrees(Axis.ZP, state.xRot);
         collector.submitModel(model, state, poses, RenderTypes.entityCutout(TEXTURE),
                 state.lightCoords, OverlayTexture.NO_OVERLAY, state.colour, null,
-                state.outlineColor, null);
+                state.outlineColor);
         poses.popPose();
 
         super.submit(state, poses, collector, camera);

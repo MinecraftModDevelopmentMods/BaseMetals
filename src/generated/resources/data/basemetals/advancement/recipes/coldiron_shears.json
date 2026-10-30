@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_shears"
+        "recipes": [
+          "basemetals:coldiron_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

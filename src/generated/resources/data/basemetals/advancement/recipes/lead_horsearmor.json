@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_horsearmor"
+        "recipes": [
+          "basemetals:lead_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

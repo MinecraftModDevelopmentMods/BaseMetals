@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_leggings"
+        "recipes": [
+          "basemetals:emerald_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,3 +1,13 @@
+Base Metals 3.1.1.2603001
+
+- Port the released 26.2 version to Minecraft 26.3 and Forge 66, keeping Java 25.
+- Keep raw metals, ore overlays, filled buckets, High/Low Fantasy and the existing gameplay fixes.
+- Update recipes, loot, screens and save handling for the newer Minecraft formats.
+- Keep coal and charcoal fuels, tool interactions and enchanted smith trades working with the new item components.
+- Use published OreSpawn 4.1.0.2603001 with the same eleven rules and copper defaults.
+- Read the new block-state save format while keeping older worlds, current player data and upgrade backups intact.
+- Skip dungeon placement in protected imported terrain, while leaving new chunks and new underground areas available for generation.
+
 Base Metals 3.1.1.2602001
 
 - Port the released 26.1.2 version to Minecraft 26.2 and Forge 65, keeping Java 25.

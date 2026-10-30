@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_hoe"
+        "recipes": [
+          "basemetals:quartz_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

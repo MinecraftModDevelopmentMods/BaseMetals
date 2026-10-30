@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_slab"
+        "recipes": [
+          "basemetals:coldiron_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

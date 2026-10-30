@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_rod"
+        "recipes": [
+          "basemetals:obsidian_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

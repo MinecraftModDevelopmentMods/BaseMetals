@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_shears"
+        "recipes": [
+          "basemetals:tin_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

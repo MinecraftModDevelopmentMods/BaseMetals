@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_lever"
+        "recipes": [
+          "basemetals:nickel_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_wall"
+        "recipes": [
+          "basemetals:cupronickel_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

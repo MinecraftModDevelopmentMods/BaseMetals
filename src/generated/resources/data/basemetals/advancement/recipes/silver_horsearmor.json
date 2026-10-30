@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_horsearmor"
+        "recipes": [
+          "basemetals:silver_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

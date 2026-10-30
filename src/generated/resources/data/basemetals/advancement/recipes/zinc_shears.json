@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_shears"
+        "recipes": [
+          "basemetals:zinc_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

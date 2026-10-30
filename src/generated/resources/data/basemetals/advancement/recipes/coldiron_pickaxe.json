@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_pickaxe"
+        "recipes": [
+          "basemetals:coldiron_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

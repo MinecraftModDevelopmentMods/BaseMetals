@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_slab"
+        "recipes": [
+          "basemetals:mithril_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

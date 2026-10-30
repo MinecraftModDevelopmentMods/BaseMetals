@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_plate"
+        "recipes": [
+          "basemetals:gold_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

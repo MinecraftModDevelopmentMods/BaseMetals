@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_chestplate"
+        "recipes": [
+          "basemetals:brass_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_smallpowder"
+        "recipes": [
+          "basemetals:coldiron_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

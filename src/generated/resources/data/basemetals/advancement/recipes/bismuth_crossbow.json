@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_crossbow"
+        "recipes": [
+          "basemetals:bismuth_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

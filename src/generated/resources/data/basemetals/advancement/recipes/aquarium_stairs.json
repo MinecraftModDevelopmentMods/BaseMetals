@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_stairs"
+        "recipes": [
+          "basemetals:aquarium_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

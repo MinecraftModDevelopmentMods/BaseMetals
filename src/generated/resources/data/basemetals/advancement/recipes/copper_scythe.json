@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_scythe"
+        "recipes": [
+          "basemetals:copper_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

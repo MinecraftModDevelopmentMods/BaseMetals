@@ -13,7 +13,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_raw_smelting"
+        "recipes": [
+          "basemetals:lead_raw_smelting"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

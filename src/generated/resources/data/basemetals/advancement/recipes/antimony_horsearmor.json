@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_horsearmor"
+        "recipes": [
+          "basemetals:antimony_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

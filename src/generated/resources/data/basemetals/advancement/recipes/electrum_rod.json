@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_rod"
+        "recipes": [
+          "basemetals:electrum_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

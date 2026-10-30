@@ -106,6 +106,8 @@ class RecipeRegressionTest {
         JsonObject criteria = read(DATA.resolve("advancement/recipes/adamantine_bow.json"))
                 .getAsJsonObject("criteria");
         assertEquals("minecraft:recipe_unlocked", criteria.getAsJsonObject("has_recipe").get("trigger").getAsString());
+        assertEquals("basemetals:adamantine_bow", criteria.getAsJsonObject("has_recipe")
+                .getAsJsonObject("conditions").getAsJsonArray("recipes").get(0).getAsString());
         assertEquals("#forge:rods/adamantine", criteria.getAsJsonObject("has_ingredient_1")
                 .getAsJsonObject("conditions").getAsJsonArray("items").get(0).getAsJsonObject().get("items").getAsString());
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_stairs"
+        "recipes": [
+          "basemetals:cupronickel_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

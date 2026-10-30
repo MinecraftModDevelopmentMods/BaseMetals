@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_scythe"
+        "recipes": [
+          "basemetals:platinum_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

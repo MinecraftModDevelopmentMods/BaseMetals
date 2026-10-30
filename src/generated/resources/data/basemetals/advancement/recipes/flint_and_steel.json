@@ -35,7 +35,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:flint_and_steel"
+        "recipes": [
+          "basemetals:flint_and_steel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

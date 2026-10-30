@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_shears"
+        "recipes": [
+          "basemetals:quartz_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_scythe"
+        "recipes": [
+          "basemetals:brass_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

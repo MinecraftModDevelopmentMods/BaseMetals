@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_chestplate"
+        "recipes": [
+          "basemetals:nickel_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

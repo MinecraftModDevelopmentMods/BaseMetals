@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_shield"
+        "recipes": [
+          "basemetals:copper_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_horsearmor"
+        "recipes": [
+          "basemetals:quartz_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

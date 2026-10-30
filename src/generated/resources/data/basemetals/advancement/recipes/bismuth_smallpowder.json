@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_smallpowder"
+        "recipes": [
+          "basemetals:bismuth_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

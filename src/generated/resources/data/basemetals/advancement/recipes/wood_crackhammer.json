@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:wood_crackhammer"
+        "recipes": [
+          "basemetals:wood_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_stairs"
+        "recipes": [
+          "basemetals:emerald_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

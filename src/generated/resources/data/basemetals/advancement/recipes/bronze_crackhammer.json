@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_crackhammer"
+        "recipes": [
+          "basemetals:bronze_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

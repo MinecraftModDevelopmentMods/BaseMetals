@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_leggings"
+        "recipes": [
+          "basemetals:invar_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

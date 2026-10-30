@@ -2,7 +2,7 @@
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
 3.1.1 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
-OreSpawn 3 plugin, or the old native fallback generator into the 26.2 instance.
+OreSpawn 3 plugin, or the old native fallback generator into the 26.3 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
 before the 1.13 flattening. Base Metals snapshots those positions, runs
@@ -126,6 +126,9 @@ Modern worlds do not need the old numeric-ID conversion. Base Metals only runs
 it after confirming an older source save. A leftover `level.dat_old` does not
 replace the current player or turn on legacy terrain protection.
 
+Dungeon generation is skipped when its centre lies in protected imported
+terrain. It still runs normally in new chunks and new underground areas.
+
 For a genuine upgrade, legacy inventories are normalized before Minecraft moves
 the player files and converts their item data. The world-local migration sidecar keeps the source version
 and saved registry map for reloads and chunks opened later; it does not store
@@ -148,7 +151,7 @@ when the current world metadata confirms an upgrade from the previous storage
 format. The source files are kept for recovery. A modern world with leftover
 old files does not activate this step.
 
-Minecraft 26.2 also moves world-generation settings, game rules and world clocks
+Minecraft 26.2 moved world-generation settings, game rules and world clocks
 out of `level.dat` into separate saved-data files. Minecraft handles that move
 during the upgrade. Keep the whole world folder together rather than copying
 an older `level.dat` over the upgraded save.

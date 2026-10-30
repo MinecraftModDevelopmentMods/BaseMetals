@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_hoe"
+        "recipes": [
+          "basemetals:bismuth_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

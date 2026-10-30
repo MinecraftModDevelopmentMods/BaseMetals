@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_blend"
+        "recipes": [
+          "basemetals:cupronickel_blend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

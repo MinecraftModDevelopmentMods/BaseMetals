@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_bolt"
+        "recipes": [
+          "basemetals:lead_bolt"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:iron_shield"
+        "recipes": [
+          "basemetals:iron_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

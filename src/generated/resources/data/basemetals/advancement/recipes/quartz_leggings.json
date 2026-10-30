@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_leggings"
+        "recipes": [
+          "basemetals:quartz_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_arrow"
+        "recipes": [
+          "basemetals:obsidian_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

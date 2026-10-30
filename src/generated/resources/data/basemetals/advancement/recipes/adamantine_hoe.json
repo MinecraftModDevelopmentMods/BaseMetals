@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_hoe"
+        "recipes": [
+          "basemetals:adamantine_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

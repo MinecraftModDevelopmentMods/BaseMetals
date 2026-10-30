@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_slab"
+        "recipes": [
+          "basemetals:copper_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

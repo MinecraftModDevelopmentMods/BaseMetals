@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_button"
+        "recipes": [
+          "basemetals:brass_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

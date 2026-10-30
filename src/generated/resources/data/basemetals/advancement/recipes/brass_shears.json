@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_shears"
+        "recipes": [
+          "basemetals:brass_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

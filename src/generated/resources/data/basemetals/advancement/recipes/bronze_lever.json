@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_lever"
+        "recipes": [
+          "basemetals:bronze_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -44,7 +44,7 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
         private Serializer() {}
 
         public static RecipeSerializer<LegacySmeltingRecipe> create() {
-            return new RecipeSerializer<>(cookingMapCodec(LegacySmeltingRecipe::new, 200),
+            return new RecipeSerializer<>(cookingMapCodec(LegacySmeltingRecipe::new),
                     cookingStreamCodec(LegacySmeltingRecipe::new));
         }
     }

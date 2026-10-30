@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_chestplate"
+        "recipes": [
+          "basemetals:zinc_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

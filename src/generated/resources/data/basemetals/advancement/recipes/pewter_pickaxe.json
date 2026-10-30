@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_pickaxe"
+        "recipes": [
+          "basemetals:pewter_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

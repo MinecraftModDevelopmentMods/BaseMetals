@@ -159,6 +159,27 @@ public final class BaseMetalsGameTests {
             require(helper, !ForgeRegistries.ITEMS.containsKey(Identifier.fromNamespaceAndPath(BaseMetals.MOD_ID, id)),
                     id + " unexpectedly has a block item");
         }
+
+        var player = survivalPlayer(helper);
+        BlockPos position = helper.absolutePos(new BlockPos(1, 1, 1));
+        ItemStack pickaxe = Items.NETHERITE_PICKAXE.getDefaultInstance();
+
+        ModContent.blocksById().forEach((id, block) -> {
+            if (block.get() instanceof net.minecraft.world.level.block.SlabBlock
+                    && !ModContent.hiddenBlocks().contains(id)) {
+                for (SlabType type : SlabType.values()) {
+                    var state = block.get().defaultBlockState()
+                            .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.SLAB_TYPE, type);
+                    var drops = Block.getDrops(state, helper.getLevel(), position, null, player, pickaxe);
+                    int count = drops.stream().filter(stack -> stack.is(block.get().asItem()))
+                            .mapToInt(ItemStack::getCount).sum();
+
+                    require(helper, count == (type == SlabType.DOUBLE ? 2 : 1),
+                            id + " has the wrong loot count for " + type);
+                }
+            }
+        });
+
         helper.succeed();
     }
 
@@ -430,6 +451,10 @@ public final class BaseMetalsGameTests {
                 bronze.crackhammerAttackDamage()), "Crackhammer attack damage changed");
         require(helper, attribute(hammer, Attributes.ATTACK_SPEED) == -3.5D,
                 "Crackhammer attack speed changed");
+
+        verifyToolTransformation(helper, "bronze_axe", Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG, 1);
+        verifyToolTransformation(helper, "bronze_shovel", Blocks.GRASS_BLOCK, Blocks.DIRT_PATH, 2);
+        verifyToolTransformation(helper, "bronze_hoe", Blocks.DIRT, Blocks.FARMLAND, 3);
 
         require(helper, burnTime("coal_powder") == 1600, "Coal powder no longer burns for one item");
         require(helper, burnTime("coal_smallpowder") == 200, "Tiny coal dust has the wrong burn time");
@@ -1157,8 +1182,38 @@ public final class BaseMetalsGameTests {
 
     private static int burnTime(String item) {
         ItemStack stack = ModContent.item(item).get().getDefaultInstance();
-        return net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer().fuelValues()
-                .burnDuration(stack, RecipeType.SMELTING);
+        var level = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer().overworld();
+
+        return new TestFurnace().burnDuration(level, stack);
+    }
+
+    private static void verifyToolTransformation(
+            GameTestHelper helper, String item, net.minecraft.world.level.block.Block original,
+            net.minecraft.world.level.block.Block transformed, int x) {
+        BlockPos position = helper.absolutePos(new BlockPos(x, 1, 1));
+        helper.getLevel().setBlockAndUpdate(position, original.defaultBlockState());
+        helper.getLevel().setBlockAndUpdate(position.above(), Blocks.AIR.defaultBlockState());
+        var player = helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        ItemStack tool = ModContent.item(item).get().getDefaultInstance();
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        var hit = new BlockHitResult(Vec3.atCenterOf(position), Direction.UP, position, false);
+
+        var result = tool.useOn(new UseOnContext(helper.getLevel(), player, InteractionHand.MAIN_HAND, tool, hit));
+
+        require(helper, helper.getLevel().getBlockState(position).is(transformed),
+                item + " did not transform " + original + " into " + transformed + ": " + result
+                        + ", current=" + helper.getLevel().getBlockState(position));
+        require(helper, tool.getDamageValue() == 1, item + " did not consume one durability");
+    }
+
+    private static final class TestFurnace extends net.minecraft.world.level.block.entity.FurnaceBlockEntity {
+        private TestFurnace() {
+            super(BlockPos.ZERO, Blocks.FURNACE.defaultBlockState());
+        }
+
+        private int burnDuration(net.minecraft.server.level.ServerLevel level, ItemStack stack) {
+            return getBurnDuration(level, stack);
+        }
     }
 
     private static boolean close(double left, double right) {

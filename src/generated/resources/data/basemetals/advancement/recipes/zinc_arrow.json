@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_arrow"
+        "recipes": [
+          "basemetals:zinc_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_hoe"
+        "recipes": [
+          "basemetals:electrum_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

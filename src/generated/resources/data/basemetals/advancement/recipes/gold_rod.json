@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_rod"
+        "recipes": [
+          "basemetals:gold_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

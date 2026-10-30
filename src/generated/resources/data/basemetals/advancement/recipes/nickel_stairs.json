@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_stairs"
+        "recipes": [
+          "basemetals:nickel_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

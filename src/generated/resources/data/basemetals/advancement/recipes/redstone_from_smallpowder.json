@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:redstone_from_smallpowder"
+        "recipes": [
+          "basemetals:redstone_from_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

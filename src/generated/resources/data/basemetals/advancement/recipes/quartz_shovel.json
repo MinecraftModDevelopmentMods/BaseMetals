@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_shovel"
+        "recipes": [
+          "basemetals:quartz_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_horsearmor"
+        "recipes": [
+          "basemetals:obsidian_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

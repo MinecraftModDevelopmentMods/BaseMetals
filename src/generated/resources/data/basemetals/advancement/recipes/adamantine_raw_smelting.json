@@ -13,7 +13,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_raw_smelting"
+        "recipes": [
+          "basemetals:adamantine_raw_smelting"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -445,7 +445,7 @@ public final class ModContent {
         flowing[0] = FLUIDS.register("flowing_" + name, () -> new ForgeFlowingFluid.Flowing(properties));
         block[0] = BLOCKS.register(name, () -> new MoltenMetalBlock(() -> source[0].get(),
                 BlockBehaviour.Properties.of().setId(BLOCKS.key(name)).mapColor(MapColor.FIRE).liquid().replaceable()
-                        .pushReaction(PushReaction.DESTROY).noCollision().strength(100.0F).noLootTable(), mercury));
+                        .pushReaction(PushReaction.POPPED).noCollision().strength(100.0F).noLootTable(), mercury));
         BLOCKS_BY_ID.put(name, block[0]);
         // Forge 1.12 registered an ItemBlock under every molten block ID. Keep
         // those hidden inventory IDs so old stacks can survive a world upgrade.

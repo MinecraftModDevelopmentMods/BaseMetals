@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_bars_2"
+        "recipes": [
+          "basemetals:silver_bars_2"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_shovel"
+        "recipes": [
+          "basemetals:pewter_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

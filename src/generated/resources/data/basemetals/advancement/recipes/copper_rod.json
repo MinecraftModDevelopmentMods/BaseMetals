@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_rod"
+        "recipes": [
+          "basemetals:copper_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

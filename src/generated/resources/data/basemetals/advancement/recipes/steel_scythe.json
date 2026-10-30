@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_scythe"
+        "recipes": [
+          "basemetals:steel_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_lever"
+        "recipes": [
+          "basemetals:zinc_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

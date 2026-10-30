@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_button"
+        "recipes": [
+          "basemetals:nickel_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

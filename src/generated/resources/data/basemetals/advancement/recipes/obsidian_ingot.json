@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_ingot"
+        "recipes": [
+          "basemetals:obsidian_ingot"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

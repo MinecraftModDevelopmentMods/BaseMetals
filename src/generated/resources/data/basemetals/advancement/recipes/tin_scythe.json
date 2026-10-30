@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_scythe"
+        "recipes": [
+          "basemetals:tin_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

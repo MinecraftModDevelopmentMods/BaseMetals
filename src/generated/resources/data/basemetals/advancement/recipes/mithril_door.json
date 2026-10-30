@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_door"
+        "recipes": [
+          "basemetals:mithril_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

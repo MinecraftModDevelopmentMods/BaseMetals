@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_shovel"
+        "recipes": [
+          "basemetals:tin_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

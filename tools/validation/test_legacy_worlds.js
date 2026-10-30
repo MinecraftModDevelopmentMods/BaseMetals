@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const { spawn } = require('child_process');
 const { serverArguments } = require('./forge_launcher');
 const { isVanillaPaintingSnapshot } = require('./painting_registry');
+const { isRetiredVanillaMemorySnapshot } = require('./vanilla_registry');
 const { isWindowsCounterDiagnostic } = require('./runtime_log');
 
 const spec = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
@@ -132,7 +133,7 @@ function checkUpgradeLog(log) {
                     'minecraft:block.trial_spawner.charge_activate'
                 ].includes(entry));
 
-            if (knownPaintingSnapshot || knownVanillaNames) {
+            if (knownPaintingSnapshot || knownVanillaNames || isRetiredVanillaMemorySnapshot(registry, entries)) {
                 entries.forEach(entry => acceptedEntries.add(entry));
                 continue;
             }
@@ -154,7 +155,7 @@ async function run(directory, launcher, label, marker, properties = []) {
     const output = fs.createWriteStream(path.join(directory, label + '.log'));
     const executable = phase === 'capture' ? spec.java8 : (spec.java || spec.java17);
     const launchArguments = phase === 'capture' ? ['-jar', launcher, 'nogui']
-        : serverArguments(spec.serverRuntime, directory, '26.2', spec.forgeVersion || '65.1.0');
+        : serverArguments(spec.serverRuntime, directory, '26.3', spec.forgeVersion || '66.0.0');
     const child = spawn(executable, ['-Xms256m', '-Xmx2g', ...properties, ...launchArguments],
         { cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.pipe(output, { end: false });

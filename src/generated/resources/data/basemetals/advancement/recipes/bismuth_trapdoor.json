@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_trapdoor"
+        "recipes": [
+          "basemetals:bismuth_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

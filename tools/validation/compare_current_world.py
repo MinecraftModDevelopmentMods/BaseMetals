@@ -13,7 +13,7 @@ from pathlib import Path
 
 import nbtlib
 
-from compare_world_terrain import block_names, chunks
+from compare_world_terrain import block_names, chunks, state_name, unwrap_state
 from world_paths import dimensions, player_files
 
 
@@ -126,9 +126,30 @@ def canonical_player(player):
     return result
 
 
+def canonical_block_state(state, defaults):
+    state = unwrap_state(state)
+    identifier = state_name(state)
+    properties = dict(defaults.get(identifier, {}))
+
+    if isinstance(state, (dict, nbtlib.Compound)):
+        properties.update({str(key): str(value) for key, value in
+                           state.get('properties', state.get('Properties', {})).items()})
+    elif identifier.startswith('basemetals:') and identifier not in defaults:
+        raise AssertionError(f'No registered default state for compact palette entry: {identifier}')
+
+    if identifier.startswith('basemetals:') and identifier.endswith('_wall'):
+        for direction in ('north', 'south', 'east', 'west'):
+            if properties.get(direction) in ('false', 'true'):
+                properties[direction] = 'low' if properties[direction] == 'true' else 'none'
+
+    return json.dumps({'id': identifier, 'properties': properties}, sort_keys=True)
+
+
 def snapshot(world):
     blocks = {}
     stacks = Counter()
+    manifest = Path(__file__).resolve().parents[2] / 'src/generated/resources/data/basemetals/registry_manifest.json'
+    defaults = json.loads(manifest.read_text(encoding='utf8')).get('block_defaults', {})
 
     def items(value):
         if isinstance(value, (dict, nbtlib.Compound)):
@@ -149,19 +170,18 @@ def snapshot(world):
     for key, chunk in chunks(world).items():
         for section in chunk.get("sections", chunk.get("Sections", [])):
             original_palette = section.get('block_states', {}).get('palette', section.get('Palette', []))
-            if not any(str(entry.get('Name', '')).startswith('basemetals:') for entry in original_palette):
+            if not any(state_name(entry).startswith('basemetals:') for entry in original_palette):
                 continue
             source = copy.deepcopy(section)
             palette = source.get("block_states", {}).get("palette", source.get("Palette", []))
-            for entry in palette:
-                # Older wall connections used booleans; Minecraft now stores none, low or tall.
-                if str(entry.get("Name", "")).startswith("basemetals:") and str(entry["Name"]).endswith("_wall"):
-                    properties = entry.get("Properties", {})
-                    for direction in ("north", "south", "east", "west"):
-                        if str(properties.get(direction, "")) in ("false", "true"):
-                            properties[direction] = nbtlib.String("low" if str(properties[direction]) == "true" else "none")
-                state = ordered(entry).snbt()
-                entry["Name"] = nbtlib.String(state)
+            canonical = nbtlib.List[nbtlib.Compound]([
+                nbtlib.Compound({'Name': nbtlib.String(canonical_block_state(entry, defaults))})
+                for entry in palette
+            ])
+            if 'block_states' in source:
+                source['block_states']['palette'] = canonical
+            else:
+                source['Palette'] = canonical
             for index, state in enumerate(block_names(source)):
                 if state and "basemetals:" in state:
                     blocks[(*key, int(section["Y"]), index)] = state

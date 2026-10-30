@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_pressure_plate"
+        "recipes": [
+          "basemetals:lead_pressure_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

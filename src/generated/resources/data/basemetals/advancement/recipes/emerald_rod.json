@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_rod"
+        "recipes": [
+          "basemetals:emerald_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

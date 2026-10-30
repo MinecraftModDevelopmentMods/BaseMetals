@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_hoe"
+        "recipes": [
+          "basemetals:pewter_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

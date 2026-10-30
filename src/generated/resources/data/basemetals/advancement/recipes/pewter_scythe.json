@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_scythe"
+        "recipes": [
+          "basemetals:pewter_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

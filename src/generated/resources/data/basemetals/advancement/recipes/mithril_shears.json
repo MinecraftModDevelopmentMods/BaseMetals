@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_shears"
+        "recipes": [
+          "basemetals:mithril_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

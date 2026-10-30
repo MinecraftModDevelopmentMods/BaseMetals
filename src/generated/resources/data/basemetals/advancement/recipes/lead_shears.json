@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_shears"
+        "recipes": [
+          "basemetals:lead_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

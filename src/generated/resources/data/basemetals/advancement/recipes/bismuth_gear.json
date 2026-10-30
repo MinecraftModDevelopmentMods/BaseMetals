@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_gear"
+        "recipes": [
+          "basemetals:bismuth_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

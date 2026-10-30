@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_powder_from_small"
+        "recipes": [
+          "basemetals:gold_powder_from_small"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

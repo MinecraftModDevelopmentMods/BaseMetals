@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_stairs"
+        "recipes": [
+          "basemetals:platinum_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

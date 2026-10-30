@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_bars"
+        "recipes": [
+          "basemetals:steel_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

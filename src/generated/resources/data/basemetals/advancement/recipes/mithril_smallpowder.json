@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_smallpowder"
+        "recipes": [
+          "basemetals:mithril_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

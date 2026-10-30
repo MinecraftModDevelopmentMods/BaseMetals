@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_plate"
+        "recipes": [
+          "basemetals:silver_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

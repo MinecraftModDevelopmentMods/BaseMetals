@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_pickaxe"
+        "recipes": [
+          "basemetals:nickel_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

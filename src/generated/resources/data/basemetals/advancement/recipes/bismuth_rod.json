@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_rod"
+        "recipes": [
+          "basemetals:bismuth_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

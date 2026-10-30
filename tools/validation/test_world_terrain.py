@@ -12,6 +12,18 @@ class PaletteLayoutTest(unittest.TestCase):
         section = {"block_states": {"palette": [{"Name": "minecraft:deepslate"}]}}
         self.assertEqual(["minecraft:deepslate"] * 4096, list(terrain.block_names(section)))
 
+    def test_native_263_block_state_objects(self):
+        section = {"block_states": {"palette": [{"id": "minecraft:deepslate"}]}}
+        self.assertEqual(["minecraft:deepslate"] * 4096, list(terrain.block_names(section)))
+
+    def test_native_263_compact_block_states(self):
+        section = {"block_states": {"palette": ["minecraft:stone"]}}
+        self.assertEqual(["minecraft:stone"] * 4096, list(terrain.block_names(section)))
+
+    def test_native_263_mixed_palette_wrappers(self):
+        section = {"block_states": {"palette": [{"": "minecraft:stone"}]}}
+        self.assertEqual(["minecraft:stone"] * 4096, list(terrain.block_names(section)))
+
     def test_contiguous_and_padded_palettes(self):
         for palette_size in (16, 17, 33, 65):
             bits = max(4, (palette_size - 1).bit_length())
@@ -41,6 +53,25 @@ def gravel(x=0.5, y=35, z=0.5, dimension=""):
 
 
 class FallingTerrainTest(unittest.TestCase):
+    def test_falling_blocks_accept_old_and_native_state_encodings(self):
+        for state in ({'Name': 'minecraft:gravel'}, {'id': 'minecraft:gravel'},
+                      'minecraft:gravel', {'': 'minecraft:gravel'}):
+            entity = {'id': 'minecraft:falling_block', 'BlockState': state, 'Pos': [0.5, 35, 0.5]}
+
+            with self.subTest(state=state), patch.object(terrain, 'dimensions', return_value=[]):
+                actual = terrain.falling_blocks(Path('unused'), {('', 0, 0): {'Entities': [entity]}})
+
+            self.assertEqual({('', 0, 0, 0): [(35, 'minecraft:gravel')]}, actual)
+
+    def test_dropped_falling_blocks_keep_the_native_item_count(self):
+        entity = {'id': 'minecraft:item', 'Item': {'id': 'minecraft:sand', 'count': 2}, 'Pos': [0.5, 35, 0.5]}
+        dropped = []
+
+        with patch.object(terrain, 'dimensions', return_value=[]):
+            terrain.falling_blocks(Path('unused'), {('', 0, 0): {'Entities': [entity]}}, dropped)
+
+        self.assertEqual(2, dropped[0]['count'])
+
     def test_exposed_dirt_beside_old_grass_can_grow_normally(self):
         self.compare_surface("minecraft:dirt", "minecraft:grass_block", nearby_grass=True)
 

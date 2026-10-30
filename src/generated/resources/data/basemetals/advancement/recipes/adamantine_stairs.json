@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_stairs"
+        "recipes": [
+          "basemetals:adamantine_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

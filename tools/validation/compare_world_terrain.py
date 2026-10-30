@@ -53,6 +53,20 @@ def chunks(world):
     return result
 
 
+def unwrap_state(state):
+    # Native mixed lists wrap entries that are not already compounds.
+    while isinstance(state, (dict, nbtlib.Compound)) and len(state) == 1 and "" in state:
+        state = state[""]
+    return state
+
+
+def state_name(state):
+    state = unwrap_state(state)
+    if isinstance(state, (str, nbtlib.String)):
+        return str(state)
+    return str(state.get("id", state.get("Name", "")))
+
+
 def block_names(section):
     if "Blocks" in section:
         blocks = section["Blocks"]
@@ -68,7 +82,7 @@ def block_names(section):
         return
 
     block_states = section.get("block_states", {})
-    palette = [str(state["Name"]) for state in section.get("Palette", block_states.get("palette", []))]
+    palette = [state_name(state) for state in section.get("Palette", block_states.get("palette", []))]
     if not palette:
         yield from [None] * 4096
         return
@@ -110,13 +124,13 @@ def falling_blocks(world, loaded_chunks, dropped_items=None):
                 name = str(item.get("id", ""))
                 if name in FALLING_BLOCKS:
                     dropped_items.append({"dimension": dimension, "name": name,
-                                          "count": int(item.get("Count", 0)),
+                                          "count": int(item.get("count", item.get("Count", 0))),
                                           "position": tuple(float(value) for value in entity["Pos"]),
                                           "uuid": tuple(entity.get("UUID", []))})
                 continue
             if str(entity.get("id", "")) != "minecraft:falling_block":
                 continue
-            name = str(entity.get("BlockState", {}).get("Name", ""))
+            name = state_name(entity.get("BlockState", entity.get("block_state", {})))
             if name not in FALLING_BLOCKS:
                 continue
             x, y, z = [math.floor(float(value)) for value in entity["Pos"]]

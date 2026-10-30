@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_shield"
+        "recipes": [
+          "basemetals:coldiron_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

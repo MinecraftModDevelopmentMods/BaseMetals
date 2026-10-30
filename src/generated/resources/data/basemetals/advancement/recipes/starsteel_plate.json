@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_plate"
+        "recipes": [
+          "basemetals:starsteel_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

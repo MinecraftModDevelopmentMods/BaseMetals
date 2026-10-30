@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_rod"
+        "recipes": [
+          "basemetals:platinum_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

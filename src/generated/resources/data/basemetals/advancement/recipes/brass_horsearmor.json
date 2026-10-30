@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_horsearmor"
+        "recipes": [
+          "basemetals:brass_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_ingot_from_nuggets"
+        "recipes": [
+          "basemetals:steel_ingot_from_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

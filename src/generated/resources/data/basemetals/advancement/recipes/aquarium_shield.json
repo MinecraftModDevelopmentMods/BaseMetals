@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_shield"
+        "recipes": [
+          "basemetals:aquarium_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

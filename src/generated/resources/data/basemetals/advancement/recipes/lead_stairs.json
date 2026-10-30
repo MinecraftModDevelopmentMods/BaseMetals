@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_stairs"
+        "recipes": [
+          "basemetals:lead_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

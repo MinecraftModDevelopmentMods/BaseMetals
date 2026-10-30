@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_button"
+        "recipes": [
+          "basemetals:platinum_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

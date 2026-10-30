@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_rod"
+        "recipes": [
+          "basemetals:steel_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

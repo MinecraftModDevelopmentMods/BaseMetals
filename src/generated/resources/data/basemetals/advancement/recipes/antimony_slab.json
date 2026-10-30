@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_slab"
+        "recipes": [
+          "basemetals:antimony_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

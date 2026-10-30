@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_shield"
+        "recipes": [
+          "basemetals:gold_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

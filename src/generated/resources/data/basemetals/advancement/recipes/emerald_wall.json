@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_wall"
+        "recipes": [
+          "basemetals:emerald_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

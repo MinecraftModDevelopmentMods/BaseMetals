@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_lever"
+        "recipes": [
+          "basemetals:cupronickel_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

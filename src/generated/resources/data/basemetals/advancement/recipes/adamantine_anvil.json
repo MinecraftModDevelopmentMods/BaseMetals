@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_anvil"
+        "recipes": [
+          "basemetals:adamantine_anvil"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

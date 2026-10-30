@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_smallpowder"
+        "recipes": [
+          "basemetals:bronze_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

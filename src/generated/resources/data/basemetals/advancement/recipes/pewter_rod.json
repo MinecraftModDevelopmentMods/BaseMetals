@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_rod"
+        "recipes": [
+          "basemetals:pewter_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

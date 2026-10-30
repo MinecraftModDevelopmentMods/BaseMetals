@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_chestplate"
+        "recipes": [
+          "basemetals:silver_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_stairs"
+        "recipes": [
+          "basemetals:electrum_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

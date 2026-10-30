@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_rod"
+        "recipes": [
+          "basemetals:quartz_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_stairs"
+        "recipes": [
+          "basemetals:starsteel_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

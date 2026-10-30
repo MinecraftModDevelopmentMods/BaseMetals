@@ -25,7 +25,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coal_ingot"
+        "recipes": [
+          "basemetals:coal_ingot"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

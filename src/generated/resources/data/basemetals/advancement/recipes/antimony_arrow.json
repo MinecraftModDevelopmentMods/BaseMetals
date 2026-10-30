@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_arrow"
+        "recipes": [
+          "basemetals:antimony_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

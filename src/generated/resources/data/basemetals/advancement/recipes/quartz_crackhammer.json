@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_crackhammer"
+        "recipes": [
+          "basemetals:quartz_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

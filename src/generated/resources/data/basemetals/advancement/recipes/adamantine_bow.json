@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_bow"
+        "recipes": [
+          "basemetals:adamantine_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

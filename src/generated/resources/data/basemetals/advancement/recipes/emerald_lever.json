@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_lever"
+        "recipes": [
+          "basemetals:emerald_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

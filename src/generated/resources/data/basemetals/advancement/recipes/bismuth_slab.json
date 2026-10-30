@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_slab"
+        "recipes": [
+          "basemetals:bismuth_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

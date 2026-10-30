@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_fishingrod"
+        "recipes": [
+          "basemetals:quartz_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

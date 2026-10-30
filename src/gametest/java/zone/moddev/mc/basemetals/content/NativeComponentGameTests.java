@@ -143,9 +143,9 @@ public final class NativeComponentGameTests {
 
                 var ops = helper.getLevel().registryAccess().createSerializationContext(
                         com.mojang.serialization.JsonOps.INSTANCE);
-                var json = Recipe.CODEC.encodeStart(ops, holder.value()).getOrThrow();
-                var parsed = Recipe.CODEC.parse(ops, json).getOrThrow();
-                helper.assertTrue(json.equals(Recipe.CODEC.encodeStart(ops, parsed).getOrThrow()),
+                var json = Recipe.DIRECT_CODEC.encodeStart(ops, holder.value()).getOrThrow();
+                var parsed = Recipe.DIRECT_CODEC.parse(ops, json).getOrThrow();
+                helper.assertTrue(json.equals(Recipe.DIRECT_CODEC.encodeStart(ops, parsed).getOrThrow()),
                         "Recipe fields changed during JSON encoding: " + holder.id());
                 helper.assertTrue(decoded.isSpecial() == holder.value().isSpecial(), "Recipe discovery changed: " + holder.id());
                 checked++;

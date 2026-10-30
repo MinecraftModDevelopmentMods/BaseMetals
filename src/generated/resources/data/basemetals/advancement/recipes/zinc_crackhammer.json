@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_crackhammer"
+        "recipes": [
+          "basemetals:zinc_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

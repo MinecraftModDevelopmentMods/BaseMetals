@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_bars"
+        "recipes": [
+          "basemetals:quartz_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

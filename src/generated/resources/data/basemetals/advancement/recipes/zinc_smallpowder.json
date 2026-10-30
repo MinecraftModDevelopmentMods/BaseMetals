@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_smallpowder"
+        "recipes": [
+          "basemetals:zinc_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

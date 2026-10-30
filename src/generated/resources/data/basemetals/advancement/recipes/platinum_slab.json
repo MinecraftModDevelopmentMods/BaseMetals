@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_slab"
+        "recipes": [
+          "basemetals:platinum_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

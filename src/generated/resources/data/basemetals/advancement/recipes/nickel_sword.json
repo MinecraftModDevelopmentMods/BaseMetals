@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_sword"
+        "recipes": [
+          "basemetals:nickel_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_axe"
+        "recipes": [
+          "basemetals:electrum_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_scythe"
+        "recipes": [
+          "basemetals:antimony_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

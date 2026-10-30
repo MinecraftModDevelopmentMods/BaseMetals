@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_chestplate"
+        "recipes": [
+          "basemetals:quartz_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_rod"
+        "recipes": [
+          "basemetals:adamantine_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

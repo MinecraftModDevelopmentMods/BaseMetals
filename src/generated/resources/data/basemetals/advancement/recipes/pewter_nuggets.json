@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_nuggets"
+        "recipes": [
+          "basemetals:pewter_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

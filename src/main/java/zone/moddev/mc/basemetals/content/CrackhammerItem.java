@@ -21,8 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 
 public final class CrackhammerItem extends Item implements MaterialBacked {
     private final MaterialDefinition material;
@@ -42,11 +40,6 @@ public final class CrackhammerItem extends Item implements MaterialBacked {
                 && canHarvest(stack, state)
                 ? material.crackhammerDestroySpeed()
                 : 1.0F;
-    }
-
-    @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction action) {
-        return ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(action);
     }
 
     @Override

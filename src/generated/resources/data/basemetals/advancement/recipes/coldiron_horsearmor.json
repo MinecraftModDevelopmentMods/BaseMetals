@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_horsearmor"
+        "recipes": [
+          "basemetals:coldiron_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

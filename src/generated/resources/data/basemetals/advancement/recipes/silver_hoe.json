@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_hoe"
+        "recipes": [
+          "basemetals:silver_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

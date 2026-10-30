@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_crossbow"
+        "recipes": [
+          "basemetals:nickel_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_bars_2"
+        "recipes": [
+          "basemetals:obsidian_bars_2"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

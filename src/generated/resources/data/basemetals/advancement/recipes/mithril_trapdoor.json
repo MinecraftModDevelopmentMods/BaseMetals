@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_trapdoor"
+        "recipes": [
+          "basemetals:mithril_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

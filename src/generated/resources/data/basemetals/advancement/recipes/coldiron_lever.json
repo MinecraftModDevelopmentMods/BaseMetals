@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_lever"
+        "recipes": [
+          "basemetals:coldiron_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

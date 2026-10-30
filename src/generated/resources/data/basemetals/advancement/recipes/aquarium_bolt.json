@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_bolt"
+        "recipes": [
+          "basemetals:aquarium_bolt"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

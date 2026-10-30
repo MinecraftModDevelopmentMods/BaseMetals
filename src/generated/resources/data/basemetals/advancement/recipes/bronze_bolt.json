@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_bolt"
+        "recipes": [
+          "basemetals:bronze_bolt"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

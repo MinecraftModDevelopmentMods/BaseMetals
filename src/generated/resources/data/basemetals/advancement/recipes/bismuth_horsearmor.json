@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_horsearmor"
+        "recipes": [
+          "basemetals:bismuth_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

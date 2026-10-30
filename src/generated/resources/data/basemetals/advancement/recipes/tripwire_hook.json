@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tripwire_hook"
+        "recipes": [
+          "basemetals:tripwire_hook"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

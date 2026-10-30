@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_fishingrod"
+        "recipes": [
+          "basemetals:coldiron_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

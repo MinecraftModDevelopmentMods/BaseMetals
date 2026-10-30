@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_hoe"
+        "recipes": [
+          "basemetals:platinum_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_axe"
+        "recipes": [
+          "basemetals:bronze_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

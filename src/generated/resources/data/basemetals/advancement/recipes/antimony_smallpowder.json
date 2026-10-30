@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_smallpowder"
+        "recipes": [
+          "basemetals:antimony_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

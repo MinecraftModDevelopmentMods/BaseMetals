@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_smallpowder"
+        "recipes": [
+          "basemetals:lead_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

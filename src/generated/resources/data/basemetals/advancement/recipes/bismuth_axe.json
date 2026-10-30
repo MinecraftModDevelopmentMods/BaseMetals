@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_axe"
+        "recipes": [
+          "basemetals:bismuth_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

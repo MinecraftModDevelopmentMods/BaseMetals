@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_helmet"
+        "recipes": [
+          "basemetals:pewter_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

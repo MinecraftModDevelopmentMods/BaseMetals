@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_hoe"
+        "recipes": [
+          "basemetals:bronze_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

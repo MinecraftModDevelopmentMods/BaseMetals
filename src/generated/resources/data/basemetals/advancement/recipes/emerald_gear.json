@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_gear"
+        "recipes": [
+          "basemetals:emerald_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

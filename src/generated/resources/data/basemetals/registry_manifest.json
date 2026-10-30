@@ -1,4 +1,1704 @@
 {
+  "block_defaults": {
+    "basemetals:adamantine": {
+      "level": "0"
+    },
+    "basemetals:adamantine_anvil": {
+      "damage": "0",
+      "facing": "north"
+    },
+    "basemetals:adamantine_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:adamantine_block": {},
+    "basemetals:adamantine_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:adamantine_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:adamantine_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:adamantine_ore": {},
+    "basemetals:adamantine_plate": {
+      "facing": "north"
+    },
+    "basemetals:adamantine_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:adamantine_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:adamantine_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:adamantine_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:adamantine_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:antimony": {
+      "level": "0"
+    },
+    "basemetals:antimony_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:antimony_block": {},
+    "basemetals:antimony_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:antimony_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:antimony_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:antimony_ore": {},
+    "basemetals:antimony_plate": {
+      "facing": "north"
+    },
+    "basemetals:antimony_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:antimony_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:antimony_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:antimony_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:antimony_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:aquarium": {
+      "level": "0"
+    },
+    "basemetals:aquarium_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:aquarium_block": {},
+    "basemetals:aquarium_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:aquarium_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:aquarium_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:aquarium_plate": {
+      "facing": "north"
+    },
+    "basemetals:aquarium_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:aquarium_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:aquarium_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:aquarium_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:aquarium_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:bismuth": {
+      "level": "0"
+    },
+    "basemetals:bismuth_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:bismuth_block": {},
+    "basemetals:bismuth_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:bismuth_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:bismuth_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:bismuth_ore": {},
+    "basemetals:bismuth_plate": {
+      "facing": "north"
+    },
+    "basemetals:bismuth_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:bismuth_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:bismuth_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:bismuth_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:bismuth_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:brass": {
+      "level": "0"
+    },
+    "basemetals:brass_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:brass_block": {},
+    "basemetals:brass_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:brass_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:brass_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:brass_plate": {
+      "facing": "north"
+    },
+    "basemetals:brass_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:brass_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:brass_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:brass_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:brass_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:bronze": {
+      "level": "0"
+    },
+    "basemetals:bronze_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:bronze_block": {},
+    "basemetals:bronze_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:bronze_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:bronze_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:bronze_plate": {
+      "facing": "north"
+    },
+    "basemetals:bronze_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:bronze_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:bronze_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:bronze_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:bronze_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:charcoal": {
+      "level": "0"
+    },
+    "basemetals:charcoal_block": {},
+    "basemetals:coal": {
+      "level": "0"
+    },
+    "basemetals:coldiron": {
+      "level": "0"
+    },
+    "basemetals:coldiron_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:coldiron_block": {},
+    "basemetals:coldiron_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:coldiron_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:coldiron_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:coldiron_ore": {},
+    "basemetals:coldiron_plate": {
+      "facing": "north"
+    },
+    "basemetals:coldiron_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:coldiron_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:coldiron_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:coldiron_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:coldiron_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:copper": {
+      "level": "0"
+    },
+    "basemetals:copper_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:copper_block": {},
+    "basemetals:copper_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:copper_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:copper_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:copper_ore": {},
+    "basemetals:copper_plate": {
+      "facing": "north"
+    },
+    "basemetals:copper_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:copper_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:copper_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:copper_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:copper_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:cupronickel": {
+      "level": "0"
+    },
+    "basemetals:cupronickel_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:cupronickel_block": {},
+    "basemetals:cupronickel_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:cupronickel_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:cupronickel_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:cupronickel_plate": {
+      "facing": "north"
+    },
+    "basemetals:cupronickel_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:cupronickel_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:cupronickel_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:cupronickel_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:cupronickel_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:diamond": {
+      "level": "0"
+    },
+    "basemetals:diamond_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:diamond_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:diamond_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:diamond_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:diamond_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:diamond_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:diamond_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:diamond_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:diamond_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:double_adamantine_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_antimony_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_aquarium_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_bismuth_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_brass_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_bronze_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_coldiron_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_copper_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_cupronickel_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_diamond_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_electrum_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_emerald_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_gold_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_invar_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_iron_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_lead_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_mithril_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_nickel_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_obsidian_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_pewter_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_platinum_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_silver_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_starsteel_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_steel_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_tin_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:double_zinc_slab": {
+      "type": "double",
+      "waterlogged": "false"
+    },
+    "basemetals:electrum": {
+      "level": "0"
+    },
+    "basemetals:electrum_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:electrum_block": {},
+    "basemetals:electrum_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:electrum_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:electrum_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:electrum_plate": {
+      "facing": "north"
+    },
+    "basemetals:electrum_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:electrum_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:electrum_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:electrum_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:electrum_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:emerald": {
+      "level": "0"
+    },
+    "basemetals:emerald_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:emerald_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:emerald_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:emerald_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:emerald_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:emerald_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:emerald_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:emerald_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:emerald_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:ender": {
+      "level": "0"
+    },
+    "basemetals:gold": {
+      "level": "0"
+    },
+    "basemetals:gold_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:gold_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:gold_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:gold_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:gold_plate": {
+      "facing": "north"
+    },
+    "basemetals:gold_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:gold_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:gold_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:gold_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:human_detector": {
+      "powered": "false"
+    },
+    "basemetals:invar": {
+      "level": "0"
+    },
+    "basemetals:invar_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:invar_block": {},
+    "basemetals:invar_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:invar_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:invar_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:invar_plate": {
+      "facing": "north"
+    },
+    "basemetals:invar_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:invar_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:invar_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:invar_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:invar_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:iron": {
+      "level": "0"
+    },
+    "basemetals:iron_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:iron_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:iron_plate": {
+      "facing": "north"
+    },
+    "basemetals:iron_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:iron_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:iron_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:lapis": {
+      "level": "0"
+    },
+    "basemetals:lead": {
+      "level": "0"
+    },
+    "basemetals:lead_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:lead_block": {},
+    "basemetals:lead_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:lead_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:lead_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:lead_ore": {},
+    "basemetals:lead_plate": {
+      "facing": "north"
+    },
+    "basemetals:lead_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:lead_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:lead_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:lead_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:lead_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:mercury": {
+      "level": "0"
+    },
+    "basemetals:mercury_ore": {},
+    "basemetals:mithril": {
+      "level": "0"
+    },
+    "basemetals:mithril_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:mithril_block": {},
+    "basemetals:mithril_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:mithril_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:mithril_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:mithril_plate": {
+      "facing": "north"
+    },
+    "basemetals:mithril_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:mithril_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:mithril_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:mithril_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:mithril_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:nickel": {
+      "level": "0"
+    },
+    "basemetals:nickel_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:nickel_block": {},
+    "basemetals:nickel_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:nickel_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:nickel_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:nickel_ore": {},
+    "basemetals:nickel_plate": {
+      "facing": "north"
+    },
+    "basemetals:nickel_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:nickel_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:nickel_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:nickel_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:nickel_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:obsidian": {
+      "level": "0"
+    },
+    "basemetals:obsidian_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:obsidian_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:obsidian_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:obsidian_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:obsidian_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:obsidian_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:obsidian_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:obsidian_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:obsidian_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:pewter": {
+      "level": "0"
+    },
+    "basemetals:pewter_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:pewter_block": {},
+    "basemetals:pewter_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:pewter_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:pewter_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:pewter_plate": {
+      "facing": "north"
+    },
+    "basemetals:pewter_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:pewter_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:pewter_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:pewter_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:pewter_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:platinum": {
+      "level": "0"
+    },
+    "basemetals:platinum_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:platinum_block": {},
+    "basemetals:platinum_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:platinum_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:platinum_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:platinum_ore": {},
+    "basemetals:platinum_plate": {
+      "facing": "north"
+    },
+    "basemetals:platinum_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:platinum_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:platinum_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:platinum_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:platinum_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:prismarine": {
+      "level": "0"
+    },
+    "basemetals:quartz": {
+      "level": "0"
+    },
+    "basemetals:quartz_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:quartz_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:quartz_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:quartz_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:quartz_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:quartz_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:quartz_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:redstone": {
+      "level": "0"
+    },
+    "basemetals:silver": {
+      "level": "0"
+    },
+    "basemetals:silver_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:silver_block": {},
+    "basemetals:silver_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:silver_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:silver_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:silver_ore": {},
+    "basemetals:silver_plate": {
+      "facing": "north"
+    },
+    "basemetals:silver_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:silver_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:silver_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:silver_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:silver_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:starsteel": {
+      "level": "0"
+    },
+    "basemetals:starsteel_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:starsteel_block": {},
+    "basemetals:starsteel_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:starsteel_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:starsteel_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:starsteel_ore": {},
+    "basemetals:starsteel_plate": {
+      "facing": "north"
+    },
+    "basemetals:starsteel_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:starsteel_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:starsteel_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:starsteel_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:starsteel_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:steel": {
+      "level": "0"
+    },
+    "basemetals:steel_anvil": {
+      "damage": "0",
+      "facing": "north"
+    },
+    "basemetals:steel_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:steel_block": {},
+    "basemetals:steel_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:steel_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:steel_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:steel_plate": {
+      "facing": "north"
+    },
+    "basemetals:steel_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:steel_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:steel_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:steel_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:steel_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:stone": {
+      "level": "0"
+    },
+    "basemetals:stone_anvil": {
+      "damage": "0",
+      "facing": "north"
+    },
+    "basemetals:tin": {
+      "level": "0"
+    },
+    "basemetals:tin_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:tin_block": {},
+    "basemetals:tin_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:tin_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:tin_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:tin_ore": {},
+    "basemetals:tin_plate": {
+      "facing": "north"
+    },
+    "basemetals:tin_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:tin_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:tin_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:tin_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:tin_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    },
+    "basemetals:wood": {
+      "level": "0"
+    },
+    "basemetals:zinc": {
+      "level": "0"
+    },
+    "basemetals:zinc_bars": {
+      "east": "false",
+      "north": "false",
+      "south": "false",
+      "waterlogged": "false",
+      "west": "false"
+    },
+    "basemetals:zinc_block": {},
+    "basemetals:zinc_button": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:zinc_door": {
+      "facing": "north",
+      "half": "lower",
+      "hinge": "left",
+      "open": "false",
+      "powered": "false"
+    },
+    "basemetals:zinc_lever": {
+      "face": "wall",
+      "facing": "north",
+      "powered": "false"
+    },
+    "basemetals:zinc_ore": {},
+    "basemetals:zinc_plate": {
+      "facing": "north"
+    },
+    "basemetals:zinc_pressure_plate": {
+      "powered": "false"
+    },
+    "basemetals:zinc_slab": {
+      "type": "bottom",
+      "waterlogged": "false"
+    },
+    "basemetals:zinc_stairs": {
+      "facing": "north",
+      "half": "bottom",
+      "shape": "straight",
+      "waterlogged": "false"
+    },
+    "basemetals:zinc_trapdoor": {
+      "facing": "north",
+      "half": "bottom",
+      "open": "false",
+      "powered": "false",
+      "waterlogged": "false"
+    },
+    "basemetals:zinc_wall": {
+      "east": "none",
+      "north": "none",
+      "south": "none",
+      "up": "true",
+      "waterlogged": "false",
+      "west": "none"
+    }
+  },
   "blocks": [
     "basemetals:adamantine_block",
     "basemetals:adamantine_plate",
@@ -1735,5 +3435,5 @@
     "basemetals:wood",
     "basemetals:stone"
   ],
-  "source": "Base Metals 26.2 catalogue"
+  "source": "Base Metals 26.3 catalogue"
 }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_helmet"
+        "recipes": [
+          "basemetals:bismuth_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

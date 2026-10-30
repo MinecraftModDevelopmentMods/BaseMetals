@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_gear"
+        "recipes": [
+          "basemetals:lead_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_bow"
+        "recipes": [
+          "basemetals:nickel_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

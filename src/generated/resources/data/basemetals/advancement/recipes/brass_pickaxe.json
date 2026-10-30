@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_pickaxe"
+        "recipes": [
+          "basemetals:brass_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

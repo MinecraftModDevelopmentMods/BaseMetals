@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_hoe"
+        "recipes": [
+          "basemetals:tin_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_smallpowder"
+        "recipes": [
+          "basemetals:obsidian_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_trapdoor"
+        "recipes": [
+          "basemetals:copper_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_door"
+        "recipes": [
+          "basemetals:lead_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

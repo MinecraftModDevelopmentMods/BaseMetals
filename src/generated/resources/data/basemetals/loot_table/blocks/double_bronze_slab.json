@@ -2,18 +2,16 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "count": 2,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "count": 2
             }
           ],
           "name": "basemetals:bronze_slab"

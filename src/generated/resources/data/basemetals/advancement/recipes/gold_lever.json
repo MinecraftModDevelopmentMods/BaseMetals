@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_lever"
+        "recipes": [
+          "basemetals:gold_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

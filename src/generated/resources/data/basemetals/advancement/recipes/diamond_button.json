@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_button"
+        "recipes": [
+          "basemetals:diamond_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

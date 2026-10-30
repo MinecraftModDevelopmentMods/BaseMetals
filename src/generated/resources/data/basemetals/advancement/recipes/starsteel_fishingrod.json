@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_fishingrod"
+        "recipes": [
+          "basemetals:starsteel_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_shears"
+        "recipes": [
+          "basemetals:steel_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

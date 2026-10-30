@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:rail"
+        "recipes": [
+          "basemetals:rail"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

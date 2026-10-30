@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_stairs"
+        "recipes": [
+          "basemetals:zinc_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

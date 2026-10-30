@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:minecart"
+        "recipes": [
+          "basemetals:minecart"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

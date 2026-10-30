@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_ingot_from_nuggets"
+        "recipes": [
+          "basemetals:pewter_ingot_from_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

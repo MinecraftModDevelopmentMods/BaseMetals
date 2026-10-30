@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_boots"
+        "recipes": [
+          "basemetals:tin_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

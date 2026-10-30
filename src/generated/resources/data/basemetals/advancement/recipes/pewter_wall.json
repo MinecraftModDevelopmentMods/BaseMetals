@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_wall"
+        "recipes": [
+          "basemetals:pewter_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

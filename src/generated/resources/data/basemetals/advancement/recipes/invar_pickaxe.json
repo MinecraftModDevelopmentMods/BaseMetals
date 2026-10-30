@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_pickaxe"
+        "recipes": [
+          "basemetals:invar_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

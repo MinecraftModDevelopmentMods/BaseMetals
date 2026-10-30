@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_crackhammer"
+        "recipes": [
+          "basemetals:nickel_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

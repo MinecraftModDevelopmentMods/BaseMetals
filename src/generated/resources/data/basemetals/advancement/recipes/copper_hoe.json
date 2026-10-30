@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_hoe"
+        "recipes": [
+          "basemetals:copper_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

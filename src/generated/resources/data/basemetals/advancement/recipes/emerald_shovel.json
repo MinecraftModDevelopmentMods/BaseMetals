@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_shovel"
+        "recipes": [
+          "basemetals:emerald_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

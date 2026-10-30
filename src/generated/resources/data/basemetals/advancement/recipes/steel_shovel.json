@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_shovel"
+        "recipes": [
+          "basemetals:steel_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

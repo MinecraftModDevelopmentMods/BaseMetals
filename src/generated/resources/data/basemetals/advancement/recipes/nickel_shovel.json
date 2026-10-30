@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_shovel"
+        "recipes": [
+          "basemetals:nickel_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

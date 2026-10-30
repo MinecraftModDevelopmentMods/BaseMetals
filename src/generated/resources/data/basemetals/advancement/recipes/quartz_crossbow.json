@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_crossbow"
+        "recipes": [
+          "basemetals:quartz_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

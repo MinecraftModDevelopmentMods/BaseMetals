@@ -25,7 +25,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:stone_crackhammer"
+        "recipes": [
+          "basemetals:stone_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

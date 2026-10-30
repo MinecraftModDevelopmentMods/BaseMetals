@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_slab"
+        "recipes": [
+          "basemetals:aquarium_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

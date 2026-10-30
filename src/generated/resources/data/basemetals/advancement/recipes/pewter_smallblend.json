@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_smallblend"
+        "recipes": [
+          "basemetals:pewter_smallblend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

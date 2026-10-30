@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_axe"
+        "recipes": [
+          "basemetals:quartz_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

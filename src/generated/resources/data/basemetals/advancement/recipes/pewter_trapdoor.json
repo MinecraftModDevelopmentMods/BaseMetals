@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_trapdoor"
+        "recipes": [
+          "basemetals:pewter_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

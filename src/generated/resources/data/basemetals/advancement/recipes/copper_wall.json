@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_wall"
+        "recipes": [
+          "basemetals:copper_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

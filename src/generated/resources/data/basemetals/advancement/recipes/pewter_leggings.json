@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_leggings"
+        "recipes": [
+          "basemetals:pewter_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

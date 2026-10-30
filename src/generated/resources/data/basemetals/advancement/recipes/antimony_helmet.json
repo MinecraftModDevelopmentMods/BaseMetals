@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_helmet"
+        "recipes": [
+          "basemetals:antimony_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

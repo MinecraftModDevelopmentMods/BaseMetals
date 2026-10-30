@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_hoe"
+        "recipes": [
+          "basemetals:starsteel_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

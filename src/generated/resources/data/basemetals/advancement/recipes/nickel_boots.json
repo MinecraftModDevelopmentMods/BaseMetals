@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_boots"
+        "recipes": [
+          "basemetals:nickel_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

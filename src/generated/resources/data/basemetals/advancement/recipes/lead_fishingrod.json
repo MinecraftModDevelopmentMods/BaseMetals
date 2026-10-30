@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_fishingrod"
+        "recipes": [
+          "basemetals:lead_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

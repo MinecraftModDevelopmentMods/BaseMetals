@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_gear"
+        "recipes": [
+          "basemetals:copper_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

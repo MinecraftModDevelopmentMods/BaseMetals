@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_rod"
+        "recipes": [
+          "basemetals:diamond_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

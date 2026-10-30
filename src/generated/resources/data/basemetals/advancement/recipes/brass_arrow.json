@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_arrow"
+        "recipes": [
+          "basemetals:brass_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }
