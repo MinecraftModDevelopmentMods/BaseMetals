@@ -23,11 +23,27 @@ jobs:
     timeout-minutes: 90
     env:
       LIBGL_ALWAYS_SOFTWARE: '1'
+      GALLIUM_DRIVER: llvmpipe
       SDL_VIDEO_DRIVER: x11
 
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Prepare Mesa software rendering
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libgl1-mesa-dri libglx-mesa0 mesa-utils
+          xvfb-run -a -s '-screen 0 1280x1024x24 +extension GLX +render -noreset' glxinfo -B
+
+      - name: Check the virtual display supports Minecraft's OpenGL context
+        run: |
+          native="$RUNNER_TEMP/basemetals-sdl-linux.jar"
+          curl --fail --location --retry 3 --output "$native" \
+            https://libraries.minecraft.net/org/lwjgl/lwjgl-sdl/3.4.3/lwjgl-sdl-3.4.3-natives-linux.jar
+          echo "E1880683A4AF33299E9A1B8D7EC1799BED8FB709064EA08DCC2A15CD1101C0B3  $native" | sha256sum --check --strict
+          timeout 30s xvfb-run -a -s '-screen 0 1280x1024x24 +extension GLX +render -noreset' \
+            python3 tools/validation/check_sdl_graphics.py "$native"
 
       - name: Install pinned Java 25 runtime and toolchain
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
@@ -112,14 +128,11 @@ jobs:
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
           --no-daemon --stacktrace
 
-      - name: Check the virtual display supports Minecraft's OpenGL context
-        run: >-
-          xvfb-run -a python3 tools/validation/check_sdl_graphics.py
-          "${{ steps.forge-runtimes.outputs.client_runtime }}/libraries/org/lwjgl/lwjgl-sdl/3.4.3/lwjgl-sdl-3.4.3-natives-linux.jar"
-
       - name: Run exact packaged integrated-world client smoke
         run: >-
-          timeout --kill-after=30s 15m xvfb-run -a ./gradlew packagedClientStartupSmoke
+          timeout --kill-after=30s 15m xvfb-run -a
+          -s '-screen 0 1280x1024x24 +extension GLX +render -noreset'
+          ./gradlew packagedClientStartupSmoke
           -PvirtualDisplaySmoke=true
           -PpackagedForgeClientRuntime=${{ steps.forge-runtimes.outputs.client_runtime }}
           -PorespawnVerificationRepository=${{ steps.orespawn.outputs.repository }}
@@ -127,7 +140,9 @@ jobs:
 
       - name: Run bounded development integrated-world client smoke
         run: >-
-          timeout --kill-after=30s 15m xvfb-run -a ./gradlew runClient
+          timeout --kill-after=30s 15m xvfb-run -a
+          -s '-screen 0 1280x1024x24 +extension GLX +render -noreset'
+          ./gradlew runClient
           -PvirtualDisplaySmoke=true
           -PintegratedWorldSmoke=true
           -PintegratedWorldSmokeName=basemetals-ci-${{ github.run_id }}
