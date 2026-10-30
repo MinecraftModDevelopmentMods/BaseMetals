@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_shovel"
+        "recipes": [
+          "basemetals:mithril_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

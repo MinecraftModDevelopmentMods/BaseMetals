@@ -13,6 +13,39 @@ import nbtlib
 import compare_current_world as content
 
 
+class NativeBlockStateTest(unittest.TestCase):
+    def setUp(self):
+        self.defaults = {'basemetals:steel_wall': {
+            'north': 'none', 'south': 'none', 'east': 'none', 'west': 'none',
+            'up': 'true', 'waterlogged': 'false',
+        }}
+
+    def canonical(self, value):
+        return content.canonical_block_state(nbtlib.parse_nbt(value), self.defaults)
+
+    def test_old_and_native_default_states_match(self):
+        old = '{Name:"basemetals:steel_wall",Properties:{north:"false",south:"false",east:"false",west:"false",up:"true",waterlogged:"false"}}'
+        native = '{id:"basemetals:steel_wall",properties:{north:"none",south:"none",east:"none",west:"none",up:"true",waterlogged:"false"}}'
+        self.assertEqual(self.canonical(old), self.canonical(native))
+        self.assertEqual(self.canonical(old), self.canonical('"basemetals:steel_wall"'))
+
+    def test_non_default_connections_are_not_lost(self):
+        old = '{Name:"basemetals:steel_wall",Properties:{north:"true",east:"tall"}}'
+        native = '{id:"basemetals:steel_wall",properties:{north:"low",east:"tall"}}'
+        self.assertEqual(self.canonical(old), self.canonical(native))
+        self.assertNotEqual(self.canonical(old), self.canonical('"basemetals:steel_wall"'))
+
+    def test_unknown_properties_are_not_discarded(self):
+        old = '{Name:"basemetals:steel_wall",Properties:{future_property:"keep_me"}}'
+        self.assertNotEqual(self.canonical(old), self.canonical('"basemetals:steel_wall"'))
+
+    def test_native_mixed_palette_wrappers(self):
+        self.assertEqual(self.canonical('"basemetals:steel_wall"'),
+                         self.canonical('{"":"basemetals:steel_wall"}'))
+        self.assertEqual(self.canonical('{id:"basemetals:steel_wall",properties:{east:"tall"}}'),
+                         self.canonical('{"":{id:"basemetals:steel_wall",properties:{east:"tall"}}}'))
+
+
 class SavedEntitiesTest(unittest.TestCase):
     def test_entity_regions_include_ammunition_and_equipment(self):
         for compression in (1, 2):

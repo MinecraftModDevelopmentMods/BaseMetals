@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_button"
+        "recipes": [
+          "basemetals:emerald_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

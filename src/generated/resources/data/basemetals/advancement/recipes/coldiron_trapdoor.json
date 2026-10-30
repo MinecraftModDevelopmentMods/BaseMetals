@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_trapdoor"
+        "recipes": [
+          "basemetals:coldiron_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

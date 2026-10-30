@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_block_ingot"
+        "recipes": [
+          "basemetals:invar_block_ingot"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

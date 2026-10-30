@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_bow"
+        "recipes": [
+          "basemetals:starsteel_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

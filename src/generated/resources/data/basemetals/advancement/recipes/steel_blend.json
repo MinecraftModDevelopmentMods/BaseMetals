@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_blend"
+        "recipes": [
+          "basemetals:steel_blend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

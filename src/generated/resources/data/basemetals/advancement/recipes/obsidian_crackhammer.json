@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_crackhammer"
+        "recipes": [
+          "basemetals:obsidian_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

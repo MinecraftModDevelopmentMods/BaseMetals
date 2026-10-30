@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.resources.Identifier;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -18,23 +19,23 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.CookingFuel;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.network.chat.Component;
 
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableInt;
+import net.minecraft.world.level.storage.loot.providers.number.floats.ResolvableFloat;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
@@ -49,16 +50,32 @@ public final class MaterialItems {
     public static final class Basic extends Item implements MaterialBacked {
         private final MaterialDefinition material;
         private final int burnTime;
+
         public Basic(MaterialDefinition material, int burnTime, Properties properties) {
-            super(properties);
+            super(withFuel(properties, burnTime));
             this.material = material;
             this.burnTime = burnTime;
         }
-        @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public int getBurnTime(ItemStack stack,
+
+        @Override
+        public MaterialDefinition baseMetalsMaterial() {
+            return material;
+        }
+
+        @Override
+        public int getBurnTime(ItemStack stack,
                 @Nullable net.minecraft.world.item.crafting.RecipeType<?> recipeType) {
             return burnTime;
         }
+    }
+
+    private static Item.Properties withFuel(Item.Properties properties, int burnTime) {
+        if (burnTime > 0) {
+            return properties.component(DataComponents.COOKING_FUEL, new CookingFuel(
+                    new ResolvableInt.Constant(burnTime), new ResolvableFloat.Constant(1.0F)));
+        }
+
+        return properties;
     }
 
     public static final class Pickaxe extends Item implements MaterialBacked {
@@ -72,40 +89,66 @@ public final class MaterialItems {
                 TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
     }
 
-    public static final class Axe extends AxeItem implements MaterialBacked {
+    public static final class Axe extends Item implements MaterialBacked {
         private final MaterialDefinition material;
+
         public Axe(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material).toolMaterial(), 4.0F + material.baseAttackDamage(),
-                    material.axeAttackSpeed(), properties);
+            super(properties.axe(new MaterialTier(material).toolMaterial(),
+                    4.0F + material.baseAttackDamage(), material.axeAttackSpeed()));
             this.material = material;
         }
-        @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
+
+        @Override
+        public MaterialDefinition baseMetalsMaterial() {
+            return material;
+        }
+
+        @Override
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+            addToolTooltip(material, tooltip);
+        }
     }
 
-    public static final class Shovel extends ShovelItem implements MaterialBacked {
+    public static final class Shovel extends Item implements MaterialBacked {
         private final MaterialDefinition material;
+
         public Shovel(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material).toolMaterial(), 1.5F, -3.0F, properties);
+            super(properties.shovel(new MaterialTier(material).toolMaterial(), 1.5F, -3.0F));
             this.material = material;
         }
-        @Override public MaterialDefinition baseMetalsMaterial() { return material; }
-        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
+
+        @Override
+        public MaterialDefinition baseMetalsMaterial() {
+            return material;
+        }
+
+        @Override
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+            addToolTooltip(material, tooltip);
+        }
     }
 
-    public static final class Hoe extends HoeItem implements MaterialBacked {
+    public static final class Hoe extends Item implements MaterialBacked {
         private final MaterialDefinition material;
+
         public Hoe(MaterialDefinition material, Properties properties) {
-            super(new MaterialTier(material).toolMaterial(), -material.baseAttackDamage(),
-                    material.baseAttackDamage() - 3.0F, properties);
+            super(properties.hoe(new MaterialTier(material).toolMaterial(),
+                    -material.baseAttackDamage(), material.baseAttackDamage() - 3.0F));
             this.material = material;
         }
-        @Override public MaterialDefinition baseMetalsMaterial() { return material; }
 
-        @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) { addToolTooltip(material, tooltip); }
+        @Override
+        public MaterialDefinition baseMetalsMaterial() {
+            return material;
+        }
+
+        @Override
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+                TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+            addToolTooltip(material, tooltip);
+        }
     }
 
     public static class Sword extends Item implements MaterialBacked {
@@ -154,11 +197,14 @@ public final class MaterialItems {
 
     public static final class BurnableBlock extends BlockItem {
         private final int burnTime;
+
         public BurnableBlock(net.minecraft.world.level.block.Block block, int burnTime, Properties properties) {
-            super(block, properties);
+            super(block, withFuel(properties, burnTime));
             this.burnTime = burnTime;
         }
-        @Override public int getBurnTime(ItemStack stack,
+
+        @Override
+        public int getBurnTime(ItemStack stack,
                 @Nullable net.minecraft.world.item.crafting.RecipeType<?> recipeType) {
             return burnTime;
         }

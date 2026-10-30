@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_blend"
+        "recipes": [
+          "basemetals:invar_blend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

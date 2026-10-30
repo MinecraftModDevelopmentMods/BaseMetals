@@ -27,7 +27,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coal_nugget"
+        "recipes": [
+          "basemetals:coal_nugget"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

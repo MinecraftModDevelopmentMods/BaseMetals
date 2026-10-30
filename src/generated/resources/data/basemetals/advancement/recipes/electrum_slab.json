@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_slab"
+        "recipes": [
+          "basemetals:electrum_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

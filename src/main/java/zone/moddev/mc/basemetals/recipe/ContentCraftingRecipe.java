@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
@@ -22,14 +23,23 @@ import zone.moddev.mc.basemetals.config.ContentPolicy;
 public final class ContentCraftingRecipe implements CraftingRecipe {
     public static final RecipeSerializer<ContentCraftingRecipe> SERIALIZER = Serializer.create();
     private final CraftingRecipe plain;
+    private final String resultItem;
 
     private ContentCraftingRecipe(CraftingRecipe plain) {
         this.plain = plain;
+        List<RecipeDisplay> displays = plain.display();
+
+        if (displays.size() != 1
+                || !(displays.getFirst().result() instanceof SlotDisplay.ItemStackSlotDisplay result)) {
+            throw new IllegalArgumentException("Content-mode recipes need a fixed crafting output");
+        }
+
+        // Recipe loading happens before item components are ready to make stacks.
+        this.resultItem = ForgeRegistries.ITEMS.getKey(result.stack().item().value()).toString();
     }
 
     private boolean allowed() {
-        ItemStack result = plain.assemble(CraftingInput.EMPTY);
-        return ContentPolicy.active().allows(ForgeRegistries.ITEMS.getKey(result.getItem()).toString());
+        return ContentPolicy.active().allows(resultItem);
     }
 
     private static ContentCraftingRecipe wrap(Recipe<?> recipe) {
@@ -86,11 +96,11 @@ public final class ContentCraftingRecipe implements CraftingRecipe {
     }
 
     private static final class Serializer {
-        private static final MapCodec<ContentCraftingRecipe> CODEC = Recipe.CODEC.fieldOf("recipe")
+        private static final MapCodec<ContentCraftingRecipe> CODEC = Recipe.DIRECT_CODEC.fieldOf("recipe")
                 .xmap(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
         // Preserve empty pattern slots and tag names instead of flattening the ingredients.
         private static final StreamCodec<RegistryFriendlyByteBuf, ContentCraftingRecipe> STREAM_CODEC =
-                ByteBufCodecs.fromCodecWithRegistries(Recipe.CODEC)
+                ByteBufCodecs.fromCodecWithRegistries(Recipe.DIRECT_CODEC)
                         .map(ContentCraftingRecipe::wrap, recipe -> recipe.plain);
 
         private static RecipeSerializer<ContentCraftingRecipe> create() {

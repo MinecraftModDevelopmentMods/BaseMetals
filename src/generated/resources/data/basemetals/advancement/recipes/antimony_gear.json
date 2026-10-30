@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_gear"
+        "recipes": [
+          "basemetals:antimony_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

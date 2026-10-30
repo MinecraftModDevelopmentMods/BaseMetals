@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_bow"
+        "recipes": [
+          "basemetals:silver_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

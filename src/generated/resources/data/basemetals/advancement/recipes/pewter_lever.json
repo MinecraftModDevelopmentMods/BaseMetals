@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_lever"
+        "recipes": [
+          "basemetals:pewter_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

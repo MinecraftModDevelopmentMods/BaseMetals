@@ -43,7 +43,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_blend"
+        "recipes": [
+          "basemetals:aquarium_blend"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

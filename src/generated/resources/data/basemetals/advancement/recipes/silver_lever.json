@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_lever"
+        "recipes": [
+          "basemetals:silver_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

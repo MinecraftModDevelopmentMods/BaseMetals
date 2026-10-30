@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:iron_slab"
+        "recipes": [
+          "basemetals:iron_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

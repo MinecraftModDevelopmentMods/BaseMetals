@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_nugget"
+        "recipes": [
+          "basemetals:quartz_nugget"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

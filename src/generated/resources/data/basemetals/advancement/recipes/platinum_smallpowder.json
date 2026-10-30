@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_smallpowder"
+        "recipes": [
+          "basemetals:platinum_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

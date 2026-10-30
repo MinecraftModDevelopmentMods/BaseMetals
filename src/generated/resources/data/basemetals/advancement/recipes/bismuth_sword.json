@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_sword"
+        "recipes": [
+          "basemetals:bismuth_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

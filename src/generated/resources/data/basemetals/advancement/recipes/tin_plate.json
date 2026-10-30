@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_plate"
+        "recipes": [
+          "basemetals:tin_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

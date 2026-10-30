@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_trapdoor"
+        "recipes": [
+          "basemetals:starsteel_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

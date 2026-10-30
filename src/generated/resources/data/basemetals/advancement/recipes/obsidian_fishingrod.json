@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_fishingrod"
+        "recipes": [
+          "basemetals:obsidian_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

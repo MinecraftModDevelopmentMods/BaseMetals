@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_fishingrod"
+        "recipes": [
+          "basemetals:brass_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

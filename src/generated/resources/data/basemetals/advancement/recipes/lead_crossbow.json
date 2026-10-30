@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_crossbow"
+        "recipes": [
+          "basemetals:lead_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

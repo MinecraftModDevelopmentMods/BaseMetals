@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_fishingrod"
+        "recipes": [
+          "basemetals:silver_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

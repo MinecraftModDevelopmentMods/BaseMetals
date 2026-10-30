@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_boots"
+        "recipes": [
+          "basemetals:copper_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_stairs"
+        "recipes": [
+          "basemetals:diamond_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

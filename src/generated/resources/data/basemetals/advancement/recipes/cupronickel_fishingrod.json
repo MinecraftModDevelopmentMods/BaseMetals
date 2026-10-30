@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_fishingrod"
+        "recipes": [
+          "basemetals:cupronickel_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

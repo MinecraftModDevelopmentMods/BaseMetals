@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mercury_powder_from_small"
+        "recipes": [
+          "basemetals:mercury_powder_from_small"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

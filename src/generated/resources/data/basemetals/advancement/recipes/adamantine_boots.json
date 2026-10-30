@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_boots"
+        "recipes": [
+          "basemetals:adamantine_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

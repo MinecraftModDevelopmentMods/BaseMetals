@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_smallpowder"
+        "recipes": [
+          "basemetals:tin_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

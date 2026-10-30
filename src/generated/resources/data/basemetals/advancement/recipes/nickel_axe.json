@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_axe"
+        "recipes": [
+          "basemetals:nickel_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

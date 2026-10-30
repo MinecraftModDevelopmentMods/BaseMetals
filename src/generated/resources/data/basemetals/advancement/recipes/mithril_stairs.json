@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_stairs"
+        "recipes": [
+          "basemetals:mithril_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

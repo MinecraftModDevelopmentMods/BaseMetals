@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_shears"
+        "recipes": [
+          "basemetals:aquarium_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

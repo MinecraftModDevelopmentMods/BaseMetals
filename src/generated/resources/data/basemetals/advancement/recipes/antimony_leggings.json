@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_leggings"
+        "recipes": [
+          "basemetals:antimony_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

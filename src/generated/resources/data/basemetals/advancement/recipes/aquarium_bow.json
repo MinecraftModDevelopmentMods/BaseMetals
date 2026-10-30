@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_bow"
+        "recipes": [
+          "basemetals:aquarium_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

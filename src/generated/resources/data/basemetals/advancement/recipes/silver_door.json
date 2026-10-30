@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_door"
+        "recipes": [
+          "basemetals:silver_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

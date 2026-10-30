@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_wall"
+        "recipes": [
+          "basemetals:obsidian_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

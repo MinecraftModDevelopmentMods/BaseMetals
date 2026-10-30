@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_smallpowder"
+        "recipes": [
+          "basemetals:brass_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

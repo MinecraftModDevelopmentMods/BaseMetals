@@ -1,7 +1,7 @@
 {
-  "given_item_modifiers": [
+  "given_item_modifier": [
     {
-      "function": "minecraft:enchant_with_levels",
+      "type": "minecraft:enchant_with_levels",
       "include_additional_cost_component": true,
       "levels": {
         "type": "minecraft:uniform",
@@ -17,7 +17,7 @@
   },
   "max_uses": 3,
   "merchant_predicate": {
-    "condition": "basemetals:trade_enabled",
+    "type": "basemetals:trade_enabled",
     "item": "basemetals:silver_boots"
   },
   "reputation_discount": 0.2,

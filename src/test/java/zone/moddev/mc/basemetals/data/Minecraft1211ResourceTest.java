@@ -14,15 +14,15 @@ import org.junit.jupiter.api.Test;
 
 class Minecraft1211ResourceTest {
     @Test
-    void resourceAndDataPacksUseThe262Formats() throws Exception {
+    void resourceAndDataPacksUseThe263Formats() throws Exception {
         var pack = read("src/main/resources/pack.mcmeta").getAsJsonObject("pack");
-        assertEquals("[107,1]", pack.get("min_format").toString());
-        assertEquals("[107,1]", pack.get("max_format").toString());
+        assertEquals("[121,0]", pack.get("min_format").toString());
+        assertEquals("[121,0]", pack.get("max_format").toString());
         net.minecraft.SharedConstants.tryDetectVersion();
         var resources = net.minecraft.SharedConstants.getCurrentVersion()
                 .packVersion(net.minecraft.server.packs.PackType.CLIENT_RESOURCES);
-        assertEquals(88, resources.major());
-        assertEquals(0, resources.minor());
+        assertEquals(97, resources.major());
+        assertEquals(1, resources.minor());
     }
 
     @Test
@@ -46,12 +46,51 @@ class Minecraft1211ResourceTest {
         var loot = read("src/generated/resources/data/basemetals/loot_table/blocks/adamantine_ore.json");
         var silk = loot.getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries").get(0)
                 .getAsJsonObject().getAsJsonArray("children").get(0).getAsJsonObject()
-                .getAsJsonArray("conditions").get(0).getAsJsonObject().getAsJsonObject("predicate")
+                .getAsJsonObject("condition").getAsJsonObject("predicate")
                 .getAsJsonObject("predicates").getAsJsonArray("minecraft:enchantments").get(0).getAsJsonObject();
 
         assertEquals("minecraft:silk_touch", silk.get("enchantments").getAsString());
         assertFalse(silk.has("enchantment"));
         assertFalse(silk.has("predicates"));
+    }
+
+    @Test
+    void lootAndTradeDispatchKeysUseTheNativeTypeField() throws Exception {
+        for (String directory : new String[] {"loot_table", "loot_modifiers", "villager_trade"}) {
+            Path root = Path.of("src/generated/resources/data/basemetals", directory);
+
+            try (var paths = Files.walk(root)) {
+                for (Path path : paths.filter(file -> file.toString().endsWith(".json")).toList()) {
+                    String json = Files.readString(path);
+                    assertFalse(json.contains("\"condition\": \""), path.toString());
+                    assertFalse(json.contains("\"function\":"), path.toString());
+                    assertFalse(json.contains("\"functions\":"), path.toString());
+                    if (directory.equals("loot_table")) {
+                        assertFalse(json.contains("\"conditions\":"), path.toString());
+                    }
+                }
+            }
+        }
+
+        var predicate = read("src/generated/resources/data/basemetals/villager_trade/weaponsmith/steel_sword.json")
+                .getAsJsonObject("merchant_predicate");
+        assertEquals("basemetals:trade_enabled", predicate.get("type").getAsString());
+        var enchanted = read("src/generated/resources/data/basemetals/villager_trade/armorer/brass_helmet_enchanted.json");
+        assertTrue(enchanted.has("given_item_modifier"));
+        assertFalse(enchanted.has("given_item_modifiers"));
+
+        var door = read("src/generated/resources/data/basemetals/loot_table/blocks/steel_door.json")
+                .getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonObject("condition")
+                .getAsJsonArray("terms").get(1).getAsJsonObject();
+        assertEquals("minecraft:match_block", door.get("type").getAsString());
+        assertEquals("basemetals:steel_door", door.get("blocks").getAsString());
+        assertEquals("lower", door.getAsJsonObject("state").get("half").getAsString());
+
+        var slab = read("src/generated/resources/data/basemetals/loot_table/blocks/steel_slab.json")
+                .getAsJsonArray("pools").get(0).getAsJsonObject().getAsJsonArray("entries").get(0)
+                .getAsJsonObject().getAsJsonArray("modifier").get(0).getAsJsonObject()
+                .getAsJsonObject("condition");
+        assertEquals("double", slab.getAsJsonObject("state").get("type").getAsString());
     }
 
     @Test

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_nuggets"
+        "recipes": [
+          "basemetals:platinum_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

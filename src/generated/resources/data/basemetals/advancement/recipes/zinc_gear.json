@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_gear"
+        "recipes": [
+          "basemetals:zinc_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

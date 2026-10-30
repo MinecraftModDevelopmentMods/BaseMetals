@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_stairs"
+        "recipes": [
+          "basemetals:invar_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

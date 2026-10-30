@@ -27,12 +27,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.ShovelItem;
 
 /** Small catalogue-driven generator for server data and compatibility manifests. */
 final class GeneratedData implements DataProvider {
@@ -278,12 +275,12 @@ final class GeneratedData implements DataProvider {
             String name = "basemetals:" + id;
 
             if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Sword) addAggregate(families, "swords", name);
-            if (item instanceof AxeItem) addAggregate(families, "axes", name);
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Axe) addAggregate(families, "axes", name);
             if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Pickaxe) addAggregate(families, "pickaxes", name);
-            if (item instanceof ShovelItem) addAggregate(families, "shovels", name);
-            if (item instanceof HoeItem) addAggregate(families, "hoes", name);
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Shovel) addAggregate(families, "shovels", name);
+            if (item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Hoe) addAggregate(families, "hoes", name);
 
-            if (item instanceof zone.moddev.mc.basemetals.content.CrackhammerItem || item instanceof zone.moddev.mc.basemetals.content.ScytheItem || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Pickaxe || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem) {
+            if (item instanceof zone.moddev.mc.basemetals.content.CrackhammerItem || item instanceof zone.moddev.mc.basemetals.content.ScytheItem || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Pickaxe || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Axe || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Shovel || item instanceof zone.moddev.mc.basemetals.content.MaterialItems.Hoe) {
                 addAggregate(families, "enchantable/mining", name);
                 addAggregate(families, "enchantable/mining_loot", name);
             } else if (item instanceof ShearsItem) {
@@ -1583,6 +1580,43 @@ final class GeneratedData implements DataProvider {
         }
         if (!element.isJsonObject()) return;
         JsonObject object = element.getAsJsonObject();
+
+        for (String dispatch : List.of("function", "condition")) {
+            if (object.has(dispatch) && object.get(dispatch).isJsonPrimitive()) {
+                object.add("type", object.remove(dispatch));
+            }
+        }
+
+        if (object.has("type") && "minecraft:block_state_property".equals(object.get("type").getAsString())) {
+            object.addProperty("type", "minecraft:match_block");
+            object.add("blocks", object.remove("block"));
+            object.add("state", object.remove("properties"));
+        }
+
+        if (object.has("functions")) {
+            object.add("modifier", object.remove("functions"));
+        }
+
+        if (object.has("conditions")) {
+            JsonArray conditions = object.remove("conditions").getAsJsonArray();
+
+            if (conditions.size() == 1) {
+                object.add("condition", conditions.get(0));
+            } else if (!conditions.isEmpty()) {
+                object.add("condition", object("type", "minecraft:all_of", "terms", conditions));
+            }
+        }
+
+        for (String field : List.of("count", "rolls", "bonus_rolls")) {
+            if (object.has(field) && object.get(field).isJsonObject()) {
+                JsonObject number = object.getAsJsonObject(field);
+
+                if (!number.has("type") && number.has("min") && number.has("max")) {
+                    number.addProperty("type", "minecraft:uniform");
+                }
+            }
+        }
+
         new ArrayList<>(object.keySet()).stream()
                 .filter(key -> key.startsWith("__comment"))
                 .forEach(object::remove);
@@ -1593,7 +1627,7 @@ final class GeneratedData implements DataProvider {
                     && entry.getValue().getAsJsonPrimitive().isString()
                     && !entry.getValue().getAsString().contains(":")) {
                 entry.setValue(new com.google.gson.JsonPrimitive("minecraft:" + entry.getValue().getAsString()));
-            } else {
+            } else if (!entry.getKey().equals("state") && !entry.getKey().equals("properties")) {
                 modernizeLootJson(entry.getValue());
             }
         }
@@ -1621,8 +1655,21 @@ final class GeneratedData implements DataProvider {
 
         JsonObject root = new JsonObject();
         root.addProperty("format", 1);
-        root.addProperty("source", "Base Metals 26.2 catalogue");
+        root.addProperty("source", "Base Metals 26.3 catalogue");
         root.add("blocks", array(blocks));
+        JsonObject blockDefaults = new JsonObject();
+
+        ModContent.blocksById().forEach((id, block) -> {
+            var state = block.get().defaultBlockState();
+            JsonObject properties = new JsonObject();
+
+            state.getProperties().stream().sorted(java.util.Comparator.comparing(
+                    net.minecraft.world.level.block.state.properties.Property::getName))
+                    .forEach(property -> properties.addProperty(property.getName(), propertyValue(state, property)));
+            blockDefaults.add("basemetals:" + id, properties);
+        });
+
+        root.add("block_defaults", blockDefaults);
         root.add("items", array(items));
         root.add("fluids", array(ModContent.fluids().keySet().stream().flatMap(id ->
                 java.util.stream.Stream.of("basemetals:" + id, "basemetals:flowing_" + id)).toList()));
@@ -1640,6 +1687,12 @@ final class GeneratedData implements DataProvider {
                 "basemetals:crushing", "basemetals:legacy_smelting", "basemetals:plate_repair", "basemetals:content_crafting"));
         root.add("new_loot_modifier_serializers", array("basemetals:add_table"));
         save(cache, root, "data/basemetals/registry_manifest.json");
+    }
+
+    private static <T extends Comparable<T>> String propertyValue(
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.world.level.block.state.properties.Property<T> property) {
+        return property.getName(state.getValue(property));
     }
 
     private static List<String> difference(List<String> current, List<String> baseline, List<String> exclusions) {
@@ -1845,6 +1898,10 @@ final class GeneratedData implements DataProvider {
             value = object("type", "basemetals:content_crafting", "recipe", value);
         }
         if (relative.contains("/recipe/")) normalizeRecipeResults(value);
+        if (relative.contains("/loot_table/")) modernizeLootJson(value);
+        if (relative.contains("/loot_modifiers/") && value.has("conditions")) {
+            value.getAsJsonArray("conditions").forEach(GeneratedData::modernizeLootJson);
+        }
         if (relative.contains("/advancement/") || relative.contains("/loot_table/")) normalizePredicates(value);
         JsonObject previous = scheduledResources.putIfAbsent(relative, value.deepCopy());
         if (previous != null) {
@@ -2009,7 +2066,7 @@ final class GeneratedData implements DataProvider {
                         "minecraft:" + method);
                 JsonObject criteria = object("has_raw", inventoryCriterion(ingredient("#forge:raw_materials/" + material)),
                         "has_recipe", object("trigger", "minecraft:recipe_unlocked",
-                                "conditions", object("recipe", "basemetals:" + id)));
+                                "conditions", object("recipes", array("basemetals:" + id))));
                 writeUnlock(cache, id, criteria);
             }
         }
@@ -2029,7 +2086,8 @@ final class GeneratedData implements DataProvider {
             default -> "#forge:ingots/" + material;
         };
         JsonObject criteria = object("has_material", inventoryCriterion(ingredient(discovery)),
-                "has_recipe", object("trigger", "minecraft:recipe_unlocked", "conditions", object("recipe", "basemetals:" + id)));
+                "has_recipe", object("trigger", "minecraft:recipe_unlocked", "conditions",
+                        object("recipes", array("basemetals:" + id))));
         List<JsonElement> inputs = new ArrayList<>();
         if (recipe.has("key")) recipe.getAsJsonObject("key").entrySet().forEach(entry -> inputs.add(entry.getValue()));
         else recipe.getAsJsonArray("ingredients").forEach(inputs::add);

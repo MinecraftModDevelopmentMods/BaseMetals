@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_axe"
+        "recipes": [
+          "basemetals:starsteel_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

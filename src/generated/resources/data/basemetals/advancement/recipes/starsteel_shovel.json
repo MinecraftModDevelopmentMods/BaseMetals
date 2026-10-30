@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_shovel"
+        "recipes": [
+          "basemetals:starsteel_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

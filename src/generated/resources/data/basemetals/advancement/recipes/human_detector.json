@@ -35,7 +35,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:human_detector"
+        "recipes": [
+          "basemetals:human_detector"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

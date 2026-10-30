@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_leggings"
+        "recipes": [
+          "basemetals:platinum_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -27,7 +27,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:charcoal_block"
+        "recipes": [
+          "basemetals:charcoal_block"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

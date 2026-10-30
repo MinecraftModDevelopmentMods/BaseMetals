@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_shears"
+        "recipes": [
+          "basemetals:platinum_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

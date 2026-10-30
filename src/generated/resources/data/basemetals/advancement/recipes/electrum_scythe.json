@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_scythe"
+        "recipes": [
+          "basemetals:electrum_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_plate"
+        "recipes": [
+          "basemetals:pewter_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

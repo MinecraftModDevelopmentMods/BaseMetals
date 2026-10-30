@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_horsearmor"
+        "recipes": [
+          "basemetals:aquarium_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

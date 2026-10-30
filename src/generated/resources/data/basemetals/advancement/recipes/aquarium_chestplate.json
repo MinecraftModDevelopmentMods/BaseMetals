@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_chestplate"
+        "recipes": [
+          "basemetals:aquarium_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

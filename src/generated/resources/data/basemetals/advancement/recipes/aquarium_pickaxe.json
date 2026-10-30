@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_pickaxe"
+        "recipes": [
+          "basemetals:aquarium_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

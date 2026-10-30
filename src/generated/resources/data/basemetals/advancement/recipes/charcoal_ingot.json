@@ -25,7 +25,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:charcoal_ingot"
+        "recipes": [
+          "basemetals:charcoal_ingot"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

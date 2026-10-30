@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_shovel"
+        "recipes": [
+          "basemetals:lead_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

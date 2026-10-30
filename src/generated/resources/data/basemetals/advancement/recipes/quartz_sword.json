@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_sword"
+        "recipes": [
+          "basemetals:quartz_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

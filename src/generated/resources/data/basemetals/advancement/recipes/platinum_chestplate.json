@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_chestplate"
+        "recipes": [
+          "basemetals:platinum_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_door"
+        "recipes": [
+          "basemetals:electrum_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_horsearmor"
+        "recipes": [
+          "basemetals:cupronickel_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

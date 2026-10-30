@@ -5,7 +5,7 @@
   },
   "max_uses": 6,
   "merchant_predicate": {
-    "condition": "basemetals:trade_enabled",
+    "type": "basemetals:trade_enabled",
     "item": "basemetals:antimony_crossbow"
   },
   "reputation_discount": 0.2,

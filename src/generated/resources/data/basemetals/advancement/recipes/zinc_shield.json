@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_shield"
+        "recipes": [
+          "basemetals:zinc_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

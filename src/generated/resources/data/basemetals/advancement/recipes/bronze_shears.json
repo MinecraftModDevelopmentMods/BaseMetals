@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_shears"
+        "recipes": [
+          "basemetals:bronze_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

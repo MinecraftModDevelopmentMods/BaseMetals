@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_chestplate"
+        "recipes": [
+          "basemetals:tin_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

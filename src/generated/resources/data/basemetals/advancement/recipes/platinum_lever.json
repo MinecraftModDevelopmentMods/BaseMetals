@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_lever"
+        "recipes": [
+          "basemetals:platinum_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

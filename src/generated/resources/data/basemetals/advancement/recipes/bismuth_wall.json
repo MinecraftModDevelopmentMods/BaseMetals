@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_wall"
+        "recipes": [
+          "basemetals:bismuth_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

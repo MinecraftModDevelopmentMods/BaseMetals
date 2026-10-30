@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_fishingrod"
+        "recipes": [
+          "basemetals:zinc_fishingrod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

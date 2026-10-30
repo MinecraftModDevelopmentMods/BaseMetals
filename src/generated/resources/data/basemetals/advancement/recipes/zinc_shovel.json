@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_shovel"
+        "recipes": [
+          "basemetals:zinc_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

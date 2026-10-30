@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_powder_from_small"
+        "recipes": [
+          "basemetals:starsteel_powder_from_small"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

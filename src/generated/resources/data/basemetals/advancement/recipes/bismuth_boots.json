@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_boots"
+        "recipes": [
+          "basemetals:bismuth_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

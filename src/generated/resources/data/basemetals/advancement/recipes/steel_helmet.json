@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_helmet"
+        "recipes": [
+          "basemetals:steel_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

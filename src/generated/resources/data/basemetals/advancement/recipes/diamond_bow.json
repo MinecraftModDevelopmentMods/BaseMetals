@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_bow"
+        "recipes": [
+          "basemetals:diamond_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

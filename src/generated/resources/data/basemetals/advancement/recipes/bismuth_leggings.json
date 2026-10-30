@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_leggings"
+        "recipes": [
+          "basemetals:bismuth_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

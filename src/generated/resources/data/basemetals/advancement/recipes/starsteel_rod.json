@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_rod"
+        "recipes": [
+          "basemetals:starsteel_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

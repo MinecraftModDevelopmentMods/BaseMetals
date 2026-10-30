@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_shield"
+        "recipes": [
+          "basemetals:diamond_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

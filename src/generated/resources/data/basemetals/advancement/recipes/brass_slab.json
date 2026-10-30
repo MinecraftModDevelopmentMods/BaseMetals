@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_slab"
+        "recipes": [
+          "basemetals:brass_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

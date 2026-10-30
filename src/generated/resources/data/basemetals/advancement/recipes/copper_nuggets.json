@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_nuggets"
+        "recipes": [
+          "basemetals:copper_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

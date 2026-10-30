@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_boots"
+        "recipes": [
+          "basemetals:zinc_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_smallpowder"
+        "recipes": [
+          "basemetals:adamantine_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

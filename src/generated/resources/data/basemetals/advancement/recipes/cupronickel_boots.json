@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_boots"
+        "recipes": [
+          "basemetals:cupronickel_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

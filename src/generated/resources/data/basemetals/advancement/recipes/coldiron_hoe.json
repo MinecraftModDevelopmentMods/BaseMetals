@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_hoe"
+        "recipes": [
+          "basemetals:coldiron_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

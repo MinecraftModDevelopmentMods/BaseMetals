@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_chestplate"
+        "recipes": [
+          "basemetals:invar_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

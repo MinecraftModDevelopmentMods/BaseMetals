@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:iron_button"
+        "recipes": [
+          "basemetals:iron_button"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

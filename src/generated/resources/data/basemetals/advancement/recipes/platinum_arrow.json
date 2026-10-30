@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_arrow"
+        "recipes": [
+          "basemetals:platinum_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

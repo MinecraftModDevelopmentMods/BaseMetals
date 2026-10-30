@@ -35,7 +35,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:detector_rail"
+        "recipes": [
+          "basemetals:detector_rail"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

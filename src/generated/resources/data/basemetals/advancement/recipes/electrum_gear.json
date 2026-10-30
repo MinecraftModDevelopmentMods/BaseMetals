@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_gear"
+        "recipes": [
+          "basemetals:electrum_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

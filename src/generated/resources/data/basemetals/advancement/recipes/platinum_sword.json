@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_sword"
+        "recipes": [
+          "basemetals:platinum_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

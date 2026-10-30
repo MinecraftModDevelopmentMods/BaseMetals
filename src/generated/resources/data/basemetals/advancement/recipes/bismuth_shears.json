@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_shears"
+        "recipes": [
+          "basemetals:bismuth_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -10,13 +10,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "minecraft:iron_ingot",
@@ -24,13 +25,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "basemetals:tin_ingot",
@@ -38,13 +40,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "basemetals:lead_ingot",
@@ -52,13 +55,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "basemetals:zinc_ingot",
@@ -66,13 +70,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "minecraft:copper_ingot",
@@ -80,13 +85,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "basemetals:brass_ingot",
@@ -94,13 +100,14 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "max": 6,
                 "min": 1
-              },
-              "function": "minecraft:set_count"
+              }
             }
           ],
           "name": "basemetals:bronze_ingot",
@@ -108,6 +115,7 @@
         }
       ],
       "rolls": {
+        "type": "minecraft:uniform",
         "max": 4,
         "min": 1
       }

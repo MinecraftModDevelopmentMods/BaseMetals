@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_crackhammer"
+        "recipes": [
+          "basemetals:electrum_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

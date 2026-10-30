@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_wall"
+        "recipes": [
+          "basemetals:coldiron_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_rod"
+        "recipes": [
+          "basemetals:cupronickel_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

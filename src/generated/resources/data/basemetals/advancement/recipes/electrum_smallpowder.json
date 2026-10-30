@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_smallpowder"
+        "recipes": [
+          "basemetals:electrum_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

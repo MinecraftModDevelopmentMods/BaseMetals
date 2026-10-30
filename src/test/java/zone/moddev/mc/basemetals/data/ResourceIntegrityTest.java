@@ -518,7 +518,7 @@ class ResourceIntegrityTest {
         JsonObject loot = read(resource("data/basemetals/loot_table/blocks/stone_anvil.json"))
                 .getAsJsonObject();
         JsonArray functions = loot.getAsJsonArray("pools").get(0).getAsJsonObject()
-                .getAsJsonArray("entries").get(0).getAsJsonObject().getAsJsonArray("functions");
+                .getAsJsonArray("entries").get(0).getAsJsonObject().getAsJsonArray("modifier");
         assertTrue(functions.toString().contains("minecraft:copy_state"));
         assertTrue(functions.toString().contains("\"damage\""));
     }

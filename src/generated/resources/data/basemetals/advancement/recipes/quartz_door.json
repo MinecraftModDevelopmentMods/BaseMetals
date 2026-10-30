@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_door"
+        "recipes": [
+          "basemetals:quartz_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

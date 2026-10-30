@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_crossbow"
+        "recipes": [
+          "basemetals:mithril_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

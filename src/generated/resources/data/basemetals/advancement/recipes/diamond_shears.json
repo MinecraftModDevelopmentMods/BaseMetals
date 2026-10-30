@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_shears"
+        "recipes": [
+          "basemetals:diamond_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

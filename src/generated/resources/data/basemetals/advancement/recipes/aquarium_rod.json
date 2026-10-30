@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_rod"
+        "recipes": [
+          "basemetals:aquarium_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

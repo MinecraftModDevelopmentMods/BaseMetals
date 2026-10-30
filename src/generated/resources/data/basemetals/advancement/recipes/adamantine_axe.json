@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_axe"
+        "recipes": [
+          "basemetals:adamantine_axe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

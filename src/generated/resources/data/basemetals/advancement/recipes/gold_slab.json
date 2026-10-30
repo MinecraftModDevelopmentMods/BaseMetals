@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_slab"
+        "recipes": [
+          "basemetals:gold_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

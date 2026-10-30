@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_shovel"
+        "recipes": [
+          "basemetals:adamantine_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

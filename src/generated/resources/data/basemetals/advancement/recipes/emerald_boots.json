@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_boots"
+        "recipes": [
+          "basemetals:emerald_boots"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

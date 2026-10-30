@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_shovel"
+        "recipes": [
+          "basemetals:platinum_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

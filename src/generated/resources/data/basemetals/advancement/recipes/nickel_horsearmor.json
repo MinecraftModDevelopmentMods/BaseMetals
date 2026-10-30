@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_horsearmor"
+        "recipes": [
+          "basemetals:nickel_horsearmor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

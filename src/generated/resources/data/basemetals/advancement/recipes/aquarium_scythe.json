@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_scythe"
+        "recipes": [
+          "basemetals:aquarium_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

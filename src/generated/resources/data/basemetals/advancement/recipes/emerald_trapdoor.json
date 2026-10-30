@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_trapdoor"
+        "recipes": [
+          "basemetals:emerald_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

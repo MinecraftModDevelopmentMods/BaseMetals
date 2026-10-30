@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_pickaxe"
+        "recipes": [
+          "basemetals:cupronickel_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

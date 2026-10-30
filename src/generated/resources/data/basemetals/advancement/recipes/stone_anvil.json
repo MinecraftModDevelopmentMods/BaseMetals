@@ -47,7 +47,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:stone_anvil"
+        "recipes": [
+          "basemetals:stone_anvil"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

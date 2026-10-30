@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_slab"
+        "recipes": [
+          "basemetals:lead_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

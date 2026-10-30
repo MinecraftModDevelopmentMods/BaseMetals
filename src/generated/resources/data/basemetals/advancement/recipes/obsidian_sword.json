@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_sword"
+        "recipes": [
+          "basemetals:obsidian_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

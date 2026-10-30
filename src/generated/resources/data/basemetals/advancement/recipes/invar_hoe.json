@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:invar_hoe"
+        "recipes": [
+          "basemetals:invar_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

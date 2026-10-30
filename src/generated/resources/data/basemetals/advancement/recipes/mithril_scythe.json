@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_scythe"
+        "recipes": [
+          "basemetals:mithril_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_scythe"
+        "recipes": [
+          "basemetals:cupronickel_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

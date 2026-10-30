@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_shovel"
+        "recipes": [
+          "basemetals:electrum_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

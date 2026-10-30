@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_bow"
+        "recipes": [
+          "basemetals:coldiron_bow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_pickaxe"
+        "recipes": [
+          "basemetals:starsteel_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

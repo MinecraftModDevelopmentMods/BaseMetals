@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_scythe"
+        "recipes": [
+          "basemetals:obsidian_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

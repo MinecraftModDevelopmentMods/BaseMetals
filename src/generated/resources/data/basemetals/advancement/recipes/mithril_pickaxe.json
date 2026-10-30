@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_pickaxe"
+        "recipes": [
+          "basemetals:mithril_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

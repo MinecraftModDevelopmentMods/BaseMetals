@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_slab"
+        "recipes": [
+          "basemetals:adamantine_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

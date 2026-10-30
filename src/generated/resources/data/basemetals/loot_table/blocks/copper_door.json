@@ -2,22 +2,25 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        },
-        {
-          "block": "basemetals:copper_door",
-          "condition": "minecraft:block_state_property",
-          "properties": {
-            "half": "lower"
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:survives_explosion"
+          },
+          {
+            "type": "minecraft:match_block",
+            "blocks": "basemetals:copper_door",
+            "state": {
+              "half": "lower"
+            }
           }
-        }
-      ],
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [],
+          "modifier": [],
           "name": "basemetals:copper_door"
         }
       ],

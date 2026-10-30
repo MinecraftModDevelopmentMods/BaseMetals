@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_shield"
+        "recipes": [
+          "basemetals:starsteel_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

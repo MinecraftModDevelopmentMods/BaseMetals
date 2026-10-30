@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_wall"
+        "recipes": [
+          "basemetals:quartz_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

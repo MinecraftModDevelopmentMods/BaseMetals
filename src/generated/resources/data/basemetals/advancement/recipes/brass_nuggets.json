@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_nuggets"
+        "recipes": [
+          "basemetals:brass_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

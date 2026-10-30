@@ -13,7 +13,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_raw_smelting"
+        "recipes": [
+          "basemetals:platinum_raw_smelting"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

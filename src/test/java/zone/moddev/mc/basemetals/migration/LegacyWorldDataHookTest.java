@@ -9,6 +9,7 @@ import org.junit.jupiter.api.io.TempDir;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.Identifier;
 
 class LegacyWorldDataHookTest {
@@ -24,6 +25,25 @@ class LegacyWorldDataHookTest {
         assertTrue(hook.contains("prepareSelectedWorld(getLevelPath(LevelResource.LEVEL_DATA_FILE))"));
         assertTrue(hook.contains("if (!useFallback)"));
         assertFalse(hook.contains("@Mixin(LevelStorageSource.class)"));
+    }
+
+    @Test
+    void dungeonHookChecksTheExistingTerrainBoundaryBeforePlacement() throws Exception {
+        var method = net.minecraft.world.level.levelgen.feature.MonsterRoomFeature.class.getDeclaredMethod(
+                "place", net.minecraft.world.level.WorldGenLevel.class,
+                net.minecraft.world.level.chunk.ChunkGenerator.class, net.minecraft.util.RandomSource.class,
+                BlockPos.class);
+        assertEquals(boolean.class, method.getReturnType());
+
+        String hook = Files.readString(Path.of(
+                "src/main/java/zone/moddev/mc/basemetals/mixin/MonsterRoomFeatureMixin.java"));
+        assertTrue(hook.contains("@Mixin(MonsterRoomFeature.class)"));
+        assertTrue(hook.contains("at = @At(\"HEAD\")"));
+        assertTrue(hook.contains("level instanceof WorldGenRegion region"));
+        assertTrue(hook.contains("shouldBlockWorldgenWrite(region, position)"));
+        assertFalse(hook.contains("getBlockEntity"));
+        assertTrue(Files.readString(Path.of("src/main/resources/basemetals.mixins.json"))
+                .contains("\"MonsterRoomFeatureMixin\""));
     }
 
     @Test
@@ -167,6 +187,68 @@ class LegacyWorldDataHookTest {
         assertEquals(1, LegacyWorldDataHook.removePhantomBedEntities(root));
         assertEquals(1, entities.size());
         assertEquals(17, entities.getCompoundOrEmpty(0).getIntOr("y", 0));
+    }
+
+    @Test
+    void nativeStateObjectsKeepPhantomBedCleanupScopedToBaseMetals() {
+        assertNativeBedCleanup(false);
+    }
+
+    @Test
+    void compactNativeStatesKeepPhantomBedCleanupScopedToBaseMetals() {
+        assertNativeBedCleanup(true);
+    }
+
+    private static void assertNativeBedCleanup(boolean compact) {
+        CompoundTag root = new CompoundTag();
+        ListTag sections = new ListTag();
+        sections.add(nativeSection(0, "basemetals:steel_block", compact));
+        sections.add(nativeSection(1, "minecraft:red_bed", compact));
+        root.put("sections", sections);
+
+        ListTag entities = new ListTag();
+        entities.add(bed(1));
+        entities.add(bed(17));
+        root.put("block_entities", entities);
+
+        assertEquals(1, LegacyWorldDataHook.removePhantomBedEntities(root));
+        assertEquals(1, entities.size());
+        assertEquals(17, entities.getCompoundOrEmpty(0).getIntOr("y", 0));
+    }
+
+    private static CompoundTag nativeSection(int y, String block, boolean compact) {
+        CompoundTag section = section(y, block);
+        ListTag palette = new ListTag();
+
+        if (compact) {
+            palette.add(StringTag.valueOf(block));
+        } else {
+            CompoundTag state = new CompoundTag();
+            state.putString("id", block);
+            palette.add(state);
+        }
+
+        section.getCompoundOrEmpty("block_states").put("palette", palette);
+        return section;
+    }
+
+    @Test
+    void nativeWallFieldsKeepConnectionValuesDuringAnUpgrade() {
+        CompoundTag wall = new CompoundTag();
+        wall.putString("id", "basemetals:steel_wall");
+        CompoundTag properties = new CompoundTag();
+        properties.putString("north", "true");
+        properties.putString("east", "false");
+        properties.putString("south", "tall");
+        wall.put("properties", properties);
+
+        assertEquals(2, LegacyWorldDataHook.migrateWallStates(wall));
+        assertEquals("low", properties.getStringOr("north", ""));
+        assertEquals("none", properties.getStringOr("east", ""));
+        assertEquals("tall", properties.getStringOr("south", ""));
+        assertEquals(0, LegacyWorldDataHook.migrateWallStates(wall));
+        assertFalse(wall.contains("Name"));
+        assertFalse(wall.contains("Properties"));
     }
 
     @Test

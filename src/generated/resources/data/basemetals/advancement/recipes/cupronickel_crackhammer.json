@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_crackhammer"
+        "recipes": [
+          "basemetals:cupronickel_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

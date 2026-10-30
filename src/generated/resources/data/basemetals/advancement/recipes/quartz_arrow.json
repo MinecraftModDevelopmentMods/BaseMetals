@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:quartz_arrow"
+        "recipes": [
+          "basemetals:quartz_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_slab"
+        "recipes": [
+          "basemetals:pewter_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

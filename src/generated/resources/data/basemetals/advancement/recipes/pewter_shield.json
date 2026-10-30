@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_shield"
+        "recipes": [
+          "basemetals:pewter_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

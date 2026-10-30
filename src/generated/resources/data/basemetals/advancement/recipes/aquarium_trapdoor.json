@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_trapdoor"
+        "recipes": [
+          "basemetals:aquarium_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

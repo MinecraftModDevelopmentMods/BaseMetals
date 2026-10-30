@@ -56,7 +56,6 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -370,9 +369,9 @@ public final class LegacyWorldDataHook {
         int changed = 0;
         if (value instanceof CompoundTag) {
             CompoundTag compound = (CompoundTag) value;
-            String name = compound.getStringOr("Name", "");
+            String name = LegacyBlockStateCodec.blockName(compound);
             if (name.startsWith("basemetals:") && name.endsWith("_wall")) {
-                CompoundTag properties = compound.getCompoundOrEmpty("Properties");
+                CompoundTag properties = LegacyBlockStateCodec.properties(compound);
                 for (String direction : new String[] {"north", "east", "south", "west"}) {
                     String connection = properties.getStringOr(direction, "");
                     if ("true".equals(connection) || "false".equals(connection)) {
@@ -441,7 +440,7 @@ public final class LegacyWorldDataHook {
                 if (word >= states.length) return "";
                 state = (int) ((states[word] >>> ((position % perWord) * bits)) & ((1L << bits) - 1));
             }
-            return state < palette.size() ? palette.getCompoundOrEmpty(state).getStringOr("Name", "") : "";
+            return state < palette.size() ? LegacyBlockStateCodec.blockName(palette.get(state)) : "";
         }
         return "";
     }
@@ -511,7 +510,7 @@ public final class LegacyWorldDataHook {
             for (int meta = 0; meta < 16; meta++) {
                 BlockState state = legacyState(block, entry.getKey().getPath(), meta);
                 table[(entry.getValue().intValue() << 4) | meta] =
-                        new Dynamic<>(net.minecraft.nbt.NbtOps.INSTANCE, NbtUtils.writeBlockState(state));
+                        new Dynamic<>(net.minecraft.nbt.NbtOps.INSTANCE, LegacyBlockStateCodec.writeFlattenedState(state));
                 mapped++;
             }
         }

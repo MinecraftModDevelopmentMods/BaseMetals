@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_sword"
+        "recipes": [
+          "basemetals:zinc_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_powder_from_small"
+        "recipes": [
+          "basemetals:silver_powder_from_small"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

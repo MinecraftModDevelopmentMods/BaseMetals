@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_bars"
+        "recipes": [
+          "basemetals:diamond_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

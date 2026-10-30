@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_bars"
+        "recipes": [
+          "basemetals:bronze_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

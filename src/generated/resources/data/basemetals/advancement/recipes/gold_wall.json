@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_wall"
+        "recipes": [
+          "basemetals:gold_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

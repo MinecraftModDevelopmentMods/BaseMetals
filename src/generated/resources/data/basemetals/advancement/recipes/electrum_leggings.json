@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_leggings"
+        "recipes": [
+          "basemetals:electrum_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

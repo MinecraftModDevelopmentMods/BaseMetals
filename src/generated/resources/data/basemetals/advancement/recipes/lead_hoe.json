@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:lead_hoe"
+        "recipes": [
+          "basemetals:lead_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

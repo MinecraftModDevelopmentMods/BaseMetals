@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_chestplate"
+        "recipes": [
+          "basemetals:adamantine_chestplate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

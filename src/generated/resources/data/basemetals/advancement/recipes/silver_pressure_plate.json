@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_pressure_plate"
+        "recipes": [
+          "basemetals:silver_pressure_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

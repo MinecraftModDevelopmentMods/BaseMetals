@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_arrow"
+        "recipes": [
+          "basemetals:mithril_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

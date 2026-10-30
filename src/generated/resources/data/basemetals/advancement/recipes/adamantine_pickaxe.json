@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_pickaxe"
+        "recipes": [
+          "basemetals:adamantine_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_bars"
+        "recipes": [
+          "basemetals:zinc_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

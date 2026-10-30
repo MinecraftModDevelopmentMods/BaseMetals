@@ -27,7 +27,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:charcoal_nugget"
+        "recipes": [
+          "basemetals:charcoal_nugget"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

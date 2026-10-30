@@ -9,6 +9,7 @@
     "BlockStateDataMixin",
     "LevelCapabilityDataMixin",
     "LevelStorageSourceMixin",
+    "MonsterRoomFeatureMixin",
     "OreSpawnEarlyTagCompatibilityMixin",
     "SimpleRegionStorageMixin",
     "WorldGenRegionMixin"

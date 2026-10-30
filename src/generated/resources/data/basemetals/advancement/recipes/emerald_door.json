@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_door"
+        "recipes": [
+          "basemetals:emerald_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bronze_door"
+        "recipes": [
+          "basemetals:bronze_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

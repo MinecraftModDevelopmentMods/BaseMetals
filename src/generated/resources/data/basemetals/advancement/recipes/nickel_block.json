@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_block"
+        "recipes": [
+          "basemetals:nickel_block"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

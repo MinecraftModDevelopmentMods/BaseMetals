@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:obsidian_shears"
+        "recipes": [
+          "basemetals:obsidian_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

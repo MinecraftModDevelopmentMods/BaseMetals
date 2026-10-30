@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_door"
+        "recipes": [
+          "basemetals:aquarium_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

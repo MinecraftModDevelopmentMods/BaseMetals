@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:diamond_smallpowder"
+        "recipes": [
+          "basemetals:diamond_smallpowder"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

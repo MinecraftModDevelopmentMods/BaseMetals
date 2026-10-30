@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_pickaxe"
+        "recipes": [
+          "basemetals:platinum_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

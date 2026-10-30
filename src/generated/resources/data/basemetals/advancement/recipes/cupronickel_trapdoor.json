@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_trapdoor"
+        "recipes": [
+          "basemetals:cupronickel_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

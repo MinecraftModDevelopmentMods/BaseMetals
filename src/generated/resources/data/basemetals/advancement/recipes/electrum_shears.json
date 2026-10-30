@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_shears"
+        "recipes": [
+          "basemetals:electrum_shears"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

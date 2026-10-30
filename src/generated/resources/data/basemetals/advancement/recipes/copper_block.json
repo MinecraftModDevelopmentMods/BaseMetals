@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_block"
+        "recipes": [
+          "basemetals:copper_block"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

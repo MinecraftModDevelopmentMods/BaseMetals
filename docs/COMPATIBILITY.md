@@ -23,7 +23,7 @@ recycling recipes also accept the appropriate vanilla equivalent.
 
 The tags and existing integration data for Mekanism, Thermal, Tinkers' Construct
 and Ender IO remain available for future compatibility work. Their Java API hooks
-and runtime jars are not included in this Forge 26.2 port. Do not substitute
+and runtime jars are not included in this Forge 26.3 port. Do not substitute
 jars made for older Minecraft versions or NeoForge.
 
 Other processors can use the shared Forge tags without a direct Java integration.

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coldiron_crossbow"
+        "recipes": [
+          "basemetals:coldiron_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

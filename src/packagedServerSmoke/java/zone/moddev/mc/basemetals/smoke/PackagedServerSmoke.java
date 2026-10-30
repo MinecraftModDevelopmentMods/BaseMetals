@@ -40,7 +40,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.1.2602001".equals(baseMetals) || !"4.1.0.2602001".equals(oreSpawn)) {
+        if (!"3.1.1.2603001".equals(baseMetals) || !"4.1.0.2603001".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }
@@ -80,8 +80,7 @@ public final class PackagedServerSmoke {
         for (var entry : items.entrySet()) {
             String id = entry.getKey();
             if (id.endsWith("_powder") || id.endsWith("_smallpowder") || id.endsWith("_nugget")) {
-                int burn = server.fuelValues().burnDuration(entry.getValue().get().getDefaultInstance(),
-                        net.minecraft.world.item.crafting.RecipeType.SMELTING);
+                int burn = new TestFurnace().burnDuration(level, entry.getValue().get().getDefaultInstance());
                 int expected = id.startsWith("coal_") || id.startsWith("charcoal_")
                         ? (id.endsWith("_powder") ? 1600 : 200) : 0;
                 if (burn != expected) throw new IllegalStateException(id + " has burn time " + burn + ", expected " + expected);
@@ -101,6 +100,16 @@ public final class PackagedServerSmoke {
         }
         LOGGER.info("BASEMETALS_PACKAGED_CONTENT PASS mode={} items={}",
                 zone.moddev.mc.basemetals.config.BaseMetalsConfig.activeMode().serializedName(), items.size());
+    }
+
+    private static final class TestFurnace extends net.minecraft.world.level.block.entity.FurnaceBlockEntity {
+        private TestFurnace() {
+            super(net.minecraft.core.BlockPos.ZERO, net.minecraft.world.level.block.Blocks.FURNACE.defaultBlockState());
+        }
+
+        private int burnDuration(net.minecraft.server.level.ServerLevel level, net.minecraft.world.item.ItemStack stack) {
+            return getBurnDuration(level, stack);
+        }
     }
 
     private static void verifyIntegrationRecipes(net.minecraft.server.MinecraftServer server) throws IOException {
@@ -176,7 +185,7 @@ public final class PackagedServerSmoke {
     }
 
     private static void verifyTinkers() {
-        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 26.2 build");
+        throw new IllegalStateException("Tinkers integration is not enabled in this Forge 26.3 build");
     }
 
     private static void verifyModernFlatTerrain(net.minecraft.server.MinecraftServer server) {

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_hoe"
+        "recipes": [
+          "basemetals:nickel_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

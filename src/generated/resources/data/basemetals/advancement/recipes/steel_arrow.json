@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:steel_arrow"
+        "recipes": [
+          "basemetals:steel_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

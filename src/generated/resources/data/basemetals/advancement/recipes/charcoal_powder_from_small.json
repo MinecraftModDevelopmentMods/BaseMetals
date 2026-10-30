@@ -25,7 +25,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:charcoal_powder_from_small"
+        "recipes": [
+          "basemetals:charcoal_powder_from_small"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

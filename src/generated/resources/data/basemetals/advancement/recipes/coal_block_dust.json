@@ -25,7 +25,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:coal_block_dust"
+        "recipes": [
+          "basemetals:coal_block_dust"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

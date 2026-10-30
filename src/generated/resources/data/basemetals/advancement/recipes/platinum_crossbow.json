@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_crossbow"
+        "recipes": [
+          "basemetals:platinum_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

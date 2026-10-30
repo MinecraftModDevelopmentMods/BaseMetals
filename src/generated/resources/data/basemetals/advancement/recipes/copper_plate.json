@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:copper_plate"
+        "recipes": [
+          "basemetals:copper_plate"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

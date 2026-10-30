@@ -35,14 +35,14 @@ final class SmithTradeProvider implements DataProvider {
                     "max_uses", offer.enchanted() ? 3 : 6,
                     "xp", offer.enchanted() ? 15 : 5,
                     "reputation_discount", 0.2,
-                    "merchant_predicate", object("condition", "basemetals:trade_enabled", "item", offer.item()));
+                    "merchant_predicate", object("type", "basemetals:trade_enabled", "item", offer.item()));
 
             if (offer.enchanted()) {
                 JsonArray modifiers = new JsonArray();
-                modifiers.add(object("function", "minecraft:enchant_with_levels",
+                modifiers.add(object("type", "minecraft:enchant_with_levels",
                         "levels", object("type", "minecraft:uniform", "min", 5, "max", 19),
                         "options", "#minecraft:on_random_loot", "include_additional_cost_component", true));
-                trade.add("given_item_modifiers", modifiers);
+                trade.add("given_item_modifier", modifiers);
             }
 
             writes.add(DataProvider.saveStable(cache, trade,

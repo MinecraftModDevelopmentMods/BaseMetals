@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mercury_nuggets"
+        "recipes": [
+          "basemetals:mercury_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

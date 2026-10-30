@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_shield"
+        "recipes": [
+          "basemetals:brass_shield"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

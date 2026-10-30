@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_bars"
+        "recipes": [
+          "basemetals:gold_bars"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

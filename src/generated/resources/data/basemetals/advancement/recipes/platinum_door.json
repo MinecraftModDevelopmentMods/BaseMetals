@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:platinum_door"
+        "recipes": [
+          "basemetals:platinum_door"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:emerald_sword"
+        "recipes": [
+          "basemetals:emerald_sword"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_rod"
+        "recipes": [
+          "basemetals:antimony_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

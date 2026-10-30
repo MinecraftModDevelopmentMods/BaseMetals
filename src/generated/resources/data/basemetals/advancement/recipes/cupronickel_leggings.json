@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_leggings"
+        "recipes": [
+          "basemetals:cupronickel_leggings"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

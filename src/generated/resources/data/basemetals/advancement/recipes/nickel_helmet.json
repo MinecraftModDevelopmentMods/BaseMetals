@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_helmet"
+        "recipes": [
+          "basemetals:nickel_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

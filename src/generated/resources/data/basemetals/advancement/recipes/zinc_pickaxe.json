@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_pickaxe"
+        "recipes": [
+          "basemetals:zinc_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

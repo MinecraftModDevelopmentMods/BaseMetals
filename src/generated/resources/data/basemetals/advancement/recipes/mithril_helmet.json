@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_helmet"
+        "recipes": [
+          "basemetals:mithril_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

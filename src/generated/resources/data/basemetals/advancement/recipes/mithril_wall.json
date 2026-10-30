@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_wall"
+        "recipes": [
+          "basemetals:mithril_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

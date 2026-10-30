@@ -13,7 +13,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_raw_blasting"
+        "recipes": [
+          "basemetals:antimony_raw_blasting"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_crossbow"
+        "recipes": [
+          "basemetals:aquarium_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

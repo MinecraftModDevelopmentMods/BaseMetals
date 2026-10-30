@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:starsteel_slab"
+        "recipes": [
+          "basemetals:starsteel_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

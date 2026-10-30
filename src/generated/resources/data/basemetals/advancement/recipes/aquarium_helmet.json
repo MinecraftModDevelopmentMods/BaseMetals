@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:aquarium_helmet"
+        "recipes": [
+          "basemetals:aquarium_helmet"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

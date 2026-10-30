@@ -9,14 +9,14 @@ plugins {
 ext.mavenizerCompatibilityJar = layout.projectDirectory.file(
         'ci-fixtures/tools/minecraft-mavenizer-0.5.21-orespawn-compat.jar')
 ext.mavenizerCompatibilitySha256 =
-        '5ABAB52A3F1BE115381C3CE80D5FD38DBE6C9F4C0B9ECF70A957700EC90FB88B'
+        '4150926F33A696B2088AB2675C1C3B45745CE4F9F2DEB31CCD88C9ADC834062F'
 
 ext.mavenizerFixtureChecksums = [
         'minecraft-mavenizer-0.5.21-orespawn-compat.jar': mavenizerCompatibilitySha256,
-        'minecraft-source-compatibility.json': '9437E03FC5E1CB5D605D72F0538C4DF4417B64DB0A57D0AABDC5184781517AC1',
-        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': '2DA8DD0FD5F112F5B7591113AED06D9A58C584A25F8705E26445A6D2E9D5C78E',
+        'minecraft-source-compatibility.json': '829400D74ECB1BF0CC6107D9980B8328365E3F56D9A5342002D8DF340571BDB7',
+        'minecraft-mavenizer-0.5.21-orespawn-compat.patch': 'F1402D730A356589AE46C2483AC10E41062E28A748FEBB72F6CB663A28027A41',
         'LICENSE-MAVENIZER.txt': '20C17D8B8C48A600800DFD14F95D5CB9FF47066A9641DDEAB48DC54AEC96E331',
-        'README.md': 'EAD1477F393897C491A10FB86178213A99C360571A8063D551DA0579DF65BA6F'
+        'README.md': '45AA8B3238D2E8A873FF49862A8EA1ADDBC186E39655436723C0C85773447D36'
 ]
 // Mavenizer runs during configuration, so verify its inputs before configuring Forge.
 mavenizerFixtureChecksums.each { name, expected ->
@@ -27,7 +27,7 @@ mavenizerFixtureChecksums.each { name, expected ->
     }
 }
 
-// Forge 65 needs no source repairs. The sealed fixture records that result
+// Forge 66 needs no source repairs. The sealed fixture records that result
 // and stays separate from the mod and its runtime dependencies.
 fgtools.configure('mavenizer') {
     classpath.from(mavenizerCompatibilityJar)

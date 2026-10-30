@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:pewter_stairs"
+        "recipes": [
+          "basemetals:pewter_stairs"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

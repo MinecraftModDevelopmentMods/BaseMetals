@@ -40,7 +40,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -668,7 +667,7 @@ public final class Legacy112WorldMigrator {
                             .setValue(DoorBlock.POWERED, upperState.getValue(DoorBlock.POWERED));
                 }
             }
-            return NbtUtils.writeBlockState(state);
+            return LegacyBlockStateCodec.writeFlattenedState(state);
         }
 
         CompoundTag state = new CompoundTag();

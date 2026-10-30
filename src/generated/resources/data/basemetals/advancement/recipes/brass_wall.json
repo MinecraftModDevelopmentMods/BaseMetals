@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:brass_wall"
+        "recipes": [
+          "basemetals:brass_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:zinc_slab"
+        "recipes": [
+          "basemetals:zinc_slab"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

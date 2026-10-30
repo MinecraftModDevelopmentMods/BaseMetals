@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
-[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-26.2)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-26.2)
+[![Build, test, and audit](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml/badge.svg?branch=master-26.3)](https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-26.3)
 
 # Base Metals
 
@@ -12,23 +12,23 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 26.2 Forge version, `3.1.1.2602001`. It keeps the
-fixes and features from the released 26.1.2 version, including raw metals, ore
+This is the Minecraft 26.3 Forge version, `3.1.1.2603001`. It keeps the
+fixes and features from the released 26.2 version, including raw metals, ore
 texture overlays and High/Low Fantasy modes. Existing Base Metals items and
 blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
 Additional Loot Tables are no longer needed.
 
 ## Requirements
 
-- Minecraft `26.2`
-- Forge `65.1.0` or newer in the Minecraft 26.2 Forge 65 line
+- Minecraft `26.3`
+- Forge `66.0.0` or newer in the Minecraft 26.3 Forge 66 line
 - A current Java 25 runtime
-- OreSpawn `[4.1.0.2602001,5.0.0)` on both client and server
+- OreSpawn `[4.1.0.2603001,5.0.0)` on both client and server
 
-The build uses Forge `65.1.0` and is also tested on `65.1.5`.
+The build uses Forge `66.0.0` and is also tested on `66.1.0`.
 
-This version uses OreSpawn `4.1.0.2602001`. Put
-`BaseMetals-3.1.1.2602001.jar` and a compatible OreSpawn JAR in the `mods`
+This version uses OreSpawn `4.1.0.2603001`. Put
+`BaseMetals-3.1.1.2603001.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -144,13 +144,16 @@ Adding Base Metals to a modern world does not trigger the old numeric-ID
 conversion just because an older backup is present. Existing player data stays
 in place; genuine legacy upgrades still make backups before changing saved data.
 
+The 26.3 update also protects imported terrain from dungeon placement during
+conversion. New chunks and the new underground areas can still generate normally.
+
 ## Mod and data-pack compatibility
 
 Forge item, block, and fluid tags are Base Metals' public compatibility API.
 
 Compatible tags and the existing recipe data for Mekanism, Thermal, Tinkers'
 Construct and Ender IO are retained, but their Java integrations are not enabled
-in this Forge 26.2 port. Do not add jars made for older Minecraft versions or
+in this Forge 26.3 port. Do not add jars made for older Minecraft versions or
 NeoForge to this instance. No optional integration API is required to compile
 or launch Base Metals.
 
@@ -201,7 +204,7 @@ early splash window. Minecraft still opens its game window and runs the full
 world check. Ordinary client launches keep the normal splash screen.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.2602001`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.1.2603001`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

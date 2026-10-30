@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_crossbow"
+        "recipes": [
+          "basemetals:tin_crossbow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

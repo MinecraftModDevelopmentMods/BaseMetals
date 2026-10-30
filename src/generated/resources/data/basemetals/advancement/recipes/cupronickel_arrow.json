@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_arrow"
+        "recipes": [
+          "basemetals:cupronickel_arrow"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

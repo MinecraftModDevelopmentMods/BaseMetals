@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:nickel_gear"
+        "recipes": [
+          "basemetals:nickel_gear"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

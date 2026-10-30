@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_crackhammer"
+        "recipes": [
+          "basemetals:adamantine_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:tin_rod"
+        "recipes": [
+          "basemetals:tin_rod"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_pickaxe"
+        "recipes": [
+          "basemetals:antimony_pickaxe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

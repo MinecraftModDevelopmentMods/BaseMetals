@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:silver_nuggets"
+        "recipes": [
+          "basemetals:silver_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

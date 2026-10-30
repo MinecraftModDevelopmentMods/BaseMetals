@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:electrum_ingot_from_nuggets"
+        "recipes": [
+          "basemetals:electrum_ingot_from_nuggets"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

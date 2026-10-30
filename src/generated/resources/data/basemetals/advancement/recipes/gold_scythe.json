@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:gold_scythe"
+        "recipes": [
+          "basemetals:gold_scythe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -33,7 +33,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:bismuth_lever"
+        "recipes": [
+          "basemetals:bismuth_lever"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

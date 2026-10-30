@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:adamantine_trapdoor"
+        "recipes": [
+          "basemetals:adamantine_trapdoor"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

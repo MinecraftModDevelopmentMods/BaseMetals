@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:cupronickel_hoe"
+        "recipes": [
+          "basemetals:cupronickel_hoe"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_shovel"
+        "recipes": [
+          "basemetals:antimony_shovel"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

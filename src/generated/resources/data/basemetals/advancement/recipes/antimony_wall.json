@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:antimony_wall"
+        "recipes": [
+          "basemetals:antimony_wall"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }

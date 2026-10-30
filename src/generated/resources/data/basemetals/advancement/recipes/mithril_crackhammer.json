@@ -23,7 +23,9 @@
     },
     "has_recipe": {
       "conditions": {
-        "recipe": "basemetals:mithril_crackhammer"
+        "recipes": [
+          "basemetals:mithril_crackhammer"
+        ]
       },
       "trigger": "minecraft:recipe_unlocked"
     }
