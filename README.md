@@ -113,6 +113,9 @@ IDs before Minecraft converts the chunks, and also converts old item names,
 durability and universal fluid buckets. Chunks containing only Base Metals
 items in containers are protected too.
 
+Use Base Metals 3.0.2.113021 or later on Minecraft 1.13.2 when upgrading an old
+world. This patch fixes a crash in Forge's leaves conversion.
+
 Always perform the first upgrade on a copy of the world and keep the untouched
 original. Read [Migration](docs/MIGRATION.md) before opening an old save. A
 world already upgraded to Minecraft 1.18 must not be opened in this older
