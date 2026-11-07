@@ -131,7 +131,7 @@ tasks.register('verifyReleaseConfiguration') {
                 loaderCode: project.loader_code.toString(), javaVersion: project.java_version.toString(),
                 gradleJavaVersion: project.gradle_java_version.toString(),
                 curseForgeProjectId: project.curseforge_project_id.toString()]
-        def expected = [modVersion: '3.1.0.117011', modGroup: expectedMavenGroup,
+        def expected = [modVersion: '3.1.1.117011', modGroup: expectedMavenGroup,
                 minecraftVersion: '1.17.1', forgeVersion: '37.1.1',
                 forgeInstallerSha256: '31F2319B1B9CA491AACCC020887240F8524A4FF2A8E0F8B795E17E889CBC043B',
                 mappingChannel: 'official', mappingVersion: '1.17.1',
@@ -258,7 +258,7 @@ tasks.register('verifyReleaseArtifacts') {
                 throw new GradleException('Release manifest contains the wrong identity')
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
-            if (modsToml.contains('${') || !modsToml.contains('version="3.1.0.117011"')
+            if (modsToml.contains('${') || !modsToml.contains('version="3.1.1.117011"')
                     || !modsToml.contains('versionRange="[4.1.0.117011,5.0.0)"')
                     || !modsToml.contains('loaderVersion="[37,38)"')
                     || !modsToml.contains('versionRange="[37,38)"')
