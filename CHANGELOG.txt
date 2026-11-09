@@ -1,3 +1,7 @@
+Base Metals 3.1.2.119041
+
+- Let companion mods preserve their own item and block data before legacy chunks are flattened.
+
 Base Metals 3.1.1.119041
 
 - Fix startup failures when Base Metals is added to an existing modern world, including worlds with external chunks or empty region files.
