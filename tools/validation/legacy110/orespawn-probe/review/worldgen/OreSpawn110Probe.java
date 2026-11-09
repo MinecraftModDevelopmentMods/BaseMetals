@@ -44,7 +44,7 @@ public final class OreSpawn110Probe {
         report.addProperty("phase", phase);
 
         try {
-            require("4.1.2.110021".equals(Loader.instance().getIndexedModList().get("orespawn").getVersion()),
+            require("4.1.6.111021".equals(Loader.instance().getIndexedModList().get("orespawn").getVersion()),
                     "Wrong OreSpawn release");
             for (final String retired : new String[] {
                     "com.mcmoddev.orespawn.BaseMetalsOreSpawn",
@@ -87,17 +87,17 @@ public final class OreSpawn110Probe {
             }
             require(oreSpawnGenerators == 1, "Expected exactly one OreSpawn generator");
             if (System.getProperty("worldgen.vanillaManaged") != null) {
-                VanillaTakeoverChecks.check(server.worldServerForDimension(0), profile, report);
+                VanillaTakeoverChecks.check(server.getWorld(0), profile, report);
             }
             if (Boolean.getBoolean("worldgen.sample")) sampleOres(server, ores, report);
             if (Boolean.getBoolean("worldgen.savedMarker")) {
-                checkSavedMarker(server.worldServerForDimension(0), new BlockPos(8, 80, 8));
+                checkSavedMarker(server.getWorld(0), new BlockPos(8, 80, 8));
                 if (Boolean.getBoolean("worldgen.openRemote")) {
-                    checkSavedMarker(server.worldServerForDimension(0), new BlockPos(1288, 80, -1272));
+                    checkSavedMarker(server.getWorld(0), new BlockPos(1288, 80, -1272));
                 }
             }
             report.addProperty("passed", true);
-            System.out.println("BASE_METALS_OS41_PASS " + phase + " rules=" + owned);
+            System.out.println("BASE_METALS_ORESPAWN_PASS " + phase + " rules=" + owned);
             server.saveAllWorlds(false);
         } catch (final Throwable failure) {
             report.addProperty("passed", false);
@@ -114,7 +114,7 @@ public final class OreSpawn110Probe {
         final JsonObject samples = new JsonObject();
         for (final int dimension : new int[] { 0, -1, 1 }) {
             if (DimensionManager.getWorld(dimension) == null) DimensionManager.initDimension(dimension);
-            final WorldServer world = server.worldServerForDimension(dimension);
+            final WorldServer world = server.getWorld(dimension);
             final String name = dimension == 0 ? "minecraft:overworld"
                     : dimension == -1 ? "minecraft:the_nether" : "minecraft:the_end";
             final Map<String, Integer> counts = new LinkedHashMap<>();
@@ -168,12 +168,12 @@ public final class OreSpawn110Probe {
                 "An existing copper block changed");
         final TileEntityChest chest = (TileEntityChest) world.getTileEntity(position.up());
         final ItemStack stack = chest.getStackInSlot(0);
-        require(stack != null && stack.stackSize == 3
+        require(stack != null && stack.getCount() == 3
                 && "basemetals:copper_ingot".equals(stack.getItem().getRegistryName().toString())
                 && "FG7 saved copper".equals(stack.getDisplayName())
                 && "kept across reload".equals(stack.getTagCompound()
                         .getCompoundTag("BaseMetalsBuildCheck").getString("Check")), "Saved item data changed");
-        world.getChunkFromBlockCoords(position).setChunkModified();
+        world.getChunkFromBlockCoords(position).markDirty();
     }
 
     private static void assertSubset(final JsonElement expected, final JsonElement actual, final String path) {

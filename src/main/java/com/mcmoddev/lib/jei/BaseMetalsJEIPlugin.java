@@ -1,7 +1,5 @@
 package com.mcmoddev.lib.jei;
 
-import java.util.stream.Collectors;
-
 import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.CrusherRecipeRegistry;
 import com.mcmoddev.lib.registry.recipe.ICrusherRecipe;
@@ -10,6 +8,7 @@ import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 
 /**
  *
@@ -24,15 +23,15 @@ public final class BaseMetalsJEIPlugin extends BlankModPlugin {
 	public static final String RECIPE_UID = JEI_UID + ".crackhammer";
 
 	@Override
-	public void register(final IModRegistry registry) {
+	public void registerCategories(final IRecipeCategoryRegistration registry) {
 		final IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 
 		registry.addRecipeCategories(new ICrusherRecipeCategory(guiHelper));
-		registry.addRecipeHandlers(new CrusherRecipeHandler());
+	}
 
-		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes().stream()
-				.map((final ICrusherRecipe in) -> new ICrusherRecipeWrapper(in))
-				.collect(Collectors.toList()));
-
+	@Override
+	public void register(final IModRegistry registry) {
+		registry.handleRecipes(ICrusherRecipe.class, ICrusherRecipeWrapper::new, RECIPE_UID);
+		registry.addRecipes(CrusherRecipeRegistry.getInstance().getAllRecipes(), RECIPE_UID);
 	}
 }

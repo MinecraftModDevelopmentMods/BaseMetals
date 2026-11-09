@@ -2,16 +2,22 @@ package review.launch;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.mojang.authlib.GameProfile;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 import java.util.concurrent.Future;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ResourceLocation;
@@ -60,14 +66,21 @@ public final class DevLaunchProbe {
     }
 
     private static void checkWorld(final MinecraftServer server) {
-        final String expectedVersion = System.getProperty("launch.expectedVersion", "2.5.1.110021");
+        final String expectedVersion = System.getProperty("launch.expectedVersion", "2.5.1.111021");
         require(expectedVersion.equals(Loader.instance().getIndexedModList().get("basemetals").getVersion()), "Wrong Base Metals version");
         require(Loader.isModLoaded("orespawn"), "The ordinary launch did not load OreSpawn");
+        final boolean modernMetals = Loader.isModLoaded("modernmetals");
+        require(modernMetals == Boolean.getBoolean("launch.modernMetals"), "Unexpected Modern Metals load state");
+        if (modernMetals) {
+            require(net.minecraftforge.fml.common.registry.ForgeRegistries.ITEMS.containsKey(
+                    new ResourceLocation("modernmetals", "aluminum_ingot")), "Modern Metals did not register aluminum");
+        }
         for (final String optional : new String[]{"tconstruct", "ic2", "cofhcore", "Mekanism", "taiga", "golems_metal"}) {
             require(!Loader.isModLoaded(optional), "Optional mod leaked into ordinary launch: " + optional);
         }
 
-        final WorldServer world = server.worldServerForDimension(0);
+        final WorldServer world = server.getWorld(0);
+        if (Boolean.getBoolean("launch.moltenContact")) checkMoltenContact(world);
         final BlockPos position = new BlockPos(8, 80, 8);
         final ResourceLocation copper = new ResourceLocation("basemetals", "copper_block");
         final Block block = net.minecraftforge.fml.common.registry.ForgeRegistries.BLOCKS.getValue(copper);
@@ -88,20 +101,63 @@ public final class DevLaunchProbe {
         require(world.getBlockState(position).getBlock() == block, "Saved copper block changed");
         final TileEntityChest chest = (TileEntityChest) world.getTileEntity(position.up());
         final ItemStack stack = chest.getStackInSlot(0);
-        require(stack != null && stack.getItem() == ingot && stack.stackSize == 3
+        require(stack != null && stack.getItem() == ingot && stack.getCount() == 3
                 && "FG7 saved copper".equals(stack.getDisplayName())
                 && "kept across reload".equals(stack.getTagCompound()
                         .getCompoundTag("BaseMetalsBuildCheck").getString("Check")), "Saved stack data changed");
-        world.getChunkFromBlockCoords(position).setChunkModified();
+        world.getChunkFromBlockCoords(position).markDirty();
         if (Boolean.getBoolean("launch.remoteMarker")) {
             final BlockPos remote = new BlockPos(1288, 80, -1272);
             world.setBlockState(remote, block.getDefaultState(), 2);
             world.setBlockState(remote.up(), Blocks.CHEST.getDefaultState(), 2);
             final ItemStack saved = chest.getStackInSlot(0).copy();
             ((TileEntityChest) world.getTileEntity(remote.up())).setInventorySlotContents(0, saved);
-            world.getChunkFromBlockCoords(remote).setChunkModified();
+            world.getChunkFromBlockCoords(remote).markDirty();
         }
         server.saveAllWorlds(false);
+    }
+
+    private static void checkMoltenContact(final WorldServer world) {
+        final BlockPos pos = new BlockPos(8, 80, 12);
+        final ResourceLocation metalId = new ResourceLocation(System.getProperty("launch.moltenBlock", "basemetals:copper"));
+        final Block metal = net.minecraftforge.fml.common.registry.ForgeRegistries.BLOCKS.getValue(metalId);
+        final Block mercury = net.minecraftforge.fml.common.registry.ForgeRegistries.BLOCKS
+                .getValue(new ResourceLocation("basemetals", "mercury"));
+        require(metal != null && mercury != null, "Missing " + metalId + " or mercury block");
+        try {
+            world.setBlockState(pos, metal.getDefaultState(), 2);
+            checkContact(world, pos, "deep " + metalId, 0.25, false, false, 4.0F);
+            checkContact(world, pos, "above " + metalId, 0.90, false, false, 0.0F);
+            checkContact(world, pos, "shallow " + metalId, 0.70, false, false, 4.0F);
+            checkContact(world, pos, "fire resistant player", 0.70, true, false, 0.0F);
+            checkContact(world, pos, "creative player", 0.70, false, true, 0.0F);
+            world.setBlockState(pos, metal.getStateFromMeta(1), 2);
+            checkContact(world, pos, "above flowing " + metalId, 0.80, false, false, 0.0F);
+            checkContact(world, pos, "shallow flowing " + metalId, 0.70, false, false, 4.0F);
+            world.setBlockState(pos, Blocks.WATER.getDefaultState(), 2);
+            checkContact(world, pos, "water", 0.25, false, false, 0.0F);
+            world.setBlockState(pos, mercury.getDefaultState(), 2);
+            checkContact(world, pos, "liquid mercury", 0.25, false, false, 0.0F);
+        } finally {
+            world.setBlockToAir(pos);
+        }
+    }
+
+    private static void checkContact(final WorldServer world, final BlockPos pos, final String label,
+            final double height, final boolean resistant, final boolean creative, final float damage) {
+        final EntityPlayer player = new EntityPlayer(world, new GameProfile(UUID.randomUUID(), "FluidCheck")) {
+            @Override public boolean isSpectator() { return false; }
+            @Override public boolean isCreative() { return creative; }
+        };
+        player.capabilities.disableDamage = creative;
+        if (resistant) player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 200));
+        player.setPosition(pos.getX() - 0.5, pos.getY() + height, pos.getZ() + 0.5);
+        player.move(net.minecraft.entity.MoverType.SELF, 1.0, 0.0, 0.0);
+        player.onEntityUpdate();
+        final float actual = player.getMaxHealth() - player.getHealth();
+        System.out.println("BASE_METALS_MOLTEN_CONTACT " + label + " damage=" + actual + " burning=" + player.isBurning());
+        require(actual == damage && (damage == 0.0F || player.isBurning()),
+                label + " expected " + damage + " damage, got " + actual + ", burning=" + player.isBurning());
     }
 
     private static void report(final boolean passed, final String detail) throws Exception {
@@ -132,6 +188,8 @@ public final class DevLaunchProbe {
 
             try {
                 if (!opening && client.currentScreen instanceof GuiMainMenu && ++menuTicks >= 20) {
+                    require("Copper Ingot".equals(I18n.format("item.basemetals.copper_ingot.name")),
+                            "The English item names did not load");
                     opening = true;
                     System.out.println("BASE_METALS_LAUNCH_MENU");
                     client.launchIntegratedServer("fg7-launch-check", "FG7 Launch Check",

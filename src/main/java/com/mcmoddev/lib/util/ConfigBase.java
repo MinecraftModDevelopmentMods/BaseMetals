@@ -94,7 +94,7 @@ public class ConfigBase {
 		}).forEach(entry -> {
 			final String ingotX = Oredicts.INGOT.concat(entry.substring(4));
 			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
-			dustX.stackSize = 2;
+			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", ingotX,
 					dustX);
 			CrusherRecipeRegistry.addNewCrusherRecipe(ingotX, dustX);
@@ -114,7 +114,7 @@ public class ConfigBase {
 		}).forEach(entry -> {
 			final String oreX = Oredicts.ORE.concat(entry.substring(4));
 			final ItemStack dustX = OreDictionary.getOres(entry).get(0).copy();
-			dustX.stackSize = 2;
+			dustX.setCount(2);
 			BaseMetals.logger.info("Automatically adding custom crusher recipe '{}' -> {}", oreX,
 					dustX);
 			CrusherRecipeRegistry.addNewCrusherRecipe(oreX, dustX);

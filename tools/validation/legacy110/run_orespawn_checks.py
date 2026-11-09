@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 DIMENSIONS = {-1: "minecraft:the_nether", 0: "minecraft:overworld", 1: "minecraft:the_end"}
-JAR_NAME = "forge-1.10.2-12.18.3.2511-universal.jar"
+JAR_NAME = "forge-1.11.2-13.20.1.2588-universal.jar"
 
 
 def write_json(path, value):
@@ -25,7 +25,7 @@ def digest(path):
 
 def prepare(directory, template, mods, world=None, flat=True):
     directory.mkdir(parents=True, exist_ok=False)
-    for name in (JAR_NAME, "minecraft_server.1.10.2.jar"):
+    for name in (JAR_NAME, "minecraft_server.1.11.2.jar"):
         shutil.copy2(template / name, directory / name)
     shutil.copytree(template / "libraries", directory / "libraries")
     (directory / "mods").mkdir()
@@ -60,6 +60,9 @@ def run(java, directory, phase, properties, report_kind="worldgen", expected_fai
             raise AssertionError(f"Did not reproduce the old generator: {report_path}")
     elif result.returncode or not report.get("passed"):
         raise AssertionError(f"Runtime check failed: {report_path}; read {log}")
+    elif any(text in log.read_text(encoding="utf-8", errors="replace") for text in
+             ("Saving entity NBT", "has thrown an exception trying to write state", "Encountered an unexpected exception")):
+        raise AssertionError(f"Unexpected save or startup failure; read {log}")
     print(directory.name, phase, "expected failure" if expected_failure else "passed", flush=True)
     return report
 
@@ -73,7 +76,7 @@ def reject_dependency(java, directory, template, mods):
 
     text = log.read_text(encoding="utf-8", errors="replace")
     if ("MissingModsException" not in text or "orespawn" not in text
-            or "4.1.2.110021" not in text or (directory / "world/level.dat").exists()):
+            or "4.1.6.111021" not in text or (directory / "world/level.dat").exists()):
         raise AssertionError(f"The unsupported dependency was not clearly rejected; read {log}")
     print(directory.name, "rejected before world load", flush=True)
 
@@ -122,6 +125,50 @@ def expected_os1(source):
     return {"ores": ores}
 
 
+def check_os1_reload_profile(before, after, expected):
+    # OreSpawn records which imported rules replace native defaults on reload.
+    # Nothing else in the saved profile should change.
+    replacements = {
+        "basemetals:legacy/" + ore["block"].split(":", 1)[1]: rule
+        for rule, ore in expected["ores"].items()
+    }
+    provider = after["providers"]["basemetals"]
+    if provider.get("legacy_ore_replacements") != replacements:
+        raise AssertionError("OreSpawn did not record the expected OS1 rule replacements")
+    if "legacy_ore_replacements" not in before["providers"]["basemetals"]:
+        del provider["legacy_ore_replacements"]
+    if before != after:
+        raise AssertionError("OS1 reload changed more than the rule replacement index")
+
+
+def check_moved_os1_world(args, source, mods, stock):
+    target = args.output / "os1-world-only-move"
+    prepare(target, args.template, mods, source / "world")
+    profile = target / "world/serverconfig/orespawn-worldgen.json"
+    original = json.loads(profile.read_text(encoding="utf-8"))
+    imported = {key: value for key, value in original["ores"].items() if key.startswith("basemetals:")}
+    # Model a world saved before OreSpawn could record replacement IDs.
+    original["providers"]["basemetals"].pop("legacy_ore_replacements", None)
+    write_json(profile, original)
+    expected = dict(imported)
+    imported_outputs = {ore["block"] for ore in imported.values()}
+    for key, rule in expected_os3(stock)["ores"].items():
+        if rule["block"] not in imported_outputs:
+            expected[key] = rule
+    expected_path = target / "expected.json"
+    write_json(expected_path, {"ores": expected})
+    remote = target / "world/region/r.2.-3.mca"
+    unopened = digest(remote)
+    for phase in ("first", "reload"):
+        result = run(args.java, target, phase, {"worldgen.phase": phase,
+                    "worldgen.expected": expected_path, "worldgen.savedMarker": "true"})
+        active = result["profile"]["ores"]
+        if any(active.get(key) != ore for key, ore in imported.items()):
+            raise AssertionError("Moving the world changed an imported rule")
+        if digest(remote) != unopened:
+            raise AssertionError("Moving the world changed an unopened region")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("java", "template", "mod", "orespawn", "probe", "output", "os3"):
@@ -130,7 +177,7 @@ def main():
     parser.add_argument("--old-mod", type=Path)
     parser.add_argument("--old-orespawn", type=Path)
     parser.add_argument("--old-support-mod", type=Path, action="append", default=[])
-    parser.add_argument("--old-version", default="2.5.1.110021")
+    parser.add_argument("--old-version", default="2.5.0-beta4")
     parser.add_argument("--launch-probe", type=Path)
     parser.add_argument("--red", action="store_true")
     args = parser.parse_args()
@@ -192,14 +239,19 @@ def main():
         remote = directory / "world/region/r.2.-3.mca"
         remote_hash = digest(remote)
         run(args.java, directory, "first", properties)
+        profile = directory / "world/serverconfig/orespawn-worldgen.json"
         stable = [directory / "config/basemetals-orespawn.json",
                   directory / "config/orespawn-upgrade-report.txt",
-                  directory / "world/serverconfig/orespawn-worldgen.json"]
+                  profile]
         hashes = {path: digest(path) for path in stable}
+        first_profile = json.loads(profile.read_text(encoding="utf-8")) if name == "os1" else None
         properties["worldgen.phase"] = "reload"
         run(args.java, directory, "reload", properties)
         if digest(remote) != remote_hash:
             raise AssertionError(f"An unopened region changed during upgrade: {directory}")
+        if first_profile is not None:
+            check_os1_reload_profile(first_profile, json.loads(profile.read_text(encoding="utf-8")), expected)
+            hashes[profile] = digest(profile)
         if digest(legacy) != source_hash or any(digest(path) != value for path, value in hashes.items()):
             raise AssertionError(f"Migration rewrote a source or was not stable on reload: {directory}")
         properties["worldgen.openRemote"] = "true"
@@ -210,14 +262,22 @@ def main():
             raise AssertionError(f"Migration changed after opening later chunks: {directory}")
         write_json(directory / "migration-hashes.json", {str(path.relative_to(directory)): value for path, value in hashes.items()})
 
+    if args.os1:
+        check_moved_os1_world(args, args.output / "os1", mods, stock)
+
     fresh = args.output / "native-fresh"
     prepare(fresh, args.template, mods, flat=False)
     write_json(fresh / "expected.json", expected_os3(stock))
     run(args.java, fresh, "first", {"worldgen.expected": fresh / "expected.json", "worldgen.sample": "true"})
     run(args.java, fresh, "reload", {"worldgen.phase": "reload", "worldgen.expected": fresh / "expected.json"})
 
-    existing = args.output / "existing-os4"
-    prepare(existing, args.template, mods, fresh / "world")
+    check_saved_overrides(args.java, args.template, args.output, mods, fresh, stock, custom)
+    print("BASE_METALS_OS3_MIGRATION_SUITE_PASS", flush=True)
+
+
+def check_saved_overrides(java, template, output, mods, fresh, stock, custom):
+    existing = output / "existing-os4"
+    prepare(existing, template, mods, fresh / "world")
     shutil.copytree(fresh / "config", existing / "config", dirs_exist_ok=True)
     profile_path = existing / "world/serverconfig/orespawn-worldgen.json"
     profile = json.loads(profile_path.read_text(encoding="utf-8"))
@@ -229,29 +289,39 @@ def main():
                 "ores": {key: copy.deepcopy(value) for key, value in profile["ores"].items()
                          if key.startswith("basemetals:")}}
     override["ores"][tin]["dimension_selectors"][selector]["frequency"] = 9.0
+    # Older OreSpawn 4 releases saved overrides without schema 5's material and channel fields.
+    older_override = copy.deepcopy(override)
+    older_override["schema_version"] = 4
+    for ore in older_override["ores"].values():
+        ore.pop("material", None)
+        for key in ("dimensions", "dimension_selectors"):
+            for dimension in ore.get(key, {}).values():
+                dimension.pop("placement_channel", None)
     override_path = existing / "config/basemetals-orespawn.json"
-    write_json(override_path, override)
+    write_json(override_path, older_override)
     write_json(existing / "config/orespawn3/basemetals.json", custom)
     expected = expected_os3(stock)
     expected["ores"][tin]["dimension_selectors"][selector]["frequency"] = 6.25
     write_json(existing / "expected.json", expected)
     hashes = {path: digest(path) for path in (profile_path, override_path)}
     for phase in ("first", "reload"):
-        run(args.java, existing, phase, {"worldgen.phase": phase, "worldgen.expected": existing / "expected.json"})
-    if any(digest(path) != value for path, value in hashes.items()):
-        raise AssertionError("An existing OS4 override or world profile was overwritten")
+        run(java, existing, phase, {"worldgen.phase": phase, "worldgen.expected": existing / "expected.json"})
+    for path, original in hashes.items():
+        if digest(path) != original:
+            raise AssertionError(f"OreSpawn rewrote an existing configuration during OS3 import: {path}")
 
-    future = args.output / "existing-os4-new-world"
-    prepare(future, args.template, mods)
-    write_json(future / "config/basemetals-orespawn.json", override)
-    write_json(future / "config/orespawn3/basemetals.json", custom)
-    write_json(future / "expected.json", {"ores": override["ores"]})
-    override_hash = digest(future / "config/basemetals-orespawn.json")
-    for phase in ("first", "reload"):
-        run(args.java, future, phase, {"worldgen.phase": phase, "worldgen.expected": future / "expected.json"})
-    if digest(future / "config/basemetals-orespawn.json") != override_hash:
-        raise AssertionError("The existing override changed when creating a new world")
-    print("BASE_METALS_OS41_MIGRATION_SUITE_PASS", flush=True)
+    for saved_override in (older_override, override):
+        future = output / f"existing-os4-schema{saved_override['schema_version']}-new-world"
+        prepare(future, template, mods)
+        override_path = future / "config/basemetals-orespawn.json"
+        write_json(override_path, saved_override)
+        write_json(future / "config/orespawn3/basemetals.json", custom)
+        write_json(future / "expected.json", {"ores": saved_override["ores"]})
+        override_hash = digest(override_path)
+        for phase in ("first", "reload"):
+            run(java, future, phase, {"worldgen.phase": phase, "worldgen.expected": future / "expected.json"})
+        if digest(override_path) != override_hash:
+            raise AssertionError(f"The existing override changed when creating a new world: {future}")
 
 
 if __name__ == "__main__":

@@ -60,7 +60,7 @@ public class ItemMMDArmor extends net.minecraft.item.ItemArmor implements IMMDOb
 			playerUpdateTimestampMap.get(player).set(w.getTotalWorldTime() + UPDATE_INTERVAL);
 			final int updateCount = playerUpdateCountMap.get(player).getAndIncrement();
 			for (int i = 0; i < 4; i++) {
-				final ItemStack armorItemStack = player.inventory.armorInventory[i];
+				final ItemStack armorItemStack = player.inventory.armorInventory.get(i);
 				if ((armorItemStack != null)
 						&& (armorItemStack.getItem() instanceof ItemMMDArmor)) {
 					MMDToolEffects.extraEffectsOnArmorUpdate(w, player, this.mmdMaterial,

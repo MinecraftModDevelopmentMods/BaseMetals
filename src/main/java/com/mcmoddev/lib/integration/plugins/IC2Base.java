@@ -15,6 +15,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.Recipes;
 import net.minecraft.item.ItemStack;
+import zone.moddev.mc.basemetals.content.ContentAcquisition;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -51,8 +52,12 @@ public class IC2Base implements IIntegration {
 				Recipes.inputFactory.forOreDict("craftingToolForgeHammer"),
 				Recipes.inputFactory.forOreDict(Oredicts.PLATE + material.getCapitalizedName()));
 
-		Recipes.advRecipes.addShapelessRecipe(casing, inputsCasing.toArray());
-		Recipes.advRecipes.addShapelessRecipe(plate, inputsPlate.toArray());
+		if (ContentAcquisition.allowsIntegrationOutput(casing)) {
+			Recipes.advRecipes.addShapelessRecipe(casing, inputsCasing.toArray());
+		}
+		if (ContentAcquisition.allowsIntegrationOutput(plate)) {
+			Recipes.advRecipes.addShapelessRecipe(plate, inputsPlate.toArray());
+		}
 	}
 
 	protected void registerVanillaRecipes(@Nonnull final String materialName) {
@@ -74,7 +79,8 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputOre = Recipes.inputFactory.forOreDict(Oredicts.ORE + oreDictName);
 		final IRecipeInput inputDensePlate = Recipes.inputFactory
 				.forOreDict(Oredicts.PLATE_DENSE + oreDictName);
-		if (material.hasItem(Names.CRUSHED)) {
+		if (material.hasItem(Names.CRUSHED)
+				&& ContentAcquisition.allowsIntegrationOutput(material.getItemStack(Names.CRUSHED))) {
 			Recipes.macerator.addRecipe(inputOre, null, false,
 					material.getItemStack(Names.CRUSHED, 2));
 		}
@@ -87,7 +93,9 @@ public class IC2Base implements IIntegration {
 	protected void addMaceratorRecipe(@Nonnull final String oreDict,
 			@Nonnull final ItemStack output) {
 		final IRecipeInput input = Recipes.inputFactory.forOreDict(oreDict);
-		Recipes.macerator.addRecipe(input, null, false, output);
+		if (ContentAcquisition.allowsIntegrationOutput(output)) {
+			Recipes.macerator.addRecipe(input, null, false, output);
+		}
 	}
 
 	protected void addOreWashingPlantRecipes(@Nonnull final String materialName) {
@@ -100,7 +108,8 @@ public class IC2Base implements IIntegration {
 				.forOreDict(Oredicts.CRUSHED + oreDictName);
 		final NBTTagCompound metadata = new NBTTagCompound();
 		metadata.setInteger("amount", 1000);
-		if ((material.hasItem(Names.CRUSHED_PURIFIED))) {
+		if (material.hasItem(Names.CRUSHED_PURIFIED)
+				&& ContentAcquisition.allowsIntegrationOutput(material.getItemStack(Names.CRUSHED_PURIFIED))) {
 			if (material.hasItem(Names.SMALLPOWDER)) {
 				Recipes.oreWashing.addRecipe(inputOre, metadata, false,
 						material.getItemStack(Names.CRUSHED_PURIFIED),
@@ -158,15 +167,15 @@ public class IC2Base implements IIntegration {
 		final ItemStack outputCasing = material.getItemStack(Names.CASING, 2);
 		final ItemStack outputFence = material.getBlockItemStack(Names.FENCE, 1);
 
-		if (material.hasBlock(Names.PLATE)) {
+		if (material.hasBlock(Names.PLATE) && ContentAcquisition.allowsIntegrationOutput(outputPlate)) {
 			Recipes.metalformerRolling.addRecipe(inputIngot, null, false, outputPlate);
 		}
 
-		if (material.hasItem(Names.CASING)) {
+		if (material.hasItem(Names.CASING) && ContentAcquisition.allowsIntegrationOutput(outputCasing)) {
 			Recipes.metalformerRolling.addRecipe(inputPlate, null, false, outputCasing);
 		}
 
-		if (material.hasBlock(Names.FENCE)) {
+		if (material.hasBlock(Names.FENCE) && ContentAcquisition.allowsIntegrationOutput(outputFence)) {
 			Recipes.metalformerExtruding.addRecipe(inputCasing, null, false, outputFence);
 		}
 	}
@@ -180,7 +189,8 @@ public class IC2Base implements IIntegration {
 		final IRecipeInput inputIngot = Recipes.inputFactory
 				.forOreDict(Oredicts.PLATE + oreDictName, 9);
 		final ItemStack outputDensePlate = material.getItemStack(Names.DENSE_PLATE);
-		if ((material.hasItem(Names.DENSE_PLATE)) && (material.hasItem(Names.PLATE))) {
+		if (material.hasItem(Names.DENSE_PLATE) && material.hasItem(Names.PLATE)
+				&& ContentAcquisition.allowsIntegrationOutput(outputDensePlate)) {
 			Recipes.compressor.addRecipe(inputIngot, null, false, outputDensePlate);
 		}
 	}

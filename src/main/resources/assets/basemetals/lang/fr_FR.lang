@@ -532,3 +532,17 @@ item.basemetals.tin_gear.name=Pignon en étain
 item.basemetals.zinc_gear.name=Pignon de zinc
 
 item.basemetals.gold_crackhammer.name=Massette en or
+
+config.basemetals.title=Configuration de Base Metals
+config.basemetals.restart_guidance=Redémarrage requis. La répartition des minerais se configure dans OreSpawn.
+config.basemetals.category.general=Général
+config.basemetals.category.metals=Métaux de base
+config.basemetals.category.vanilla=Compléments Vanilla
+config.basemetals.category.fluids=Fluides en fusion
+config.basemetals.option.content_mode=Mode de contenu
+config.basemetals.content_mode.high_fantasy=Fantaisie élevée
+config.basemetals.content_mode.low_fantasy=Fantaisie modérée
+high_fantasy=Fantaisie élevée
+low_fantasy=Fantaisie modérée
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

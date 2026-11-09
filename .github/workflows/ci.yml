@@ -1,19 +1,19 @@
-name: Base Metals 1.10 CI
+name: Base Metals 1.11 CI
 
 on:
   push:
     branches:
-      - master-1.10.2
+      - master-1.11.2
       - 'feature/**'
   pull_request:
     branches:
-      - master-1.10.2
+      - master-1.11.2
 
 permissions:
   contents: read
 
 concurrency:
-  group: basemetals-1.10-${{ github.workflow }}-${{ github.ref }}
+  group: basemetals-1.11-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -133,11 +133,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          runtime="$RUNNER_TEMP/forge-1.10.2-2511-runtime"
+          runtime="$RUNNER_TEMP/forge-1.11.2-2588-runtime"
           bash gradle/prepare-packaged-forge-runtime.sh "$runtime" "$JAVA_HOME_8_X64/bin/java"
           echo "runtime=$runtime" >> "$GITHUB_OUTPUT"
 
-      - name: Install world-audit tools
+      - name: Install Python for packaged runtime checks
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
@@ -171,7 +171,7 @@ jobs:
           set -euo pipefail
           bundle="$RUNNER_TEMP/release-input"
           mkdir -p "$bundle"
-          cp build/libs/BaseMetals-2.5.1.110021{,-sources,-javadoc}.jar "$bundle/"
+          cp build/libs/BaseMetals-2.5.1.111021{,-sources,-javadoc}.jar "$bundle/"
           cp build/release/SHA256SUMS CHANGELOG.txt "$bundle/"
           ./gradlew verifyPreparedReleaseArtifacts verifyMavenCoordinates \
             -PpreparedReleaseDir="$bundle" \
@@ -200,13 +200,13 @@ jobs:
       - name: Upload audited release candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.10.2-${{ github.sha }}
+          name: BaseMetals-1.11.2-${{ github.sha }}
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-2.5.1.110021.jar
-            build/libs/BaseMetals-2.5.1.110021-sources.jar
-            build/libs/BaseMetals-2.5.1.110021-javadoc.jar
+            build/libs/BaseMetals-2.5.1.111021.jar
+            build/libs/BaseMetals-2.5.1.111021-sources.jar
+            build/libs/BaseMetals-2.5.1.111021-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
@@ -214,7 +214,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: BaseMetals-1.10.2-diagnostics-${{ github.sha }}
+          name: BaseMetals-1.11.2-diagnostics-${{ github.sha }}
           if-no-files-found: ignore
           retention-days: 14
           path: |

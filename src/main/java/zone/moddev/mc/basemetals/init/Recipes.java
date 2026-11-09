@@ -12,7 +12,6 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -45,22 +44,6 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 			}
 			if (Options.isMaterialEnabled(MaterialNames.STONE)) {
 				crackHammerHelper(MaterialNames.STONE, net.minecraft.init.Blocks.STONEBRICK);
-			}
-		}
-
-		// Iron items
-		if (Materials.hasMaterial(MaterialNames.IRON)) {
-			final MMDMaterial iron = com.mcmoddev.lib.init.Materials
-					.getMaterialByName(MaterialNames.IRON);
-			final String oreDictName = iron.getCapitalizedName();
-
-			if (iron.hasItem(Names.NUGGET)) {
-				GameRegistry.addRecipe(new ShapelessOreRecipe(iron.getItemStack(Names.NUGGET, 9),
-						Oredicts.INGOT + oreDictName));
-			}
-			if (iron.hasItem(Names.INGOT)) {
-				GameRegistry.addRecipe(new ShapedOreRecipe(iron.getItemStack(Names.INGOT), "xxx", "xxx",
-						"xxx", 'x', Oredicts.NUGGET + oreDictName));
 			}
 		}
 
@@ -153,9 +136,8 @@ public final class Recipes extends com.mcmoddev.lib.init.Recipes {
 			if (FluidRegistry.isUniversalBucketEnabled()) {
 				final UniversalBucket universalBucket = ForgeModContainer
 						.getInstance().universalBucket;
-				final ItemStack bucketMercury = new ItemStack(universalBucket, 1, 0);
-				universalBucket.fill(bucketMercury,
-						new FluidStack(mercury.getFluid(), universalBucket.getCapacity()), true);
+				final ItemStack bucketMercury = UniversalBucket.getFilledBucket(universalBucket,
+						mercury.getFluid());
 				GameRegistry.addRecipe(new ShapelessOreRecipe(bucketMercury,
 						net.minecraft.init.Items.BUCKET, Oredicts.INGOT_MERCURY,
 						Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY, Oredicts.INGOT_MERCURY,

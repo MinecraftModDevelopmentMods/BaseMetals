@@ -111,9 +111,9 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 							(1.0F / ((itemRand.nextFloat() * 0.4F) + 1.2F)) + (f * 0.5F));
 
 					if (!flag1) {
-						--itemStack.stackSize;
+						itemStack.shrink(1);
 
-						if (itemStack.stackSize == 0) {
+						if (itemStack.getCount() == 0) {
 							entityPlayer.inventory.deleteStack(itemStack);
 						}
 					}
@@ -154,8 +154,9 @@ public class ItemBow extends net.minecraft.item.ItemBow {
 	 * Called when the equipped item is right clicked.
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(final ItemStack itemStackIn,
-			final World worldIn, final EntityPlayer playerIn, final EnumHand handIn) {
+	public ActionResult<ItemStack> onItemRightClick(final World worldIn,
+			final EntityPlayer playerIn, final EnumHand handIn) {
+		final ItemStack itemStackIn = playerIn.getHeldItem(handIn);
 		// Check for specific Arrows
 		final boolean flag = this.myFindAmmo(playerIn) != null;
 

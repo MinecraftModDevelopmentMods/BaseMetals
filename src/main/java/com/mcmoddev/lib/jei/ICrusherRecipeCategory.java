@@ -53,6 +53,11 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 	}
 
 	@Override
+	public String getModName() {
+		return "Base Metals";
+	}
+
+	@Override
 	public IDrawable getBackground() {
 		return this.background;
 	}
@@ -80,7 +85,7 @@ public class ICrusherRecipeCategory extends BlankRecipeCategory<ICrusherRecipeWr
 
 		// load the output and input bits
 		final List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-		final List<ItemStack> outputs = ingredients.getOutputs(ItemStack.class);
+		final List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
 
 		// setup the data
 		guiItemStacks.set(0, inputs.get(0));

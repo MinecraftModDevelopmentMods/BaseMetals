@@ -55,7 +55,7 @@ public final class LegacyCapture {
     @EventHandler
     public void serverStarted(FMLServerStartedEvent event) throws IOException {
         net.minecraft.server.MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        Path worldRoot = server.worldServerForDimension(0).getSaveHandler().getWorldDirectory().toPath();
+        Path worldRoot = server.getWorld(0).getSaveHandler().getWorldDirectory().toPath();
         if (Files.isRegularFile(worldRoot.resolve("legacy_registry_manifest_runtime.json"))) {
             verifySavedFixture(server, worldRoot);
             server.saveAllWorlds(false);
@@ -66,15 +66,15 @@ public final class LegacyCapture {
         net.minecraftforge.common.DimensionManager.initDimension(-1);
         net.minecraftforge.common.DimensionManager.initDimension(1);
         List<WorldServer> worlds = new ArrayList<>();
-        worlds.add(server.worldServerForDimension(0));
-        worlds.add(server.worldServerForDimension(-1));
-        worlds.add(server.worldServerForDimension(1));
+        worlds.add(server.getWorld(0));
+        worlds.add(server.getWorld(-1));
+        worlds.add(server.getWorld(1));
         WorldServer world = worlds.get(0);
         JsonObject manifest = new JsonObject();
-        manifest.addProperty("source", "live Forge 1.10.2 registries");
-        manifest.addProperty("forge", "12.18.3.2511");
+        manifest.addProperty("source", "live Forge 1.11.2 registries");
+        manifest.addProperty("forge", "13.20.1.2588");
         manifest.addProperty("fixture_format", 2);
-        manifest.addProperty("source_minecraft", "1.10.2");
+        manifest.addProperty("source_minecraft", "1.11.2");
         net.minecraftforge.fml.common.ModContainer mod = net.minecraftforge.fml.common.Loader.instance()
                 .getIndexedModList().get("basemetals");
         manifest.addProperty("source_basemetals", mod.getVersion());
@@ -105,7 +105,7 @@ public final class LegacyCapture {
             }
         }
         Files.write(worldDir.resolve("BASEMETALS_1_10_FIXTURE_COMPLETE.txt"),
-                ("Base Metals 1.10 fixture format 2 captured with " + blockIds.size()
+                ("Base Metals 1.11 fixture format 2 captured with " + blockIds.size()
                         + " blocks in all three dimensions, " + itemIds.size()
                         + " exact item stacks, filled fluid buckets, armor stands, and player data.\n")
                         .getBytes(StandardCharsets.UTF_8));
@@ -132,7 +132,7 @@ public final class LegacyCapture {
             JsonObject block = element.getAsJsonObject();
             for (com.google.gson.JsonElement stateElement : block.getAsJsonArray("states")) {
                 JsonObject saved = stateElement.getAsJsonObject();
-                WorldServer world = server.worldServerForDimension(saved.get("dimension").getAsInt());
+                WorldServer world = server.getWorld(saved.get("dimension").getAsInt());
                 BlockPos pos = new BlockPos(saved.get("x").getAsInt(), saved.get("y").getAsInt(),
                         saved.get("z").getAsInt());
                 IBlockState actual = world.getBlockState(pos);
@@ -141,7 +141,7 @@ public final class LegacyCapture {
                     throw new IllegalStateException("Source fixture lost " + expectedId + " at " + pos);
                 }
 
-                // Record the state that 1.10 actually saved, not properties computed from neighbours.
+                // Record the state saved to disk, not properties computed from neighbours.
                 saved.addProperty("saved_metadata", actual.getBlock().getMetaFromState(actual));
                 JsonObject properties = new JsonObject();
                 for (Map.Entry<net.minecraft.block.properties.IProperty<?>, Comparable<?>> property
@@ -154,7 +154,7 @@ public final class LegacyCapture {
             }
         }
 
-        WorldServer world = server.worldServerForDimension(0);
+        WorldServer world = server.getWorld(0);
         int stacks = 0;
         for (com.google.gson.JsonElement element : manifest.getAsJsonArray("items")) {
             JsonObject saved = element.getAsJsonObject();
@@ -163,10 +163,11 @@ public final class LegacyCapture {
             world.getBlockState(pos);
             TileEntityChest chest = (TileEntityChest) world.getTileEntity(pos);
             ItemStack stack = chest.getStackInSlot(saved.get("slot").getAsInt());
-            if (stack == null || !stack.getItem().getRegistryName().toString().equals(saved.get("id").getAsString())
-                    || stack.stackSize != saved.get("count").getAsInt()
-                    || stack.getItemDamage() != saved.get("damage").getAsInt()) {
-                throw new IllegalStateException("Source fixture inventory changed at " + pos);
+            if (stack.isEmpty() || !stack.getItem().getRegistryName().toString().equals(saved.get("id").getAsString())
+                    || stack.getCount() != saved.get("count").getAsInt()
+                    || stack.getItemDamage() != saved.get("damage").getAsInt()
+                    || !String.valueOf(stack.getTagCompound()).equals(saved.get("tag_snbt").getAsString())) {
+                throw new IllegalStateException("Saved inventory changed: " + saved.get("id") + " at " + pos);
             }
             if (saved.has("armor_x")) {
                 BlockPos armorPos = new BlockPos(saved.get("armor_x").getAsDouble(),
@@ -179,9 +180,10 @@ public final class LegacyCapture {
                     for (EntityEquipmentSlot equipment : EntityEquipmentSlot.values()) {
                         if (!equipment.getName().equals(saved.get("armor_slot").getAsString())) continue;
                         ItemStack worn = stand.getItemStackFromSlot(equipment);
-                        found |= worn != null && worn.getItem().getRegistryName().toString()
+                        found |= !worn.isEmpty() && worn.getItem().getRegistryName().toString()
                                 .equals(saved.get("id").getAsString())
-                                && worn.getItemDamage() == saved.get("damage").getAsInt();
+                                && worn.getItemDamage() == saved.get("damage").getAsInt()
+                                && String.valueOf(worn.getTagCompound()).equals(saved.get("tag_snbt").getAsString());
                     }
                 }
                 if (!found) throw new IllegalStateException("Source armor stand was not saved: " + saved.get("id"));
@@ -250,13 +252,13 @@ public final class LegacyCapture {
                 stack.setItemDamage(Math.max(1, stack.getMaxDamage() / 3));
                 if (stack.isItemEnchantable()) stack.addEnchantment(Enchantments.UNBREAKING, 2);
             }
-            NBTTagCompound fixtureTag = stack.getSubCompound("basemetals_fixture", true);
+            NBTTagCompound fixtureTag = stack.getOrCreateSubCompound("basemetals_fixture");
             fixtureTag.setString("proof", id.toString());
             stack.setStackDisplayName("Fixture " + id.toString());
             entry.addProperty("custom_name", stack.getDisplayName());
             entry.addProperty("metadata", stack.getMetadata());
             entry.addProperty("damage", stack.getItemDamage());
-            entry.addProperty("count", stack.stackSize);
+            entry.addProperty("count", stack.getCount());
             entry.addProperty("max_damage", stack.getMaxDamage());
             entry.addProperty("enchanted", stack.isItemEnchanted());
             entry.addProperty("tag_snbt", stack.getTagCompound().toString());
@@ -352,7 +354,7 @@ public final class LegacyCapture {
         for (int slot = 0; slot < Math.min(9, itemIds.size()); slot++) {
             ResourceLocation id = itemIds.get(slot);
             ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(id));
-            NBTTagCompound fixtureTag = stack.getSubCompound("basemetals_fixture", true);
+            NBTTagCompound fixtureTag = stack.getOrCreateSubCompound("basemetals_fixture");
             fixtureTag.setString("player_proof", id.toString());
             player.inventory.setInventorySlotContents(slot, stack);
             JsonObject value = new JsonObject();

@@ -53,7 +53,7 @@ public class EventHandler {
 		if ((damage > 0.0F) && (activeItemStack.getItem() instanceof ItemMMDShield)) {
 			final int i = 1 + MathHelper.floor(damage);
 			activeItemStack.damageItem(i, player);
-			if (activeItemStack.stackSize <= 0) {
+			if (activeItemStack.getCount() <= 0) {
 				final EnumHand enumhand = player.getActiveHand();
 				ForgeEventFactory.onPlayerDestroyItem(player, activeItemStack, enumhand);
 				if (enumhand == EnumHand.MAIN_HAND) {
@@ -156,8 +156,8 @@ public class EventHandler {
 		final ItemStack left = event.getLeft();
 		final ItemStack right = event.getRight();
 
-		if ((left == null) || (right == null) || (left.stackSize != 1)
-				|| (right.stackSize != 1)) {
+		if ((left == null) || (right == null) || (left.getCount() != 1)
+				|| (right.getCount() != 1)) {
 			return;
 		}
 

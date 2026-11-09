@@ -34,8 +34,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 	modid = BaseMetals.MODID,
 	name = BaseMetals.NAME,
 	version = BaseMetals.VERSION,
-	dependencies = "required-after:Forge@[12.18.3.2511,);required-after:orespawn@[4.1.2.110021,5.0.0);after:tconstruct;after:ic2;after:taiga;before:buildingbricks",
-	acceptedMinecraftVersions = "[1.10.2]",
+	dependencies = "required-after:forge@[13.20.1.2588,);required-after:orespawn@[4.1.6.111021,5.0.0);after:tconstruct;after:ic2;after:taiga;before:buildingbricks",
+	guiFactory = "zone.moddev.mc.basemetals.client.BaseMetalsGuiFactory",
+	acceptedMinecraftVersions = "[1.11.2]",
 	certificateFingerprint = "",
 	updateJSON = BaseMetals.UPDATEJSON)
 public class BaseMetals {
@@ -50,9 +51,9 @@ public class BaseMetals {
 	protected static final String NAME = "Base Metals";
 
 	/**
-	 * Major.Minor.Patch.Target, where 110021 means Minecraft 1.10.2 on Forge.
+	 * Major.Minor.Patch.Target, where 111021 means Minecraft 1.11.2 on Forge.
 	 */
-	public static final String VERSION = "2.5.1.110021";
+	public static final String VERSION = "2.5.1.111021";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";

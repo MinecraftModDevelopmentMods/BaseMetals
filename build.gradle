@@ -13,8 +13,8 @@ group = project.mod_group
 version = project.mod_version
 base.archivesName = 'BaseMetals'
 
-if (!(project.version ==~ /\d+\.\d+\.\d+\.110021/)) {
-    throw new GradleException('Use Major.Minor.Patch.110021 for Minecraft 1.10.2 on Forge.')
+if (!(project.version ==~ /\d+\.\d+\.\d+\.111021/)) {
+    throw new GradleException('Use Major.Minor.Patch.111021 for Minecraft 1.11.2 on Forge.')
 }
 
 // Gradle and Mavenizer use modern JDKs; the mod and game still use Java 8.
@@ -57,10 +57,10 @@ def normalizeText = { details ->
             eof: FixCrLfFilter.AddAsisRemove.newInstance('asis'))
 }
 
-def developmentOutput = layout.buildDirectory.dir('forge10-development/main')
+def developmentOutput = layout.buildDirectory.dir('forge11-development/main')
 def prepareDevelopmentMod = tasks.register('prepareDevelopmentMod', Sync) {
     group = 'ide'
-    description = 'Merges production classes and processed resources for Forge 1.10 launches.'
+    description = 'Merges production classes and processed resources for Forge 1.11 launches.'
     dependsOn tasks.named('classes')
     from tasks.named('compileJava', JavaCompile).flatMap { it.destinationDirectory }
     from sourceSets.main.output.resourcesDir
@@ -148,6 +148,8 @@ tasks.named('processResources', ProcessResources) {
     inputs.property 'version', project.version
     inputs.property 'mcversion', project.minecraft_version
     filesMatching('mcmod.info') { expand version: project.version, mcversion: project.minecraft_version }
+    // Pack format 3 looks up locale filenames in lowercase.
+    filesMatching('assets/basemetals/lang/*.lang') { name = name.toLowerCase(Locale.ROOT) }
     rename '(.+_at.cfg)', 'META-INF/$1'
     filesMatching(textPatterns, normalizeText)
 }

@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.content.ContentMode;
+import zone.moddev.mc.basemetals.content.ContentPolicy;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -53,16 +55,22 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack curItem = inv.getStackInSlot(i);
 
-			if (curItem != null) {
+			if (!curItem.isEmpty()) {
 				final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getItemDamage());
 				if (OreDictionary.itemMatches(base, comp, false)) {
 					matches[0] = true;
-				} else if (OreDictionary.containsMatch(false, upgradeMats, comp)) {
+				} else if (upgradeMats.stream().anyMatch(plate -> OreDictionary.itemMatches(plate, comp, false))) {
 					matches[1] = true;
 				}
 			}
 		}
-		return matches[0] ? matches[1] : false;
+		if (!matches[0] || !matches[1]) {
+			return false;
+		}
+
+		// The plate determines the output, so the crafting list cannot filter this recipe.
+		return ContentPolicy.active().mode() == ContentMode.HIGH_FANTASY
+				|| !getCraftingResult(inv).isEmpty();
 	}
 
 	@Override
@@ -82,7 +90,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 			}
 		}
 
-		ItemStack plateMatched = null;
+		ItemStack plateMatched = ItemStack.EMPTY;
 		Map<Enchantment, Integer> enchants = Collections.emptyMap();
 		final ItemStack matcher = new ItemStack(
 				Materials.getMaterialByName(this.materialName).getItem(Names.SHIELD), 1, 0);
@@ -90,10 +98,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack curItem = inv.getStackInSlot(i);
 
-			if (curItem != null) {
+			if (!curItem.isEmpty()) {
 				final ItemStack comp = new ItemStack(curItem.getItem(), 1, curItem.getMetadata());
 				for (final Entry<String, List<ItemStack>> ent : plates.entrySet()) {
-					if (OreDictionary.containsMatch(false, ent.getValue(), comp)) {
+					if (ent.getValue().stream().anyMatch(plate -> OreDictionary.itemMatches(plate, comp, false))) {
 						plateMatched = new ItemStack(
 								Materials.getMaterialByName(ent.getKey().toLowerCase())
 										.getItem(Names.SHIELD),
@@ -106,6 +114,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 			}
 		}
 
+		if (plateMatched.isEmpty() || !ContentPolicy.active().allows(plateMatched)) {
+			return ItemStack.EMPTY;
+		}
+
 		BaseMetals.logger.debug("Adding %d enchantments to output item", enchants.size());
 		EnchantmentHelper.setEnchantments(enchants, plateMatched);
 		return plateMatched;
@@ -115,7 +127,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack curItem = inv.getStackInSlot(i);
 
-			if (curItem != null) {
+			if (!curItem.isEmpty()) {
 				for (final MMDMaterial e : Materials.getAllMaterials()) {
 					if (OreDictionary.containsMatch(false,
 							OreDictionary.getOres(Oredicts.PLATE + e.getName()), curItem)) {
@@ -133,7 +145,7 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack a = inv.getStackInSlot(i);
-			if (a != null) {
+			if (!a.isEmpty()) {
 				final ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
 				if (OreDictionary.itemMatches(input, comp, false)) {
 					return a;

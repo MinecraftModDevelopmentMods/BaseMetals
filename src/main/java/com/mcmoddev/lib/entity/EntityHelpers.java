@@ -29,7 +29,7 @@ public class EntityHelpers {
 	 * @return
 	 */
 	public static ItemStack readFromNBTItemStack(final NBTTagCompound compound) {
-		return ItemStack.loadItemStackFromNBT(compound.getCompoundTag("itemstack"));
+		return new ItemStack(compound.getCompoundTag("itemstack"));
 	}
 
 }

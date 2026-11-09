@@ -24,8 +24,8 @@ class ReleaseSetupTests {
             values.load(reader);
         }
 
-        assertEquals("1.10.2", values.getProperty("minecraft_version"));
-        assertTrue(values.getProperty("mod_version").matches("\\d+\\.\\d+\\.\\d+\\.110021"));
+        assertEquals("1.11.2", values.getProperty("minecraft_version"));
+        assertTrue(values.getProperty("mod_version").matches("\\d+\\.\\d+\\.\\d+\\.111021"));
         assertEquals("forge", values.getProperty("loader_name"));
         assertEquals("1", values.getProperty("loader_code"));
         assertEquals("240967", values.getProperty("curseforge_project_id"));
@@ -53,7 +53,7 @@ class ReleaseSetupTests {
                     }
                 }
                 if (!path.endsWith("release-on-tag.yml")) {
-                    assertTrue(workflow.contains("master-1.10.2"), path.toString());
+                    assertTrue(workflow.contains("master-1.11.2"), path.toString());
                     assertFalse(workflow.contains("master-1.12"), path.toString());
                 }
             }

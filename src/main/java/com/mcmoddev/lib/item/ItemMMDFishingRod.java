@@ -16,7 +16,7 @@ import net.minecraft.world.World;
  * @author Jasmine Iwanek
  *
  */
-public class ItemMMDFishingRod extends ItemFishingRod implements IMMDObject {
+public class ItemMMDFishingRod extends net.minecraft.item.ItemFishingRod implements IMMDObject {
 
 	private final MMDMaterial material;
 

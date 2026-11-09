@@ -29,6 +29,7 @@ class BaseMetalsWorldgenProviderTests {
 			final JsonObject ore = ores.getAsJsonObject("basemetals:legacy/" + entry.getKey());
 			final JsonObject parameters = old.getAsJsonObject("parameters");
 			assertEquals(old.getAsJsonArray("blocks").get(0).getAsJsonObject().get("name"), ore.get("block"));
+			assertEquals("orespawn:" + entry.getKey().replaceFirst("_ore$", ""), ore.get("material").getAsString());
 			assertFalse(ore.get("native_generation").getAsBoolean());
 			assertFalse(ore.get("retrogen").getAsBoolean());
 
