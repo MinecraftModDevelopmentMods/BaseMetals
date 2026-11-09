@@ -125,6 +125,21 @@ class ReleaseDispatcherTest {
 	}
 
 	@Test
+	void resolvesAnnotatedReleaseTagsWithoutAcceptingWrongCommits() throws Exception {
+		final Map<String, String> environment = new LinkedHashMap<>();
+		environment.put("TEST_TAG_TYPE", "tag");
+		environment.put("TEST_TAG_TARGET", "0123456789012345678901234567890123456789");
+		final Map<String, String> properties = metadata("1.19.4", "forge", "17.0.1+12");
+		Result result = preflight("master-1.19.4", properties, environment);
+		assertEquals(0, result.exitCode, result.log);
+
+		environment.put("TEST_TAG_TARGET", "9876543210987654321098765432109876543210");
+		result = preflight("master-1.19.4", properties, environment);
+		assertTrue(result.exitCode != 0, result.log);
+		assertTrue(result.log.contains("instead of 0123456789012345678901234567890123456789"), result.log);
+	}
+
+	@Test
 	void refusesToReleaseFromAFork() throws Exception {
 		final Map<String, String> environment = new LinkedHashMap<>();
 		environment.put("GITHUB_REPOSITORY", "SkyBlade1978/BaseMetals");
@@ -178,7 +193,9 @@ class ReleaseDispatcherTest {
 				+ " case \"$1 $2\" in\n"
 				+ "  \"api repos/$GITHUB_REPOSITORY/branches/$TEST_BRANCH\") return 0 ;;\n"
 				+ "  \"api repos/$GITHUB_REPOSITORY/commits/\"*\"/check-runs?per_page=100\") echo \"$TEST_CI_COUNT\" ;;\n"
-				+ "  \"api repos/$GITHUB_REPOSITORY/branches/\"*|\"api repos/$GITHUB_REPOSITORY/git/ref/tags/\"*) return 1 ;;\n"
+				+ "  \"api repos/$GITHUB_REPOSITORY/git/ref/tags/\"*) [[ -n \"${TEST_TAG_TYPE:-}\" ]] || return 1; echo \"$TEST_TAG_TYPE test-tag-object\" ;;\n"
+				+ "  \"api repos/$GITHUB_REPOSITORY/git/tags/test-tag-object\") echo \"commit $TEST_TAG_TARGET\" ;;\n"
+				+ "  \"api repos/$GITHUB_REPOSITORY/branches/\"*) return 1 ;;\n"
 				+ "  *) echo \"Unexpected GitHub call: $*\" >&2; return 99 ;;\n"
 				+ " esac\n}\n"
 				+ "git() { [[ \"$*\" == 'rev-parse HEAD' ]] || return 99; echo 0123456789012345678901234567890123456789; }\n";
