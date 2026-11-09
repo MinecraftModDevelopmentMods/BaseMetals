@@ -527,3 +527,17 @@ item.basemetals.starsteel_gear.name=Ferro-Stelle Ingranaggio
 item.basemetals.steel_gear.name=Acciaio Ingranaggio
 item.basemetals.tin_gear.name=Latta Ingranaggio
 item.basemetals.zinc_gear.name=Zinco Ingranaggio
+
+config.basemetals.title=Configurazione di Base Metals
+config.basemetals.restart_guidance=Riavvio necessario. La distribuzione dei minerali si configura in OreSpawn.
+config.basemetals.category.general=Generale
+config.basemetals.category.metals=Metalli di base
+config.basemetals.category.vanilla=Aggiunte Vanilla
+config.basemetals.category.fluids=Fluidi fusi
+config.basemetals.option.content_mode=Modalità contenuti
+config.basemetals.content_mode.high_fantasy=Alta fantasia
+config.basemetals.content_mode.low_fantasy=Bassa fantasia
+high_fantasy=Alta fantasia
+low_fantasy=Bassa fantasia
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

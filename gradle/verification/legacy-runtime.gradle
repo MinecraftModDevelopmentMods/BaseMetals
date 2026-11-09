@@ -18,6 +18,10 @@ sourceSets {
         java.srcDirs = ['tools/validation/legacy110/capture-probe']
         compileClasspath = sourceSets.main.compileClasspath
     }
+    fantasyProbe {
+        java.srcDirs = ['tools/validation/legacy110/fantasy-probe']
+        compileClasspath = sourceSets.main.output + sourceSets.main.compileClasspath
+    }
 }
 
 def captureJar = tasks.register('captureProbeJar', Jar) {
@@ -79,11 +83,26 @@ tasks.register('migrationProbeJar', Jar) {
     }
 }
 
+def fantasyProbe = tasks.register('fantasyProbeJar', Jar) {
+    group = 'verification'
+    archiveFileName = 'fantasy-probe.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.fantasyProbe.output
+}
+def packagedFantasyProbe = renamer.classes(fantasyProbe) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('test-mods/fantasy-probe-packaged.jar')
+}
+tasks.register('packagedFantasyProbeJar') {
+    group = 'verification'
+    dependsOn packagedFantasyProbe
+}
+
 tasks.register('packagedForgeRuntimeTest', Exec) {
     group = 'verification'
-    description = 'Tests OS1/OS3 imports, overrides, reloads and the vanilla takeover switch.'
-    dependsOn 'verifyReleaseArtifacts', 'packagedLaunchProbeJar', 'packagedOreSpawnProbeJar',
-            'migrationProbeJar', packagedCapture
+    description = 'Checks 1.11.2 save upgrades, OreSpawn imports, molten metals and Modern Metals on packaged Forge.'
+    dependsOn 'verifyReleaseArtifacts', 'packagedLaunchProbeJar', 'packagedOreSpawnProbeJar', 'packagedFantasyProbeJar',
+            packagedCapture
     doFirst {
         def runtime = providers.gradleProperty('packagedForgeRuntimeRoot')
         if (!runtime.isPresent()) throw new GradleException('Set packagedForgeRuntimeRoot to a prepared Forge server.')

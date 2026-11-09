@@ -29,7 +29,7 @@ publishing {
             }
             pom {
                 name = 'Base Metals'
-                description = 'Metals, alloys, equipment and Crack Hammer processing for Minecraft 1.10.2.'
+                description = 'Metals, alloys, equipment and Crack Hammer processing for Minecraft 1.11.2.'
                 url = 'https://github.com/MinecraftModDevelopmentMods/BaseMetals'
                 licenses {
                     license {

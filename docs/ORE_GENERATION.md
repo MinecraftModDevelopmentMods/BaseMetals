@@ -1,57 +1,38 @@
-# Ore generation in Minecraft 1.10.2
+# Ore generation in Minecraft 1.11.2
 
-Base Metals now requires MMD OreSpawn 4.1.2.110021 or a newer compatible 4.x
+Base Metals now requires MMD OreSpawn 4.1.6.111021 or a newer compatible 4.x
 release. OreSpawn is the only ore-generation engine; Base Metals no longer
 ships its old OS3 plugin or fallback generator. This also raises the minimum
-Forge version to 12.18.3.2511.
+Forge version to 13.20.1.2588.
 
 ## Existing worlds
 
 Back up the world and its configuration folder before updating. Install the
 new Base Metals and OreSpawn jars together, removing the older jars first.
-Keep the old configuration files in place:
+Keep the old `config/orespawn/` or `config/orespawn3/` files and
+`config/orespawn.cfg` in place. OreSpawn can import their rules without changing
+the source files or replacing an existing Base Metals provider override. Check
+`config/orespawn-upgrade-report.txt` before exploring new chunks.
 
-- OreSpawn 1: `config/orespawn/*.json`
-- OreSpawn 3: `config/orespawn3/*.json`, together with `config/orespawn.cfg`
-
-OreSpawn imports those files without changing the originals. Custom ore
-frequencies, sizes, heights, dimensions and disabled rules carry across. The
-old exclusive maximum height becomes an inclusive maximum one block lower;
-for example, `maxHeight: 96` becomes `max_y: 95`.
-
-Read `config/orespawn-upgrade-report.txt` after the first start. It lists what
-was imported and anything that needs attention. Missing blocks and unsupported
-custom settings cannot be guessed safely, so keep the report with your backup.
-
-An OS1 `+` dimension entry is imported for the dimensions installed at that
-start. If you add another dimension mod later, review its ore rules yourself.
-
-The resulting provider override is `config/basemetals-orespawn.json`. Each
-world stores its effective settings in
-`<world>/serverconfig/orespawn-worldgen.json`. Existing OS4 overrides and world
-profiles take priority over the defaults supplied by Base Metals. Updating the
-mod does not reset them or replace generated terrain. Retrogen stays off
-unless the imported configuration explicitly enables it.
-
-OreSpawn's **Manage Vanilla Ores** switch controls imported vanilla-ore rules
-as well as its newer vanilla defaults. When it is off, Minecraft generates its
-own ores; imported vanilla rules stay saved but inactive. When it is on, the
-imported frequency, height and vein settings are used without adding a second
-vanilla/default pass. This switch does not disable Base Metals' own ore rules.
-Changing it affects new generation, not ore already placed in existing chunks.
-
-Existing provider overrides are kept even when legacy files are imported for
-the first time. OreSpawn records the retained file in its upgrade report. An
-unfinished or invalid override is left for the normal loader to check, not
-silently replaced by older settings.
+The Base Metals provider override is `config/basemetals-orespawn.json`. Each
+world keeps its effective settings in
+`<world>/serverconfig/orespawn-worldgen.json`. Back up these files too if you
+already use OreSpawn 4. Existing ores are not replaced by a change to the
+defaults; review any imported retrogen setting separately.
 
 Copy the instance configuration folder as well as the world when moving an old
 save to another installation. A world alone cannot recover custom ore settings
-that were stored outside it.
+that were stored outside it. If an OreSpawn 1 world already has an imported rule
+saved in its profile, OreSpawn keeps that rule instead of adding a second copy.
+
+OreSpawn's **Manage Vanilla Ores** switch also applies to imported vanilla ore
+rules. With it off, Minecraft places its own ores and the imported settings stay
+saved but inactive. With it on, the imported rules take over without a second
+vanilla pass. Base Metals ores are unaffected by that switch.
 
 ## Changing ore placement
 
-Use OreSpawn's ore editor, or edit its JSON files while Minecraft is stopped:
+Use OreSpawn's editor, or edit its JSON files while Minecraft is stopped:
 
 - `config/orespawn-worldgen.json` holds defaults for new worlds.
 - `config/basemetals-orespawn.json` overrides the Base Metals provider.

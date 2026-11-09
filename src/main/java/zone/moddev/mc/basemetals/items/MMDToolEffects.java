@@ -82,12 +82,12 @@ public abstract class MMDToolEffects {
 		final String materialName = material.getName();
 		if (materialName.equals(MaterialNames.COLDIRON)) {
 			if (target.isImmuneToFire()) {
-				final DamageSource extraDamage = DamageSource.generic;
+				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 3f);
 			}
 		} else if (materialName.equals(MaterialNames.ADAMANTINE)) {
 			if (target.getMaxHealth() > 20f) {
-				final DamageSource extraDamage = DamageSource.generic;
+				final DamageSource extraDamage = DamageSource.GENERIC;
 				target.attackEntityFrom(extraDamage, 4f);
 			}
 		} else if (materialName.equals(MaterialNames.MITHRIL)) {
@@ -101,7 +101,7 @@ public abstract class MMDToolEffects {
 			}
 		} else if ((materialName.equals(MaterialNames.AQUARIUM))
 				&& (target.canBreatheUnderwater())) {
-			final DamageSource extraDamage = DamageSource.generic;
+			final DamageSource extraDamage = DamageSource.GENERIC;
 			target.attackEntityFrom(extraDamage, 4f);
 		}
 	}
@@ -310,7 +310,7 @@ public abstract class MMDToolEffects {
 			final MMDMaterial material = Materials.getMaterialByName(materialName);
 			final ItemStack heldItemStack = player.getHeldItemMainhand();
 			final Item heldItem = heldItemStack.getItem();
-			if (((heldItemStack.stackSize >= 1) && (heldItem == material.getItem(itemName)))) {
+			if (((heldItemStack.getCount() >= 1) && (heldItem == material.getItem(itemName)))) {
 				return true;
 			}
 		}

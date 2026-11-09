@@ -1,7 +1,6 @@
 package com.mcmoddev.lib.init;
 
 import java.util.Comparator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -11,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -65,7 +65,7 @@ public class MMDCreativeTab extends CreativeTabs {
 	public MMDCreativeTab(@Nonnull final String unlocalizedName, @Nonnull final boolean searchable,
 			@Nullable final ItemStack iconItem) {
 		super(unlocalizedName);
-		if (iconItem == null) {
+		if (iconItem == null || iconItem.isEmpty()) {
 			this.iconItem = new ItemStack(net.minecraft.init.Items.IRON_PICKAXE);
 		} else {
 			this.iconItem = iconItem;
@@ -84,7 +84,7 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void displayAllRelevantItems(@Nonnull final List<ItemStack> itemList) {
+	public void displayAllRelevantItems(@Nonnull final NonNullList<ItemStack> itemList) {
 		super.displayAllRelevantItems(itemList);
 		if (this.comparator != null) {
 			itemList.sort(this.comparator);
@@ -93,8 +93,8 @@ public class MMDCreativeTab extends CreativeTabs {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Item getTabIconItem() {
-		return this.iconItem.getItem();
+	public ItemStack getTabIconItem() {
+		return this.iconItem;
 	}
 
 	public void setSortingAlgorithm(@Nonnull final Comparator<ItemStack> comparator) {

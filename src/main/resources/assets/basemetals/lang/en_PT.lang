@@ -530,3 +530,17 @@ item.basemetals.tin_gear.name=Tin Gear
 item.basemetals.zinc_gear.name=Zinc Gear
 
 item.basemetals.gold_crackhammer.name=Golden Crack Hammer
+
+config.basemetals.title=Base Metals Ship's Settings
+config.basemetals.restart_guidance=Restart yer game, matey. Chart ore waters in OreSpawn.
+config.basemetals.category.general=General Orders
+config.basemetals.category.metals=Base Metals Cargo
+config.basemetals.category.vanilla=Vanilla Booty
+config.basemetals.category.fluids=Molten Cargo
+config.basemetals.option.content_mode=Content Course
+config.basemetals.content_mode.high_fantasy=High Fantasy
+config.basemetals.content_mode.low_fantasy=Low Fantasy
+high_fantasy=High Fantasy
+low_fantasy=Low Fantasy
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

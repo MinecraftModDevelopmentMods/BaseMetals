@@ -82,15 +82,6 @@ public class BlockMMDBlock extends net.minecraft.block.Block implements IMMDObje
 	 */
 	@Override
 	@Deprecated
-	public boolean isFullyOpaque(final IBlockState bs) {
-		return true;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	@Override
-	@Deprecated
 	public boolean isFullCube(final IBlockState bs) {
 		return true;
 	}

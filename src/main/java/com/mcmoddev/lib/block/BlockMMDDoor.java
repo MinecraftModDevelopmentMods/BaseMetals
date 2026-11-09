@@ -67,8 +67,7 @@ public class BlockMMDDoor extends net.minecraft.block.BlockDoor implements IMMDO
 	@Override
 	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
-			final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY,
-			final float hitZ) {
+			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
 		if ((this.material.getToolHarvestLevel() > 1)
 				|| (this.material.getType().equals(MaterialType.METAL))) {
 			return false;

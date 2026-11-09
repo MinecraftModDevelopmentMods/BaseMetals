@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Predicate;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import com.mcmoddev.lib.registry.recipe.ArbitraryCrusherRecipe;
@@ -41,6 +42,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class CrusherRecipeRegistry {
 
 	private final List<ICrusherRecipe> recipes = new ArrayList<>();
+	private Predicate<ItemStack> outputFilter;
 
 	private final Map<Integer, ICrusherRecipe> recipeByInputCache = new HashMap<>();
 	private final Map<Integer, List<ICrusherRecipe>> recipeByOutputCache = new HashMap<>();
@@ -154,7 +156,22 @@ public class CrusherRecipeRegistry {
 	 *            An implementation of the ICrusherRecipe interface.
 	 */
 	public void addRecipe(final ICrusherRecipe crusherRecipe) {
-		this.recipes.add(crusherRecipe);
+		if (this.outputFilter == null || this.outputFilter.test(crusherRecipe.getOutput())) {
+			this.recipes.add(crusherRecipe);
+		}
+	}
+
+	/** Applies an output rule only during the caller's startup registration. */
+	public void registerWithOutputFilter(final Runnable register,
+			final Predicate<ItemStack> filter) {
+		final Predicate<ItemStack> previous = this.outputFilter;
+		this.outputFilter = previous == null ? filter : previous.and(filter);
+		try {
+			register.run();
+		} finally {
+			this.outputFilter = previous;
+			clearCache();
+		}
 	}
 
 	/**
@@ -181,7 +198,7 @@ public class CrusherRecipeRegistry {
 					for (final String s : Options.disabledRecipes()) {
 						final List<ItemStack> ores = OreDictionary.getOres(s);
 						for (final ItemStack input : r.getValidInputs()) {
-							if (OreDictionary.containsMatch(false, ores, input)) {
+							if (ores.stream().anyMatch(ore -> OreDictionary.itemMatches(ore, input, false))) {
 								this.recipeByInputCache.put(hashKey, null);
 								return new ArrayList<>();
 							}
@@ -231,7 +248,7 @@ public class CrusherRecipeRegistry {
 				if (r.isValidInput(input)) {
 					for (final String s : Options.disabledRecipes()) {
 						final List<ItemStack> ores = OreDictionary.getOres(s);
-						if (OreDictionary.containsMatch(false, ores, input)) {
+						if (ores.stream().anyMatch(ore -> OreDictionary.itemMatches(ore, input, false))) {
 							this.recipeByInputCache.put(hashKey, null);
 							return null;
 						}

@@ -1,7 +1,17 @@
-# 1.10 migration checks
+# 1.11.2 packaged checks and 1.10 reference fixtures
 
 These checks use disposable worlds. Never point a server launch at the only copy
 of a player's world.
+
+For 1.11.2, use `packagedForgeRuntimeTest` as described in the
+[build guide](../../../docs/BUILDING.md). It runs Forge 13.20.1.2588 against the
+public 1.11.2 releases. It checks both Fantasy Levels, molten metal contact,
+an old 1.11.2 save, and fresh and reloaded worlds with and without Modern Metals.
+It also checks OreSpawn imports, a moved OreSpawn 1 world, and the vanilla-ore
+switch. The directory retains its historical name because it also holds the
+1.10 fixtures and probes described below.
+
+## 1.10 reference
 
 The main Gradle project compiles the complete mod with Forge 2511 and stable-29
 mappings. Run the repository's wrapper from the project root, using Java 17 for
@@ -94,7 +104,7 @@ settings, reloads and later exploration, confirms Base Metals ores still generat
 and compares 49 existing chunks after switching off, on and back off. The source
 configuration and fixture world must remain unchanged.
 
-## Automated CI suite
+## 1.10 CI reference
 
 `packagedForgeRuntimeTest` builds all probes separately and runs `run_ci_checks.py`.
 It downloads checksum-pinned public releases, creates its own disposable Cyano

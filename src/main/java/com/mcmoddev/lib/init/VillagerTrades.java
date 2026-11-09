@@ -16,6 +16,7 @@ import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.material.MMDMaterial;
 
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager.ITradeList;
 import net.minecraft.entity.passive.EntityVillager.ListEnchantedItemForEmeralds;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
@@ -89,7 +90,7 @@ public abstract class VillagerTrades {
 
 			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS,
 					Names.BOOTS)) {
-				if (material.hasItem(name)) {
+				if (canTrade(material, name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(
 							emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2),
@@ -112,7 +113,7 @@ public abstract class VillagerTrades {
 					}
 				}
 			}
-			if (material.hasItem(Names.CRACKHAMMER)) {
+			if (canTrade(material, Names.CRACKHAMMER)) {
 				final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
 				final ITradeList[] hammerTrades = makeTradePalette(
 						makePurchasePalette(emeraldPurch, itemStack));
@@ -128,7 +129,7 @@ public abstract class VillagerTrades {
 					// enchantedHammerTrades);
 				}
 			}
-			if (material.hasItem(Names.SWORD)) {
+			if (canTrade(material, Names.SWORD)) {
 				final ItemStack itemStack = material.getItemStack(Names.SWORD);
 				final ITradeList[] swordTrades = makeTradePalette(makePurchasePalette(
 						(emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1,
@@ -153,7 +154,7 @@ public abstract class VillagerTrades {
 				}
 			}
 			for (final Names name : Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL)) {
-				if (material.hasItem(name)) {
+				if (canTrade(material, name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] toolTrades = makeTradePalette(
 							makePurchasePalette(emeraldPurch, itemStack));
@@ -161,7 +162,7 @@ public abstract class VillagerTrades {
 							toolTrades);
 				}
 			}
-			if (material.hasItem(Names.PICKAXE)) {
+			if (canTrade(material, Names.PICKAXE)) {
 				final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
 				final ITradeList[] pickaxeTrades = makeTradePalette(
 						makePurchasePalette(emeraldPurch, itemStack));
@@ -178,7 +179,7 @@ public abstract class VillagerTrades {
 					// enchantedPickaxeTrades);
 				}
 			}
-			if (material.hasItem(Names.INGOT)) {
+			if (canTrade(material, Names.INGOT)) {
 				final ItemStack itemStack = material.getItemStack(Names.INGOT, 12);
 				if ((!itemStack.getItem().equals(net.minecraft.init.Items.EMERALD))
 						&& (!itemStack.getItem().equals(net.minecraft.init.Items.DIAMOND))) {
@@ -196,6 +197,11 @@ public abstract class VillagerTrades {
 		}
 
 		commitTrades(tradesTable);
+	}
+
+	private static boolean canTrade(final MMDMaterial material, final Names form) {
+		return material.hasItem(form) && zone.moddev.mc.basemetals.content.ContentAcquisition
+				.allowsIntegrationOutput(material.getItemStack(form));
 	}
 
 	protected static void registerModSpecificTrades() {
@@ -336,7 +342,7 @@ public abstract class VillagerTrades {
 			@Nonnull final ItemStack... itemStacks) {
 		final ITradeList[] trades = new ITradeList[itemStacks.length];
 		for (int i = 0; i < itemStacks.length; i++) {
-			trades[i] = new SimpleTrade(itemStacks[i], fluctuation(itemStacks[i].stackSize),
+			trades[i] = new SimpleTrade(itemStacks[i], fluctuation(itemStacks[i].getCount()),
 					new ItemStack(net.minecraft.init.Items.EMERALD, emeraldValue, 0), 0);
 		}
 		return trades;
@@ -400,10 +406,10 @@ public abstract class VillagerTrades {
 		 *            a psuedorandom number generator instance
 		 */
 		@Override
-		public void modifyMerchantRecipeList(final MerchantRecipeList recipeList,
+		public void addMerchantRecipe(final IMerchant merchant, final MerchantRecipeList recipeList,
 				final Random random) {
 			for (int n = 0; n < this.numberOfTrades; n++) {
-				this.trades[random.nextInt(this.trades.length)].modifyMerchantRecipeList(recipeList,
+				this.trades[random.nextInt(this.trades.length)].addMerchantRecipe(merchant, recipeList,
 						random);
 			}
 		}
@@ -535,7 +541,7 @@ public abstract class VillagerTrades {
 		 *            a psuedorandom number generator instance
 		 */
 		@Override
-		public void modifyMerchantRecipeList(@Nonnull final MerchantRecipeList recipeList,
+		public void addMerchantRecipe(final IMerchant merchant, @Nonnull final MerchantRecipeList recipeList,
 				@Nonnull final Random random) {
 			int numTrades = -1;
 			if (this.maxTrades > 0) {
@@ -549,18 +555,18 @@ public abstract class VillagerTrades {
 			}
 			final ItemStack in1 = this.input1.copy();
 			if (this.maxInputMarkup1 > 0) {
-				in1.stackSize = in1.stackSize + random.nextInt(this.maxInputMarkup1);
+				in1.setCount(in1.getCount() + random.nextInt(this.maxInputMarkup1));
 			}
-			ItemStack in2 = null;
-			if ((this.input2 != null) && (this.input2.getItem() != null)) {
+			ItemStack in2 = ItemStack.EMPTY;
+			if (this.input2 != null && !this.input2.isEmpty()) {
 				in2 = this.input2.copy();
 				if (this.maxInputMarkup2 > 0) {
-					in2.stackSize = in2.stackSize + random.nextInt(this.maxInputMarkup2);
+					in2.setCount(in2.getCount() + random.nextInt(this.maxInputMarkup2));
 				}
 			}
 			final ItemStack out = this.output.copy();
 			if (this.maxOutputMarkup > 0) {
-				out.stackSize = out.stackSize + random.nextInt(this.maxOutputMarkup);
+				out.setCount(out.getCount() + random.nextInt(this.maxOutputMarkup));
 			}
 
 			if (numTrades > 0) {

@@ -22,7 +22,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 }
 
-// Forge 1.10's mod scanner cannot read Java 11 multi-release entries. They are
+// Forge 1.11's mod scanner cannot read Java 11 multi-release entries. They are
 // unused on Java 8, so omit them from the development launcher copy.
 tasks.register('prepareJava8Launcher', Jar) {
     dependsOn configurations.java8LauncherArtifact
@@ -40,9 +40,9 @@ tasks.register('verifyReleaseDependencies') {
     doLast {
         def artifacts = configurations.legacyModArtifacts.resolvedConfiguration.resolvedArtifacts
         def orespawn = specs.find { it.id == 'orespawn' }
-        if (orespawn.coordinate != 'curse.maven:mmd-orespawn-245586:9276430'
-                || orespawn.sha256 != '4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6') {
-            throw new GradleException('Use the verified OreSpawn 4.1.2.110021 release.')
+        if (orespawn.coordinate != 'curse.maven:mmd-orespawn-245586:9524249'
+                || orespawn.sha256 != '4246D1EB83FFFC325F04E3D3FE331D1404714F4A8D773ADE278A5D0EBEE5EDBC') {
+            throw new GradleException('Use the verified OreSpawn 4.1.6.111021 release.')
         }
         specs.each { spec ->
             def parts = spec.coordinate.split(':')
@@ -58,6 +58,7 @@ tasks.register('verifyReleaseDependencies') {
                     def metadata = new JsonSlurper().parse(jar.getInputStream(jar.getJarEntry('mcmod.info')))
                     if (!metadata.any { it.modid == 'orespawn' && it.version == project.orespawn_version }
                             || jar.getJarEntry('zone/moddev/mc/orespawn/api/OreSpawnApi.class') == null
+                            || jar.getJarEntry('zone/moddev/mc/orespawn/api/client/WorldSettingsExtensionRegistry.class') == null
                             || jar.manifest.mainAttributes.getValue('OreSpawn-API-Version') != '1') {
                         throw new GradleException('Wrong OreSpawn identity or public API.')
                     }

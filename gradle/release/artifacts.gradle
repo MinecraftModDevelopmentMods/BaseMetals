@@ -19,7 +19,7 @@ tasks.register('verifyJava8Toolchain') {
     description = 'Checks Java 8 compatibility; exact compiler versions are required only for release builds.'
     doLast {
         def compiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(8) }.get().metadata
-        if (compiler.languageVersion.asInt() != 8) throw new GradleException('Minecraft 1.10 requires Java 8.')
+        if (compiler.languageVersion.asInt() != 8) throw new GradleException('Minecraft 1.11 requires Java 8.')
         if (providers.gradleProperty('releaseBuild').getOrElse('false').toBoolean()
                 && (compiler.javaRuntimeVersion != '1.8.0_502-b07'
                 || System.getProperty('java.runtime.version') != '17.0.1+12')) {
@@ -38,19 +38,19 @@ tasks.register('verifyReleaseConfiguration') {
     group = 'verification'
     dependsOn tasks.named('verifyJava8Toolchain')
     doLast {
-        if (project.group != 'zone.moddev.mc.basemetals' || project.version != '2.5.1.110021'
-                || project.minecraft_version != '1.10.2' || project.forge_version != '12.18.3.2511'
-                || project.mappings_channel != 'stable' || project.mappings_version != '29-1.10.2') {
+        if (project.group != 'zone.moddev.mc.basemetals' || project.version != '2.5.1.111021'
+                || project.minecraft_version != '1.11.2' || project.forge_version != '13.20.1.2588'
+                || project.mappings_channel != 'stable' || project.mappings_version != '32-1.11') {
             throw new GradleException('Base Metals target, mappings or Maven identity changed.')
         }
         String source = file('src/main/java/zone/moddev/mc/basemetals/BaseMetals.java').getText('UTF-8')
         if (!source.contains('VERSION = "' + project.version + '"') || !source.contains('MODID = "basemetals"')) {
             throw new GradleException('The mod identity differs from the build metadata.')
         }
-        if (project.orespawn_version != '4.1.2.110021'
-                || project.orespawn_version_range != '[4.1.2.110021,5.0.0)'
+        if (project.orespawn_version != '4.1.6.111021'
+                || project.orespawn_version_range != '[4.1.6.111021,5.0.0)'
                 || !source.contains('required-after:orespawn@' + project.orespawn_version_range)
-                || !source.contains('required-after:Forge@[12.18.3.2511,)')) {
+                || !source.contains('required-after:forge@[13.20.1.2588,)')) {
             throw new GradleException('The OreSpawn or Forge runtime requirement changed.')
         }
     }
@@ -113,11 +113,19 @@ def auditJars = { File directory ->
                         throw new GradleException('Incorrect release manifest.')
                     }
                     def info = new JsonSlurper().parse(zip.getInputStream(zip.getEntry('mcmod.info')))[0]
-                    if (info.modid != 'basemetals' || info.version != project.version || info.mcversion != '1.10.2') {
+                    if (info.modid != 'basemetals' || info.version != project.version || info.mcversion != '1.11.2') {
                         throw new GradleException('Incorrect processed mcmod.info.')
                     }
                     int classes = zip.entries().count { it.name.endsWith('.class') }
-                    if (classes != 218 || zip.getEntry('cyano/basemetals/init/Blocks.class') == null
+                    def fantasyClasses = [
+                        'client/BaseMetalsConfigScreen', 'client/BaseMetalsGuiFactory',
+                        'content/ContentAcquisition', 'content/ContentMode', 'content/ContentModeNetwork',
+                        'content/ContentModeNetwork$RejectModList',
+                        'content/ContentPolicy', 'content/MaterialForm'
+                    ]
+                    if (classes != 218 || fantasyClasses.any {
+                            zip.getEntry("zone/moddev/mc/basemetals/${it}.class") == null
+                        } || zip.getEntry('cyano/basemetals/init/Blocks.class') == null
                             || zip.getEntry('META-INF/basemetals-legacy-api.list') == null) {
                         throw new GradleException('The compatibility-layer class inventory changed.')
                     }
@@ -171,7 +179,7 @@ tasks.register('verifyPreparedReleaseArtifacts') {
             String actual = MessageDigest.getInstance('SHA-256').digest(jar.bytes).encodeHex().toString()
             if (!actual.equalsIgnoreCase(match[0][1])) throw new GradleException("Prepared checksum mismatch: ${jar.name}")
         }
-        if (!new File(directory, 'CHANGELOG.txt').getText('UTF-8').startsWith(project.version.toString() + ' for 1.10.2')) {
+        if (!new File(directory, 'CHANGELOG.txt').getText('UTF-8').startsWith(project.version.toString() + ' for 1.11.2')) {
             throw new GradleException('The prepared changelog belongs to a different release.')
         }
         auditJars(directory)

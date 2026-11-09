@@ -1,8 +1,5 @@
 package com.mcmoddev.lib.recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Oredicts;
@@ -10,6 +7,7 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -20,7 +18,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	private final ItemStack baseItem;
 	private final String materialName;
 	private final String itemName;
-	private final List<ItemStack> repairMaterials;
+	private final NonNullList<ItemStack> repairMaterials;
 
 	/**
 	 *
@@ -59,22 +57,16 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 		this.itemName = itemName;
 	}
 
-	private boolean repairMaterialsDoesntContain(final ItemStack itemStack) {
-		return !this.repairMaterials.contains(itemStack);
-	}
-
 	@Override
 	public boolean matches(final InventoryCrafting inv, final World worldIn) {
-		// make sure we have all the materials that can be used for repair, not just what was
-		// available when we were initialized.
-		OreDictionary.getOres(Oredicts.PLATE + this.materialName).stream()
-				.filter(this::repairMaterialsDoesntContain).forEach(this.repairMaterials::add);
-
 		boolean matched = false;
 		boolean repairMatched = false;
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack item = inv.getStackInSlot(i);
+			if (item.isEmpty()) {
+				continue;
+			}
 			if (!repairMatched) {
 				repairMatched = OreDictionary.containsMatch(false, this.repairMaterials, item);
 			}
@@ -89,7 +81,7 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	private ItemStack findBaseItem(final InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			final ItemStack a = inv.getStackInSlot(i);
-			if (a != null) {
+			if (!a.isEmpty()) {
 				final ItemStack comp = new ItemStack(a.getItem(), 1, a.getMetadata());
 				if (OreDictionary.itemMatches(this.baseItem, comp, false)) {
 					return a;
@@ -133,8 +125,8 @@ public abstract class RepairRecipeBase extends ShapelessOreRecipe {
 	 * @return
 	 */
 	@Override
-	public ArrayList<Object> getInput() {
-		final ArrayList<Object> inputs = new ArrayList<>();
+	public NonNullList<Object> getInput() {
+		final NonNullList<Object> inputs = NonNullList.create();
 		inputs.add(this.baseItem);
 		inputs.addAll(OreDictionary.getOres(Oredicts.PLATE + this.materialName));
 		return inputs;

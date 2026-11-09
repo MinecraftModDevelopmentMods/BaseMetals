@@ -12,6 +12,7 @@ import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
 import net.minecraft.item.ItemStack;
+import zone.moddev.mc.basemetals.content.ContentAcquisition;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -154,6 +155,10 @@ public class MekanismBase implements IIntegration {
 	protected static void addMetallurgicInfuserRecipe(@Nonnull final String infuse,
 			@Nonnull final int amount, @Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		// TODO: Check
@@ -167,6 +172,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addCrusherRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
@@ -177,6 +186,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addEnrichmentChamberRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		recipeTag.setTag(INPUT, inputItem.writeToNBT(new NBTTagCompound()));
@@ -187,6 +200,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addPurificationChamberRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas("oxygen"), 1000);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
@@ -199,6 +216,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addChemicalInjectionChamberRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas("hydrogenChloride"), 1000);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
@@ -212,6 +233,10 @@ public class MekanismBase implements IIntegration {
 	// 5x, Slurry to Crystal
 	protected static void addChemicalCrystallizerRecipe(@Nonnull final String inputGas,
 			@Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
@@ -260,6 +285,10 @@ public class MekanismBase implements IIntegration {
 			@Nonnull final int inputGasQty, @Nonnull final ItemStack outputItem,
 			@Nonnull final String outputGas, @Nonnull final int outputGasQty, final int extraEnergy,
 			final int ticks) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final GasStack inputGasStack = new GasStack(GasRegistry.getGas(inputGas), inputGasQty);
 		final GasStack outputGasStack = new GasStack(GasRegistry.getGas(outputGas), outputGasQty);
 		final NBTTagCompound recipeTag = new NBTTagCompound();
@@ -283,6 +312,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addOsmiumCompressorRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		// TODO: Check
@@ -294,6 +327,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addCombinerRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		// TODO: Check
@@ -336,6 +373,10 @@ public class MekanismBase implements IIntegration {
 
 	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack outputItem) {
+		if (!ContentAcquisition.allowsIntegrationOutput(outputItem)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		// TODO: Check
@@ -348,6 +389,11 @@ public class MekanismBase implements IIntegration {
 	protected static void addPrecisionSawmillRecipe(@Nonnull final ItemStack inputItem,
 			@Nonnull final ItemStack primaryOutput, @Nonnull final ItemStack secondaryOutput,
 			@Nonnull final double chance) {
+		if (!ContentAcquisition.allowsIntegrationOutput(primaryOutput)
+				|| !ContentAcquisition.allowsIntegrationOutput(secondaryOutput)) {
+			return;
+		}
+
 		final NBTTagCompound recipeTag = new NBTTagCompound();
 
 		// TODO: Check

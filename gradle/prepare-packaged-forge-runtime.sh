@@ -7,8 +7,8 @@ if [[ $# -ne 2 ]]; then
 fi
 runtime="$1"
 java8="$2"
-version=1.10.2-12.18.3.2511
-expected=664393C5A924B8F06CFB953903ABCF9FE5E99ECBE6AF8C7EA217339C766E519C
+version=1.11.2-13.20.1.2588
+expected=00AEA3DDF1E78BBB4D5D05E8C22FB3E849DE09B47D828E57DAD373A16BB8A26F
 
 if [[ -e "$runtime" && -n "$(find "$runtime" -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
   echo "Packaged Forge destination must be empty: $runtime" >&2
@@ -24,11 +24,11 @@ if [[ "$actual" != "$expected" ]]; then
   echo "Forge installer checksum mismatch: $actual" >&2
   exit 1
 fi
-# The 1.10 installer writes to its working directory and ignores a destination argument.
+# The legacy installer writes to its working directory.
 (cd "$runtime" && "$java8" -jar "forge-$version-installer.jar" --installServer)
 if [[ ! -f "$runtime/forge-$version-universal.jar" && -f "$runtime/forge-$version.jar" ]]; then
   cp "$runtime/forge-$version.jar" "$runtime/forge-$version-universal.jar"
 fi
 test -f "$runtime/forge-$version-universal.jar"
-test -f "$runtime/minecraft_server.1.10.2.jar"
+test -f "$runtime/minecraft_server.1.11.2.jar"
 test -d "$runtime/libraries"

@@ -293,7 +293,7 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 		iron.addNewItem(Names.HELMET, net.minecraft.init.Items.IRON_HELMET);
 		iron.addNewItem(Names.LEGGINGS, net.minecraft.init.Items.IRON_LEGGINGS);
 		iron.addNewItem(Names.INGOT, net.minecraft.init.Items.IRON_INGOT);
-		// iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Items.IRON_NUGGET
+		iron.addNewItem(Names.NUGGET, net.minecraft.init.Items.field_191525_da); // Vanilla iron nugget.
 		iron.addNewItem(Names.SHEARS, net.minecraft.init.Items.SHEARS);
 
 		if (Materials.hasMaterial(MaterialNames.IRON)) {

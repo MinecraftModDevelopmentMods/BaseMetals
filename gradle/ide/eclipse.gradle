@@ -15,6 +15,7 @@ eclipse {
                     'build/resources/main', 'tools/validation/legacy110',
                     'tools/validation/legacy110/migration-probe',
                     'tools/validation/legacy110/launch-probe',
+                    'tools/validation/legacy110/fantasy-probe',
                     'tools/validation/legacy110/orespawn-probe'] as Set<String>
             classpath.entries.removeAll { it.kind == 'src' && managed.contains(it.path) }
         }
@@ -88,7 +89,7 @@ tasks.register('isolateEclipseProductionRuns') {
             }
             text = text.replace(arguments[0][0], arguments[0][1] + args + arguments[0][3])
             text = text.replaceAll(/<mapEntry key="MC_VERSION" value="[^"]*"\/>/,
-                    '<mapEntry key="MC_VERSION" value="1.10.2"/>')
+                    '<mapEntry key="MC_VERSION" value="1.11.2"/>')
             String modClasses = '<mapEntry key="MOD_CLASSES" value="' + escapeXml(file('bin/main').absolutePath) + '"/>'
             if (text.contains('key="MOD_CLASSES"')) {
                 text = text.replaceAll(/<mapEntry key="MOD_CLASSES" value="[^"]*"\/>/,
@@ -156,11 +157,11 @@ tasks.register('verifyEclipseProductionClasspath') {
             String text = file(name).getText('UTF-8').replace('\\', '/')
             if (!text.contains('MAIN_TYPE" value="net.minecraftforge.launcher.Main"')
                     || !text.contains('StandardVMType/JavaSE-8')
-                    || !text.contains('MC_VERSION" value="1.10.2"')
+                    || !text.contains('MC_VERSION" value="1.11.2"')
                     || !text.contains('ATTR_EXCLUDE_TEST_CODE')
                     || text.contains('gradleclasspathcontainer') || text.contains('bin/test')
                     || text.contains('slime-launcher-0.2.2.jar')
-                    || text.contains('junit-') || text.contains('legacy110-probe')) {
+                    || text.contains('junit-') || text.contains('legacy110-probe') || text.contains('fantasy-probe')) {
                 throw new GradleException("Unsafe production launch: ${name}")
             }
             if (runtime.any { !text.contains(it.path.replace('\\', '/')) }

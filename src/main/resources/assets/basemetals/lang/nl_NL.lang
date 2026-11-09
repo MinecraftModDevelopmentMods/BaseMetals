@@ -530,3 +530,17 @@ item.basemetals.starsteel_gear.name=Star-Steel Gear
 item.basemetals.steel_gear.name=Steel Gear
 item.basemetals.tin_gear.name=Tin Gear
 item.basemetals.zinc_gear.name=Zinc Gear
+
+config.basemetals.title=Base Metals-configuratie
+config.basemetals.restart_guidance=Opnieuw opstarten vereist. De ertsverdeling wordt in OreSpawn ingesteld.
+config.basemetals.category.general=Algemeen
+config.basemetals.category.metals=Basismetalen
+config.basemetals.category.vanilla=Vanilla-uitbreidingen
+config.basemetals.category.fluids=Gesmolten vloeistoffen
+config.basemetals.option.content_mode=Inhoudsmodus
+config.basemetals.content_mode.high_fantasy=Hoge fantasie
+config.basemetals.content_mode.low_fantasy=Lage fantasie
+high_fantasy=Hoge fantasie
+low_fantasy=Lage fantasie
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

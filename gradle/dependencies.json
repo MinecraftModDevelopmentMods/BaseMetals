@@ -1,16 +1,13 @@
 [
-  {"id":"orespawn","coordinate":"curse.maven:mmd-orespawn-245586:9276430","sha256":"4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6","repository":"https://www.cursemaven.com","runtime":true},
-  {"id":"alt","coordinate":"curse.maven:additional-loot-tables-243157:2604973","sha256":"DFDEE18663A0CBC3A811E442C7B20F34F1765B1D36C6284CB3B8B8EAA3FC5620","repository":"https://www.cursemaven.com"},
-  {"id":"mantle","coordinate":"slimeknights.mantle:Mantle:1.10.2-1.1.5.207","sha256":"520499E1329EA57DB3D7ABA671B30A0CC7DA60C02C97828CFAF57778B0923832","repository":"https://dvs1.progwml6.com/files/maven"},
-  {"id":"tconstruct","coordinate":"slimeknights:TConstruct:1.10.2-2.6.5.11","sha256":"E33061BEFB4DA60B2EF79016A022C434149DDF1E573A01EFD2F202F03904E52D","repository":"https://dvs1.progwml6.com/files/maven"},
-  {"id":"jei","coordinate":"mezz.jei:jei_1.10.2:3.14.7.420","sha256":"B29DC3077772543E765432CC2C91AAA657F2AC70E664707B3F1D9ACB2A02706A","repository":"https://dvs1.progwml6.com/files/maven"},
-  {"id":"nei","coordinate":"codechicken:NotEnoughItems:1.10.2-2.1.3.220:universal","sha256":"C49BE9F4AE9ABD1CF397884D32F7F1DAD233C8ED4E74EA72F8B6656E8A8A1594","repository":"https://chickenbones.net/maven"},
-  {"id":"ccl","coordinate":"codechicken:CodeChickenLib:1.10.2-2.5.9.320:universal","sha256":"E265A9B9F3E2ED4302CADAFDBC8520E90F12CF06BC60F267466AF8E6B752C8FC","repository":"https://chickenbones.net/maven"},
-  {"id":"ccc","coordinate":"codechicken:CodeChickenCore:1.10.2-2.4.1.103:universal","sha256":"E2E4FDABAB58F76A25BCC9AE944639CA6265DA7BF81E62379CBED23851C2D479","repository":"https://chickenbones.net/maven"},
-  {"id":"ic2","coordinate":"net.industrial-craft:industrialcraft-2:2.6.254-ex110","sha256":"CD51FB645C26FA96C6B22704EF168D00192A135F70BD97B1DA40CD5F80FA62A2","repository":"https://maven.ic2.player.to"},
-  {"id":"cofh","coordinate":"cofh:CoFHCore:1.10.2-4.1.12.17:universal","sha256":"AD8924E7B142A98C03CF0C37DBD320DDBA553BA92487556C8D3D8F28D41409B3","repository":"https://maven.covers1624.net"},
-  {"id":"mekanism","coordinate":"curse.maven:mekanism-268560:2475800","sha256":"E46A248BDA91F683812A10D1764CC95CA25A2BBBD24D945D1D4007DE54E79876","repository":"https://www.cursemaven.com"},
+  {"id":"orespawn","coordinate":"curse.maven:mmd-orespawn-245586:9524249","sha256":"4246D1EB83FFFC325F04E3D3FE331D1404714F4A8D773ADE278A5D0EBEE5EDBC","repository":"https://www.cursemaven.com","runtime":true},
+  {"id":"alt","coordinate":"curse.maven:additional-loot-tables-243157:2604961","sha256":"4CC6B59760DBCE28411B8F76F25F4F94AD6B1769F20917BDEF9FA6202ABB86C1","repository":"https://www.cursemaven.com"},
+  {"id":"mantle","coordinate":"curse.maven:mantle-74924:2413993","sha256":"6C1C79BD8491106D65240D4DF139E2BEA7914BA2622FAE0662ADB3047D5EDF9D","repository":"https://www.cursemaven.com"},
+  {"id":"tconstruct","coordinate":"curse.maven:tinkers-construct-74072:2451489","sha256":"2D7F4A08EDDA2881A432CD80FF26575CCEA593FCC8A597A435652C1A53B14CB8","repository":"https://www.cursemaven.com"},
+  {"id":"jei","coordinate":"curse.maven:jei-238222:2461378","sha256":"370814660C9FEB9514C8F4A8B6F2DC74E5ACC665A4B11ED046AD68F1869A422F","repository":"https://www.cursemaven.com"},
+  {"id":"ic2","coordinate":"curse.maven:industrial-craft-242638:2457397","sha256":"ACCFA9A503A4B194CFF9528EA521AB42E00A85620F13DDE268BE14C112305B98","repository":"https://www.cursemaven.com"},
+  {"id":"cofh","coordinate":"curse.maven:cofh-core-69162:2469613","sha256":"7C3EC573F62AE6F3F98B34361123E9D706CFDF03419AE6242293515960391C11","repository":"https://www.cursemaven.com"},
+  {"id":"mekanism","coordinate":"curse.maven:mekanism-268560:2475809","sha256":"AF013AB6843174E4E766EC98A576D60047EAEA372CD01F6BF5460678EFE86D19","repository":"https://www.cursemaven.com"},
   {"id":"taiga","coordinate":"curse.maven:taiga-247661:2368038","sha256":"B835A38B80ED60E0F59426F82EE5EA2E681A2AE8DD877DB5DBCF7949B9C4B735","repository":"https://www.cursemaven.com"},
-  {"id":"hwyla","coordinate":"curse.maven:hwyla-253449:2433252","sha256":"2FC66DBB0CD7A1B9395FB5AAC198CF29C69BE44DE12A771FC4E77D4106D2DDDF","repository":"https://www.cursemaven.com"},
-  {"id":"veinminer","coordinate":"curse.maven:veinminer-67133:2528282","sha256":"C2F651221CFCE7049A0011426F3E712026ECE31CE61C6A47DEF68BD7C78EB10A","repository":"https://www.cursemaven.com"}
+  {"id":"hwyla","coordinate":"curse.maven:hwyla-253449:2496989","sha256":"4B6B22C4B79052841ABC7E84C2604CD8441ADADE07CD1262CC5B096DA68EC073","repository":"https://www.cursemaven.com"},
+  {"id":"veinminer","coordinate":"curse.maven:veinminer-67133:2528292","sha256":"75B37AC8778261875A692D468ABAA3B1BD8AFF61D18B4EA900C26AA2C8528AD7","repository":"https://www.cursemaven.com"}
 ]

@@ -9,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -50,8 +49,7 @@ public class BlockMMDAnvil extends net.minecraft.block.BlockAnvil implements IMM
 	@Override
 	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
-			final ItemStack itemStack, final EnumFacing facing, final float hitX, final float hitY,
-			final float hitZ) {
+			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
 		if (!worldIn.isRemote) {
 			playerIn.displayGui(new BlockMMDAnvil.MMDAnvil(worldIn, pos, this.material));
 		}

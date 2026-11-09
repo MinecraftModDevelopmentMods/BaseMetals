@@ -34,7 +34,7 @@ public class TraitReactive extends AbstractTrait {
 			@Nonnull final boolean isCritical) {
 		if (target.canBreatheUnderwater()) {
 			// do extra damage
-			final DamageSource extraDamage = DamageSource.onFire;
+			final DamageSource extraDamage = DamageSource.ON_FIRE;
 			target.attackEntityFrom(extraDamage, isCritical ? 8f : 4f);
 		}
 	}

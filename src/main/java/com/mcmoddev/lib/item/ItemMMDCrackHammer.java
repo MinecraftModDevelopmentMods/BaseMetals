@@ -81,8 +81,8 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 				final ItemStack output = recipe.getOutput().copy();
 				world.setBlockToAir(coord);
 				if (output != null) {
-					final int num = output.stackSize;
-					output.stackSize = 1;
+					final int num = output.getCount();
+					output.setCount(1);
 					for (int i = 0; i < num; i++) {
 						world.spawnEntity(new EntityItem(world, coord.getX() + 0.5,
 								coord.getY() + 0.5, coord.getZ() + 0.5, output.copy()));
@@ -94,9 +94,10 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	}
 
 	@Override
-	public EnumActionResult onItemUse(final ItemStack item, final EntityPlayer player,
+	public EnumActionResult onItemUse(final EntityPlayer player,
 			final World w, final BlockPos coord, final EnumHand hand, final EnumFacing facing,
 			final float partialX, final float partialY, final float partialZ) {
+		final ItemStack item = player.getHeldItem(hand);
 		if (facing != EnumFacing.UP) {
 			return EnumActionResult.PASS;
 		}
@@ -105,7 +106,7 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 		final List<EntityItem> entities = w.getEntitiesWithinAABB(EntityItem.class, boundingBox);
 		boolean success = false;
 		for (final EntityItem target : entities) {
-			final ItemStack targetItem = target.getEntityItem();
+			final ItemStack targetItem = target.getItem();
 			if (targetItem != null) {
 				final ICrusherRecipe recipe = CrusherRecipeRegistry.getInstance()
 						.getRecipeForInputItem(targetItem);
@@ -122,16 +123,16 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 					// crush the item (server side only)
 					if (!w.isRemote) {
 						final ItemStack output = recipe.getOutput().copy();
-						final int count = output.stackSize;
+						final int count = output.getCount();
 						int toolDamage;
 						if (Options.crackHammerFullStack()) {
-							output.stackSize = targetItem.stackSize;
-							if (item.isItemDamaged() && (item.getItemDamage() < output.stackSize)) {
-								output.stackSize = item.getItemDamage();
+							output.setCount(targetItem.getCount());
+							if (item.isItemDamaged() && (item.getItemDamage() < output.getCount())) {
+								output.setCount(item.getItemDamage());
 							}
-							toolDamage = output.stackSize;
+							toolDamage = output.getCount();
 						} else {
-							output.stackSize = 1;
+							output.setCount(1);
 							toolDamage = 1;
 						}
 						final double x = target.posX;
@@ -139,11 +140,11 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 						final double z = target.posZ;
 
 						if (Options.crackHammerFullStack()) {
-							targetItem.stackSize -= output.stackSize;
+							targetItem.shrink(output.getCount());
 						} else {
-							targetItem.stackSize--;
+							targetItem.shrink(1);
 						}
-						if (targetItem.stackSize <= 0) {
+						if (targetItem.getCount() <= 0) {
 							w.removeEntity(target);
 						}
 						for (int i = 0; i < count; i++) {
@@ -214,6 +215,11 @@ public class ItemMMDCrackHammer extends net.minecraft.item.ItemTool implements I
 	 */
 	@Override
 	@Deprecated
+	public int getHarvestLevel(final ItemStack stack, final String typeRequested,
+			final EntityPlayer player, final IBlockState state) {
+		return getHarvestLevel(stack, typeRequested);
+	}
+
 	public int getHarvestLevel(final ItemStack stack, final String typeRequested) {
 		if ((typeRequested != null) && this.toolTypes.contains(typeRequested)) {
 			if (Options.strongHammers()) {

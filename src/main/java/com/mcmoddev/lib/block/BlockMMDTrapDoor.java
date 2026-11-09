@@ -9,7 +9,6 @@ import com.mcmoddev.lib.material.MMDMaterial.MaterialType;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -41,8 +40,7 @@ public class BlockMMDTrapDoor extends net.minecraft.block.BlockTrapDoor implemen
 	@Override
 	public boolean onBlockActivated(final World worldIn, final BlockPos pos,
 			final IBlockState state, final EntityPlayer playerIn, final EnumHand hand,
-			final ItemStack heldItem, final EnumFacing facing, final float hitX, final float hitY,
-			final float hitZ) {
+			final EnumFacing facing, final float hitX, final float hitY, final float hitZ) {
 		if ((this.material.getToolHarvestLevel() > 1)
 				|| (this.material.getType().equals(MaterialType.METAL))) {
 			return false;

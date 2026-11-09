@@ -137,7 +137,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 
 			// tool should be, mostly, equal to what the player is holding... Maybe literal
 			// equality is needed, dunno
-			if ((tool.stackSize == 0) && tool.equals(player.getHeldItemMainhand())) {
+			if ((tool.getCount() == 0) && tool.equals(player.getHeldItemMainhand())) {
 				ForgeEventFactory.onPlayerDestroyItem(player, tool, EnumHand.MAIN_HAND);
 				player.setHeldItem(EnumHand.MAIN_HAND, null);
 			}
@@ -180,7 +180,7 @@ public class ItemMMDSickle extends ItemTool implements IMMDObject {
 			final EntityPlayer player, final ItemStack stack, final int range) {
 
 		BaseMetals.logger.debug("Entered getEffectedBlocks");
-		if ((stack.stackSize == 0) || !(stack.getItem() instanceof ItemMMDSickle)) {
+		if ((stack.getCount() == 0) || !(stack.getItem() instanceof ItemMMDSickle)) {
 			BaseMetals.logger.debug("Early out because tool-stack is empty");
 			return ImmutableList.of();
 		}

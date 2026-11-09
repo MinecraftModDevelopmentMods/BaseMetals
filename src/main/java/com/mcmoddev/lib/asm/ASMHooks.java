@@ -1,6 +1,5 @@
 package com.mcmoddev.lib.asm;
 
-import com.google.common.base.Optional;
 import com.mcmoddev.lib.common.item.IHorseArmor;
 
 import net.minecraft.entity.passive.EntityHorse;
@@ -14,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ASMHooks {
 
-	public static final DataParameter<Optional<ItemStack>> ARMOR_STACK = EntityDataManager
+	public static final DataParameter<ItemStack> ARMOR_STACK = EntityDataManager
 			.createKey(EntityHorse.class, DataSerializers.OPTIONAL_ITEM_STACK);
 
 	private ASMHooks() {
@@ -22,11 +21,11 @@ public class ASMHooks {
 	}
 
 	public static void onInitHorse(final EntityHorse entity) {
-		entity.getDataManager().register(ASMHooks.ARMOR_STACK, Optional.absent());
+		entity.getDataManager().register(ASMHooks.ARMOR_STACK, ItemStack.EMPTY);
 	}
 
 	public static void setHorseArmorStack(final EntityHorse entity, final ItemStack stack) {
-		entity.getDataManager().set(ASMHooks.ARMOR_STACK, Optional.fromNullable(stack));
+		entity.getDataManager().set(ASMHooks.ARMOR_STACK, stack == null ? ItemStack.EMPTY : stack);
 	}
 
 	/**
@@ -37,8 +36,8 @@ public class ASMHooks {
 	 */
 	@SideOnly(Side.CLIENT)
 	public static String getTextureName(final HorseArmorType type, final EntityHorse entity) {
-		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK).orNull();
-		if ((stack != null) && (stack.getItem() instanceof IHorseArmor)) {
+		final ItemStack stack = entity.getDataManager().get(ASMHooks.ARMOR_STACK);
+		if (!stack.isEmpty() && (stack.getItem() instanceof IHorseArmor)) {
 			return ((IHorseArmor) stack.getItem()).getHorseArmorTexture(entity, stack);
 		}
 		return type.getTextureName();
