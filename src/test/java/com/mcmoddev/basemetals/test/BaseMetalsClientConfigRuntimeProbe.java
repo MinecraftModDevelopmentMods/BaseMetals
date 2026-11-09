@@ -3,8 +3,11 @@ package com.mcmoddev.basemetals.test;
 import com.mcmoddev.basemetals.client.config.BaseMetalsConfigScreen;
 import com.mcmoddev.basemetals.client.config.BaseMetalsGuiFactory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiDisconnected;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.GuiModList;
@@ -22,6 +25,9 @@ import zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -32,15 +38,22 @@ import java.util.stream.Collectors;
 		name = "Base Metals Client Configuration Probe",
 		version = "1",
 		clientSideOnly = true,
-		dependencies = "required-after:basemetals;required-after:orespawn@[4.1.0.112021,5.0.0)",
+		dependencies = "required-after:basemetals;required-after:orespawn@[4.1.6.112021,5.0.0)",
 		acceptedMinecraftVersions = "[1.12.2]")
 public final class BaseMetalsClientConfigRuntimeProbe {
 	public static final String MODID = "basemetals_client_config_probe";
 	private final Properties result = new Properties();
 	private boolean checkedModsButton;
+	private boolean connecting;
+	private int connectedTicks;
 
 	@EventHandler
 	public void init(final FMLInitializationEvent event) throws IOException {
+		if (Integer.getInteger("basemetals.connectionProbe.port", 0) != 0) {
+			MinecraftForge.EVENT_BUS.register(this);
+			return;
+		}
+
 		final List<WorldSettingsExtension> extensions = WorldSettingsExtensionRegistry.extensions()
 				.stream()
 				.filter(extension -> "basemetals".equals(extension.id().getNamespace()))
@@ -82,8 +95,14 @@ public final class BaseMetalsClientConfigRuntimeProbe {
 	}
 
 	@SubscribeEvent
-	public void checkModsButton(final TickEvent.ClientTickEvent event) throws IOException {
+	public void checkModsButton(final TickEvent.ClientTickEvent event) throws IOException, IllegalAccessException {
 		if (checkedModsButton || event.phase != TickEvent.Phase.END) {
+			return;
+		}
+
+		final int port = Integer.getInteger("basemetals.connectionProbe.port", 0);
+		if (port != 0) {
+			checkConnection(port);
 			return;
 		}
 
@@ -132,6 +151,40 @@ public final class BaseMetalsClientConfigRuntimeProbe {
 		if (Boolean.getBoolean("basemetals.clientConfigProbe.exit")) {
 			Minecraft.getMinecraft().shutdown();
 		}
+	}
+
+	private void checkConnection(final int port) throws IOException, IllegalAccessException {
+		final Minecraft client = Minecraft.getMinecraft();
+		if (!connecting && client.currentScreen instanceof GuiMainMenu) {
+			connecting = true;
+			client.displayGuiScreen(new GuiConnecting(client.currentScreen, client, "127.0.0.1", port));
+			return;
+		}
+
+		if (connecting && client.currentScreen instanceof GuiDisconnected) {
+			for (final Field field : GuiDisconnected.class.getDeclaredFields()) {
+				if (field.getType() == ITextComponent.class) {
+					field.setAccessible(true);
+					final ITextComponent message = (ITextComponent) field.get(client.currentScreen);
+					finishConnectionCheck(client, message.getUnformattedText());
+					return;
+				}
+			}
+
+			throw new AssertionError("The disconnect screen has no message");
+		}
+
+		if (!Boolean.getBoolean("basemetals.connectionProbe.expectDisconnect")
+				&& client.world != null && client.player != null && ++connectedTicks >= 10) {
+			finishConnectionCheck(client, "joined");
+		}
+	}
+
+	private void finishConnectionCheck(final Minecraft client, final String message) throws IOException {
+		final File marker = new File(System.getProperty("basemetals.connectionProbe.marker"));
+		Files.write(marker.toPath(), message.getBytes(StandardCharsets.UTF_8));
+		checkedModsButton = true;
+		client.shutdown();
 	}
 
 	private static void require(final boolean condition, final String message) {

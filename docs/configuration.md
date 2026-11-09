@@ -48,9 +48,9 @@ enabled. Recipe-book unlocks operate independently of this setting.
 
 An older `BaseMetals.cfg` without `contentMode` is treated exactly like an
 explicit `high_fantasy` configuration. Unrecognized values are corrected to High
-Fantasy. The mode is chosen when Minecraft starts. A client using a different
-mode from the server is disconnected with an explanatory
-Base Metals message before gameplay.
+Fantasy. The mode is chosen when Minecraft starts. Use the same Base Metals
+build and Fantasy Level on the server and client. If the settings differ,
+Base Metals explains the mismatch before the player joins the world.
 
 The mode belongs to the Minecraft instance or dedicated server, not to an
 individual save. After a restart, the selected mode applies to every world
@@ -64,6 +64,6 @@ and saved-world profiles are not rewritten when the mode changes.
 ## OreSpawn dependency
 
 Development, CI, and release qualification use the published OreSpawn
-`4.1.0.112021` CurseForge artifact. Base Metals pins its exact CurseForge file
+`4.1.6.112021` CurseForge artifact. Base Metals pins its exact CurseForge file
 ID and SHA-256 and verifies the mod metadata and required client API classes
 before accepting the dependency.

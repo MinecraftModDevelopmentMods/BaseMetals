@@ -9,9 +9,15 @@ def originalArtifact = packagedForge.originalArtifact
 def runtimeLogFailures = packagedForge.runtimeLogFailures
 def stagePackagedForgeBase = packagedForge.stagePackagedForgeBase
 
-// Check that OreSpawn is required and saved worldgen overrides are preserved.
+// Importing an older OreSpawn file must not replace an existing override.
 File existingOverrideRun = file("${buildDir}/packaged-forge-existing-override-run")
 File existingOverrideMarker = new File(existingOverrideRun, 'basemetals-runtime-probe.properties')
+File existingOverrideFile = new File(existingOverrideRun, 'config/basemetals-orespawn.json')
+File existingOverrideLegacyFile = new File(existingOverrideRun, 'config/orespawn3/basemetals.json')
+def legacyFixture = file('src/test/resources/orespawn3/basemetals-custom.json')
+String ordinaryDimensions = 'orespawn:all_except_nether_end'
+BigDecimal overrideNickelFrequency = 6.25
+String expectedOverrideText
 def prepareExistingOverride = tasks.register('preparePackagedForgeExistingOverrideRuntime') {
     group = 'verification'
     dependsOn releaseJar
@@ -34,9 +40,16 @@ def prepareExistingOverride = tasks.register('preparePackagedForgeExistingOverri
         def explicitOverride = new JsonSlurper().parse(
                 file('docs/examples/basemetals-orespawn-disabled.json'))
         explicitOverride.ores.each { id, rule -> rule.enabled = true }
-        new File(config, 'basemetals-orespawn.json').setText(
-                groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(explicitOverride))
-                        + System.lineSeparator(), 'UTF-8')
+        def nickel = explicitOverride.ores['basemetals:legacy/nickel_ore']
+        nickel.dimension_selectors[ordinaryDimensions].frequency = overrideNickelFrequency
+        expectedOverrideText = groovy.json.JsonOutput.prettyPrint(
+                groovy.json.JsonOutput.toJson(explicitOverride)) + System.lineSeparator()
+        existingOverrideFile.setText(expectedOverrideText, 'UTF-8')
+        copy {
+            from legacyFixture
+            into existingOverrideLegacyFile.parentFile
+            rename { 'basemetals.json' }
+        }
     }
 }
 
@@ -69,25 +82,32 @@ def previousExistingOverride = prepareExistingOverride
             if (!existingOverrideMarker.isFile()) {
                 throw new GradleException("Existing OreSpawn 4 override ${phase} probe failed")
             }
-            File override = new File(existingOverrideRun, 'config/basemetals-orespawn.json')
             File worldProfile = new File(existingOverrideRun,
                     'world/serverconfig/orespawn-worldgen.json')
-            if (!override.isFile() || !worldProfile.isFile()) {
-                throw new GradleException('Existing OreSpawn 4 override or world snapshot is missing')
+            File report = new File(existingOverrideRun, 'config/orespawn-os3-migration-report.json')
+            if (!existingOverrideFile.isFile() || !worldProfile.isFile() || !report.isFile()) {
+                throw new GradleException('The OreSpawn override, migration report or world snapshot is missing')
             }
-            def overrideJson = new JsonSlurper().parse(override)
+            if (existingOverrideFile.getText('UTF-8') != expectedOverrideText) {
+                throw new GradleException("OreSpawn 3 import rewrote the native override on ${phase}")
+            }
+            if (!existingOverrideLegacyFile.isFile() || !Arrays.equals(existingOverrideLegacyFile.bytes,
+                    legacyFixture.bytes)) {
+                throw new GradleException("OreSpawn 3 import changed the original legacy file on ${phase}")
+            }
             def profile = new JsonSlurper().parse(worldProfile)
-            def overrideRules = overrideJson.ores.findAll { id, rule ->
-                id.startsWith('basemetals:legacy/')
-            }
             def snapshotRules = profile.ores.findAll { id, rule ->
                 id.startsWith('basemetals:legacy/')
             }
-            if (overrideRules.size() != 11 || snapshotRules.size() != 11
+            if (snapshotRules.size() != 11
                     || !snapshotRules.every { id, rule ->
                         rule.enabled && rule.source_provider == 'basemetals'
                     }) {
                 throw new GradleException('Existing OreSpawn 4 override did not retain eleven stable rules')
+            }
+            def nickel = snapshotRules['basemetals:legacy/nickel_ore']
+            if (nickel.dimension_selectors[ordinaryDimensions]?.frequency != overrideNickelFrequency) {
+                throw new GradleException("OreSpawn 3 import displaced the native nickel frequency on ${phase}")
             }
             List<String> failures = runtimeLogFailures(existingOverrideRun)
             if (!failures.isEmpty()) {
@@ -101,7 +121,7 @@ def previousExistingOverride = prepareExistingOverride
 
 tasks.register('packagedForgeExistingOverrideRuntimeTest') {
     group = 'verification'
-    description = 'Loads an existing translated OreSpawn 4 override and reloads its world snapshot.'
+    description = 'Checks native OreSpawn 4 override precedence on first OreSpawn 3 import and reload.'
     dependsOn previousExistingOverride
 }
 
@@ -148,7 +168,7 @@ tasks.register('packagedForgeMissingOreSpawnTest', Exec) {
         if (!output.contains('MissingModsException')
                 || !output.contains('basemetals')
                 || !output.contains('orespawn')
-                || !output.contains('4.1.0.112021')) {
+                || !output.contains(project.orespawn4_version)) {
             throw new GradleException('Missing OreSpawn 4 was not rejected by the Base Metals version contract')
         }
     }
@@ -199,7 +219,7 @@ tasks.register('packagedForgeOs3RejectionTest', Exec) {
         if (!output.contains('MissingModsException')
                 || !output.contains('basemetals')
                 || !output.contains('orespawn')
-                || !output.contains('4.1.0.112021')) {
+                || !output.contains(project.orespawn4_version)) {
             throw new GradleException('OreSpawn 3 was not rejected by the Base Metals version contract')
         }
     }

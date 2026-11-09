@@ -4,12 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.block.BlockBaseMetalsMoltenFluid;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.events.MMDLibRegisterFluids;
 import com.mcmoddev.lib.init.Materials;
+import com.mcmoddev.lib.material.MMDMaterial;
 import com.mcmoddev.lib.util.Config.Options;
 
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -34,14 +37,25 @@ public final class Fluids extends com.mcmoddev.lib.init.Fluids {
 				MaterialNames.TIN, MaterialNames.ZINC);
 
 		materials.stream().filter(Materials::hasMaterial).filter(Options::isFluidEnabled)
-				.forEach(materialName -> {
-					addFluid(materialName, 2000, 10000, 769, 10);
-					addFluidBlock(materialName);
-				});
+				.forEach(Fluids::registerMoltenFluid);
 
 		if (Materials.hasMaterial(MaterialNames.MERCURY) && Options.isFluidEnabled(MaterialNames.MERCURY)) {
 			addFluid(MaterialNames.MERCURY, 13594, 2000, 769, 0);
 			addFluidBlock(MaterialNames.MERCURY);
 		}
+	}
+
+	/** Registers a molten fluid for Base Metals or its Vanilla Bits. */
+	public static void registerMoltenFluid(final String materialName) {
+		final MMDMaterial material = Materials.getMaterialByName(materialName);
+		final boolean useDefaultBlock = material.getFluid() == null && !material.hasCustomFluid()
+				&& !FluidRegistry.isFluidRegistered(materialName);
+		addFluid(materialName, 2000, 10000, 769, 10);
+
+		if (useDefaultBlock && material.getFluidBlock() == null) {
+			material.setFluidBlockGetter(name -> new BlockBaseMetalsMoltenFluid(FluidRegistry.getFluid(name)));
+		}
+
+		addFluidBlock(materialName);
 	}
 }

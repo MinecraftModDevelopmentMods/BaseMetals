@@ -1,6 +1,6 @@
 # Base Metals world generation
 
-Base Metals 2.6 requires OreSpawn 4.1.0.112021 or newer in the 4.x line.
+This build requires OreSpawn 4.1.6.112021 or newer in the 4.x line.
 OreSpawn is the only Base Metals ore generator. Base Metals does not register a
 fallback generator.
 
@@ -48,7 +48,11 @@ OreSpawn 4 migrates `config/orespawn3/basemetals.json` into the same stable
 rule IDs used by the native provider. Customized frequencies, heights and
 disabled rules therefore remain associated with their Base Metals rules.
 Previously generated `config/basemetals-orespawn.json` overrides also remain
-valid and authoritative.
+valid and take precedence over a first-time OreSpawn 3 import.
+
+When moving a world from 1.10.2 or 1.11.2, copy the whole world folder,
+including its `serverconfig` folder. OreSpawn keeps the world's saved ore
+settings. Moving the world does not, by itself, regenerate existing chunks.
 
 The legacy MMDLib settings named `using_orespawn` and `fallback_orespawn` are
 not Base Metals OreSpawn 4 controls. Use the provider override or the per-world

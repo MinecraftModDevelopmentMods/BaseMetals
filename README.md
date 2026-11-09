@@ -10,10 +10,11 @@ Base Metals adds metals, alloys, equipment, building blocks, and the crackhammer
 Crush ores into powder, smelt the powder into ingots, or combine it into alloy
 blends. The metals also work with supported processing and tool-building mods.
 
-This branch builds **2.6.1.112021** for Minecraft 1.12.2 and Forge. This update
-fixes missing blocks and items when upgrading older Base Metals worlds. It
-also keeps the gameplay fixes and optional Low Fantasy mode from 2.6.0. See the
-[changelog](CHANGELOG.txt) for the release changes.
+This branch builds **2.6.2.112021** for Minecraft 1.12.2 and Forge. I've
+updated OreSpawn support so saved ore settings carry over when you move an
+older world. This update also fixes shallow molten metal not burning on
+contact and gives players a clear message if their Fantasy Level doesn't
+match the server's. See the [changelog](CHANGELOG.txt) for the details.
 
 ## Installation
 
@@ -24,7 +25,8 @@ Install these mods on both the client and server:
 - [MMDLib](https://www.curseforge.com/minecraft/mc-mods/mmdlib), tested with
   `1.0.0-rc2.36`.
 - [MMD OreSpawn](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn)
-  `4.1.0.112021` or newer in the 4.x line.
+  [`4.1.6.112021`](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9527784)
+  or newer in the 4.x line.
 - [Base Metals](https://www.curseforge.com/minecraft/mc-mods/base-metals).
 
 Put the jars in the instance's `mods` folder. Minecraft 1.12.2 runs on Java 8.
@@ -44,6 +46,8 @@ loss instead.
 
 Test a complete copy of the world first. Containers and entities supplied by
 other mods still need their own compatible versions and upgrade support.
+When moving a world from 1.10.2 or 1.11.2, copy the whole world folder,
+including `serverconfig`, to keep its saved OreSpawn rules.
 
 ## Metals and alloys
 
@@ -100,8 +104,9 @@ screen. Changes require a Minecraft restart.
   It does not remove existing items or change ore generation.
 
 An old configuration without `contentMode` still uses High Fantasy. The mode
-applies to the whole Minecraft instance or server, not to one world. Clients
-and servers must use the same mode.
+applies to the whole Minecraft instance or server, not to one world. Use
+the same Base Metals build and Fantasy Level on the client and server. If
+the settings don't match, you'll see what to change before you join.
 
 OreSpawn is the only Base Metals ore generator. Edit ore rules in OreSpawn,
 not through MMDLib's old `using_orespawn` or `fallback_orespawn` switches.
@@ -143,7 +148,7 @@ The [build-script guide](gradle/README.md) explains the supporting scripts.
 The [release guide](docs/releasing.md) covers publication from the MMD Actions tab.
 
 Release artifacts use the Maven coordinates
-`zone.moddev.mc.basemetals:BaseMetals:2.6.1.112021`. Java packages remain under
+`zone.moddev.mc.basemetals:BaseMetals:2.6.2.112021`. Java packages remain under
 `com.mcmoddev.basemetals`; this release does not move saved registry names.
 
 Report bugs through the [issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

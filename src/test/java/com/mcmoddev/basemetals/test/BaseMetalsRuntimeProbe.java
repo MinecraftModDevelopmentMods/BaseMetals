@@ -29,8 +29,10 @@ import com.mcmoddev.lib.material.MMDMaterial;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -137,6 +139,8 @@ public final class BaseMetalsRuntimeProbe {
 				FMLCommonHandler.instance().getMinecraftServerInstance());
 		final int armorEffectChecks = verifyArmorEffects(
 				FMLCommonHandler.instance().getMinecraftServerInstance());
+		final int moltenContactChecks = verifyMoltenContact(
+				FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0));
 		final WorldgenCounts worldgen = expectedCoFHWorld
 				? verifyCoFHWorldgen(FMLCommonHandler.instance().getMinecraftServerInstance())
 				: new WorldgenCounts(0, 0);
@@ -145,7 +149,7 @@ public final class BaseMetalsRuntimeProbe {
 		final String mmdLibVersion = version("mmdlib");
 		final String oreSpawnVersion = version("orespawn");
 
-		require("2.6.1.112021".equals(baseMetalsVersion),
+		require("2.6.2.112021".equals(baseMetalsVersion),
 				"Unexpected Base Metals version " + baseMetalsVersion);
 		// MMDLib rc2.36 still reports "rc2" in its mod metadata.
 		require("1.0.0-rc2".equals(mmdLibVersion),
@@ -179,6 +183,7 @@ public final class BaseMetalsRuntimeProbe {
 		result.setProperty("rangedItemsChecked", Integer.toString(rangedItemsChecked));
 		result.setProperty("rangedDamageChecks", Integer.toString(rangedDamageChecks));
 		result.setProperty("armorEffectChecks", Integer.toString(armorEffectChecks));
+		result.setProperty("moltenContactChecks", Integer.toString(moltenContactChecks));
 		result.setProperty("registered", "true");
 		marker.getParentFile().mkdirs();
 
@@ -187,6 +192,65 @@ public final class BaseMetalsRuntimeProbe {
 		}
 
 		FMLCommonHandler.instance().getMinecraftServerInstance().initiateShutdown();
+	}
+
+	private static int verifyMoltenContact(final WorldServer world) {
+		final BlockPos pos = new BlockPos(8, 150, 12);
+		final IBlockState original = world.getBlockState(pos);
+		final Block copper = Block.REGISTRY.getObject(new ResourceLocation("basemetals", "copper"));
+		final Block mercury = Block.REGISTRY.getObject(new ResourceLocation("basemetals", "mercury"));
+		requireRegistered(copper, "basemetals:copper");
+		requireRegistered(mercury, "basemetals:mercury");
+
+		try {
+			world.setBlockState(pos, copper.getDefaultState(), 2);
+			checkFluidContact(world, pos, "deep molten copper", 0.25, false, false, 4.0F);
+			checkFluidContact(world, pos, "above molten copper", 0.90, false, false, 0.0F);
+			checkFluidContact(world, pos, "shallow molten copper", 0.70, false, false, 4.0F);
+			checkFluidContact(world, pos, "fire resistance", 0.70, true, false, 0.0F);
+			checkFluidContact(world, pos, "creative mode", 0.70, false, true, 0.0F);
+
+			world.setBlockState(pos, copper.getStateFromMeta(1), 2);
+			checkFluidContact(world, pos, "above flowing copper", 0.80, false, false, 0.0F);
+			checkFluidContact(world, pos, "shallow flowing copper", 0.70, false, false, 4.0F);
+
+			world.setBlockState(pos, Blocks.WATER.getDefaultState(), 2);
+			checkFluidContact(world, pos, "water", 0.25, false, false, 0.0F);
+			world.setBlockState(pos, mercury.getDefaultState(), 2);
+			checkFluidContact(world, pos, "liquid mercury", 0.25, false, false, 0.0F);
+		} finally {
+			world.setBlockState(pos, original, 2);
+		}
+
+		return 9;
+	}
+
+	private static void checkFluidContact(final WorldServer world, final BlockPos pos, final String label,
+			final double height, final boolean resistant, final boolean creative, final float expectedDamage) {
+		final EntityPlayer player = new EntityPlayer(world, new GameProfile(UUID.randomUUID(), "FluidCheck")) {
+			@Override
+			public boolean isSpectator() {
+				return false;
+			}
+
+			@Override
+			public boolean isCreative() {
+				return creative;
+			}
+		};
+		player.capabilities.disableDamage = creative;
+		if (resistant) {
+			player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 200));
+		}
+
+		player.setPosition(pos.getX() - 0.5, pos.getY() + height, pos.getZ() + 0.5);
+		player.move(MoverType.SELF, 1.0, 0.0, 0.0);
+		player.onEntityUpdate();
+
+		final float damage = player.getMaxHealth() - player.getHealth();
+		require(damage == expectedDamage && (expectedDamage == 0.0F || player.isBurning()),
+				label + " expected " + expectedDamage + " damage, got " + damage
+						+ " (burning: " + player.isBurning() + ")");
 	}
 
 	private static WorldgenCounts verifyCoFHWorldgen(final MinecraftServer server) {

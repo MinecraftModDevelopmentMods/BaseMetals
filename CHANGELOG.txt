@@ -1,3 +1,15 @@
+Base Metals 2.6.2.112021 — Minecraft 1.12.2
+
+- Updated to OreSpawn 4.1.6.112021. Install it on both the client and server.
+  Saved ore rules carry over when you move a world from 1.10.2 or 1.11.2,
+  and importing an old OreSpawn 3 config no longer replaces an existing
+  OreSpawn override.
+- Fixed shallow molten metal so it burns on contact, just like deeper molten
+  metal. Mercury still behaves as before.
+- The server now checks your Fantasy Level before you join and tells you
+  what to change if it doesn't match. Old configs without that setting
+  still use High Fantasy.
+
 Base Metals 2.6.1.112021 — Minecraft 1.12.2
 
 - Fixed recovery of mercury blocks, carbon powder, iron nuggets and metal door
