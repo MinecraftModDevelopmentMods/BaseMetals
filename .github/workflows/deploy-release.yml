@@ -311,9 +311,14 @@ jobs:
             exit 1
           fi
 
-          if tag_json="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" 2>/dev/null)"; then
-            tag_sha="$(jq -r '.object.sha' <<<"$tag_json")"
-            if [[ "$tag_sha" != "$release_sha" ]]; then
+          if tag_object="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$release_tag" \
+            --jq '.object | "\(.type) \(.sha)"' 2>/dev/null)"; then
+            read -r tag_type tag_sha <<<"$tag_object"
+            if [[ "$tag_type" == "tag" ]]; then
+              tag_object="$(gh api "repos/$GITHUB_REPOSITORY/git/tags/$tag_sha" --jq '.object | "\(.type) \(.sha)"')"
+              read -r tag_type tag_sha <<<"$tag_object"
+            fi
+            if [[ "$tag_type" != "commit" || "$tag_sha" != "$release_sha" ]]; then
               echo "Existing tag $release_tag resolves to $tag_sha instead of $release_sha" >&2
               exit 1
             fi
@@ -532,25 +537,24 @@ jobs:
         run: |
           set -euo pipefail
 
-          if tag_json="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" 2>/dev/null)"; then
-            tag_sha="$(jq -r '.object.sha' <<<"$tag_json")"
-            if [[ "$tag_sha" != "$RELEASE_SHA" ]]; then
-              echo "Existing tag $RELEASE_TAG resolves to $tag_sha instead of $RELEASE_SHA" >&2
-              exit 1
-            fi
-            echo "Existing tag $RELEASE_TAG already points to $RELEASE_SHA"
-          else
+          if ! gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" >/dev/null 2>&1; then
             gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
               -f ref="refs/tags/$RELEASE_TAG" \
               -f sha="$RELEASE_SHA" >/dev/null
             echo "Created tag $RELEASE_TAG at $RELEASE_SHA"
           fi
 
-          created_sha="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha')"
-          if [[ "$created_sha" != "$RELEASE_SHA" ]]; then
+          tag_object="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object | "\(.type) \(.sha)"')"
+          read -r tag_type created_sha <<<"$tag_object"
+          if [[ "$tag_type" == "tag" ]]; then
+            tag_object="$(gh api "repos/$GITHUB_REPOSITORY/git/tags/$created_sha" --jq '.object | "\(.type) \(.sha)"')"
+            read -r tag_type created_sha <<<"$tag_object"
+          fi
+          if [[ "$tag_type" != "commit" || "$created_sha" != "$RELEASE_SHA" ]]; then
             echo "Tag verification returned $created_sha instead of $RELEASE_SHA" >&2
             exit 1
           fi
+          echo "Verified tag $RELEASE_TAG at $RELEASE_SHA"
 
   publish_maven:
     name: Publish Maven
