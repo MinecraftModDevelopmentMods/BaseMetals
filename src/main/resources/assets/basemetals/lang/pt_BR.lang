@@ -530,3 +530,17 @@ item.basemetals.starsteel_gear.name=Roda Dentada de Ferro-Estrela
 item.basemetals.steel_gear.name=Roda Dentada de Aço
 item.basemetals.tin_gear.name=Roda Dentada de Estanho
 item.basemetals.zinc_gear.name=Roda Dentada de Zinco
+
+config.basemetals.title=Configuração do Base Metals
+config.basemetals.restart_guidance=É necessário reiniciar. A distribuição de minérios é configurada no OreSpawn.
+config.basemetals.category.general=Geral
+config.basemetals.category.metals=Metais básicos
+config.basemetals.category.vanilla=Adições Vanilla
+config.basemetals.category.fluids=Fluidos fundidos
+config.basemetals.option.content_mode=Modo de conteúdo
+config.basemetals.content_mode.high_fantasy=Alta fantasia
+config.basemetals.content_mode.low_fantasy=Baixa fantasia
+high_fantasy=Alta fantasia
+low_fantasy=Baixa fantasia
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

@@ -17,6 +17,8 @@ import com.mcmoddev.lib.util.Oredicts;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import zone.moddev.mc.basemetals.content.ContentAcquisition;
+import zone.moddev.mc.basemetals.content.ContentPolicy;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -200,13 +202,19 @@ public class TinkersConstructRegistry {
 
 		this.registerFluid(mmdMaterial, mat.getAmountPer());
 
-		TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getExtraStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
-		TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
+		final boolean restricted = ContentAcquisition.restrictsIntegration();
+		if (!restricted || ContentPolicy.active().allowsToolParts(mmdMaterial.getName())) {
+			TinkerRegistry.addMaterialStats(tcmat, mat.getHeadStats());
+			TinkerRegistry.addMaterialStats(tcmat, mat.getHandleStats());
+			TinkerRegistry.addMaterialStats(tcmat, mat.getExtraStats());
+		}
+
+		if (!restricted) {
+			TinkerRegistry.addMaterialStats(tcmat, mat.getBowStats());
+			TinkerRegistry.addMaterialStats(tcmat, mat.getBowStringStats());
+			TinkerRegistry.addMaterialStats(tcmat, mat.getArrowShaftStats());
+			TinkerRegistry.addMaterialStats(tcmat, mat.getFletchingStats());
+		}
 
 		tcmat.setFluid(fluid).setCraftable(mat.getCraftable()).setCastable(mat.getCastable())
 				.addItem(matRepItem, 1, Material.VALUE_Ingot);
@@ -388,8 +396,10 @@ public class TinkersConstructRegistry {
 		if (sourceQty == 0) {
 			return TCCode.FAILURE_PARAMETER_ERROR;
 		}
-		TinkerRegistry.registerBasinCasting(new ItemStack(block), null, source,
-				sourceQty);
+		final ItemStack output = new ItemStack(block);
+		if (ContentAcquisition.allowsIntegrationOutput(output)) {
+			TinkerRegistry.registerBasinCasting(output, null, source, sourceQty);
+		}
 		return TCCode.SUCCESS;
 	}
 
@@ -409,8 +419,10 @@ public class TinkersConstructRegistry {
 		if (sourceQty == 0) {
 			return TCCode.FAILURE_PARAMETER_ERROR;
 		}
-		TinkerRegistry.registerTableCasting(new ItemStack(output), null, source,
-				sourceQty);
+		final ItemStack stack = new ItemStack(output);
+		if (ContentAcquisition.allowsIntegrationOutput(stack)) {
+			TinkerRegistry.registerTableCasting(stack, null, source, sourceQty);
+		}
 		return TCCode.SUCCESS;
 	}
 

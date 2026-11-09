@@ -73,7 +73,7 @@ def reject_dependency(java, directory, template, mods):
 
     text = log.read_text(encoding="utf-8", errors="replace")
     if ("MissingModsException" not in text or "orespawn" not in text
-            or "4.1.2.110021" not in text or (directory / "world/level.dat").exists()):
+            or "4.1.6.110021" not in text or (directory / "world/level.dat").exists()):
         raise AssertionError(f"The unsupported dependency was not clearly rejected; read {log}")
     print(directory.name, "rejected before world load", flush=True)
 
@@ -120,6 +120,22 @@ def expected_os1(source):
             ores[f"basemetals:legacy/{name}"] = {"block": ore["blockID"], "enabled": True,
                     "dimensions": {DIMENSIONS[value]: placement for value in domains}}
     return {"ores": ores}
+
+
+def check_os1_reload_profile(before, after, expected):
+    # OreSpawn records which imported rules replace native defaults on reload.
+    # This index must not add a generation rule or change any saved settings.
+    replacements = {
+        "basemetals:legacy/" + ore["block"].split(":", 1)[1]: rule
+        for rule, ore in expected["ores"].items()
+    }
+    provider = after["providers"]["basemetals"]
+    if provider.get("legacy_ore_replacements") != replacements:
+        raise AssertionError("OreSpawn did not record the expected OS1 rule replacements")
+    if "legacy_ore_replacements" not in before["providers"]["basemetals"]:
+        del provider["legacy_ore_replacements"]
+    if before != after:
+        raise AssertionError("OS1 reload changed more than the rule replacement index")
 
 
 def main():
@@ -192,14 +208,19 @@ def main():
         remote = directory / "world/region/r.2.-3.mca"
         remote_hash = digest(remote)
         run(args.java, directory, "first", properties)
+        profile = directory / "world/serverconfig/orespawn-worldgen.json"
         stable = [directory / "config/basemetals-orespawn.json",
                   directory / "config/orespawn-upgrade-report.txt",
-                  directory / "world/serverconfig/orespawn-worldgen.json"]
+                  profile]
         hashes = {path: digest(path) for path in stable}
+        first_profile = json.loads(profile.read_text(encoding="utf-8")) if name == "os1" else None
         properties["worldgen.phase"] = "reload"
         run(args.java, directory, "reload", properties)
         if digest(remote) != remote_hash:
             raise AssertionError(f"An unopened region changed during upgrade: {directory}")
+        if first_profile is not None:
+            check_os1_reload_profile(first_profile, json.loads(profile.read_text(encoding="utf-8")), expected)
+            hashes[profile] = digest(profile)
         if digest(legacy) != source_hash or any(digest(path) != value for path, value in hashes.items()):
             raise AssertionError(f"Migration rewrote a source or was not stable on reload: {directory}")
         properties["worldgen.openRemote"] = "true"

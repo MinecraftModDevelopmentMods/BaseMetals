@@ -1844,3 +1844,17 @@ modifier.toxic-modifier.desc=§oТОКСИЧНЫЙ МСТИТЕЛЬ!§r\nРту�
 modifier.lead-plated.name=Свинцовая пластина
 modifier.lead-plated.desc=§oБезопастность Прежде Всего!§r\nЕсли рядом с вами есть плутоний или уран, я думаю это можно использовать как оружие, не забудьте экранировать излучение.\nХорошая свинцовая пластина может спасти Вас от смертельного излучения, пока Ваших врагов будетубивать радиация.
 
+config.basemetals.title=Настройки Base Metals
+config.basemetals.restart_guidance=Требуется перезапуск. Распределение руд настраивается в OreSpawn.
+config.basemetals.category.general=Общие
+config.basemetals.category.metals=Базовые металлы
+config.basemetals.category.vanilla=Дополнения Vanilla
+config.basemetals.category.fluids=Расплавленные жидкости
+config.basemetals.option.content_mode=Уровень фэнтези
+config.basemetals.content_mode.high_fantasy=Высокое фэнтези
+config.basemetals.content_mode.low_fantasy=Низкое фэнтези
+high_fantasy=Высокий уровень фэнтези
+low_fantasy=Низкий уровень фэнтези
+config.basemetals.connection.mismatch=Уровень на сервере — %s, в вашей игре — %s. Выберите тот же уровень в меню «Моды > Base Metals > Настройки» и перезапустите игру.
+config.basemetals.connection.protocol=Не удалось проверить уровень фэнтези Base Metals. Установите одну и ту же сборку Base Metals на клиенте и сервере.
+

@@ -14,8 +14,8 @@ Temurin 8u502-b07 and Gradle on Temurin 17.0.1+12. Do not change Eclipse's own
 runtime to Java 8: its Gradle and Minecraft runtimes are separate settings.
 
 The compile and runtime target is Forge 12.18.3.2511 with stable-29 mappings.
-OreSpawn 4.1.2.110021 is pinned through Curse Maven and verified against its
-published SHA-256. Saved registry IDs and recipes have not changed.
+OreSpawn 4.1.6.110021 is pinned through Curse Maven and verified against its
+published SHA-256. Updating the dependency does not change saved registry IDs.
 
 ## Eclipse
 
@@ -29,7 +29,7 @@ cannot replace the mod version with a `${version}` placeholder. After changing
 textures or other resources, refresh Gradle or run `prepareEclipse` again.
 
 The launch tasks merge production classes and processed resources, so Minecraft
-sees one mod root. Ordinary launches include the published OreSpawn 4.1.2.110021
+sees one mod root. Ordinary launches include the published OreSpawn 4.1.6.110021
 release. Other integration APIs, JUnit and the migration probes
 are excluded. Keep personal worlds outside the development `run` directory.
 
@@ -43,7 +43,7 @@ transformed copies cannot retain a valid signature for the original bytes.
 gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums prepareEclipse
 ```
 
-The installable jar is `build/libs/BaseMetals-2.5.1.110021.jar`. Sources,
+The installable jar is `build/libs/BaseMetals-2.6.0.110021.jar`. Sources,
 Javadocs are written alongside it; checksums are in `build/release/SHA256SUMS`. The mapped development jar
 is kept separately under `build/libs-dev`; it is not the jar to install in a
 normal Minecraft instance. Building never uploads anything.
@@ -80,7 +80,7 @@ with `-PpackagedForgeRuntimeRoot=<server-directory>`. Python 3 needs `nbtlib`
 keep a failed run before cleaning the build directory.
 
 The shared **Release Base Metals** workflow lives on the repository's default
-branch. Version `2.5.1.110021` selects `master-1.10.2`; it requires successful
+branch. Version `2.6.0.110021` selects `master-1.10.2`; it requires successful
 CI for the exact source commit and explicit publication confirmation. It builds
 one candidate, then publishes those same files to MMD Maven, CurseForge and
 GitHub, in that order. A tag alone only validates the candidate.

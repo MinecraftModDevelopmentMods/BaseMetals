@@ -89,7 +89,7 @@ public abstract class VillagerTrades {
 
 			for (final Names name : Arrays.asList(Names.HELMET, Names.CHESTPLATE, Names.LEGGINGS,
 					Names.BOOTS)) {
-				if (material.hasItem(name)) {
+				if (canTrade(material, name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] armorTrades = makeTradePalette(makePurchasePalette(
 							emeraldPurch + (int) (material.getStat(MaterialStats.HARDNESS) / 2),
@@ -112,7 +112,7 @@ public abstract class VillagerTrades {
 					}
 				}
 			}
-			if (material.hasItem(Names.CRACKHAMMER)) {
+			if (canTrade(material, Names.CRACKHAMMER)) {
 				final ItemStack itemStack = material.getItemStack(Names.CRACKHAMMER);
 				final ITradeList[] hammerTrades = makeTradePalette(
 						makePurchasePalette(emeraldPurch, itemStack));
@@ -128,7 +128,7 @@ public abstract class VillagerTrades {
 					// enchantedHammerTrades);
 				}
 			}
-			if (material.hasItem(Names.SWORD)) {
+			if (canTrade(material, Names.SWORD)) {
 				final ItemStack itemStack = material.getItemStack(Names.SWORD);
 				final ITradeList[] swordTrades = makeTradePalette(makePurchasePalette(
 						(emeraldPurch + (int) (material.getBaseAttackDamage() / 2)) - 1,
@@ -153,7 +153,7 @@ public abstract class VillagerTrades {
 				}
 			}
 			for (final Names name : Arrays.asList(Names.AXE, Names.HOE, Names.SHOVEL)) {
-				if (material.hasItem(name)) {
+				if (canTrade(material, name)) {
 					final ItemStack itemStack = material.getItemStack(name);
 					final ITradeList[] toolTrades = makeTradePalette(
 							makePurchasePalette(emeraldPurch, itemStack));
@@ -161,7 +161,7 @@ public abstract class VillagerTrades {
 							toolTrades);
 				}
 			}
-			if (material.hasItem(Names.PICKAXE)) {
+			if (canTrade(material, Names.PICKAXE)) {
 				final ItemStack itemStack = material.getItemStack(Names.PICKAXE);
 				final ITradeList[] pickaxeTrades = makeTradePalette(
 						makePurchasePalette(emeraldPurch, itemStack));
@@ -178,7 +178,7 @@ public abstract class VillagerTrades {
 					// enchantedPickaxeTrades);
 				}
 			}
-			if (material.hasItem(Names.INGOT)) {
+			if (canTrade(material, Names.INGOT)) {
 				final ItemStack itemStack = material.getItemStack(Names.INGOT, 12);
 				if ((!itemStack.getItem().equals(net.minecraft.init.Items.EMERALD))
 						&& (!itemStack.getItem().equals(net.minecraft.init.Items.DIAMOND))) {
@@ -196,6 +196,11 @@ public abstract class VillagerTrades {
 		}
 
 		commitTrades(tradesTable);
+	}
+
+	private static boolean canTrade(final MMDMaterial material, final Names form) {
+		return material.hasItem(form) && zone.moddev.mc.basemetals.content.ContentAcquisition
+				.allowsIntegrationOutput(material.getItemStack(form));
 	}
 
 	protected static void registerModSpecificTrades() {

@@ -9,12 +9,12 @@ import javax.annotation.Nullable;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import zone.moddev.mc.basemetals.data.MaterialNames;
+import com.mcmoddev.lib.block.BlockMoltenFluid;
 import com.mcmoddev.lib.block.InteractiveFluidBlock;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.fluids.CustomFluid;
 import com.mcmoddev.lib.material.MMDMaterial;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
@@ -109,7 +109,7 @@ public abstract class Fluids {
 		}
 
 		if (!name.equals(MaterialNames.MERCURY)) {
-			block = new BlockFluidClassic(material.getFluid(), Material.LAVA);
+			block = new BlockMoltenFluid(material.getFluid());
 		} else {
 			block = new InteractiveFluidBlock(getFluidByName(name), false,
 					(final World w, final EntityLivingBase e) -> {

@@ -44,7 +44,7 @@ public final class OreSpawn110Probe {
         report.addProperty("phase", phase);
 
         try {
-            require("4.1.2.110021".equals(Loader.instance().getIndexedModList().get("orespawn").getVersion()),
+            require("4.1.6.110021".equals(Loader.instance().getIndexedModList().get("orespawn").getVersion()),
                     "Wrong OreSpawn release");
             for (final String retired : new String[] {
                     "com.mcmoddev.orespawn.BaseMetalsOreSpawn",

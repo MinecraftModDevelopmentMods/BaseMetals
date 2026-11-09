@@ -1867,3 +1867,17 @@ gas.cleanGasPlatinum=きれいなプラチナのスラリー
 gas.cleanGasNickel=きれいなニッケルのスラリー
 gas.cleanGasStarsteel=きれいなスタースチールのスラリー
 gas.cleanGasZinc=きれいな亜鉛のスラリー
+
+config.basemetals.title=Base Metals 設定
+config.basemetals.restart_guidance=再起動が必要です。鉱石の分布は OreSpawn で設定します。
+config.basemetals.category.general=一般
+config.basemetals.category.metals=Base Metals
+config.basemetals.category.vanilla=バニラ追加要素
+config.basemetals.category.fluids=溶融流体
+config.basemetals.option.content_mode=コンテンツモード
+config.basemetals.content_mode.high_fantasy=ハイファンタジー
+config.basemetals.content_mode.low_fantasy=ローファンタジー
+high_fantasy=ハイファンタジー
+low_fantasy=ローファンタジー
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

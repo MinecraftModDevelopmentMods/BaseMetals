@@ -25,6 +25,9 @@ Fantasy metals have been added to the Nether and the End: Cold Iron, Mithril, Ad
 
 **Mercury**: This toxic liquid metal has many alchemical uses. The Mithril metal alloys requires mercury.
 
+Molten metals burn like lava, even when you only touch the surface. Liquid
+mercury causes nausea.
+
 **Nickel**: This metal is as soft as copper, but it has alchemical properties and forms the invar metal alloy when mixed with iron.
 
 **Platinum**: 
@@ -76,13 +79,26 @@ Also known as a sledgehammer, this tool is designed for pulverizing rocks. Using
 ## Requirements
 
 Install Forge `12.18.3.2511` or later and
-[MMD OreSpawn `4.1.2.110021`](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9276430)
+[MMD OreSpawn `4.1.6.110021`](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9518063)
 or a newer compatible 4.x release for Minecraft 1.10.2. Base Metals no longer
 includes its own fallback ore generator.
 
 OreSpawn handles ore placement and imports old OreSpawn configuration files.
 The eleven ore defaults are unchanged. See [ore generation and upgrades](docs/ORE_GENERATION.md)
 for configuration locations and advice for existing worlds.
+
+## Configuration
+
+Open **Mods → Base Metals → Config** from the main menu, or use the Base Metals
+cog in **Create World → OreSpawn → Mods**. Both open the same settings in
+`config/BaseMetals.cfg`. Restart Minecraft or the server to apply changes.
+
+**High Fantasy** is the default and keeps the usual recipes, including when
+upgrading an old config. **Low Fantasy** restricts what you can make from each
+material: for example, Adamantine still makes pickaxes, but not bows. Existing
+items still load and work, and both modes use the same OreSpawn rules. Servers
+and clients need to use the same setting. This does not change the separate
+Fantasy Level settings in Base Gems or Modern Metals.
 
 ## Building and running from source
 
@@ -103,7 +119,7 @@ pass. Normal builds and tags do not publish anything.
 
 ## Installing
 
-Install Forge and OreSpawn, then put `BaseMetals-2.5.1.110021.jar` in your
+Install Forge and OreSpawn, then put `BaseMetals-2.6.0.110021.jar` in your
 `mods` folder. Downloads are available on CurseForge and the repository's
 Releases page once the version is published.
 
@@ -123,7 +139,7 @@ items cannot, by itself, repair those Java references. Base Metal Golems
 its eighteen golems use the existing Base Metals blocks and ingots. Neither
 add-on needs changing, and neither is required when playing without golems.
 
-This release uses version `2.5.1.110021`. The final six digits identify Minecraft
+This release uses version `2.6.0.110021`. The final six digits identify Minecraft
 1.10.2 on Forge, following the same version format as the newer branches.
 The mod ID, saved block and item names, resources and configuration names remain
 `basemetals`; moving the Java packages does not rename anything in your world.
@@ -133,7 +149,7 @@ The mod ID, saved block and item names, resources and configuration names remain
 
 New integrations should use `zone.moddev.mc.basemetals.init` for materials,
 blocks and items. Maven builds use
-`zone.moddev.mc.basemetals:BaseMetals:2.5.1.110021`. Crack Hammer recipes still
+`zone.moddev.mc.basemetals:BaseMetals:2.6.0.110021`. Crack Hammer recipes still
 use `com.mcmoddev.lib.registry.CrusherRecipeRegistry`; the bundled library API
 has not moved.
 

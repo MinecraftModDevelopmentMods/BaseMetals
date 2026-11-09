@@ -1,5 +1,5 @@
 [
-  {"id":"orespawn","coordinate":"curse.maven:mmd-orespawn-245586:9276430","sha256":"4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6","repository":"https://www.cursemaven.com","runtime":true},
+  {"id":"orespawn","coordinate":"curse.maven:mmd-orespawn-245586:9518063","sha256":"05DB7CBFAADC815D6A713DACDFB9F0647BCED49CCFC357FB2FF010E95BD1379F","repository":"https://www.cursemaven.com","runtime":true},
   {"id":"alt","coordinate":"curse.maven:additional-loot-tables-243157:2604973","sha256":"DFDEE18663A0CBC3A811E442C7B20F34F1765B1D36C6284CB3B8B8EAA3FC5620","repository":"https://www.cursemaven.com"},
   {"id":"mantle","coordinate":"slimeknights.mantle:Mantle:1.10.2-1.1.5.207","sha256":"520499E1329EA57DB3D7ABA671B30A0CC7DA60C02C97828CFAF57778B0923832","repository":"https://dvs1.progwml6.com/files/maven"},
   {"id":"tconstruct","coordinate":"slimeknights:TConstruct:1.10.2-2.6.5.11","sha256":"E33061BEFB4DA60B2EF79016A022C434149DDF1E573A01EFD2F202F03904E52D","repository":"https://dvs1.progwml6.com/files/maven"},

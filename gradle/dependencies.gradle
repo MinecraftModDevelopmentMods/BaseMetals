@@ -40,9 +40,9 @@ tasks.register('verifyReleaseDependencies') {
     doLast {
         def artifacts = configurations.legacyModArtifacts.resolvedConfiguration.resolvedArtifacts
         def orespawn = specs.find { it.id == 'orespawn' }
-        if (orespawn.coordinate != 'curse.maven:mmd-orespawn-245586:9276430'
-                || orespawn.sha256 != '4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6') {
-            throw new GradleException('Use the verified OreSpawn 4.1.2.110021 release.')
+        if (orespawn.coordinate != 'curse.maven:mmd-orespawn-245586:9518063'
+                || orespawn.sha256 != '05DB7CBFAADC815D6A713DACDFB9F0647BCED49CCFC357FB2FF010E95BD1379F') {
+            throw new GradleException('Use the verified OreSpawn 4.1.6.110021 release.')
         }
         specs.each { spec ->
             def parts = spec.coordinate.split(':')

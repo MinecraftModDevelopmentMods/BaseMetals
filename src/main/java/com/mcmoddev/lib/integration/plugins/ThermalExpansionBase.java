@@ -10,6 +10,7 @@ import com.mcmoddev.lib.util.ConfigBase.Options;
 
 import cofh.api.util.ThermalExpansionHelper;
 import net.minecraft.item.ItemStack;
+import zone.moddev.mc.basemetals.content.ContentAcquisition;
 //import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -43,7 +44,9 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		ThermalExpansionHelper.addPulverizerRecipe(energy, input, output);
+		if (ContentAcquisition.allowsIntegrationOutput(output)) {
+			ThermalExpansionHelper.addPulverizerRecipe(energy, input, output);
+		}
 	}
 
 	protected static void addCompactorPressRecipe(@Nonnull final int energy,
@@ -55,7 +58,9 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		ThermalExpansionHelper.addCompactorPressRecipe(energy, input, output);
+		if (ContentAcquisition.allowsIntegrationOutput(output)) {
+			ThermalExpansionHelper.addCompactorPressRecipe(energy, input, output);
+		}
 		/*
 		final NBTTagCompound toSend = new NBTTagCompound();
 
@@ -77,7 +82,9 @@ public class ThermalExpansionBase implements IIntegration {
 			return;
 		}
 
-		ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
+		if (ContentAcquisition.allowsIntegrationOutput(output)) {
+			ThermalExpansionHelper.addCompactorStorageRecipe(energy, input, output);
+		}
 		/*
 		final NBTTagCompound toSend = new NBTTagCompound();
 

@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.content.ContentMode;
+import zone.moddev.mc.basemetals.content.ContentPolicy;
 import com.mcmoddev.lib.data.MaterialStats;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -62,7 +64,13 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 				}
 			}
 		}
-		return matches[0] ? matches[1] : false;
+		if (!matches[0] || !matches[1]) {
+			return false;
+		}
+
+		// The plate determines the output, so the crafting list cannot filter this recipe.
+		return ContentPolicy.active().mode() == ContentMode.HIGH_FANTASY
+				|| getCraftingResult(inv) != null;
 	}
 
 	@Override
@@ -104,6 +112,10 @@ public class ShieldUpgradeRecipe extends RecipeRepairItem implements IRecipe {
 					enchants = EnchantmentHelper.getEnchantments(curItem);
 				}
 			}
+		}
+
+		if (plateMatched == null || !ContentPolicy.active().allows(plateMatched)) {
+			return null;
 		}
 
 		BaseMetals.logger.debug("Adding %d enchantments to output item", enchants.size());

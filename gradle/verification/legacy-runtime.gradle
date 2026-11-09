@@ -18,6 +18,10 @@ sourceSets {
         java.srcDirs = ['tools/validation/legacy110/capture-probe']
         compileClasspath = sourceSets.main.compileClasspath
     }
+    fantasyProbe {
+        java.srcDirs = ['tools/validation/legacy110/fantasy-probe']
+        compileClasspath = sourceSets.main.output + sourceSets.main.compileClasspath
+    }
 }
 
 def captureJar = tasks.register('captureProbeJar', Jar) {
@@ -77,6 +81,21 @@ tasks.register('migrationProbeJar', Jar) {
         description = 'Maps the probe for a packaged Forge server; ordinary IDE launches use the mapped development copy.'
         dependsOn packaged
     }
+}
+
+def fantasyProbe = tasks.register('fantasyProbeJar', Jar) {
+    group = 'verification'
+    archiveFileName = 'fantasy-probe.jar'
+    destinationDirectory = layout.buildDirectory.dir('test-mods')
+    from sourceSets.fantasyProbe.output
+}
+def packagedFantasyProbe = renamer.classes(fantasyProbe) {
+    map.from minecraft.dependency.toSrgFile
+    output = layout.buildDirectory.file('test-mods/fantasy-probe-packaged.jar')
+}
+tasks.register('packagedFantasyProbeJar') {
+    group = 'verification'
+    dependsOn packagedFantasyProbe
 }
 
 tasks.register('packagedForgeRuntimeTest', Exec) {

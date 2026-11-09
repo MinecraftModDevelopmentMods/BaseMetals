@@ -1,6 +1,6 @@
 # Ore generation in Minecraft 1.10.2
 
-Base Metals now requires MMD OreSpawn 4.1.2.110021 or a newer compatible 4.x
+Base Metals now requires MMD OreSpawn 4.1.6.110021 or a newer compatible 4.x
 release. OreSpawn is the only ore-generation engine; Base Metals no longer
 ships its old OS3 plugin or fallback generator. This also raises the minimum
 Forge version to 12.18.3.2511.

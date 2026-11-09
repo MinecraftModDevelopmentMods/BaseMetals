@@ -24,7 +24,7 @@ tooltip.starsteel.armor=Volle Rüstung: Gewichtsreduktion
 
 #Achievements
     #Achievement Name
-achievement.aquarium_maker=Aquarium 
+achievement.aquarium_maker=Aquarium
 achievement.angel_of_death=Todesengel
 achievement.brass_maker=Messing
 achievement.bronze_maker=Bronze
@@ -38,11 +38,11 @@ achievement.juggernaut=Juggernaut
 achievement.metallurgy=Metallurgy
 achievement.mithril_maker=Mithril
 achievement.moon_boots=Moon Walker
-achievement.scuba_diver=SCUBA Diver 
+achievement.scuba_diver=SCUBA Diver
 achievement.steel_maker=Stahl
 achievement.this_is_new=Das ist neu ...
     #Acheviement Desc
-achievement.aquarium_maker.desc=Kombiniere Kupferpulver, Zinkpulver und Prismarinkristalle, um Aquarium herzustellen 
+achievement.aquarium_maker.desc=Kombiniere Kupferpulver, Zinkpulver und Prismarinkristalle, um Aquarium herzustellen
 achievement.angel_of_death.desc=Trage eine vollständige Mithrilrüstung und führe ein Mithrilschwert
 achievement.brass_maker.desc=Kombiniere Kupferpulver und Zinkpulver, um Messing herzustellen
 achievement.bronze_maker.desc=Kombiniere Kupferpulver und Zinnpulver, um Bronze herzustellen
@@ -438,7 +438,7 @@ item.basemetals.aquarium_leggings.name=Aquariumbeinpanzer
 item.basemetals.antimony_boots.name=Antimonstiefel
 item.basemetals.antimony_chestplate.name=Antimonbrustpanzer
 item.basemetals.antimony_helmet.name=Antimonhelm
-item.basemetals.antimony_leggings.name=Antimonbeinpanzer    
+item.basemetals.antimony_leggings.name=Antimonbeinpanzer
     #Bismuth
 item.basemetals.bismuth_boots.name=Bismuthstiefel
 item.basemetals.bismuth_chestplate.name=Bismuthbrustpanzer
@@ -829,16 +829,16 @@ tile.basemetals.antimony_ore.name=Antimonerz
 tile.basemetals.bismuth_ore.name=Bismutherz
 tile.basemetals.coldiron_ore.name=Kalteisenerz
 tile.basemetals.copper_ore.name=Kupfererz
-tile.basemetals.lead_ore.name=Bleierz  
+tile.basemetals.lead_ore.name=Bleierz
 tile.basemetals.mercury_ore.name=Quecksilbererz
 tile.basemetals.nickel_ore.name=Nickelerz
 tile.basemetals.pewter_ore.name=Hartzinnerz
 tile.basemetals.platinum_ore.name=Platinerz
 tile.basemetals.silver_ore.name=Silbererz
-tile.basemetals.starsteel_ore.name=Sternenstahlerz  
+tile.basemetals.starsteel_ore.name=Sternenstahlerz
 tile.basemetals.tin_ore.name=Zinnerz
 tile.basemetals.zinc_ore.name=Zinkerz
-  
+
 #gemischs
 item.basemetals.aquarium_blend.name=Aquariumgemisch
 item.basemetals.brass_blend.name=Messinggemisch
@@ -909,7 +909,7 @@ tile.basemetals.starsteel_block.name=Sternenstahlblock
 tile.basemetals.steel_block.name=Stahlblock
 tile.basemetals.tin_block.name=Zinnblock
 tile.basemetals.zinc_block.name=Zinkblock
-    
+
 #Fluids
     #Fluid
 fluid.basemetals.mercury=Flüssiges Quecksilber
@@ -1106,7 +1106,7 @@ tile.basemetals.starsteel_door.name=Sternenstahltür
 tile.basemetals.steel_door.name=Stahltür
 tile.basemetals.tin_door.name=Zinntür
 tile.basemetals.zinc_door.name=Zinktür
-    
+
 #falltürs
     #Tiles
 tile.basemetals.adamantine_trapdoor.name=Adamantfalltür
@@ -1400,75 +1400,75 @@ tile.basemetals.iron_pressure_plate.name=Eisendruckplatte
 tile.basemetals.gold_pressure_plate.name=Golddruckplatte
 
 #Crystal
-item.basemetals.adamantine_crystal.name=Adamantkristall 
-item.basemetals.aquarium_crystal.name=Aquariumkristall 
-item.basemetals.antimony_crystal.name= Antimonkristall 
-item.basemetals.bismuth_crystal.name= Bismuthkristall 
-item.basemetals.brass_crystal.name= Messingkristall 
-item.basemetals.bronze_crystal.name= Bronzekristall 
-item.basemetals.coldiron_crystal.name= Kalteisenkristall 
-item.basemetals.copper_crystal.name= Kupferkristall 
-item.basemetals.cupronickel_crystal.name= Kupfernickelkristall 
-item.basemetals.electrum_crystal.name= Elektronkristall 
-item.basemetals.invar_crystal.name= Invarkristall 
-item.basemetals.lead_crystal.name= Bleikristall 
-item.basemetals.mithril_crystal.name= Mithrilkristall 
-item.basemetals.nickel_crystal.name= Nickelkristall 
-item.basemetals.pewter_crystal.name= Hartzinnkristall 
-item.basemetals.platinum_crystal.name= Platinkristall 
-item.basemetals.silver_crystal.name= Silberkristall 
-item.basemetals.starsteel_crystal.name= Sternenstahlkristall 
-item.basemetals.steel_crystal.name= Stahlkristall 
-item.basemetals.tin_crystal.name= Zinnkristall 
-item.basemetals.zinc_crystal.name=Zinkkristall 
+item.basemetals.adamantine_crystal.name=Adamantkristall
+item.basemetals.aquarium_crystal.name=Aquariumkristall
+item.basemetals.antimony_crystal.name= Antimonkristall
+item.basemetals.bismuth_crystal.name= Bismuthkristall
+item.basemetals.brass_crystal.name= Messingkristall
+item.basemetals.bronze_crystal.name= Bronzekristall
+item.basemetals.coldiron_crystal.name= Kalteisenkristall
+item.basemetals.copper_crystal.name= Kupferkristall
+item.basemetals.cupronickel_crystal.name= Kupfernickelkristall
+item.basemetals.electrum_crystal.name= Elektronkristall
+item.basemetals.invar_crystal.name= Invarkristall
+item.basemetals.lead_crystal.name= Bleikristall
+item.basemetals.mithril_crystal.name= Mithrilkristall
+item.basemetals.nickel_crystal.name= Nickelkristall
+item.basemetals.pewter_crystal.name= Hartzinnkristall
+item.basemetals.platinum_crystal.name= Platinkristall
+item.basemetals.silver_crystal.name= Silberkristall
+item.basemetals.starsteel_crystal.name= Sternenstahlkristall
+item.basemetals.steel_crystal.name= Stahlkristall
+item.basemetals.tin_crystal.name= Zinnkristall
+item.basemetals.zinc_crystal.name=Zinkkristall
 
 #Clump
-item.basemetals.adamantine_clump.name= Adamantklumpen 
-item.basemetals.aquarium_clump.name= Aquariumklumpen 
-item.basemetals.antimony_clump.name= Antimonklumpen 
-item.basemetals.bismuth_clump.name= Bismuthklumpen 
-item.basemetals.brass_clump.name= Messingklumpen 
-item.basemetals.bronze_clump.name= Bronzeklumpen 
-item.basemetals.coldiron_clump.name= Kalteisenklumpen 
-item.basemetals.copper_clump.name= Kupferklumpen 
-item.basemetals.cupronickel_clump.name= Kupfernickelklumpen 
-item.basemetals.electrum_clump.name= Elektronklumpen 
-item.basemetals.invar_clump.name= Invarklumpen 
-item.basemetals.lead_clump.name= Bleiklumpen 
-item.basemetals.mithril_clump.name= Mithrilklumpen 
-item.basemetals.nickel_clump.name= Nickelklumpen 
-item.basemetals.pewter_clump.name= Hartzinnklumpen 
-item.basemetals.platinum_clump.name= Platinklumpen 
-item.basemetals.silver_clump.name= Silberklumpen 
-item.basemetals.starsteel_clump.name= Sternenstahlklumpen 
-item.basemetals.steel_clump.name= Stahlklumpen 
-item.basemetals.tin_clump.name= Zinnklumpen 
-item.basemetals.zinc_clump.name= Zinkklumpen 
+item.basemetals.adamantine_clump.name= Adamantklumpen
+item.basemetals.aquarium_clump.name= Aquariumklumpen
+item.basemetals.antimony_clump.name= Antimonklumpen
+item.basemetals.bismuth_clump.name= Bismuthklumpen
+item.basemetals.brass_clump.name= Messingklumpen
+item.basemetals.bronze_clump.name= Bronzeklumpen
+item.basemetals.coldiron_clump.name= Kalteisenklumpen
+item.basemetals.copper_clump.name= Kupferklumpen
+item.basemetals.cupronickel_clump.name= Kupfernickelklumpen
+item.basemetals.electrum_clump.name= Elektronklumpen
+item.basemetals.invar_clump.name= Invarklumpen
+item.basemetals.lead_clump.name= Bleiklumpen
+item.basemetals.mithril_clump.name= Mithrilklumpen
+item.basemetals.nickel_clump.name= Nickelklumpen
+item.basemetals.pewter_clump.name= Hartzinnklumpen
+item.basemetals.platinum_clump.name= Platinklumpen
+item.basemetals.silver_clump.name= Silberklumpen
+item.basemetals.starsteel_clump.name= Sternenstahlklumpen
+item.basemetals.steel_clump.name= Stahlklumpen
+item.basemetals.tin_clump.name= Zinnklumpen
+item.basemetals.zinc_clump.name= Zinkklumpen
 
 #Shard
-item.basemetals.adamantine_shard.name= Adamantsplitter 
-item.basemetals.aquarium_shard.name= Aquariumsplitter 
-item.basemetals.antimony_shard.name= Antimonsplitter 
-item.basemetals.bismuth_shard.name= Bismuthsplitter 
-item.basemetals.brass_shard.name= Messingsplitter 
-item.basemetals.bronze_shard.name= Bronzesplitter 
-item.basemetals.coldiron_shard.name= Kalteisensplitter 
-item.basemetals.copper_shard.name= Kupfersplitter 
-item.basemetals.cupronickel_shard.name= Kupfernickelsplitter 
-item.basemetals.electrum_shard.name= Elektronsplitter 
-item.basemetals.invar_shard.name= Invarsplitter 
-item.basemetals.lead_shard.name= Bleisplitter 
-item.basemetals.mithril_shard.name= Mithrilsplitter 
-item.basemetals.nickel_shard.name= Nickelsplitter 
-item.basemetals.pewter_shard.name= Hartzinnsplitter 
-item.basemetals.platinum_shard.name= Platinsplitter 
-item.basemetals.silver_shard.name= Silbersplitter 
-item.basemetals.starsteel_shard.name= Sternenstahlsplitter 
-item.basemetals.steel_shard.name= Stahlsplitter 
-item.basemetals.tin_shard.name= Zinnsplitter 
-item.basemetals.zinc_shard.name= Zinksplitter 
+item.basemetals.adamantine_shard.name= Adamantsplitter
+item.basemetals.aquarium_shard.name= Aquariumsplitter
+item.basemetals.antimony_shard.name= Antimonsplitter
+item.basemetals.bismuth_shard.name= Bismuthsplitter
+item.basemetals.brass_shard.name= Messingsplitter
+item.basemetals.bronze_shard.name= Bronzesplitter
+item.basemetals.coldiron_shard.name= Kalteisensplitter
+item.basemetals.copper_shard.name= Kupfersplitter
+item.basemetals.cupronickel_shard.name= Kupfernickelsplitter
+item.basemetals.electrum_shard.name= Elektronsplitter
+item.basemetals.invar_shard.name= Invarsplitter
+item.basemetals.lead_shard.name= Bleisplitter
+item.basemetals.mithril_shard.name= Mithrilsplitter
+item.basemetals.nickel_shard.name= Nickelsplitter
+item.basemetals.pewter_shard.name= Hartzinnsplitter
+item.basemetals.platinum_shard.name= Platinsplitter
+item.basemetals.silver_shard.name= Silbersplitter
+item.basemetals.starsteel_shard.name= Sternenstahlsplitter
+item.basemetals.steel_shard.name= Stahlsplitter
+item.basemetals.tin_shard.name= Zinnsplitter
+item.basemetals.zinc_shard.name= Zinksplitter
 
-#Verunreinigtes 
+#Verunreinigtes
 item.basemetals.adamantine_powder_dirty.name=Verunreinigtes Adamantpulver
 item.basemetals.aquarium_powder_dirty.name=Verunreinigtes Aquariumpulver
 item.basemetals.antimony_powder_dirty.name=Verunreinigtes Antimonpulver
@@ -1569,7 +1569,7 @@ tile.basemetals.zinc_dense_plate.name=Verdichtetes Verdichtetes Zinkblech
 tile.basemetals.iron_dense_plate.name=Verdichtetes Verdichtetes Eisenblech
 tile.basemetals.gold_dense_plate.name=Verdichtetes Verdichtetes Goldblech
 
-#fliese  
+#fliese
     #Item
 item.basemetals.adamantine_slab.name=Adamantfliese
 item.basemetals.aquarium_slab.name=Aquariumfliese
@@ -1816,3 +1816,17 @@ modifier.toxic-modifier.name=Giftig
 modifier.toxic-modifier.desc=§oGIFTIGER RÄCHER!§r\nQuecksilber und seine Ethyl- und Methyl-Salze sind extrem giftig und haben neurodegenerative Effekte.\nSie zu einer Waffe oder einem Werkzeug hinzuzufügen, erlaubt diesen deine Feinde zu blenden und zu vergiften.
 modifier.lead-plated.name=Bleibeschichtung
 modifier.lead-plated.desc=§oSafety First§r\nWenn du etwas Plutonium oder Uran herumliegen hast und denkst, dass es gut für eine Waffe geeignet wäre, vergiss nicht etwas Abschirmendes hinzuzufügen.\nEine Beschichtung mit Blei wird die tödliche Verstrahlung davon abhalten, dich zu betreffen, während sie deinen Feinden weiterhin schadet.
+
+config.basemetals.title=Base-Metals-Konfiguration
+config.basemetals.restart_guidance=Neustart erforderlich. Die Erzverteilung wird in OreSpawn konfiguriert.
+config.basemetals.category.general=Allgemein
+config.basemetals.category.metals=Basismetalle
+config.basemetals.category.vanilla=Vanilla-Erweiterungen
+config.basemetals.category.fluids=Geschmolzene Flüssigkeiten
+config.basemetals.option.content_mode=Fantasy-Stufe
+config.basemetals.content_mode.high_fantasy=High Fantasy
+config.basemetals.content_mode.low_fantasy=Low Fantasy
+high_fantasy=Viel Fantasy
+low_fantasy=Wenig Fantasy
+config.basemetals.connection.mismatch=Der Server verwendet %s, dein Spiel verwendet %s. Gleiche die Fantasy-Stufe unter Mods > Base Metals > Konfiguration an und starte das Spiel neu.
+config.basemetals.connection.protocol=Base Metals konnte die Fantasy-Stufe nicht prüfen. Verwende auf dem Server und im Spiel denselben Build von Base Metals.
