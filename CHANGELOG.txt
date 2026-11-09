@@ -1,4 +1,4 @@
-2.5.1.111021 for Minecraft 1.11.2
+2.5.1.111021 for 1.11.2
 
 This update brings the newer Base Metals features to 1.11.2. It requires
 Forge 13.20.1.2588 or later and MMD OreSpawn 4.1.6.111021 or a compatible
