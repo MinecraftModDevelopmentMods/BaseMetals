@@ -24,9 +24,7 @@ public class VanillaFluids extends Fluids {
 				MaterialNames.WOOD, MaterialNames.REDSTONE, MaterialNames.STONE,
 				MaterialNames.REDSTONE).stream()
 				.filter(Options::isMaterialEnabled)
-				.filter(Options::isFluidEnabled).forEach(materialName -> {
-					addFluid(materialName, 2000, 10000, 769, 10);
-					addFluidBlock(materialName);
-				});
+				.filter(Options::isFluidEnabled)
+				.forEach(com.mcmoddev.basemetals.init.Fluids::registerMoltenFluid);
 	}
 }

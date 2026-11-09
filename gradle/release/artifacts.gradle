@@ -139,6 +139,7 @@ tasks.register('verifyReleaseArtifacts') {
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsBow.class',
                 // Returns the tool-material name expected by Ancient Warfare 2.
                 'com/mcmoddev/basemetals/items/ItemBaseMetalsHoe.class',
+                'com/mcmoddev/basemetals/block/BlockBaseMetalsMoltenFluid.class',
                 'com/mcmoddev/basemetals/items/MaterialRangedDamage.class',
                 // Replaces MMDLib's reference to a nonexistent bolt texture.
                 'com/mcmoddev/basemetals/client/renderer/RenderBaseMetalsBolt.class',
@@ -158,6 +159,7 @@ tasks.register('verifyReleaseArtifacts') {
                 'com/mcmoddev/basemetals/network/ClientContentModeConnectionHandler.class',
                 'com/mcmoddev/basemetals/network/ContentModeMessage.class',
                 'com/mcmoddev/basemetals/network/ContentModeNetwork.class',
+                'com/mcmoddev/basemetals/network/ContentModeNetwork$RejectModList.class',
                 'com/mcmoddev/basemetals/network/ContentModeNetwork$ServerHandler.class',
                 'com/mcmoddev/basemetals/recipe/ContentAcquisitionFilters.class',
 				'com/mcmoddev/basemetals/recipe/PlateRepairFactory.class',

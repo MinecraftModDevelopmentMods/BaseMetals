@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 		modid = BaseMetals.MODID,
 		name = BaseMetals.NAME,
 		version = BaseMetals.VERSION,
-		dependencies = "required-after:forge@[14.23.5.2859,);required-after:mmdlib;required-after:orespawn@[4.1.0.112021,5.0.0);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
+		dependencies = "required-after:forge@[14.23.5.2859,);required-after:mmdlib;required-after:orespawn@[4.1.6.112021,5.0.0);after:tconstruct;after:conarm;after:thaumcraft;after:ic2;before:buildingbricks",
 		acceptedMinecraftVersions = "[1.12,1.12.2]",
 		guiFactory = "com.mcmoddev.basemetals.client.config.BaseMetalsGuiFactory",
 		certificateFingerprint = "",
@@ -45,7 +45,7 @@ public final class BaseMetals {
 	protected static final String NAME = "Base Metals";
 
 	/** Release version in the shared MMD major.minor.patch.target format. */
-	protected static final String VERSION = "2.6.1.112021";
+	protected static final String VERSION = "2.6.2.112021";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";
