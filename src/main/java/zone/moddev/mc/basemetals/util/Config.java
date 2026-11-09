@@ -3,6 +3,7 @@ package zone.moddev.mc.basemetals.util;
 import java.io.File;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.content.ContentMode;
 import zone.moddev.mc.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.ConfigKeys;
 import com.mcmoddev.lib.integration.plugins.DenseOresBase;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class Config extends ConfigBase {
 
 	private static Configuration configuration;
+	private static ContentMode activeContentMode = ContentMode.HIGH_FANTASY;
 	private static final String CONFIG_FILE = "config/BaseMetals.cfg";
 	private static final String GENERAL_CAT = "General";
 	private static final String INTEGRATION_CAT = "Mod Integration";
@@ -39,14 +41,22 @@ public class Config extends ConfigBase {
 	private static final String TOOLS_CAT = "Tools and Items";
 	private static final String FLUIDS_CAT = "Fluids";
 
+	public static Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public static ContentMode getActiveContentMode() {
+		return activeContentMode;
+	}
+
 	/**
 	 *
 	 * @param event
 	 */
 	@SubscribeEvent
 	public void onConfigChange(final ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.getModID().equals(BaseMetals.MODID)) {
-			init();
+		if (BaseMetals.MODID.equals(event.getModID()) && configuration.hasChanged()) {
+			configuration.save();
 		}
 	}
 
@@ -57,6 +67,22 @@ public class Config extends ConfigBase {
 		if (configuration == null) {
 			configuration = new Configuration(new File(CONFIG_FILE));
 			MinecraftForge.EVENT_BUS.register(new Config());
+
+			final Property mode = configuration.get(GENERAL_CAT, "contentMode", "high_fantasy",
+					"High Fantasy keeps the full recipe set. Low Fantasy limits what each material can make. "
+							+ "Existing items and ore generation are unchanged. Restart to apply.");
+			mode.setLanguageKey("config.basemetals.option.content_mode");
+			mode.setValidValues(ContentMode.serializedNames());
+			mode.setRequiresMcRestart(true);
+
+			final String configured = mode.getString();
+			activeContentMode = ContentMode.fromSerializedName(configured);
+			if (!ContentMode.isValidSerializedName(configured)) {
+				BaseMetals.logger.warn("Unknown Fantasy Level '%s'; using High Fantasy.", configured);
+			}
+			if (!activeContentMode.serializedName().equals(configured)) {
+				mode.set(activeContentMode.serializedName());
+			}
 		}
 
 		// GENERAL
@@ -363,6 +389,14 @@ public class Config extends ConfigBase {
 		}
 
 		manageUserHammerRecipes(userRecipeCat.values());
+
+		configuration.getCategory(GENERAL_CAT).setLanguageKey("config.basemetals.category.general");
+		configuration.getCategory(MATERIALS_CAT).setLanguageKey("config.basemetals.category.metals");
+		configuration.getCategory(VANILLA_CAT).setLanguageKey("config.basemetals.category.vanilla");
+		configuration.getCategory(FLUIDS_CAT).setLanguageKey("config.basemetals.category.fluids");
+		configuration.getCategory(TOOLS_CAT).setLanguageKey(TOOLS_CAT);
+		configuration.getCategory(INTEGRATION_CAT).setLanguageKey(INTEGRATION_CAT);
+		configuration.getCategory(HAMMER_RECIPES_CAT).setLanguageKey(HAMMER_RECIPES_CAT);
 
 		if (configuration.hasChanged()) {
 			configuration.save();

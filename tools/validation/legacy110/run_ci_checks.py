@@ -20,7 +20,7 @@ RELEASES = {
     "mmdlib": ("mmdlib-261744", "2400405", "286149F4E8132535135C27285A750916D35AB3ECDDB28AE4475FC604D1FDF178"),
     "os3": ("mmd-orespawn-245586", "2533153", "D964148C20175E16CCEFAB02AE43A181A50DC08A1D636A77E59CFE8C8EA8D41A"),
     "os1": ("mmd-orespawn-245586", "2323091", "91345E4B825AA06E05F470066F467AABA0C7A2804A8DBCA4D3CD1905ED53607C"),
-    "orespawn": ("mmd-orespawn-245586", "9276430", "4D4975421FEEBF17505056306D06B0344D7A4553B6275885D7C5C5065B0348A6"),
+    "orespawn": ("mmd-orespawn-245586", "9518063", "05DB7CBFAADC815D6A713DACDFB9F0647BCED49CCFC357FB2FF010E95BD1379F"),
 }
 
 
@@ -70,8 +70,12 @@ def main():
     downloads = args.output / "downloads"
     downloads.mkdir()
     jars = {name: download(downloads, name) for name in RELEASES}
-    mod = ROOT / "build/libs/BaseMetals-2.5.1.110021.jar"
+    mod = ROOT / "build/libs/BaseMetals-2.6.0.110021.jar"
     probes = ROOT / "build/test-mods"
+    molten = args.output / "molten-contact"
+    prepare(molten, args.template, [mod, jars["orespawn"], probes / "launch-probe-packaged.jar"])
+    for phase in ("fresh", "reload"):
+        run(args.java, molten, phase, {"launch.phase": phase, "launch.moltenContact": "true"}, report_kind="launch")
 
     def script(name, *arguments):
         subprocess.run([sys.executable, str(Path(__file__).with_name(name)),

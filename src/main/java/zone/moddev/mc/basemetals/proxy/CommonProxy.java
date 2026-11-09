@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.content.ContentAcquisition;
+import zone.moddev.mc.basemetals.content.ContentModeNetwork;
 import zone.moddev.mc.basemetals.data.MaterialNames;
 import zone.moddev.mc.basemetals.init.Achievements;
 import zone.moddev.mc.basemetals.init.Blocks;
@@ -49,6 +51,7 @@ public class CommonProxy {
 	public void preInit(final FMLPreInitializationEvent event) {
 
 		Config.init();
+		ContentModeNetwork.register();
 
 		com.mcmoddev.lib.init.Materials.init();
 		Materials.init();
@@ -118,8 +121,10 @@ public class CommonProxy {
 	public void init(final FMLInitializationEvent event) {
 		this.allsGood = false;
 		BaseMetalsWorldgenProvider.enqueue();
-		com.mcmoddev.lib.init.Recipes.init();
-		Recipes.init();
+		ContentAcquisition.registerRecipes(() -> {
+			com.mcmoddev.lib.init.Recipes.init();
+			Recipes.init();
+		});
 
 		Achievements.init();
 		FuelRegistry.register();

@@ -574,3 +574,17 @@ tile.basemetals.stone_anvil.veryDamaged.name=Badly Damaged Stone Anvil
 tile.basemetals.adamantine_anvil.intact.name=Adamantine Anvil
 tile.basemetals.adamantine_anvil.slightlyDamaged.name=Slightly Damaged Adamantine Anvil
 tile.basemetals.adamantine_anvil.veryDamaged.name=Badly Damaged Adamantine Anvil
+
+config.basemetals.title=Base Metals Configuration
+config.basemetals.restart_guidance=Restart required. Ore distribution is configured in OreSpawn.
+config.basemetals.category.general=General
+config.basemetals.category.metals=Base Metals
+config.basemetals.category.vanilla=Vanilla Bits
+config.basemetals.category.fluids=Molten Fluids
+config.basemetals.option.content_mode=Content Mode
+config.basemetals.content_mode.high_fantasy=High Fantasy
+config.basemetals.content_mode.low_fantasy=Low Fantasy
+high_fantasy=High Fantasy
+low_fantasy=Low Fantasy
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

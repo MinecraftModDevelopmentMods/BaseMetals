@@ -1810,3 +1810,17 @@ modifier.brittle.name=易碎
 modifier.heavy.name=沉重
 modifier.reactive.name=活泼
 modifier.radioactive.name=放射
+
+config.basemetals.title=Base Metals 配置
+config.basemetals.restart_guidance=需要重启。矿石分布请在 OreSpawn 中配置。
+config.basemetals.category.general=常规
+config.basemetals.category.metals=基础金属
+config.basemetals.category.vanilla=原版扩展
+config.basemetals.category.fluids=熔融流体
+config.basemetals.option.content_mode=奇幻等级
+config.basemetals.content_mode.high_fantasy=高幻想
+config.basemetals.content_mode.low_fantasy=低幻想
+high_fantasy=高奇幻
+low_fantasy=低奇幻
+config.basemetals.connection.mismatch=服务器使用%s，你的游戏使用%s。请在模组 > Base Metals > 配置中选择与服务器一致的奇幻等级，然后重启游戏。
+config.basemetals.connection.protocol=Base Metals 无法核对奇幻等级。请在服务器和客户端使用相同构建版本的 Base Metals。

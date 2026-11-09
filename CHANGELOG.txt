@@ -1,3 +1,15 @@
+2.6.0.110021 for 1.10.2
+
+- Open Base Metals settings from the Mods list or the OreSpawn cog.
+- High Fantasy is still the default. Choose Low Fantasy to limit which
+  materials can be made into equipment. Existing items and ore placement
+  stay the same. Restart to change modes; clients and servers must match.
+- Molten metal burns on contact, even in shallow flows. Liquid mercury
+  still causes nausea.
+- Require OreSpawn 4.1.6.110021 or a compatible newer 4.x release, with Forge
+  12.18.3.2511 or later. This picks up OreSpawn's fix for duplicate veins when
+  moving an OreSpawn 1 world without its converted configuration.
+
 2.5.1.110021 for 1.10.2
 
 - Require OreSpawn 4.1.2.110021 or a compatible newer 4.x release, with Forge

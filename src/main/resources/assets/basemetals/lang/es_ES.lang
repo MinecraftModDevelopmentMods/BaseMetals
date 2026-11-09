@@ -529,3 +529,17 @@ item.basemetals.starsteel_gear.name=Engranaje de estrellacero
 item.basemetals.steel_gear.name=Engranaje de acero
 item.basemetals.tin_gear.name=Engranaje de estaño
 item.basemetals.zinc_gear.name=Engranaje de zinc
+
+config.basemetals.title=Configuración de Base Metals
+config.basemetals.restart_guidance=Se requiere reiniciar. La distribución de minerales se configura en OreSpawn.
+config.basemetals.category.general=General
+config.basemetals.category.metals=Metales básicos
+config.basemetals.category.vanilla=Complementos de Vanilla
+config.basemetals.category.fluids=Fluidos fundidos
+config.basemetals.option.content_mode=Modo de contenido
+config.basemetals.content_mode.high_fantasy=Alta fantasía
+config.basemetals.content_mode.low_fantasy=Baja fantasía
+high_fantasy=Alta fantasía
+low_fantasy=Baja fantasía
+config.basemetals.connection.mismatch=The server uses %s, but your game uses %s. Match the Fantasy Level in Mods > Base Metals > Config and restart.
+config.basemetals.connection.protocol=Base Metals could not check the Fantasy Level. Use the same Base Metals build on the server and client.

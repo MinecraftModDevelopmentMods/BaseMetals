@@ -15,11 +15,16 @@ The main jar contains production code and resources only. The separate
 `build/test-mods/legacy110-probe.jar` is a server-side test mod; do not distribute it with releases
 or leave it installed for normal play.
 
-`audit_artifacts.py` compares the candidate with the pre-namespace production jar.
-It checks the complete class and resource inventory, Java 8 bytecode, saved
-resource names, version metadata and exclusion of test material and local paths.
+`audit_artifacts.py` records the 2.5.1 namespace-migration comparison against
+the original jar. For the current release, use `verifyReleaseArtifacts` to
+check the inventory, Java 8 bytecode and exclusion of test material.
 
 ## Runtime checks
+
+The packaged launch probe checks molten metal contact with
+`-Dlaunch.moltenContact=true`. The CI suite runs it on a fresh world and
+reload, covering source and flowing metal, Creative, Fire Resistance, water
+and mercury.
 
 For the captured Cyano and MMD fixtures, launch the packaged server with
 `review.manifest` pointing to `legacy_registry_manifest_runtime.json` and

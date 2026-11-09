@@ -1,6 +1,8 @@
 package zone.moddev.mc.basemetals.proxy;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.basemetals.client.BaseMetalsConfigScreen;
+import zone.moddev.mc.orespawn.api.client.WorldSettingsExtensionRegistry;
 import com.mcmoddev.lib.client.registrations.RegistrationHelper;
 import com.mcmoddev.lib.client.renderer.RenderCustomArrow;
 import com.mcmoddev.lib.client.renderer.RenderCustomBolt;
@@ -65,6 +67,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(final FMLInitializationEvent event) {
 		super.init(event);
+		WorldSettingsExtensionRegistry.registerConfigScreen(BaseMetals.MODID, BaseMetalsConfigScreen::new);
+
 		if (Loader.isModLoaded("waila")) {
 			com.mcmoddev.lib.waila.Waila.init();
 		}
