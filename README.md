@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and extra loot to find in chests.
 
-This is Base Metals `3.1.0.117011` for Minecraft 1.17.1. It brings the 1.16.5
+This is Base Metals `3.1.1.117011` for Minecraft 1.17.1. It brings the 1.16.5
 release forward and adds raw metals, while keeping existing blocks and items.
 MMDLib and Additional Loot Tables are no longer needed. OreSpawn places the
 ores, and Base Metals supplies the metals and their recipes.
@@ -35,7 +35,7 @@ without changing their collision or placement.
 - Java 16
 - OreSpawn `[4.1.0.117011,5.0.0)` on both client and server
 
-Put `BaseMetals-3.1.0.117011.jar` and OreSpawn `4.1.0.117011` (or a later
+Put `BaseMetals-3.1.1.117011.jar` and OreSpawn `4.1.0.117011` (or a later
 compatible OreSpawn 4 build for 1.17.1) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
@@ -220,7 +220,7 @@ and passes its temporary repository through `orespawnVerificationRepository`.
 Normal development does not need a local OreSpawn checkout or repository.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.117011`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.1.117011`.
 
 Report defects through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
