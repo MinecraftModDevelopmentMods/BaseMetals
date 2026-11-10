@@ -140,6 +140,7 @@ repositories {
 }
 
 apply from: 'gradle/dependencies.gradle'
+apply from: 'gradle/ore-models.gradle'
 renamer.mappings.from minecraft.dependency.toSrgFile
 
 tasks.named('processResources', ProcessResources) {

@@ -87,6 +87,11 @@ OreSpawn handles ore placement and imports old OreSpawn configuration files.
 The eleven ore defaults are unchanged. See [ore generation and upgrades](docs/ORE_GENERATION.md)
 for configuration locations and advice for existing worlds.
 
+Base Metals ores use your resource pack's stone, netherrack and end stone.
+The ore markings are a separate layer, using textures by KiriCattus. Pack
+makers can replace those markings in
+`assets/basemetals/textures/blocks/ore_overlays/`.
+
 ## Configuration
 
 Open **Mods → Base Metals → Config** from the main menu, or use the Base Metals
@@ -119,7 +124,7 @@ pass. Normal builds and tags do not publish anything.
 
 ## Installing
 
-Install Forge and OreSpawn, then put `BaseMetals-2.6.0.110021.jar` in your
+Install Forge and OreSpawn, then put `BaseMetals-2.6.1.110021.jar` in your
 `mods` folder. Downloads are available on CurseForge and the repository's
 Releases page once the version is published.
 
@@ -139,7 +144,7 @@ items cannot, by itself, repair those Java references. Base Metal Golems
 its eighteen golems use the existing Base Metals blocks and ingots. Neither
 add-on needs changing, and neither is required when playing without golems.
 
-This release uses version `2.6.0.110021`. The final six digits identify Minecraft
+This release uses version `2.6.1.110021`. The final six digits identify Minecraft
 1.10.2 on Forge, following the same version format as the newer branches.
 The mod ID, saved block and item names, resources and configuration names remain
 `basemetals`; moving the Java packages does not rename anything in your world.
@@ -149,7 +154,7 @@ The mod ID, saved block and item names, resources and configuration names remain
 
 New integrations should use `zone.moddev.mc.basemetals.init` for materials,
 blocks and items. Maven builds use
-`zone.moddev.mc.basemetals:BaseMetals:2.6.0.110021`. Crack Hammer recipes still
+`zone.moddev.mc.basemetals:BaseMetals:2.6.1.110021`. Crack Hammer recipes still
 use `com.mcmoddev.lib.registry.CrusherRecipeRegistry`; the bundled library API
 has not moved.
 

@@ -2,6 +2,7 @@ package com.mcmoddev.lib.block;
 
 import java.util.Random;
 
+import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.init.Materials;
@@ -12,8 +13,12 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Ore Block.
@@ -55,6 +60,19 @@ public class BlockMMDOre extends net.minecraft.block.BlockOre implements IMMDObj
 		this.blockHardness = Math.max(hardnessMax, this.material.getOreBlockHardness());
 		this.blockResistance = Math.max(resistMax, this.material.getBlastResistance() * 0.75f);
 		this.setHarvestLevel(tool, this.material.getRequiredHarvestLevel());
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer() {
+		final ResourceLocation id = getRegistryName();
+
+		if (id != null && BaseMetals.MODID.equals(id.getResourceDomain())
+				&& id.getResourcePath().equals(material.getName() + "_ore")) {
+			return BlockRenderLayer.CUTOUT_MIPPED;
+		}
+
+		return super.getBlockLayer();
 	}
 
 	@Override
