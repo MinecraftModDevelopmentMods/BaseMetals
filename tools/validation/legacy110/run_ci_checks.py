@@ -70,7 +70,7 @@ def main():
     downloads = args.output / "downloads"
     downloads.mkdir()
     jars = {name: download(downloads, name) for name in RELEASES}
-    mod = ROOT / "build/libs/BaseMetals-2.6.0.110021.jar"
+    mod = ROOT / "build/libs/BaseMetals-2.6.1.110021.jar"
     probes = ROOT / "build/test-mods"
     molten = args.output / "molten-contact"
     prepare(molten, args.template, [mod, jars["orespawn"], probes / "launch-probe-packaged.jar"])

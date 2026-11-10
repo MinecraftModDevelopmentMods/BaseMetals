@@ -1,3 +1,10 @@
+2.6.1.110021 for 1.10.2
+
+- Brought KiriCattus's ore overlays to Minecraft 1.10.2. If your resource
+  pack changes stone, netherrack or end stone, Base Metals ores now match
+  the surrounding rock and keep their ore markings.
+- Ore placement and existing worlds are unchanged.
+
 2.6.0.110021 for 1.10.2
 
 - Open Base Metals settings from the Mods list or the OreSpawn cog.
