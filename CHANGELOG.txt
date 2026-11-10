@@ -1,6 +1,7 @@
 Base Metals 3.1.2.120061
 
 - Let companion mods preserve their own item and block data during legacy world upgrades.
+- Preserve custom names and enchantments on old player items before Minecraft converts them to components.
 
 Base Metals 3.1.1.120061
 
