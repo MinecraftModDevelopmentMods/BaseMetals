@@ -1,3 +1,10 @@
+Base Metals 2.6.3.112021 — Minecraft 1.12.2
+
+- Brought KiriCattus's ore overlays to Minecraft 1.12.2. If your resource
+  pack changes stone, netherrack or end stone, Base Metals ores now match
+  the surrounding rock and keep their ore markings.
+- Ore placement and existing worlds are unchanged.
+
 Base Metals 2.6.2.112021 — Minecraft 1.12.2
 
 - Updated to OreSpawn 4.1.6.112021. Install it on both the client and server.

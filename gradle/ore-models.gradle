@@ -1,0 +1,114 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+import javax.imageio.ImageIO
+
+// KiriCattus's two-layer model uses the legacy texture paths on these Forge versions.
+def hosts = [
+    adamantine_ore: 'netherrack', antimony_ore: 'stone', bismuth_ore: 'stone',
+    coldiron_ore: 'netherrack', copper_ore: 'stone', lead_ore: 'stone',
+    mercury_ore: 'stone', nickel_ore: 'stone', platinum_ore: 'stone',
+    silver_ore: 'stone', starsteel_ore: 'end_stone', tin_ore: 'stone', zinc_ore: 'stone'
+].asImmutable()
+ext.baseMetalsOreOverlayIds = hosts.keySet().toList().asImmutable()
+
+def assets = layout.projectDirectory.dir('src/main/resources/assets/basemetals')
+def textures = assets.dir('textures/blocks/ore_overlays')
+def overlayFiles = fileTree(textures) { include '*_ore.png' }
+def oreStates = fileTree(assets.dir('blockstates')) { include '*_ore.json' }
+def oreItems = fileTree(assets.dir('models/item')) { include '*_ore.json' }
+def generated = layout.buildDirectory.dir('generated/ore-models')
+def sides = ['down', 'up', 'north', 'south', 'west', 'east']
+
+def cube = { Number from, Number to, String texture ->
+    def faces = sides.collectEntries { side ->
+        [(side): [texture: texture, cullface: side, uv: [0, 0, 16, 16]]]
+    }
+    [from: [from, from, from], to: [to, to, to], faces: faces]
+}
+
+def models = [ore_overlay: [
+    parent: 'minecraft:block/block',
+    elements: [cube(0, 16, '#base'), cube(-0.05, 16.05, '#overlay')]
+]]
+hosts.each { id, host ->
+    def base = "minecraft:blocks/${host}".toString()
+    models[id] = [
+        parent: 'basemetals:block/ore_overlay',
+        textures: [particle: base, base: base, overlay: "basemetals:blocks/ore_overlays/${id}".toString()]
+    ]
+}
+
+def generateOreModels = tasks.register('generateOreModels') {
+    group = 'build'
+    description = 'Generates the ore models from KiriCattus’s textures and vanilla rock.'
+    inputs.files(overlayFiles, oreStates, oreItems).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.property('models', JsonOutput.toJson(models))
+    outputs.dir(generated)
+
+    doLast {
+        def found = overlayFiles.files.collect { it.name - '.png' }.toSet()
+        if (found != hosts.keySet()) {
+            throw new GradleException("Ore textures do not match the model list: missing ${hosts.keySet() - found}, extra ${found - hosts.keySet()}")
+        }
+
+        def json = new JsonSlurper()
+        hosts.keySet().each { id ->
+            def state = json.parse(assets.file("blockstates/${id}.json").asFile)
+            def item = json.parse(assets.file("models/item/${id}.json").asFile)
+            if (state.variants?.normal?.model != "basemetals:${id}" || item.parent != "basemetals:block/${id}") {
+                throw new GradleException("The block and item must both use the generated model for ${id}")
+            }
+
+            def image = ImageIO.read(textures.file("${id}.png").asFile)
+            if (image == null) throw new GradleException("Cannot read the overlay for ${id}")
+            def alpha = image.getRGB(0, 0, image.width, image.height, null, 0, image.width).collect { it >>> 24 }
+            if (!alpha.contains(0) || !alpha.any { it >= 128 }) {
+                throw new GradleException("The overlay for ${id} must show both the ore and the rock behind it")
+            }
+        }
+
+        def dir = generated.get().dir('assets/basemetals/models/block').asFile
+        dir.mkdirs()
+        models.each { id, model ->
+            new File(dir, "${id}.json").setText(JsonOutput.prettyPrint(JsonOutput.toJson(model)) + '\n', 'UTF-8')
+        }
+        dir.listFiles().findAll { it.isFile() && it.name.endsWith('.json') && !models.containsKey(it.name - '.json') }.each {
+            if (!it.delete()) throw new GradleException("Could not remove stale generated model ${it.name}")
+        }
+    }
+}
+
+// Eclipse copies these models into bin/main just like the other game resources.
+sourceSets.main.resources.srcDir(generateOreModels)
+
+['genEclipseRuns', 'eclipseClasspath'].each { taskName ->
+    tasks.named(taskName) { dependsOn generateOreModels }
+}
+
+def processResources = tasks.named('processResources', ProcessResources)
+
+def verifyOreOverlayModels = tasks.register('verifyOreOverlayModels') {
+    group = 'verification'
+    description = 'Checks that the processed block and item resources use the generated ore overlays.'
+    dependsOn processResources
+
+    doLast {
+        def root = new File(processResources.get().destinationDir, 'assets/basemetals')
+        def json = new JsonSlurper()
+        models.each { id, expected ->
+            def path = new File(root, "models/block/${id}.json")
+            if (!path.isFile() || json.parse(path) != expected) {
+                throw new GradleException("Missing or incorrect processed ore model: ${id}")
+            }
+        }
+        hosts.keySet().each { id ->
+            def packaged = new File(root, "textures/blocks/ore_overlays/${id}.png")
+            if (!packaged.isFile() || !Arrays.equals(packaged.bytes, textures.file("${id}.png").asFile.bytes)) {
+                throw new GradleException("Missing or changed processed ore overlay: ${id}")
+            }
+        }
+    }
+}
+
+tasks.named('check') { dependsOn verifyOreOverlayModels }
