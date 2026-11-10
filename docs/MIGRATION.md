@@ -26,9 +26,9 @@ summary or that no legacy content was present; subsequent starts do nothing.
 
 The packaged fallback map covers the exact public 1.12 runtime. With a saved
 legacy registry map, blocks from the world's other 1.10/1.12 mods also retain
-their registry name and original block-entity data, although block states
-without a Base Metals-owned metadata decoder fall back to that mod's default
-state. Base Metals and historical `mmdlib:*` states retain their old metadata
+their registry name and original block-entity data. Without a Base Metals or
+companion metadata decoder, those blocks use the registered default state.
+Base Metals and historical `mmdlib:*` states retain their old metadata
 semantics, including complete paired-door state. If neither legacy level file
 contains an ID used by a numeric chunk, migration stops instead of guessing or
 deleting it. Restore the backed-up regions and recover the world's original
@@ -57,6 +57,22 @@ upgrade start. Missing mappings also forward:
   `basemetals:liquid_mercury` block item to `basemetals:mercury_bucket`;
 - historical `mmdlib:*` Vanilla Bits blocks, items, and fluids to matching
   `basemetals:*` IDs.
+
+### Companion mods
+
+Register a `Legacy112MigrationExtension` with a unique ID during common setup.
+The extension runs only for a legacy Base Metals world that has not completed
+pre-flattening. It can prepare legacy chunks and player NBT and decode raw
+four-bit block metadata for its own blocks. It does not replace Base Metals'
+decoders. Multiple claims for a block or a decoded air state stop conversion.
+
+Keep stacks in vanilla-recognized inventories in legacy `Count` and `tag`
+format during preparation. Minecraft's data fixer converts them to `count` and
+`components` on load. The embedded player callback receives the prepared
+legacy snapshot and the current componentized result. Detached playerdata runs
+only the prepare callback; vanilla loads and fixes that file later. Vanilla
+does not fix arbitrary item stacks inside opaque mod block-entity or player
+data; the companion mod owns those formats.
 
 ## Moving from 1.13 through 1.19
 
