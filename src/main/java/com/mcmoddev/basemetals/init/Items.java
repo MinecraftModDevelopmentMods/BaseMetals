@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.block.OverlayOreBlock;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.basemetals.items.ItemBaseMetalsArrow;
 import com.mcmoddev.basemetals.items.ItemBaseMetalsBolt;
 import com.mcmoddev.basemetals.items.ItemBaseMetalsBow;
 import com.mcmoddev.basemetals.items.ItemBaseMetalsCrossbow;
 import com.mcmoddev.basemetals.items.ItemBaseMetalsHoe;
+import com.mcmoddev.lib.block.BlockMMDOre;
 import com.mcmoddev.lib.data.Names;
 import com.mcmoddev.lib.data.SharedStrings;
 import com.mcmoddev.lib.events.MMDLibRegisterItems;
@@ -38,6 +40,8 @@ public final class Items extends com.mcmoddev.lib.init.Items {
 	/** Creates material forms before Forge opens the item registry. */
 	@SubscribeEvent
 	public static void registerItems(MMDLibRegisterItems ev) {
+		addClassSorting(OverlayOreBlock.class, BlockMMDOre.class);
+
 		final List<String> materials = Arrays.asList(MaterialNames.ADAMANTINE,
 				MaterialNames.ANTIMONY, MaterialNames.AQUARIUM, MaterialNames.BISMUTH,
 				MaterialNames.BRASS, MaterialNames.BRONZE, MaterialNames.COLDIRON,

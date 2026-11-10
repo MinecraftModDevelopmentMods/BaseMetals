@@ -157,6 +157,7 @@ jobs:
           cp build/release/SHA256SUMS "$RUNNER_TEMP/first-SHA256SUMS"
 
       - name: Verify reproducible release archives
+        id: release_archives
         shell: bash
         run: |
           set -euo pipefail
@@ -170,6 +171,9 @@ jobs:
           )
           ./gradlew "${gradle_args[@]}"
           cmp "$RUNNER_TEMP/first-SHA256SUMS" build/release/SHA256SUMS
+          version="$(sed -n 's/^mod_version=//p' gradle.properties)"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Upload audited release candidate
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -178,9 +182,9 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-2.6.2.112021.jar
-            build/libs/BaseMetals-2.6.2.112021-sources.jar
-            build/libs/BaseMetals-2.6.2.112021-javadoc.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}-sources.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 

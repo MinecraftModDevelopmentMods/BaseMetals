@@ -10,11 +10,10 @@ Base Metals adds metals, alloys, equipment, building blocks, and the crackhammer
 Crush ores into powder, smelt the powder into ingots, or combine it into alloy
 blends. The metals also work with supported processing and tool-building mods.
 
-This branch builds **2.6.2.112021** for Minecraft 1.12.2 and Forge. I've
-updated OreSpawn support so saved ore settings carry over when you move an
-older world. This update also fixes shallow molten metal not burning on
-contact and gives players a clear message if their Fantasy Level doesn't
-match the server's. See the [changelog](CHANGELOG.txt) for the details.
+Version **2.6.3.112021** brings the ore overlays from newer versions of
+Base Metals to Minecraft 1.12.2. Ores now match your resource pack's rock
+textures. You can update an existing world without changing where ores spawn.
+See the [changelog](CHANGELOG.txt) for what's changed.
 
 ## Installation
 
@@ -60,6 +59,11 @@ OreSpawn places Cold Iron and Adamantine in the Nether and Starsteel in the
 End. Copper, Silver, Tin, Lead, Zinc, Mercury, Nickel, and Platinum generate
 in ordinary dimensions. Antimony and Bismuth ore blocks are available, but
 they do not generate by default. Aquarium and Mithril are alloys, not ores.
+
+Base Metals ores use your resource pack's stone, netherrack and end stone.
+The ore markings are a separate layer, using textures by KiriCattus. Pack
+makers can replace those markings in
+`assets/basemetals/textures/blocks/ore_overlays/`.
 
 Make alloys by combining powders in a crafting grid and smelting the resulting
 blend. For example, Bronze uses Copper and Tin; Steel uses Iron and carbon.
@@ -144,11 +148,13 @@ toolchain and dependency versions are recorded in `gradle.properties`.
 
 `prepareEclipse` creates client and server launches with processed resources
 and keeps optional compile-only mods and test code out of normal launches.
+After updating an existing Eclipse project, use **Gradle → Refresh Gradle
+Project** so Eclipse picks up the generated ore models.
 The [build-script guide](gradle/README.md) explains the supporting scripts.
 The [release guide](docs/releasing.md) covers publication from the MMD Actions tab.
 
 Release artifacts use the Maven coordinates
-`zone.moddev.mc.basemetals:BaseMetals:2.6.2.112021`. Java packages remain under
+`zone.moddev.mc.basemetals:BaseMetals:2.6.3.112021`. Java packages remain under
 `com.mcmoddev.basemetals`; this release does not move saved registry names.
 
 Report bugs through the [issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

@@ -1,3 +1,5 @@
+import groovy.xml.XmlSlurper
+
 // Eclipse support repairs ForgeGradle's generated launches without changing product dependencies.
 idea {
     module {
@@ -183,6 +185,14 @@ tasks.register('verifyEclipseProductionClasspath') {
                 || eclipseClasspath.contains('<classpathentry kind="lib"')
                 || eclipseClasspath ==~ /(?s).*<classpathentry[^>]+path="[A-Za-z]:[\\\/].*/) {
             throw new GradleException('Eclipse must expose dependencies through the Buildship container only')
+        }
+        File generatedOreModels = tasks.named('generateOreModels').get().outputs.files.singleFile
+        String oreModelSource = project.relativePath(generatedOreModels).replace('\\', '/')
+        def classpathEntries = new XmlSlurper().parseText(eclipseClasspath).classpathentry
+        if (!classpathEntries.any { entry ->
+            entry.@kind.text() == 'src' && entry.@path.text() == oreModelSource && entry.@output.text() == 'bin/main'
+        }) {
+            throw new GradleException("Eclipse must copy the generated ore models from ${oreModelSource} into bin/main")
         }
         List<File> runtimeArchives = configurations.runtimeClasspath.files.collect {
             it.canonicalFile

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.ImmutableList;
 import com.mcmoddev.basemetals.BaseMetals;
+import com.mcmoddev.basemetals.block.OverlayOreBlock;
 import com.mcmoddev.basemetals.data.MaterialNames;
 import com.mcmoddev.lib.block.BlockHumanDetector;
 import com.mcmoddev.lib.data.Names;
@@ -13,6 +14,7 @@ import com.mcmoddev.lib.events.MMDLibRegisterBlocks;
 import com.mcmoddev.lib.init.ItemGroups;
 import com.mcmoddev.lib.init.Materials;
 import com.mcmoddev.lib.material.MMDMaterial;
+import com.mcmoddev.lib.util.Oredicts;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,7 +48,7 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 
 			create(Names.BLOCK, material);
 			create(Names.PLATE, material);
-			create(Names.ORE, material);
+			createOre(material);
 			create(Names.BARS, material);
 			create(Names.DOOR, material);
 			create(Names.TRAPDOOR, material);
@@ -79,11 +81,26 @@ public final class Blocks extends com.mcmoddev.lib.init.Blocks {
 		if (Materials.hasMaterial(MaterialNames.MERCURY)) {
 			final MMDMaterial mercury = Materials.getMaterialByName(MaterialNames.MERCURY);
 
-			create(Names.ORE, mercury);
+			createOre(mercury);
 
 			if (mercury.hasBlock(Names.ORE)) {
 				mercury.getBlock(Names.ORE).setHardness(3.0f).setResistance(5.0f);
 			}
+		}
+	}
+
+	private static void createOre(final MMDMaterial material) {
+		if (!material.hasOre() || material.hasBlock(Names.ORE) || !isNameEnabled(Names.ORE)) {
+			return;
+		}
+
+		final Block ore = addBlock(new OverlayOreBlock(material), Names.ORE, material,
+				ItemGroups.getTab(SharedStrings.TAB_BLOCKS));
+		material.addNewBlock(Names.ORE, ore);
+
+		final String prefix = getOredictFromName(Names.ORE);
+		if (prefix != null) {
+			Oredicts.registerOre(prefix + material.getCapitalizedName(), ore);
 		}
 	}
 

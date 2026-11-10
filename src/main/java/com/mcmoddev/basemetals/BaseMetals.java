@@ -45,7 +45,7 @@ public final class BaseMetals {
 	protected static final String NAME = "Base Metals";
 
 	/** Release version in the shared MMD major.minor.patch.target format. */
-	protected static final String VERSION = "2.6.2.112021";
+	protected static final String VERSION = "2.6.3.112021";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";

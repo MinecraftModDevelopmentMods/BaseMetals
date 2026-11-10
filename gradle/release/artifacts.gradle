@@ -190,6 +190,13 @@ tasks.register('verifyReleaseArtifacts') {
             entry ==~ /assets\/basemetals\/advancements\/recipes\/materials\/[^\/]+\/[^\/]+\.json/
         }
         allowedAddedEntries.addAll([
+                'com/mcmoddev/basemetals/block/OverlayOreBlock.class',
+                'assets/basemetals/models/block/ore_overlay.json'
+        ])
+        allowedAddedEntries.addAll(project.baseMetalsOreOverlayIds.collect {
+            "assets/basemetals/textures/blocks/ore_overlays/${it}.png".toString()
+        })
+        allowedAddedEntries.addAll([
                 'this_is_new', 'blocktastic', 'geologist', 'metallurgy',
                 'aquarium_maker', 'brass_maker', 'bronze_maker', 'cupronickel_maker',
                 'electrum_maker', 'invar_maker', 'mithril_maker', 'pewter_maker', 'steel_maker',
