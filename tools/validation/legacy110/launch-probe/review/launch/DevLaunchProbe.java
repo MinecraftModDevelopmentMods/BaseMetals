@@ -66,7 +66,7 @@ public final class DevLaunchProbe {
     }
 
     private static void checkWorld(final MinecraftServer server) {
-        final String expectedVersion = System.getProperty("launch.expectedVersion", "2.5.1.111021");
+        final String expectedVersion = System.getProperty("launch.expectedVersion", "2.5.2.111021");
         require(expectedVersion.equals(Loader.instance().getIndexedModList().get("basemetals").getVersion()), "Wrong Base Metals version");
         require(Loader.isModLoaded("orespawn"), "The ordinary launch did not load OreSpawn");
         final boolean modernMetals = Loader.isModLoaded("modernmetals");

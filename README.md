@@ -12,7 +12,7 @@ Adamantine in the Nether, and Star Steel in the End.
 Install Forge `13.20.1.2588` or later and
 [MMD OreSpawn `4.1.6.111021`](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9524249)
 or a newer compatible 4.x release for Minecraft 1.11.2. Put the OreSpawn and
-`BaseMetals-2.5.1.111021.jar` files in your `mods` folder.
+`BaseMetals-2.5.2.111021.jar` files in your `mods` folder.
 
 If you're updating an existing world, back up the world and the `config` folder
 first. Replace Base Metals and OreSpawn together, but keep your old OreSpawn
@@ -20,6 +20,11 @@ config files so their settings can be imported. OreSpawn now handles all Base
 Metals ore placement, and the eleven default rules haven't changed. Check
 [the ore generation guide](docs/ORE_GENERATION.md) before exploring new chunks,
 especially if your pack changes where vanilla ores spawn.
+
+Base Metals ores use your resource pack's stone, netherrack and end stone.
+The ore markings are a separate layer, using textures by KiriCattus. Pack
+makers can replace those markings in
+`assets/basemetals/textures/blocks/ore_overlays/`.
 
 ## Using the Crack Hammer
 
@@ -63,7 +68,7 @@ tests. The source for this version is on `master-1.11.2`.
 
 New integrations should use `zone.moddev.mc.basemetals.init` for materials,
 blocks and items. The Maven coordinate is
-`zone.moddev.mc.basemetals:BaseMetals:2.5.1.111021`. Crack Hammer recipes still
+`zone.moddev.mc.basemetals:BaseMetals:2.5.2.111021`. Crack Hammer recipes still
 use `com.mcmoddev.lib.registry.CrusherRecipeRegistry`.
 
 Existing add-ons can still use the old `com.mcmoddev.basemetals` class names.
