@@ -166,12 +166,16 @@ jobs:
           cp build/release/SHA256SUMS "$RUNNER_TEMP/first-SHA256SUMS"
 
       - name: Verify the prepared release bundle
+        id: release_archives
         shell: bash
         run: |
           set -euo pipefail
+          version="$(sed -n 's/^mod_version=//p' gradle.properties)"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          echo "version=$version" >> "$GITHUB_OUTPUT"
           bundle="$RUNNER_TEMP/release-input"
           mkdir -p "$bundle"
-          cp build/libs/BaseMetals-2.6.0.110021{,-sources,-javadoc}.jar "$bundle/"
+          cp "build/libs/BaseMetals-$version"{,-sources,-javadoc}.jar "$bundle/"
           cp build/release/SHA256SUMS CHANGELOG.txt "$bundle/"
           ./gradlew verifyPreparedReleaseArtifacts verifyMavenCoordinates \
             -PpreparedReleaseDir="$bundle" \
@@ -204,9 +208,9 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-2.6.0.110021.jar
-            build/libs/BaseMetals-2.6.0.110021-sources.jar
-            build/libs/BaseMetals-2.6.0.110021-javadoc.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}-sources.jar
+            build/libs/BaseMetals-${{ steps.release_archives.outputs.version }}-javadoc.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 
