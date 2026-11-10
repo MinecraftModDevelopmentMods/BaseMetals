@@ -24,10 +24,12 @@ public interface Legacy112MigrationExtension {
     default void beforeChunkFlattening(CompoundTag chunk) { }
 
     /**
-     * Checks or restores extension data after vanilla converts the embedded
-     * single-player record. The prepared source is a read-only legacy snapshot;
-     * the result uses the current item component format. Vanilla does not
-     * componentize arbitrary stacks inside opaque mod payloads.
+     * Checks or restores extension data after vanilla flattens the embedded
+     * single-player record to the 1.20.1 schema (data version 3465). The prepared
+     * source is a read-only legacy snapshot; the mutable result still stores
+     * items as {@code Count} and {@code tag}. Base Metals runs the remaining native data fixes,
+     * including item component conversion, after all callbacks return. Vanilla
+     * does not componentize arbitrary stacks inside opaque mod payloads.
      */
     default void afterPlayerFlattening(CompoundTag preparedSource, CompoundTag result) { }
 

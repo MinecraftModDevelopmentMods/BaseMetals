@@ -148,16 +148,44 @@ class Legacy112MigrationExtensionTest {
         verifyEmbeddedPlayer(world, 512, true);
     }
 
+    @Test
+    void restoresTheCapturedPlayerWithTheUnsplitNativeFixerWhenNoExtensionIsRegistered(
+            @TempDir(cleanup = CleanupMode.ON_SUCCESS) Path world) throws Exception {
+        Path levelDat = world.resolve("level.dat");
+        CompoundTag original = player();
+        addPlayerWitnesses(original);
+        CompoundTag legacy = level(512, original);
+        Legacy112WorldMigrator.beginWorldLoad();
+        try {
+            Legacy112WorldMigrator.prepareWorld(levelDat, legacy);
+            LegacyNbt.writeCompressed(level(currentVersion(), new CompoundTag()), levelDat.toFile());
+            CompoundTag expected = DataFixTypes.PLAYER.updateToCurrentVersion(
+                    DataFixers.getDataFixer(), original.copy(), 512);
+
+            Legacy112WorldMigrator.migrateIfNeeded(world, List.of());
+
+            CompoundTag restored = LegacyNbt.readCompressed(levelDat.toFile())
+                    .getCompound("Data").getCompound("Player");
+            assertEquals(expected, restored);
+            assertEquals(7, stack(restored, "Inventory", 2).getInt("count"));
+            assertEquals("minecraft:red_wool", stack(restored, "Inventory", 2).getString("id"));
+        } finally {
+            Legacy112WorldMigrator.beginWorldLoad();
+        }
+    }
+
     private static void verifyEmbeddedPlayer(Path world, int version, boolean rewritten) throws Exception {
         Path levelDat = world.resolve("level.dat");
-        CompoundTag legacy = level(version, player());
+        CompoundTag original = player();
+        addPlayerWitnesses(original);
+        CompoundTag legacy = level(version, original);
         LegacyNbt.writeCompressed(legacy, levelDat.toFile());
         Legacy112WorldMigrator.beginWorldLoad();
         try {
             Legacy112WorldMigrator.prepareWorld(levelDat, legacy);
             CompoundTag onDisk = rewritten ? level(currentVersion(), new CompoundTag()) : legacy;
             if (rewritten) LegacyNbt.writeCompressed(onDisk, levelDat.toFile());
-            byte[] original = Files.readAllBytes(levelDat);
+            byte[] originalLevel = Files.readAllBytes(levelDat);
             List<String> calls = new ArrayList<>();
             Legacy112MigrationExtension extension = new Legacy112MigrationExtension() {
                 @Override public boolean prepareData(CompoundTag tag, int dataVersion, Payload payload) {
@@ -170,19 +198,41 @@ class Legacy112MigrationExtensionTest {
 
                 @Override public void afterPlayerFlattening(CompoundTag source, CompoundTag result) {
                     assertEquals(3, inventoryStack(source).getCompound("tag").getInt("Damage"));
-                    assertComponentStack(inventoryStack(result));
+                    assertLegacyWitnesses(result);
+                    assertEquals(3, inventoryStack(result).getCompound("tag").getInt("Damage"));
+                    assertEquals("minecraft:wool", stack(source, "Inventory", 2).getString("id"));
+                    restoreBookName(source, result, "Inventory", 1, "example:precision", 3);
+                    restoreBookName(source, result, "EnderItems", 0, "example:ward", 2);
                     result.putInt("companionEnergy", 125);
                     calls.add("after");
                 }
             };
-            Legacy112WorldMigrator.migrateIfNeeded(world, List.of(extension));
+            Legacy112MigrationExtension observer = new Legacy112MigrationExtension() {
+                @Override public void afterPlayerFlattening(CompoundTag source, CompoundTag result) {
+                    assertEquals(List.of("prepare", "after"), calls);
+                    assertLegacyWitnesses(result);
+                    assertEquals(125, result.getInt("companionEnergy"));
+                    assertEquals("example:precision", storedEnchantment(stack(result, "Inventory", 1)).getString("id"));
+                    assertEquals("example:ward", storedEnchantment(stack(result, "EnderItems", 0)).getString("id"));
+                    calls.add("observe");
+                }
+            };
+            List<Legacy112MigrationExtension> extensions = List.of(extension, observer);
+            Legacy112WorldMigrator.migrateIfNeeded(world, extensions);
             CompoundTag loaded = new CompoundTag();
             loaded.putBoolean("stale", true);
             Legacy112WorldMigrator.refreshLoadedSingleplayerPlayer(loaded, world);
             CompoundTag diskData = LegacyNbt.readCompressed(levelDat.toFile()).getCompound("Data");
-            assertEquals(List.of("prepare", "after"), calls);
+            assertEquals(List.of("prepare", "after", "observe"), calls);
             assertFalse(loaded.contains("stale"));
             assertComponentStack(inventoryStack(loaded));
+            assertComponentBook(stack(loaded, "Inventory", 1), 9, "example:precision", 3);
+            assertComponentBook(stack(loaded, "EnderItems", 0), 5, "example:ward", 2);
+            CompoundTag wool = stack(loaded, "Inventory", 2);
+            assertEquals("minecraft:red_wool", wool.getString("id"));
+            assertEquals(7, wool.getInt("count"));
+            assertEquals(12, wool.getByte("Slot"));
+            assertFalse(wool.contains("Count"));
             assertEquals(125, loaded.getInt("companionEnergy"));
             assertEquals(rewritten ? currentVersion() : version, diskData.getInt("DataVersion"));
             if (rewritten) {
@@ -193,10 +243,10 @@ class Legacy112MigrationExtensionTest {
                 assertFalse(stack.contains("components"));
                 assertFalse(diskData.getCompound("Player").contains("companionEnergy"));
             }
-            assertArrayEquals(original, Files.readAllBytes(world.resolve("basemetals-1.12-region-backup/level.dat")));
+            assertArrayEquals(originalLevel, Files.readAllBytes(world.resolve("basemetals-1.12-region-backup/level.dat")));
             assertTrue(Files.readString(world.resolve(MARKER)).contains("Companion player data migrated."));
-            Legacy112WorldMigrator.migrateIfNeeded(world, List.of(extension));
-            assertEquals(List.of("prepare", "after"), calls);
+            Legacy112WorldMigrator.migrateIfNeeded(world, extensions);
+            assertEquals(List.of("prepare", "after", "observe"), calls);
         } finally {
             Legacy112WorldMigrator.beginWorldLoad();
         }
@@ -263,7 +313,84 @@ class Legacy112MigrationExtensionTest {
     }
 
     private static CompoundTag inventoryStack(CompoundTag player) {
-        return player.getList("Inventory", Tag.TAG_COMPOUND).getCompound(0);
+        return stack(player, "Inventory", 0);
+    }
+
+    private static CompoundTag stack(CompoundTag player, String inventory, int index) {
+        return player.getList(inventory, Tag.TAG_COMPOUND).getCompound(index);
+    }
+
+    private static void addPlayerWitnesses(CompoundTag player) {
+        ListTag inventory = player.getList("Inventory", Tag.TAG_COMPOUND);
+        inventory.add(legacyBook(9, "example:precision", 3));
+        CompoundTag wool = new CompoundTag();
+        wool.putString("id", "minecraft:wool");
+        wool.putByte("Count", (byte) 7);
+        wool.putByte("Slot", (byte) 12);
+        wool.putShort("Damage", (short) 14);
+        inventory.add(wool);
+        ListTag enderItems = new ListTag();
+        enderItems.add(legacyBook(5, "example:ward", 2));
+        player.put("EnderItems", enderItems);
+    }
+
+    private static CompoundTag legacyBook(int slot, String name, int level) {
+        CompoundTag book = new CompoundTag();
+        book.putString("id", "minecraft:enchanted_book");
+        book.putByte("Count", (byte) 1);
+        book.putByte("Slot", (byte) slot);
+        CompoundTag enchantment = new CompoundTag();
+        enchantment.putString("id", name);
+        enchantment.putShort("lvl", (short) level);
+        ListTag enchantments = new ListTag();
+        enchantments.add(enchantment);
+        CompoundTag tag = new CompoundTag();
+        tag.put("StoredEnchantments", enchantments);
+        book.put("tag", tag);
+        return book;
+    }
+
+    private static CompoundTag storedEnchantment(CompoundTag stack) {
+        ListTag enchantments = stack.getCompound("tag").getList("StoredEnchantments", Tag.TAG_COMPOUND);
+        assertEquals(1, enchantments.size());
+        return enchantments.getCompound(0);
+    }
+
+    private static void assertLegacyWitnesses(CompoundTag result) {
+        assertEquals(3, result.getList("Inventory", Tag.TAG_COMPOUND).size());
+        assertEquals(1, result.getList("EnderItems", Tag.TAG_COMPOUND).size());
+        CompoundTag wool = stack(result, "Inventory", 2);
+        assertEquals("minecraft:red_wool", wool.getString("id"));
+        assertEquals(7, wool.getByte("Count"));
+        assertEquals(12, wool.getByte("Slot"));
+        assertFalse(wool.contains("count"));
+        assertFalse(wool.contains("components"));
+    }
+
+    private static void restoreBookName(CompoundTag source, CompoundTag result, String inventory, int index,
+            String name, int level) {
+        CompoundTag before = stack(source, inventory, index);
+        CompoundTag after = stack(result, inventory, index);
+        assertEquals("minecraft:enchanted_book", after.getString("id"));
+        assertEquals(before.get("Count"), after.get("Count"));
+        assertEquals(before.get("Slot"), after.get("Slot"));
+        assertFalse(after.contains("count"));
+        assertFalse(after.contains("components"));
+        assertEquals(name, storedEnchantment(before).getString("id"));
+        assertEquals(level, storedEnchantment(after).getInt("lvl"));
+        storedEnchantment(after).putString("id", name);
+    }
+
+    private static void assertComponentBook(CompoundTag stack, int slot, String name, int level) {
+        assertEquals("minecraft:enchanted_book", stack.getString("id"));
+        assertEquals(1, stack.getInt("count"));
+        assertEquals(slot, stack.getByte("Slot"));
+        assertFalse(stack.contains("Count"));
+        assertFalse(stack.contains("tag"));
+        CompoundTag levels = stack.getCompound("components").getCompound("minecraft:stored_enchantments")
+                .getCompound("levels");
+        assertEquals(1, levels.size());
+        assertEquals(level, levels.getInt(name));
     }
 
     private static CompoundTag legacyStack() {

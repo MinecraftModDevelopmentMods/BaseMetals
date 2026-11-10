@@ -82,6 +82,7 @@ public final class Legacy112WorldMigrator {
     private static final int LAST_SUPPORTED_LEGACY_DATA_VERSION = 1_343;
     private static final int PALETTED_PRE_PROTOCHUNK_DATA_VERSION = 1_456;
     private static final int NAMESPACED_BLOCK_ENTITY_DATA_VERSION = 704;
+    private static final int PRE_COMPONENT_PLAYER_DATA_VERSION = 3_465;
     private static final int REGION_HEADER_BYTES = 8_192;
     private static final int SECTOR_BYTES = 4_096;
     private static final String MARKER = "BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt";
@@ -520,16 +521,27 @@ public final class Legacy112WorldMigrator {
 
     private static PlayerConversion flattenPreparedPlayer(CompoundTag player, int version,
             List<Legacy112MigrationExtension> extensions) {
-        CompoundTag before = extensions.isEmpty() ? null : player.copy();
-        if (!extensions.isEmpty() && version < NAMESPACED_BLOCK_ENTITY_DATA_VERSION) {
-            player = DataFixTypes.PLAYER.update(DataFixers.getDataFixer(), player, version,
+        var fixer = DataFixers.getDataFixer();
+        if (extensions.isEmpty()) {
+            return new PlayerConversion(DataFixTypes.PLAYER.updateToCurrentVersion(fixer, player, version), false);
+        }
+
+        CompoundTag preparedSource = player.copy();
+        if (version < NAMESPACED_BLOCK_ENTITY_DATA_VERSION) {
+            player = DataFixTypes.PLAYER.update(fixer, player, version,
                     NAMESPACED_BLOCK_ENTITY_DATA_VERSION);
             version = NAMESPACED_BLOCK_ENTITY_DATA_VERSION;
         }
-        CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(), player, version);
-        CompoundTag beforeCallbacks = extensions.isEmpty() ? null : fixedPlayer.copy();
-        for (Legacy112MigrationExtension extension : extensions) extension.afterPlayerFlattening(before, fixedPlayer);
-        return new PlayerConversion(fixedPlayer, beforeCallbacks != null && !beforeCallbacks.equals(fixedPlayer));
+
+        // Give extensions the flattened 1.20.1 item shape so they can restore names before componentization.
+        CompoundTag flattened = DataFixTypes.PLAYER.update(fixer, player, version, PRE_COMPONENT_PLAYER_DATA_VERSION);
+        CompoundTag beforeCallbacks = flattened.copy();
+        for (Legacy112MigrationExtension extension : extensions) {
+            extension.afterPlayerFlattening(preparedSource, flattened);
+        }
+        boolean changed = !beforeCallbacks.equals(flattened);
+        CompoundTag current = DataFixTypes.PLAYER.updateToCurrentVersion(fixer, flattened, PRE_COMPONENT_PLAYER_DATA_VERSION);
+        return new PlayerConversion(current, changed);
     }
 
     private static ItemMigration convertLegacyItems(Tag value) {
