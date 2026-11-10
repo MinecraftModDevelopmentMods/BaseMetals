@@ -38,7 +38,7 @@ tasks.register('verifyReleaseConfiguration') {
     group = 'verification'
     dependsOn tasks.named('verifyJava8Toolchain')
     doLast {
-        if (project.group != 'zone.moddev.mc.basemetals' || project.version != '2.5.1.111021'
+        if (project.group != 'zone.moddev.mc.basemetals' || project.version != '2.5.2.111021'
                 || project.minecraft_version != '1.11.2' || project.forge_version != '13.20.1.2588'
                 || project.mappings_channel != 'stable' || project.mappings_version != '32-1.11') {
             throw new GradleException('Base Metals target, mappings or Maven identity changed.')

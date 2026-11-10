@@ -43,7 +43,7 @@ transformed copies cannot retain a valid signature for the original bytes.
 gradlew clean check build javadoc verifyReleaseArtifacts writeReleaseChecksums prepareEclipse
 ```
 
-The installable jar is `build/libs/BaseMetals-2.5.1.111021.jar`. Sources,
+The installable jar is `build/libs/BaseMetals-2.5.2.111021.jar`. Sources,
 Javadocs are written alongside it; checksums are in `build/release/SHA256SUMS`. The mapped development jar
 is kept separately under `build/libs-dev`; it is not the jar to install in a
 normal Minecraft instance. Building never uploads anything.
@@ -85,7 +85,7 @@ does not duplicate its ore rules. They also exercise the vanilla-ore switch,
 molten metal contact and the Modern Metals add-on.
 
 The shared **Release Base Metals** workflow lives on the repository's default
-branch. Version `2.5.1.111021` selects `master-1.11.2`; it requires successful
+branch. Version `2.5.2.111021` selects `master-1.11.2`; it requires successful
 CI for the exact source commit and explicit publication confirmation. It builds
 one candidate, then publishes those same files to MMD Maven, CurseForge and
 GitHub, in that order. A tag alone only validates the candidate.
@@ -105,5 +105,5 @@ point. The verification jars are under `build/test-mods`; don't install them in
 a regular instance.
 
 For add-on development, use
-`zone.moddev.mc.basemetals:BaseMetals:2.5.1.111021`. The public material and
+`zone.moddev.mc.basemetals:BaseMetals:2.5.2.111021`. The public material and
 recipe types under `com.mcmoddev.lib` are still bundled in Base Metals.

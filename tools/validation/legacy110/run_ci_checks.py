@@ -120,7 +120,7 @@ def main():
     downloads = args.output / "downloads"
     downloads.mkdir()
     jars = {name: download(downloads, name) for name in RELEASES}
-    mod = ROOT / "build/libs/BaseMetals-2.5.1.111021.jar"
+    mod = ROOT / "build/libs/BaseMetals-2.5.2.111021.jar"
     probes = ROOT / "build/test-mods"
 
     def script(name, *arguments):

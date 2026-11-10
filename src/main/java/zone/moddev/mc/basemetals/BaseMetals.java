@@ -53,7 +53,7 @@ public class BaseMetals {
 	/**
 	 * Major.Minor.Patch.Target, where 111021 means Minecraft 1.11.2 on Forge.
 	 */
-	public static final String VERSION = "2.5.1.111021";
+	public static final String VERSION = "2.5.2.111021";
 
 	protected static final String UPDATEJSON = SharedStrings.UPDATE_JSON_URL
 			+ "BaseMetals/master/update.json";
