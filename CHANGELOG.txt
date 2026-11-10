@@ -1,3 +1,7 @@
+Base Metals 3.1.2.121011
+
+- Keep machine directions, inventories and item wear when upgrading an old world with the Base Metals expansions installed.
+
 Base Metals 3.1.1.121011
 
 - Fix startup failures when Base Metals is added to an existing modern world, including worlds with LZ4-compressed chunks, external chunks or empty region files.
