@@ -22,11 +22,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.zip.DeflaterOutputStream;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.MissingMappings;
+import zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension;
+import zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension.Payload;
 import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
 import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.ModContent;
@@ -79,6 +83,7 @@ public final class Legacy112WorldMigrator {
     private static final int SECTOR_BYTES = 4_096;
     private static final String MARKER = "BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt";
     private static final String BACKUP_DIRECTORY = "basemetals-1.12-region-backup";
+    private static final Map<ResourceLocation, Legacy112MigrationExtension> EXTENSIONS = new ConcurrentSkipListMap<>();
     private static Path preparedWorld;
     private static CompoundTag preparedPlayer;
     private static int preparedVersion;
@@ -123,6 +128,12 @@ public final class Legacy112WorldMigrator {
                 .anyMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":") || id.startsWith("mmdlib:"));
     }
 
+    public static void registerExtension(ResourceLocation id, Legacy112MigrationExtension extension) {
+        if (EXTENSIONS.putIfAbsent(Objects.requireNonNull(id), Objects.requireNonNull(extension)) != null) {
+            throw new IllegalArgumentException("Duplicate legacy world migration extension: " + id);
+        }
+    }
+
     public static void migrateIfNeeded(Path worldRoot) throws IOException {
         Path root = worldRoot.toAbsolutePath().normalize();
         if (Files.isRegularFile(root.resolve(MARKER))) return;
@@ -134,6 +145,7 @@ public final class Legacy112WorldMigrator {
         if (oldBlockIds.values().stream().noneMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":"))) return;
 
         List<Path> regions = findRegionFiles(root);
+        List<Legacy112MigrationExtension> extensions = List.copyOf(EXTENSIONS.values());
 
         int convertedRegions = 0;
         int convertedChunks = 0;
@@ -143,7 +155,7 @@ public final class Legacy112WorldMigrator {
         int convertedItemAliases = 0;
         int convertedDamageValues = 0;
         for (Path region : regions) {
-            RegionConversion result = convertRegion(root, region, oldBlockIds);
+            RegionConversion result = convertRegion(root, region, oldBlockIds, extensions);
             if (result.convertedChunks() > 0) {
                 convertedRegions++;
                 convertedChunks += result.convertedChunks();
@@ -154,8 +166,8 @@ public final class Legacy112WorldMigrator {
                 convertedDamageValues += result.convertedDamageValues();
             }
         }
-        ItemMigration looseItems = restoreRewrittenSingleplayerPlayer(root)
-                .plus(migrateLooseInventories(root));
+        ItemMigration looseItems = restoreRewrittenSingleplayerPlayer(root, extensions)
+                .plus(migrateLooseInventories(root, extensions));
         convertedBuckets += looseItems.convertedBuckets();
         convertedItemAliases += looseItems.convertedItemAliases();
         convertedDamageValues += looseItems.convertedDamageValues();
@@ -171,7 +183,7 @@ public final class Legacy112WorldMigrator {
 
         String result = "Converted " + convertedChunks + " legacy chunks in " + convertedRegions
                 + " region files through Mojang's legacy flattening fixes. Backups: " + BACKUP_DIRECTORY
-                + ". Third-party states preserved by registry name at their default state: "
+                + ". Third-party states restored: "
                 + externalStates + ". Legacy block entities preserved: " + preservedBlockEntities
                 + ". Legacy filled buckets converted: " + convertedBuckets
                 + ". Legacy item aliases forwarded: " + convertedItemAliases
@@ -270,7 +282,8 @@ public final class Legacy112WorldMigrator {
         }
     }
 
-    private static RegionConversion convertRegion(Path root, Path region, Map<Integer, String> ids) throws IOException {
+    private static RegionConversion convertRegion(Path root, Path region, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         byte[] source = Files.readAllBytes(region);
         if (source.length == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
         if (source.length < REGION_HEADER_BYTES) throw new IOException("Invalid region header: " + region);
@@ -313,7 +326,7 @@ public final class Legacy112WorldMigrator {
                     chunk = NbtIo.read(input);
                 }
 
-                ChunkConversion conversion = convertChunk(chunk, ids);
+                ChunkConversion conversion = convertChunk(chunk, ids, extensions);
                 byte[] record;
                 if (conversion.converted()) {
                     record = writeChunk(conversion.chunk());
@@ -353,13 +366,15 @@ public final class Legacy112WorldMigrator {
                 convertedItemAliases, convertedDamageValues);
     }
 
-    private static ChunkConversion convertChunk(CompoundTag chunk, Map<Integer, String> ids) throws IOException {
+    private static ChunkConversion convertChunk(CompoundTag chunk, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         int sourceVersion = chunk.getInt("DataVersion");
         if (sourceVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
         ItemMigration itemMigration = convertLegacyItems(chunk);
+        boolean extensionChanged = prepareExtensions(extensions, chunk, sourceVersion, Payload.CHUNK);
         CompoundTag level = chunk.getCompound("Level");
         ListTag sections = level.getList("Sections", Tag.TAG_COMPOUND);
         List<LegacyBlock> savedBlocks = new ArrayList<>();
@@ -371,16 +386,17 @@ public final class Legacy112WorldMigrator {
             savedBlocks.addAll(snapshot.blocks());
             externalStates += snapshot.externalStates();
         }
-        Map<Long, List<CompoundTag>> savedBlockEntities = snapshotLegacyBlockEntities(level, savedBlocks);
-        if (savedBlocks.isEmpty() && itemMigration.isEmpty()) {
+        if (savedBlocks.isEmpty() && itemMigration.isEmpty() && !extensionChanged) {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
+        for (Legacy112MigrationExtension extension : extensions) extension.beforeChunkFlattening(chunk);
+        Map<Long, List<CompoundTag>> savedBlockEntities = snapshotLegacyBlockEntities(level, savedBlocks);
         CompoundTag fixed = DataFixTypes.CHUNK.update(DataFixers.getDataFixer(),
                 chunk, sourceVersion, PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         fixed.putInt("DataVersion", PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         if (!savedBlocks.isEmpty()) {
-            restoreSavedBlocks(fixed, savedBlocks);
+            restoreSavedBlocks(fixed, savedBlocks, extensions);
             restoreLegacyBlockEntities(fixed, savedBlocks, savedBlockEntities);
         }
         int preservedBlockEntities = savedBlockEntities.values().stream().mapToInt(List::size).sum();
@@ -389,14 +405,29 @@ public final class Legacy112WorldMigrator {
     }
 
     static CompoundTag convertChunkForTest(CompoundTag chunk, Map<Integer, String> ids) throws IOException {
-        ChunkConversion conversion = convertChunk(chunk, ids);
+        return convertChunkForTest(chunk, ids, List.of());
+    }
+
+    static CompoundTag convertChunkForTest(CompoundTag chunk, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
+        ChunkConversion conversion = convertChunk(chunk, ids, extensions);
         if (!conversion.converted()) throw new IOException("Validation chunk did not contain a third-party block");
         return conversion.chunk();
     }
 
-    private static ItemMigration migrateLooseInventories(Path root) throws IOException {
+    private static boolean prepareExtensions(List<Legacy112MigrationExtension> extensions, CompoundTag tag,
+            int dataVersion, Payload payload) {
+        if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) return false;
+        boolean changed = false;
+        for (Legacy112MigrationExtension extension : extensions) changed |= extension.prepareData(tag, dataVersion, payload);
+        return changed;
+    }
+
+    private static ItemMigration migrateLooseInventories(Path root, List<Legacy112MigrationExtension> extensions)
+            throws IOException {
         List<Path> files = new ArrayList<>();
-        files.add(root.resolve("level.dat"));
+        Path levelDat = root.resolve("level.dat");
+        files.add(levelDat);
         Path playerData = root.resolve("playerdata");
         if (Files.isDirectory(playerData)) {
             try (var paths = Files.list(playerData)) {
@@ -412,7 +443,17 @@ public final class Legacy112WorldMigrator {
             if (!Files.isRegularFile(file)) continue;
             CompoundTag data = NbtIo.readCompressed(file.toFile());
             ItemMigration changed = convertLegacyItems(data);
-            if (changed.isEmpty()) continue;
+            boolean extensionChanged = false;
+            if (file.equals(levelDat)) {
+                CompoundTag world = data.getCompound("Data");
+                if (world.contains("Player", Tag.TAG_COMPOUND)) {
+                    extensionChanged = prepareExtensions(extensions, world.getCompound("Player"),
+                            world.getInt("DataVersion"), Payload.PLAYER);
+                }
+            } else {
+                extensionChanged = prepareExtensions(extensions, data, data.getInt("DataVersion"), Payload.PLAYER);
+            }
+            if (changed.isEmpty() && !extensionChanged) continue;
             Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(file));
             Files.createDirectories(backup.getParent());
             if (!Files.exists(backup)) Files.copy(file, backup, StandardCopyOption.COPY_ATTRIBUTES);
@@ -423,7 +464,8 @@ public final class Legacy112WorldMigrator {
     }
 
     /** Restore only the player captured from this load's original legacy save. */
-    private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root) throws IOException {
+    private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         Path currentFile = root.resolve("level.dat");
         if (!root.equals(preparedWorld) || preparedPlayer == null || !Files.isRegularFile(currentFile)) {
             return ItemMigration.NONE;
@@ -438,8 +480,16 @@ public final class Legacy112WorldMigrator {
 
         CompoundTag player = preparedPlayer.copy();
         ItemMigration migration = convertLegacyItems(player);
+        prepareExtensions(extensions, player, preparedVersion, Payload.PLAYER);
+        CompoundTag before = extensions.isEmpty() ? null : player.copy();
+        int version = preparedVersion;
+        if (!extensions.isEmpty() && version < 704) {
+            player = DataFixTypes.PLAYER.update(DataFixers.getDataFixer(), player, version, 704);
+            version = 704;
+        }
         CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                player, preparedVersion);
+                player, version);
+        for (Legacy112MigrationExtension extension : extensions) extension.afterPlayerFlattening(before, fixedPlayer);
         currentData.put("Player", fixedPlayer);
 
         Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(currentFile));
@@ -557,7 +607,8 @@ public final class Legacy112WorldMigrator {
         return new SectionSnapshot(savedBlocks, externalStates);
     }
 
-    private static void restoreSavedBlocks(CompoundTag chunk, List<LegacyBlock> savedBlocks) throws IOException {
+    private static void restoreSavedBlocks(CompoundTag chunk, List<LegacyBlock> savedBlocks,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         Map<Integer, CompoundTag> targetSections = new HashMap<>();
         ListTag sections = chunk.getCompound("Level").getList("Sections", Tag.TAG_COMPOUND);
         for (Tag value : sections) {
@@ -589,7 +640,7 @@ public final class Legacy112WorldMigrator {
             }
 
             for (LegacyBlock legacy : entry.getValue()) {
-                CompoundTag state = restoredState(legacy, byPosition);
+                CompoundTag state = restoredState(legacy, byPosition, extensions);
                 Integer paletteId = paletteIds.get(state);
                 if (paletteId == null) {
                     paletteId = palette.size();
@@ -683,8 +734,8 @@ public final class Legacy112WorldMigrator {
         return Math.max(4, 32 - Integer.numberOfLeadingZeros(Math.max(1, paletteSize - 1)));
     }
 
-    private static CompoundTag restoredState(LegacyBlock legacy, Map<Long, LegacyBlock> byPosition)
-            throws IOException {
+    private static CompoundTag restoredState(LegacyBlock legacy, Map<Long, LegacyBlock> byPosition,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         String normalizedName = normalizeLegacyRegistryName(legacy.name());
         ResourceLocation oldId = ResourceLocation.tryParse(normalizedName);
         if (oldId == null) throw new IOException("Invalid legacy block registry name " + legacy.name());
@@ -710,6 +761,17 @@ public final class Legacy112WorldMigrator {
             }
             return NbtUtils.writeBlockState(state);
         }
+
+        BlockState decoded = null;
+        for (Legacy112MigrationExtension extension : extensions) {
+            BlockState state = extension.decodeBlockState(oldId, legacy.metadata());
+            if (state == null) continue;
+            if (decoded != null || state.isAir()) {
+                throw new IOException("Unsafe or ambiguous migration state for legacy block " + oldId);
+            }
+            decoded = state;
+        }
+        if (decoded != null) return NbtUtils.writeBlockState(decoded);
 
         CompoundTag state = new CompoundTag();
         state.putString("Name", normalizedName);
