@@ -1,3 +1,10 @@
+Base Metals 3.1.2.121111
+
+- Keep expansion machine directions, inventories and item wear before Minecraft converts old worlds.
+- Carry the shared migration extension hook forward to Minecraft 1.21.11.
+- Let companion chunk-migration callbacks finish before returning, so staged entities are not lost.
+- Keep existing block and item identities, recipes and material balance unchanged.
+
 Base Metals 3.1.1.121111
 
 - Port the released 1.21.1 version to Minecraft 1.21.11 and Forge 61, keeping Java 21.
