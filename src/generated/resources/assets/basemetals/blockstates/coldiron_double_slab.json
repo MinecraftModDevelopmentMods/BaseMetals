@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "basemetals:block/half_slab_coldiron"
+    },
+    "type=double": {
+      "model": "basemetals:block/coldiron_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/upper_slab_coldiron"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "events": [
+    {"type": "player-tick", "id": "basemetals:adamantine_effects", "name": "Adamantine armor",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#adamantine"},
+    {"type": "player-tick", "id": "basemetals:aquarium_effects", "name": "Aquarium armor",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#aquarium"},
+    {"type": "player-tick", "id": "basemetals:coldiron_effects", "name": "Cold-iron armor",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#coldiron"},
+    {"type": "player-tick", "id": "basemetals:lead_effects", "name": "Lead armor",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#lead"},
+    {"type": "player-tick", "id": "basemetals:mithril_effects", "name": "Mithril armor",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#mithril"},
+    {"type": "player-tick", "id": "basemetals:starsteel_effects", "name": "Starsteel armor and regeneration",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#starsteel"},
+    {"type": "basemetals:melee-damage", "id": "basemetals:adamantine_melee", "name": "Adamantine weapons",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#adamantineMelee"},
+    {"type": "basemetals:melee-damage", "id": "basemetals:aquarium_melee", "name": "Aquarium weapons",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#aquariumMelee"},
+    {"type": "basemetals:melee-damage", "id": "basemetals:coldiron_melee", "name": "Cold-iron weapons",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#coldironMelee"},
+    {"type": "basemetals:melee-damage", "id": "basemetals:mithril_melee", "name": "Mithril weapons",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#mithrilMelee"},
+    {"type": "projectile-hit", "id": "basemetals:starsteel_shot", "name": "Starsteel ammunition",
+      "handler": "zone.moddev.mc.basemetals.effects.MaterialEffects#starsteelShot"}
+  ]
+}

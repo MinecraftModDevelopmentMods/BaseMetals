@@ -1,0 +1,8 @@
+{
+  "factory": "basemetals:bucket",
+  "template": {
+    "max_stack_size": 1,
+    "fire_resistant": false,
+    "container": "minecraft:bucket"
+  }
+}

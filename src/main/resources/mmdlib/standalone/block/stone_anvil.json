@@ -1,0 +1,24 @@
+{
+  "module": "mmdlib:anvil",
+  "template": {
+    "properties": {
+      "hardness": 5.0,
+      "blast_resistance": 10.0,
+      "requires_correct_tool": true,
+      "sound": "stone",
+      "map_color": "stone"
+    },
+    "has_item": true,
+    "tags": [
+      "minecraft:anvil",
+      "minecraft:mineable/pickaxe",
+      "minecraft:needs_stone_tool"
+    ],
+    "events": {
+      "block-right-click": "mmdlib:open_menu"
+    }
+  },
+  "runtime": {
+    "base_block": "minecraft:stone"
+  }
+}
