@@ -3,7 +3,7 @@ Base Metals 3.1.2.121111
 - Keep expansion machine directions, inventories and item wear before Minecraft converts old worlds.
 - Carry the shared migration extension hook forward to Minecraft 1.21.11.
 - Let companion chunk-migration callbacks finish before returning, so staged entities are not lost.
-- This dependency patch is under local qualification and is not published.
+- Keep existing block and item identities, recipes and material balance unchanged.
 
 Base Metals 3.1.1.121111
 

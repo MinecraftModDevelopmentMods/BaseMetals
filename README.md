@@ -5,8 +5,11 @@
 
 # Base Metals
 
-The 3.1.2.121111 shared-migration patch is a local test candidate, not a
-published release. It preserves expansion data before legacy world conversion.
+The 3.1.2.121111 patch preserves expansion machine data before Minecraft
+converts an older world. It also lets companion migration callbacks finish,
+so restored entities are not lost. Machine, upgrade, restart and endurance
+checks have passed with the matching basePower, baseSteam and baseElectric
+builds. Keep a backup and test an upgrade on a copy of your world first.
 
 Base Metals adds historically common metals, useful alloys, and fantasy metals
 to Minecraft. Depending on the material, these are available as ores, storage
