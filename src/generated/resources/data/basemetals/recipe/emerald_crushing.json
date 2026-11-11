@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "item": "minecraft:emerald"
+  },
+  "result": {
+    "item": "basemetals:emerald_powder"
+  }
+}

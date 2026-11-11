@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ingots/obsidian"
+  },
+  "result": {
+    "item": "basemetals:obsidian_powder"
+  }
+}

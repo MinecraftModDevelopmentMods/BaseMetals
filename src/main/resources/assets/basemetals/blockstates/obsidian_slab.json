@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "basemetals:block/obsidian_slab_quartz_slab"
+    },
+    "type=double": {
+      "model": "basemetals:block/obsidian_slab_quartz_block"
+    },
+    "type=top": {
+      "model": "basemetals:block/obsidian_slab_quartz_slab_top"
+    }
+  }
+}

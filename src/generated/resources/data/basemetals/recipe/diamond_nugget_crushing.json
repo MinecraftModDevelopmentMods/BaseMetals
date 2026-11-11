@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:nuggets/diamond"
+  },
+  "result": {
+    "item": "basemetals:diamond_smallpowder"
+  }
+}

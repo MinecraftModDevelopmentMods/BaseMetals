@@ -33,7 +33,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.1 NeoForge port, `3.1.0.121012`. It includes raw
+This is the Minecraft 1.21.1 NeoForge port, `4.0.0.121012`. It includes raw
 metals, ore texture overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
 Tables are no longer needed.
@@ -46,7 +46,7 @@ Tables are no longer needed.
 - OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 
 This version builds against OreSpawn `4.0.16.121012`. Put
-`BaseMetals-3.1.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
+`BaseMetals-4.0.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -207,7 +207,7 @@ They do not change the build or deployment workflow. See
 [Port regression checks](tools/verification/README.md) for details.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.121012`.
+`zone.moddev.mc.basemetals:BaseMetals:4.0.0.121012`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).

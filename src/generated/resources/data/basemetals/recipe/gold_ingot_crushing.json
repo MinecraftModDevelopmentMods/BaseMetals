@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ingots/gold"
+  },
+  "result": {
+    "item": "basemetals:gold_powder"
+  }
+}

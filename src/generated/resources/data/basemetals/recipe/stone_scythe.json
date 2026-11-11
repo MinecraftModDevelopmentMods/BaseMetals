@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:stone_scythe",
+    "key": {
+      "S": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "c:stones"
+      }
+    },
+    "pattern": [
+      "XX ",
+      "  X",
+      " S "
+    ],
+    "result": {
+      "id": "basemetals:stone_scythe"
+    }
+  }
+}

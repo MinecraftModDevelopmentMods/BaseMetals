@@ -91,8 +91,8 @@ public final class MissingMappings {
     }
 
     public static ResourceLocation itemTargetId(String path) {
-        // Coal powder is now MMDLib's vanilla extension.
-        if ("carbon_powder".equals(path)) return ResourceLocation.fromNamespaceAndPath("mmdlib", "coal_dust");
+        // 1.12's carbon powder is the coal vanilla extension's powder.
+        if ("carbon_powder".equals(path)) return ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "coal_powder");
         return "iron_nugget".equals(path)
                 ? ResourceLocation.fromNamespaceAndPath("minecraft", "iron_nugget")
                 : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));

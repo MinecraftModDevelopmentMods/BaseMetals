@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.4,
+  "ingredient": {
+    "item": "basemetals:obsidian_boots"
+  },
+  "result": {
+    "count": 4,
+    "id": "basemetals:obsidian_ingot"
+  }
+}

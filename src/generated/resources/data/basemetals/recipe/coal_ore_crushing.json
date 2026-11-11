@@ -1,0 +1,10 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ores/coal"
+  },
+  "result": {
+    "count": 2,
+    "item": "basemetals:coal_powder"
+  }
+}

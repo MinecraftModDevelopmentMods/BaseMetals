@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "basemetals:ender",
+  "loader": "neoforge:fluid_container"
+}

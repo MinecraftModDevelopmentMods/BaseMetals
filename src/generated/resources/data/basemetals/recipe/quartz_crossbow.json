@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:quartz_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/quartz"
+      },
+      "R": {
+        "tag": "c:rods/quartz"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:quartz_crossbow"
+    }
+  }
+}

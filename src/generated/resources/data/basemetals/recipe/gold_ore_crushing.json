@@ -1,0 +1,10 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ores/gold"
+  },
+  "result": {
+    "count": 2,
+    "item": "basemetals:gold_powder"
+  }
+}

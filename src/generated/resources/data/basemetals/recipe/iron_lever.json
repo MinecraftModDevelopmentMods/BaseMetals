@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:iron_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/iron"
+      },
+      "X": {
+        "tag": "c:ingots/iron"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:iron_lever"
+    }
+  }
+}

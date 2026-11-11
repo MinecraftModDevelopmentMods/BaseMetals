@@ -27,6 +27,14 @@ public record MaterialDefinition(
         public boolean isAlloy() {
             return this == ALLOY || this == RARE_ALLOY;
         }
+
+        /** The kind named by a material's {@code type}; vanilla extensions use other types. */
+        public static java.util.Optional<Kind> of(String type) {
+            for (Kind kind : values()) {
+                if (kind.name().equalsIgnoreCase(type)) return java.util.Optional.of(kind);
+            }
+            return java.util.Optional.empty();
+        }
     }
 
     public MaterialDefinition {

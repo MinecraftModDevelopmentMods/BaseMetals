@@ -1,0 +1,10 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:storage_blocks/iron"
+  },
+  "result": {
+    "count": 9,
+    "item": "basemetals:iron_powder"
+  }
+}

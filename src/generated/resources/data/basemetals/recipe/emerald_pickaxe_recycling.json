@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "basemetals:emerald_pickaxe"
+  },
+  "result": {
+    "count": 3,
+    "id": "minecraft:emerald"
+  }
+}

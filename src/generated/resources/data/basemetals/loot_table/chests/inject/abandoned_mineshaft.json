@@ -165,7 +165,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "mmdlib:iron_crackhammer",
+          "name": "basemetals:iron_crackhammer",
           "weight": 3
         },
         {

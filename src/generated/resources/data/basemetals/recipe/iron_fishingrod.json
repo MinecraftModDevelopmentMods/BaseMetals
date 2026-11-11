@@ -1,0 +1,24 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:iron_fishing_rod",
+    "key": {
+      "R": {
+        "tag": "c:rods/iron"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "  R",
+      " RS",
+      "R S"
+    ],
+    "result": {
+      "id": "basemetals:iron_fishing_rod"
+    }
+  }
+}

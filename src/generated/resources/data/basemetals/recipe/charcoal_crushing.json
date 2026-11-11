@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "item": "minecraft:charcoal"
+  },
+  "result": {
+    "item": "basemetals:charcoal_powder"
+  }
+}

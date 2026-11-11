@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-29T15:58:30.796225824	Item Models: basemetals
+// 1.21.1	2026-11-11T07:50:25.997263861	Item Models: basemetals
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/adamantine.json
 48156136fce119acebab42f0ae6cd3f61ae8dbb4 assets/basemetals/models/item/adamantine_bucket.json
 3cb598145d7445c43f54957d4953c8a7540e2f18 assets/basemetals/models/item/adamantine_raw.json
@@ -14,6 +14,10 @@ bc3da2ad3eba28dd042eb27466d8af35f22f6613 assets/basemetals/models/item/aquarium_
 6f4d1ddead8674149cef60094c9c97617c9dacda assets/basemetals/models/item/brass_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/bronze.json
 e52069ec45b78ca9e5b11fec889a645ead722005 assets/basemetals/models/item/bronze_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/charcoal.json
+1def21d5b4d528dadc44a881db09631620484807 assets/basemetals/models/item/charcoal_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/coal.json
+a1587c9b9a826d969e178a773fb4120957f46122 assets/basemetals/models/item/coal_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/coldiron.json
 f565c72f80d4857d68ae153e422deccdf0b7e498 assets/basemetals/models/item/coldiron_bucket.json
 027fb59a2328d8e8ea583208e9dba55468d54ce8 assets/basemetals/models/item/coldiron_raw.json
@@ -21,10 +25,20 @@ f565c72f80d4857d68ae153e422deccdf0b7e498 assets/basemetals/models/item/coldiron_
 ce60072a1c9a2a02b797cd4d0a7c352defa626a4 assets/basemetals/models/item/copper_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/cupronickel.json
 a646dde1584d6f36fae7c6ec38336916b70c6fa2 assets/basemetals/models/item/cupronickel_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/diamond.json
+02ba0390bbd4564b037c02ce6e93ad5966ce6af5 assets/basemetals/models/item/diamond_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/electrum.json
 16325925ca849b50b8a37500ff8b02d43669b00c assets/basemetals/models/item/electrum_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/emerald.json
+23095f6003e8e7595197eb01dee7bc2f8b72916d assets/basemetals/models/item/emerald_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/ender.json
+64724cb850e5382d72ee872ee397a959691f32e2 assets/basemetals/models/item/ender_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/gold.json
+468d6108faec4f3442800a14e61880f245e99556 assets/basemetals/models/item/gold_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/invar.json
 99d01920c8141e89f876492ba9b5e9e3492dce48 assets/basemetals/models/item/invar_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/iron.json
+177e722850ca798d67528c9b330c3d9dbb53aade assets/basemetals/models/item/iron_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/lead.json
 0d9c3411cb64ffccb3828a2b5dbcd92d61c06bfa assets/basemetals/models/item/lead_bucket.json
 815c0c1b72b759c686a992339f1f84e43ceef4d6 assets/basemetals/models/item/lead_raw.json
@@ -36,11 +50,19 @@ a7fcf4d51a2ca7810201f99a5867d26072156615 assets/basemetals/models/item/mithril_b
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/nickel.json
 f2d942bba2603d792b94715455c552cb6f740ca6 assets/basemetals/models/item/nickel_bucket.json
 a0000e22c702d8bd5a11f0ac1dc99047ec03328a assets/basemetals/models/item/nickel_raw.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/obsidian.json
+369eaab2398fd8f122927121bca0d0da63600288 assets/basemetals/models/item/obsidian_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/pewter.json
 8895377f00be53f998afcef33020f9e868724f0d assets/basemetals/models/item/pewter_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/platinum.json
 6f287202c61fdb1ce3ed07942eec3dd1c3802af9 assets/basemetals/models/item/platinum_bucket.json
 6bb280169626360e61b10f28db6cf5ef529a6c32 assets/basemetals/models/item/platinum_raw.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/prismarine.json
+d910996b727d9fac477292ab8b9a420fb565796d assets/basemetals/models/item/prismarine_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/quartz.json
+db1a8bc0b5d749947184b1fc4be0cabcbc469008 assets/basemetals/models/item/quartz_bucket.json
+78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/redstone.json
+de891e7d9466b14438a0d6676876e9b33a319271 assets/basemetals/models/item/redstone_bucket.json
 78168678a8799ce97ef23476d3b8a2407d0cc352 assets/basemetals/models/item/silver.json
 20ec9427b319c8b62f5296b3b22686828fd15f96 assets/basemetals/models/item/silver_bucket.json
 d69eddeaed322ca07e0dac75f52d61c2164d32cc assets/basemetals/models/item/silver_raw.json

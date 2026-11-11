@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.11,
+  "ingredient": {
+    "tag": "c:small_blends/gold"
+  },
+  "result": {
+    "id": "minecraft:gold_nugget"
+  }
+}

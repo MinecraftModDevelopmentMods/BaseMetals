@@ -12,6 +12,10 @@ import zone.moddev.mc.lib.common.types.MMDMaterial;
 /**
  * Base Metals' materials, read from the MMDLib definitions in {@code mmdlib/material/}.
  * Available once MMDLib has loaded definitions, before registry events.
+ *
+ * <p>The vanilla extensions (iron, diamond, wood, ...) are also Base Metals definitions,
+ * but they extend existing vanilla materials and are not part of this catalogue; see
+ * {@link #isVanillaExtension}.
  */
 public final class MaterialCatalogue {
     private static volatile List<MaterialDefinition> all;
@@ -44,12 +48,18 @@ public final class MaterialCatalogue {
                 .map(id -> byName().get(id.getPath()));
     }
 
+    /** A Base Metals extension of a vanilla material, whose type is not a Base Metals kind. */
+    public static boolean isVanillaExtension(MMDMaterial material) {
+        return material.name().map(id -> id.getNamespace().equals(BaseMetals.MOD_ID)).orElse(false)
+                && MaterialDefinition.Kind.of(material.properties().type()).isEmpty();
+    }
+
     private static synchronized void load() {
         if (all != null) return;
         Map<String, MaterialDefinition> materials = new LinkedHashMap<>();
         // loadedMaterials() is sorted by ID, which keeps the historical alphabetical order.
         MMDLib.loadedMaterials().forEach((id, result) -> {
-            if (id.getNamespace().equals(BaseMetals.MOD_ID)) {
+            if (id.getNamespace().equals(BaseMetals.MOD_ID) && !isVanillaExtension(result.material())) {
                 materials.put(id.getPath(), MaterialDefinition.of(result.material()));
             }
         });

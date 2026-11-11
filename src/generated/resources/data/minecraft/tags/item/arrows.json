@@ -42,6 +42,18 @@
     "basemetals:tin_arrow",
     "basemetals:tin_bolt",
     "basemetals:zinc_arrow",
-    "basemetals:zinc_bolt"
+    "basemetals:zinc_bolt",
+    "basemetals:diamond_arrow",
+    "basemetals:diamond_bolt",
+    "basemetals:emerald_arrow",
+    "basemetals:emerald_bolt",
+    "basemetals:gold_arrow",
+    "basemetals:gold_bolt",
+    "basemetals:iron_arrow",
+    "basemetals:iron_bolt",
+    "basemetals:obsidian_arrow",
+    "basemetals:obsidian_bolt",
+    "basemetals:quartz_arrow",
+    "basemetals:quartz_bolt"
   ]
 }

@@ -1,4 +1,4 @@
-### Base Metals 3.1.0.121012 (in development)
+### Base Metals 4.0.0.121012 (in development)
 
 - Port Base Metals to Minecraft 1.21.1 and NeoForge.
 - Restore recipe-book unlocks and armour advancements in the new data-pack folders.
@@ -10,7 +10,7 @@
 - Add optional regression tests without changing the normal build or deployment tasks.
 - Document the Eclipse cache settings needed to avoid duplicate launcher modules.
 - Build on MMDLib 2.0: materials, anvils and the human detector are MMDLib definitions, and armour and weapon effects are MMDLib event handlers.
-- Remove the vanilla extras (diamond doors, iron crackhammers, molten diamond and so on); MMDLib adds these now.
+- Bring the vanilla extras (diamond doors, iron crackhammers, emerald armour, molten diamond and so on) back from MMDLib as `basemetals:` content. Their powders keep the 1.12 `_powder` names, and their molten metals are Base Metals fluids. Base Metals keeps its own copper set rather than MMDLib's vanilla-copper extension.
 - Compatibility double slabs are now `<metal>_double_slab`; old saves are remapped.
 - Crystals, shards, clumps and dirty powders exist only when Mekanism is installed.
 

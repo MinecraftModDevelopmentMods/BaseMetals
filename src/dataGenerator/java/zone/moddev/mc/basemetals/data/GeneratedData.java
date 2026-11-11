@@ -43,6 +43,9 @@ final class GeneratedData implements DataProvider {
     // MMDLib only plans these forms when Mekanism is installed.
     private static final List<String> MEKANISM_FORMS = List.of("crystals", "shards", "clumps", "dirty_dusts");
     private static final String WOODEN_ROD = "#c:rods/wooden";
+    /** Vanilla materials whose extensions include equipment and decorative blocks. */
+    private static final List<String> VANILLA_EQUIPMENT = List.of(
+            "diamond", "emerald", "gold", "iron", "obsidian", "quartz");
     private static final Map<String, List<AlloyComponent>> ALLOYS = Map.ofEntries(
             Map.entry("aquarium", List.of(component("copper", 2), component("zinc", 1),
                     new AlloyComponent("#c:dusts/prismarine", 1))),
@@ -163,6 +166,7 @@ final class GeneratedData implements DataProvider {
                 .filter(MaterialDefinition::hasEquipment)
                 .map(material -> "basemetals:" + material.name() + "_block")
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+        beaconBases.add("basemetals:charcoal_block");
         tag(cache, "minecraft", "blocks/beacon_base_blocks", beaconBases);
         // MMDLib's scythe and crackhammer read these tags; add Base Metals blocks to them.
         tag(cache, "mmdlib", "blocks/scythe_harvestable", scytheHarvestableBlocks());
@@ -171,10 +175,11 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "blocks/netherrack", List.of("minecraft:netherrack"));
         tag(cache, "forge", "blocks/end_stones", List.of("minecraft:end_stone"));
         // Bolts are arrows to MMDLib's crossbow, as they are in MMDLib's own tag.
-        tag(cache, "minecraft", "items/arrows", MaterialCatalogue.all().stream()
-                .filter(MaterialDefinition::hasEquipment)
-                .flatMap(material -> java.util.stream.Stream.of(
-                        "basemetals:" + material.name() + "_arrow", "basemetals:" + material.name() + "_bolt"))
+        tag(cache, "minecraft", "items/arrows", java.util.stream.Stream.concat(
+                MaterialCatalogue.all().stream().filter(MaterialDefinition::hasEquipment).map(MaterialDefinition::name),
+                VANILLA_EQUIPMENT.stream())
+                .flatMap(name -> java.util.stream.Stream.of(
+                        "basemetals:" + name + "_arrow", "basemetals:" + name + "_bolt"))
                 .toList());
 
         Map<String, List<String>> aggregateItems = new LinkedHashMap<>();
@@ -260,7 +265,57 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "items/sprockets/steel", List.of("#c:gears/steel"));
         tag(cache, "forge", "items/plates/diamond", List.of());
         tag(cache, "forge", "items/plates/emerald", List.of());
+        writeVanillaBitsTags(cache);
         writeCompatibilityTags(cache);
+    }
+
+    /** Tags for the vanilla material extensions (1.12's Vanilla Bits). */
+    private void writeVanillaBitsTags(CachedOutput cache) throws IOException {
+        Map<String, String> vanillaIngot = Map.of(
+                "diamond", "minecraft:diamond", "emerald", "minecraft:emerald",
+                "gold", "minecraft:gold_ingot", "iron", "minecraft:iron_ingot",
+                "quartz", "minecraft:quartz", "obsidian", "basemetals:obsidian_ingot");
+        Map<String, String> vanillaBlock = Map.of(
+                "diamond", "minecraft:diamond_block", "emerald", "minecraft:emerald_block",
+                "gold", "minecraft:gold_block", "iron", "minecraft:iron_block",
+                "quartz", "minecraft:quartz_block", "obsidian", "minecraft:obsidian");
+        for (String material : VANILLA_EQUIPMENT) {
+            if (hasItem(material + "_rod")) {
+                tag(cache, "forge", "items/rods/" + material, List.of("basemetals:" + material + "_rod"));
+            }
+            if (hasItem(material + "_gear")) {
+                tag(cache, "forge", "items/gears/" + material, List.of("basemetals:" + material + "_gear"));
+            }
+            tag(cache, "forge", "items/materials/" + material, List.of(vanillaIngot.get(material)));
+            tag(cache, "forge", "items/storage_blocks/" + material, List.of(vanillaBlock.get(material)));
+            tag(cache, "forge", "blocks/storage_blocks/" + material, List.of(vanillaBlock.get(material)));
+        }
+        tag(cache, "forge", "items/rods/stone", List.of("basemetals:stone_rod"));
+        for (String material : List.of("wood", "stone")) {
+            tag(cache, "forge", "items/gears/" + material, List.of("basemetals:" + material + "_gear"));
+        }
+        for (String material : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
+            tag(cache, "forge", "items/dusts/" + material, List.of("basemetals:" + material + "_powder"));
+            tag(cache, "forge", "items/tiny_dusts/" + material, List.of("basemetals:" + material + "_smallpowder"));
+        }
+        tag(cache, "forge", "items/tiny_dusts/redstone", List.of("basemetals:redstone_smallpowder"));
+        tag(cache, "forge", "items/tiny_dusts/lapis", List.of("basemetals:lapis_smallpowder"));
+        tag(cache, "forge", "items/dusts/redstone", List.of("minecraft:redstone"));
+        tag(cache, "forge", "items/dusts/lapis", List.of("minecraft:lapis_lazuli"));
+        tag(cache, "forge", "items/dusts/prismarine", List.of("minecraft:prismarine_shard"));
+        for (String material : List.of("coal", "charcoal", "diamond", "emerald", "obsidian", "quartz")) {
+            tag(cache, "forge", "items/nuggets/" + material, List.of("basemetals:" + material + "_nugget"));
+        }
+        tag(cache, "forge", "items/ingots/obsidian", List.of("basemetals:obsidian_ingot"));
+        tag(cache, "forge", "items/ingots/redstone", List.of("basemetals:redstone_ingot"));
+        tag(cache, "forge", "items/plates/gold", List.of("basemetals:gold_plate"));
+        tag(cache, "forge", "items/plates/iron", List.of("basemetals:iron_plate"));
+        for (String material : List.of("diamond", "gold", "iron")) {
+            tag(cache, "forge", "items/blends/" + material, List.of("basemetals:" + material + "_blend"));
+            tag(cache, "forge", "items/small_blends/" + material, List.of("basemetals:" + material + "_smallblend"));
+        }
+        tag(cache, "forge", "items/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
+        tag(cache, "forge", "blocks/storage_blocks/charcoal", List.of("basemetals:charcoal_block"));
     }
 
     private static List<String> scytheHarvestableBlocks() {
@@ -328,6 +383,14 @@ final class GeneratedData implements DataProvider {
                     .map(ResourceLocation::toString)
                     .forEach(byTier.get(level)::add);
         });
+        Map<String, Integer> vanillaLevels = Map.of(
+                "diamond", 3, "emerald", 3, "obsidian", 3,
+                "iron", 2, "quartz", 1);
+        vanillaLevels.forEach((name, level) -> ModContent.blocksById().keySet().stream()
+                .filter(id -> id.startsWith(name + "_"))
+                .map(id -> "basemetals:" + id)
+                .forEach(byTier.get(level)::add));
+        byTier.get(1).add("basemetals:charcoal_block");
         byTier.get(1).add("basemetals:stone_anvil");
         byTier.get(2).add("basemetals:steel_anvil");
         byTier.get(3).add("basemetals:adamantine_anvil");
@@ -348,10 +411,9 @@ final class GeneratedData implements DataProvider {
                     PROCESSING_MATERIALS.stream()
                             .map(material -> "basemetals:" + state + "_" + material).toList());
         }
-        for (MaterialDefinition material : MaterialCatalogue.all()) {
-            tag(cache, "forge", "fluids/molten_" + material.name(), List.of(
-                    "basemetals:" + material.name(),
-                    "basemetals:flowing_" + material.name()));
+        for (String fluid : ModContent.fluids().keySet()) {
+            tag(cache, "forge", "fluids/molten_" + fluid, List.of(
+                    "basemetals:" + fluid, "basemetals:flowing_" + fluid));
         }
         for (String material : PROCESSING_MATERIALS) {
             for (String family : List.of("dirty_dusts", "clumps", "crystals", "shards")) {
@@ -437,6 +499,7 @@ final class GeneratedData implements DataProvider {
             }
         }
         alloyRecipes(cache);
+        vanillaBitsRecipes(cache);
         plateRepairRecipes(cache);
         legacySpecialRecipes(cache);
         anvilRecipes(cache);
@@ -498,6 +561,265 @@ final class GeneratedData implements DataProvider {
                 Map.of('R', "#c:rods/" + name, 'X', metal), "basemetals:" + name + "_lever", 1);
     }
 
+    private void vanillaBitsRecipes(CachedOutput cache) throws IOException {
+        Map<String, String> materials = Map.of(
+                "diamond", "#c:gems/diamond", "emerald", "#c:gems/emerald",
+                "gold", "#c:ingots/gold", "iron", "#c:ingots/iron",
+                "obsidian", "#c:ingots/obsidian", "quartz", "#c:gems/quartz");
+        for (String name : VANILLA_EQUIPMENT) {
+            String material = materials.get(name);
+            if (hasItem(name + "_rod")) {
+                shaped(cache, name + "_rod", List.of("X", "X"), Map.of('X', material),
+                        "basemetals:" + name + "_rod", 4);
+            }
+            if (hasItem(name + "_gear")) {
+                String gearRod = name.equals("emerald") ? "#c:rods/iron" : "#c:rods/" + name;
+                shaped(cache, name + "_gear", List.of(" X ", "XRX", " X "),
+                        Map.of('X', material, 'R', gearRod),
+                        "basemetals:" + name + "_gear", 4);
+            }
+            vanillaEquipmentRecipes(cache, name, material);
+            vanillaDecorativeRecipes(cache, name, material, "#c:storage_blocks/" + name);
+        }
+        shaped(cache, "gold_plate", List.of("XXX"), Map.of('X', "#c:ingots/gold"),
+                "basemetals:gold_plate", 3);
+        shaped(cache, "iron_plate", List.of("XXX"), Map.of('X', "#c:ingots/iron"),
+                "basemetals:iron_plate", 3);
+        for (String name : List.of("stone", "wood")) {
+            if (hasItem(name + "_crackhammer")) {
+                String hammerHead = name.equals("stone") ? "minecraft:stone_bricks" : "#minecraft:logs";
+                shaped(cache, name + "_crackhammer", List.of("X", "S", "S"),
+                        Map.of('X', hammerHead, 'S', WOODEN_ROD),
+                        "basemetals:" + name + "_crackhammer", 1);
+            }
+            if (hasItem(name + "_scythe")) {
+                String scytheMaterial = name.equals("stone") ? "#c:stones" : "#minecraft:planks";
+                shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "),
+                        Map.of('X', scytheMaterial, 'S', WOODEN_ROD),
+                        "basemetals:" + name + "_scythe", 1);
+            }
+            if (hasItem(name + "_gear")) {
+                String gearMaterial = name.equals("stone") ? "#c:cobblestones" : "#minecraft:planks";
+                String gearRod = name.equals("stone") ? "#c:rods/stone" : WOODEN_ROD;
+                shaped(cache, name + "_gear", List.of(" X ", "XRX", " X "),
+                        Map.of('X', gearMaterial, 'R', gearRod), "basemetals:" + name + "_gear", 4);
+            }
+        }
+        if (hasItem("stone_rod")) {
+            shaped(cache, "stone_rod", List.of("X", "X"), Map.of('X', "#c:cobblestones"),
+                    "basemetals:stone_rod", 4);
+        }
+        // Vanilla Bits also allowed three Base Metals iron rods to make four
+        // vanilla iron bars.
+        shaped(cache, "iron_bars_2", List.of("XXX"), Map.of('X', "#c:rods/iron"),
+                "minecraft:iron_bars", 4);
+        vanillaPowderRecipes(cache);
+        vanillaCrushingRecipes(cache);
+    }
+
+    private void vanillaCrushingRecipes(CachedOutput cache) throws IOException {
+        // Default MMDLib 1.12 ore-dictionary behaviour, extended through
+        // the common ore tags so normal and deepslate ores share a recipe.
+        for (String name : List.of("coal", "diamond", "emerald", "gold", "iron")) {
+            crushing(cache, name + "_ore_crushing", "#c:ores/" + name,
+                    "basemetals:" + name + "_powder", 2);
+        }
+
+        crushing(cache, "coal_crushing", "minecraft:coal", "basemetals:coal_powder", 1);
+        crushing(cache, "coal_block_crushing", "#c:storage_blocks/coal",
+                "basemetals:coal_powder", 9);
+        crushing(cache, "coal_nugget_crushing", "#c:nuggets/coal",
+                "basemetals:coal_smallpowder", 1);
+        crushing(cache, "charcoal_crushing", "minecraft:charcoal", "basemetals:charcoal_powder", 1);
+        crushing(cache, "charcoal_block_crushing", "#c:storage_blocks/charcoal",
+                "basemetals:charcoal_powder", 9);
+        crushing(cache, "charcoal_nugget_crushing", "#c:nuggets/charcoal",
+                "basemetals:charcoal_smallpowder", 1);
+
+        for (String name : List.of("diamond", "emerald")) {
+            crushing(cache, name + "_crushing", "minecraft:" + name,
+                    "basemetals:" + name + "_powder", 1);
+            crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
+                    "basemetals:" + name + "_powder", 9);
+            crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
+                    "basemetals:" + name + "_smallpowder", 1);
+        }
+        for (String name : List.of("gold", "iron")) {
+            crushing(cache, name + "_ingot_crushing", "#c:ingots/" + name,
+                    "basemetals:" + name + "_powder", 1);
+            crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
+                    "basemetals:" + name + "_powder", 9);
+            crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
+                    "basemetals:" + name + "_smallpowder", 1);
+        }
+        crushing(cache, "obsidian_ingot_crushing", "#c:ingots/obsidian",
+                "basemetals:obsidian_powder", 1);
+        crushing(cache, "obsidian_nugget_crushing", "#c:nuggets/obsidian",
+                "basemetals:obsidian_smallpowder", 1);
+        crushing(cache, "quartz_crushing", "minecraft:quartz", "basemetals:quartz_powder", 1);
+        crushing(cache, "quartz_nugget_crushing", "#c:nuggets/quartz",
+                "basemetals:quartz_smallpowder", 1);
+
+        crushing(cache, "obsidian_crushing", "minecraft:obsidian", "basemetals:obsidian_powder", 4);
+        // Crushing that yields vanilla items (stone to cobblestone, bone to bone meal, ...)
+        // is shared by every Metals and Advantage mod, so MMDLib registers it.
+    }
+
+    private void vanillaEquipmentRecipes(CachedOutput cache, String name, String material) throws IOException {
+        if (hasItem(name + "_crackhammer")) shaped(cache, name + "_crackhammer", List.of("X", "S", "S"),
+                Map.of('X', "#c:storage_blocks/" + name, 'S', WOODEN_ROD),
+                "basemetals:" + name + "_crackhammer", 1);
+        if (hasItem(name + "_scythe")) {
+            // Vanilla Bits' Obsidian scythe uniquely used the 1.12 "obsidian"
+            // Ore Dictionary entry (blocks), rather than ingotObsidian.
+            String scytheMaterial = name.equals("obsidian")
+                    ? "#c:storage_blocks/obsidian"
+                    : material;
+            shaped(cache, name + "_scythe", List.of("XX ", "  X", " S "),
+                    Map.of('X', scytheMaterial, 'S', WOODEN_ROD),
+                    "basemetals:" + name + "_scythe", 1);
+        }
+        if (hasItem(name + "_shears")) shaped(cache, name + "_shears", List.of(" X", "X "),
+                Map.of('X', material), "basemetals:" + name + "_shears", 1);
+        if (hasItem(name + "_fishing_rod")) shaped(cache, name + "_fishingrod", List.of("  R", " RS", "R S"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"),
+                "basemetals:" + name + "_fishing_rod", 1);
+        if (hasItem(name + "_arrow")) shaped(cache, name + "_arrow", List.of("N", "R", "F"),
+                Map.of('N', "#c:nuggets/" + name, 'R', "#c:rods/" + name, 'F', "minecraft:feather"),
+                "basemetals:" + name + "_arrow", 4);
+        if (hasItem(name + "_bolt")) shaped(cache, name + "_bolt", List.of("R", "R", "F"),
+                Map.of('R', "#c:rods/" + name, 'F', "minecraft:feather"),
+                "basemetals:" + name + "_bolt", 4);
+        if (hasItem(name + "_bow")) shaped(cache, name + "_bow", List.of(" RS", "R S", " RS"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string"),
+                "basemetals:" + name + "_bow", 1);
+        if (hasItem(name + "_crossbow")) shaped(cache, name + "_crossbow", List.of("GRR", " SR", "R G"),
+                Map.of('R', "#c:rods/" + name, 'S', "minecraft:string", 'G', "#c:gears/" + name),
+                "basemetals:" + name + "_crossbow", 1);
+        if (hasItem(name + "_shield")) shaped(cache, name + "_shield", List.of("XWX", "XXX", " X "),
+                Map.of('X', material, 'W', "#minecraft:planks"), "basemetals:" + name + "_shield", 1);
+        if (hasItem(name + "_horse_armor")) shaped(cache, name + "_horsearmor", List.of("  X", "XWX", "XXX"),
+                Map.of('X', material, 'W', "#minecraft:wool"), "basemetals:" + name + "_horse_armor", 1);
+        if (hasItem(name + "_sword")) {
+            Map<Character, String> tool = Map.of('X', material, 'S', WOODEN_ROD);
+            shaped(cache, name + "_pickaxe", List.of("XXX", " S ", " S "), tool, "basemetals:" + name + "_pickaxe", 1);
+            shaped(cache, name + "_axe", List.of("XX", "XS", " S"), tool, "basemetals:" + name + "_axe", 1);
+            shaped(cache, name + "_shovel", List.of("X", "S", "S"), tool, "basemetals:" + name + "_shovel", 1);
+            shaped(cache, name + "_hoe", List.of("XX", " S", " S"), tool, "basemetals:" + name + "_hoe", 1);
+            shaped(cache, name + "_sword", List.of("X", "X", "S"), tool, "basemetals:" + name + "_sword", 1);
+            shaped(cache, name + "_helmet", List.of("XXX", "X X"), Map.of('X', material), "basemetals:" + name + "_helmet", 1);
+            shaped(cache, name + "_chestplate", List.of("X X", "XXX", "XXX"), Map.of('X', material), "basemetals:" + name + "_chestplate", 1);
+            shaped(cache, name + "_leggings", List.of("XXX", "X X", "X X"), Map.of('X', material), "basemetals:" + name + "_leggings", 1);
+            shaped(cache, name + "_boots", List.of("X X", "X X"), Map.of('X', material), "basemetals:" + name + "_boots", 1);
+        }
+    }
+
+    private void vanillaDecorativeRecipes(CachedOutput cache, String name, String material,
+            String block) throws IOException {
+        if (hasItem(name + "_bars")) shaped(cache, name + "_bars", List.of("XXX", "XXX"), Map.of('X', material), "basemetals:" + name + "_bars", 16);
+        if (hasItem(name + "_bars") && hasItem(name + "_rod")) {
+            shaped(cache, name + "_bars_2", List.of("XXX"), Map.of('X', "#c:rods/" + name),
+                    "basemetals:" + name + "_bars", 4);
+        }
+        if (hasItem(name + "_door")) shaped(cache, name + "_door", List.of("XX", "XX", "XX"),
+                Map.of('X', material), "basemetals:" + name + "_door", 3);
+        if (hasItem(name + "_trapdoor")) shaped(cache, name + "_trapdoor", List.of("XX", "XX"),
+                Map.of('X', material), "basemetals:" + name + "_trapdoor", 1);
+        if (hasItem(name + "_button")) {
+            // Gold and iron have no Base Metals nugget: use the vanilla one via the common tag.
+            shaped(cache, name + "_button", List.of("X", "X"),
+                    Map.of('X', "#c:nuggets/" + name), "basemetals:" + name + "_button", 1);
+        }
+        if (hasItem(name + "_slab")) shaped(cache, name + "_slab", List.of("XXX"), Map.of('X', block), "basemetals:" + name + "_slab", 6);
+        if (hasItem(name + "_pressure_plate")) shaped(cache, name + "_pressure_plate", List.of("XX"), Map.of('X', material), "basemetals:" + name + "_pressure_plate", 1);
+        if (hasItem(name + "_stairs")) shaped(cache, name + "_stairs", List.of("X  ", "XX ", "XXX"), Map.of('X', block), "basemetals:" + name + "_stairs", 4);
+        if (hasItem(name + "_wall")) shaped(cache, name + "_wall", List.of("XXX", "XXX"), Map.of('X', block), "basemetals:" + name + "_wall", 6);
+        if (hasItem(name + "_lever")) shaped(cache, name + "_lever", List.of("R", "X"),
+                Map.of('R', "#c:rods/" + name, 'X', material), "basemetals:" + name + "_lever", 1);
+    }
+
+    private void vanillaPowderRecipes(CachedOutput cache) throws IOException {
+        for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
+            shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
+                    Map.of('X', "#c:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
+            shapeless(cache, name + "_smallpowder", List.of("#c:dusts/" + name),
+                    "basemetals:" + name + "_smallpowder", 9);
+        }
+        Map<String, String> ingots = Map.of(
+                "diamond", "minecraft:diamond",
+                "emerald", "minecraft:emerald",
+                "gold", "minecraft:gold_ingot",
+                "iron", "minecraft:iron_ingot",
+                "obsidian", "basemetals:obsidian_ingot",
+                "quartz", "minecraft:quartz");
+        Map<String, String> nuggets = Map.of(
+                "diamond", "basemetals:diamond_nugget",
+                "emerald", "basemetals:emerald_nugget",
+                "gold", "minecraft:gold_nugget",
+                "iron", "minecraft:iron_nugget",
+                "obsidian", "basemetals:obsidian_nugget",
+                "quartz", "basemetals:quartz_nugget");
+        Map<String, String> blocks = Map.of(
+                "diamond", "minecraft:diamond_block",
+                "emerald", "minecraft:emerald_block",
+                "gold", "minecraft:gold_block",
+                "iron", "minecraft:iron_block",
+                "obsidian", "minecraft:obsidian",
+                "quartz", "minecraft:quartz_block");
+        for (String name : ingots.keySet().stream().sorted().toList()) {
+            float baseExperience = vanillaBaseSmeltingExperience(name);
+            float ingotExperience = vanillaIngotSmeltingExperience(name);
+            smelting(cache, name + "_powder_smelting", "#c:dusts/" + name,
+                    ingots.get(name), ingotExperience, 200, "minecraft:smelting");
+            smelting(cache, name + "_smallpowder_smelting", "#c:tiny_dusts/" + name,
+                    nuggets.get(name), legacyNuggetExperience(baseExperience), 200, "minecraft:smelting");
+            legacyRecyclingRecipes(cache, name, ingots.get(name), nuggets.get(name), blocks.get(name),
+                    ingotExperience, legacyNuggetExperience(baseExperience));
+        }
+        // MMDLib added pure-material blends for these three; 1.12 had the small blends.
+        for (String name : List.of("diamond", "gold", "iron")) {
+            shapeless(cache, name + "_blend", List.of("#c:dusts/" + name, "#c:dusts/" + name),
+                    "basemetals:" + name + "_blend", 2);
+            shaped(cache, name + "_blend_from_small", List.of("XXX", "XXX", "XXX"),
+                    Map.of('X', "#c:small_blends/" + name), "basemetals:" + name + "_blend", 1);
+            shapeless(cache, name + "_smallblend", List.of("#c:blends/" + name),
+                    "basemetals:" + name + "_smallblend", 9);
+            smelting(cache, name + "_blend_smelting", "#c:blends/" + name, ingots.get(name),
+                    vanillaIngotSmeltingExperience(name), 200, "minecraft:smelting");
+            smelting(cache, name + "_smallblend_smelting", "#c:small_blends/" + name,
+                    nuggets.get(name), legacyNuggetExperience(vanillaBaseSmeltingExperience(name)),
+                    200, "minecraft:smelting");
+        }
+        shaped(cache, "redstone_from_smallpowder", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:tiny_dusts/redstone"), "minecraft:redstone", 1);
+        shapeless(cache, "redstone_smallpowder", List.of("#c:dusts/redstone"),
+                "basemetals:redstone_smallpowder", 9);
+        shaped(cache, "lapis_from_smallpowder", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:tiny_dusts/lapis"), "minecraft:lapis_lazuli", 1);
+        shapeless(cache, "lapis_smallpowder", List.of("#c:dusts/lapis"),
+                "basemetals:lapis_smallpowder", 9);
+        smelting(cache, "redstone_ingot", "#c:dusts/redstone", "basemetals:redstone_ingot",
+                0.1F, 200, "minecraft:smelting");
+    }
+
+    private static float vanillaBaseSmeltingExperience(String name) {
+        return switch (name) {
+            case "gold" -> 1.0F;
+            case "iron" -> 0.45F;
+            case "diamond", "emerald", "obsidian" -> 0.4F;
+            case "quartz" -> 0.2F;
+            default -> throw new IllegalArgumentException("No Vanilla Bits furnace material " + name);
+        };
+    }
+
+    private static float vanillaIngotSmeltingExperience(String name) {
+        return switch (name) {
+            case "diamond", "emerald", "gold" -> 1.0F;
+            case "iron" -> 0.7F;
+            default -> vanillaBaseSmeltingExperience(name);
+        };
+    }
+
     private void legacyRecyclingRecipes(CachedOutput cache, String name, String ingot, String nugget,
             String block, float ingotExperience, float nuggetExperience) throws IOException {
         legacyRecycle(cache, name, "button", nugget, 2, nuggetExperience);
@@ -547,10 +869,16 @@ final class GeneratedData implements DataProvider {
                 .map(MaterialDefinition::name)
                 .filter(name -> !List.of("aquarium", "invar", "mercury", "mithril").contains(name))
                 .toList());
+        materials.addAll(List.of("gold", "iron"));
         for (String material : materials) {
             for (String form : List.of("boots", "chestplate", "helmet", "leggings", "shield")) {
+                // Vanilla gold and iron armour, with the Base Metals shield.
+                String namespace = !form.equals("shield") && List.of("gold", "iron").contains(material)
+                        ? "minecraft" : "basemetals";
+                String targetMaterial = namespace.equals("minecraft") && material.equals("gold")
+                        ? "golden" : material;
                 plateRepair(cache, material + "_" + form + "_plate_repair",
-                        "basemetals:" + material + "_" + form, "#c:plates/" + material);
+                        namespace + ":" + targetMaterial + "_" + form, "#c:plates/" + material);
             }
         }
     }
@@ -580,6 +908,40 @@ final class GeneratedData implements DataProvider {
                 Map.of('X', "minecraft:brick", 'G', "#c:gears"),
                 "basemetals:human_detector", 1);
 
+        shaped(cache, "charcoal_block", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "minecraft:charcoal"), "basemetals:charcoal_block", 1);
+        shapeless(cache, "charcoal_from_block", List.of("basemetals:charcoal_block"),
+                "minecraft:charcoal", 9);
+        shaped(cache, "charcoal_block_dust", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:dusts/charcoal"), "basemetals:charcoal_block", 1);
+        shaped(cache, "charcoal_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/charcoal"), "minecraft:charcoal", 1);
+        shapeless(cache, "charcoal_nugget", List.of("minecraft:charcoal"),
+                "basemetals:charcoal_nugget", 9);
+        shaped(cache, "coal_block_dust", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:dusts/coal"), "minecraft:coal_block", 1);
+        shaped(cache, "coal_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/coal"), "minecraft:coal", 1);
+        shapeless(cache, "coal_nugget", List.of("minecraft:coal"),
+                "basemetals:coal_nugget", 9);
+        shaped(cache, "obsidian_block", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:ingots/obsidian"), "minecraft:obsidian", 1);
+        shaped(cache, "obsidian_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/obsidian"), "basemetals:obsidian_ingot", 1);
+        shapeless(cache, "obsidian_nugget", List.of("#c:ingots/obsidian"),
+                "basemetals:obsidian_nugget", 9);
+        shaped(cache, "quartz_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/quartz"), "minecraft:quartz", 1);
+        shapeless(cache, "quartz_nugget", List.of("#c:gems/quartz"),
+                "basemetals:quartz_nugget", 9);
+        shaped(cache, "diamond_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/diamond"), "minecraft:diamond", 1);
+        shapeless(cache, "diamond_nugget", List.of("#c:gems/diamond"),
+                "basemetals:diamond_nugget", 9);
+        shaped(cache, "emerald_ingot", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/emerald"), "minecraft:emerald", 1);
+        shapeless(cache, "emerald_nugget", List.of("#c:gems/emerald"),
+                "basemetals:emerald_nugget", 9);
     }
 
     private void anvilRecipes(CachedOutput cache) throws IOException {
@@ -1201,10 +1563,6 @@ final class GeneratedData implements DataProvider {
                     && entry.getValue().getAsJsonPrimitive().isString()
                     && !entry.getValue().getAsString().contains(":")) {
                 entry.setValue(new com.google.gson.JsonPrimitive("minecraft:" + entry.getValue().getAsString()));
-            } else if (entry.getKey().equals("name") && entry.getValue().isJsonPrimitive()
-                    && entry.getValue().getAsString().equals("basemetals:iron_crackhammer")) {
-                // Vanilla-material equipment is MMDLib's vanilla extension now.
-                entry.setValue(new com.google.gson.JsonPrimitive("mmdlib:iron_crackhammer"));
             } else {
                 modernizeLootJson(entry.getValue());
             }
@@ -1358,7 +1716,7 @@ final class GeneratedData implements DataProvider {
     private static String advancementIcon(String id) {
         return switch (id) {
             case "blocktastic" -> "basemetals:copper_block";
-            case "geologist" -> "mmdlib:iron_crackhammer";
+            case "geologist" -> "basemetals:iron_crackhammer";
             case "metallurgy" -> "basemetals:bronze_blend";
             case "angel_of_death" -> "basemetals:mithril_sword";
             case "scuba_diver" -> "basemetals:aquarium_helmet";
@@ -1475,13 +1833,12 @@ final class GeneratedData implements DataProvider {
     }
 
     private void writeRawProcessing(CachedOutput cache) throws IOException {
-        // MMDLib's vanilla extensions crush raw iron and gold into its own dusts.
-        List<String> rawMaterials = new ArrayList<>(List.of("copper"));
+        List<String> rawMaterials = new ArrayList<>(List.of("iron", "gold", "copper"));
         MaterialCatalogue.all().stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
                 .map(MaterialDefinition::name).forEach(rawMaterials::add);
 
         for (String material : rawMaterials) {
-            boolean vanilla = material.equals("copper");
+            boolean vanilla = List.of("iron", "gold", "copper").contains(material);
             String raw = vanilla ? "minecraft:raw_" + material : "basemetals:" + material + "_raw";
             tag(cache, "forge", "items/raw_materials/" + material, List.of(raw));
             crushing(cache, material + "_raw_crushing", "#c:raw_materials/" + material,
@@ -1507,7 +1864,7 @@ final class GeneratedData implements DataProvider {
         if (List.of("activator_rail", "detector_rail", "flint_and_steel", "human_detector", "minecart",
                 "piston", "rail", "tripwire_hook").contains(id)) material = "steel";
         String discovery = switch (material) {
-            case "diamond", "emerald", "quartz" -> "#c:gems/" + material;
+            case "diamond", "emerald", "quartz", "lapis" -> "#c:gems/" + material;
             case "coal", "charcoal" -> "minecraft:" + material;
             case "stone" -> "#c:stones";
             case "wood" -> "#minecraft:logs";

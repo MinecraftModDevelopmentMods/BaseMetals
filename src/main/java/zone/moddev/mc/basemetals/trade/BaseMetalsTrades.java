@@ -1,5 +1,7 @@
 package zone.moddev.mc.basemetals.trade;
 
+import zone.moddev.mc.basemetals.BaseMetals;
+
 import java.util.List;
 
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
@@ -56,9 +58,9 @@ public final class BaseMetalsTrades {
         }
         if (event.getType() == VillagerProfession.ARMORER || event.getType() == VillagerProfession.TOOLSMITH
                 || event.getType() == VillagerProfession.WEAPONSMITH) {
-            // Coal and charcoal dusts are MMDLib's vanilla extensions.
-            for (String dust : List.of("coal_dust", "charcoal_dust")) {
-                BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath("mmdlib", dust))
+            // Coal and charcoal powders are Base Metals' vanilla extensions.
+            for (String powder : List.of("coal_powder", "charcoal_powder")) {
+                BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, powder))
                         .ifPresent(item -> event.getTrades().get(1).add(selling(item, 10, 1)));
             }
         }

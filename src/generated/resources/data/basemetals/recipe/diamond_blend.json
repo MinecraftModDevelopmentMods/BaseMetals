@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:diamond_blend",
+    "ingredients": [
+      {
+        "tag": "c:dusts/diamond"
+      },
+      {
+        "tag": "c:dusts/diamond"
+      }
+    ],
+    "result": {
+      "count": 2,
+      "id": "basemetals:diamond_blend"
+    }
+  }
+}

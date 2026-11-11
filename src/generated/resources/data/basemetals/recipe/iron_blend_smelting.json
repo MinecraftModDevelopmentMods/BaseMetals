@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "tag": "c:blends/iron"
+  },
+  "result": {
+    "id": "minecraft:iron_ingot"
+  }
+}

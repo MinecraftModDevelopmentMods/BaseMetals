@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": {
+      "custom": {
+        "fluid": "basemetals:quartz"
+      },
+      "model": "minecraft:block/water"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "basemetals:iron",
+  "loader": "neoforge:fluid_container"
+}

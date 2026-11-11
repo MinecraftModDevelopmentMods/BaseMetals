@@ -1,0 +1,27 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "group": "basemetals:emerald_crossbow",
+    "key": {
+      "G": {
+        "tag": "c:gears/emerald"
+      },
+      "R": {
+        "tag": "c:rods/emerald"
+      },
+      "S": {
+        "item": "minecraft:string"
+      }
+    },
+    "pattern": [
+      "GRR",
+      " SR",
+      "R G"
+    ],
+    "result": {
+      "id": "basemetals:emerald_crossbow"
+    }
+  }
+}

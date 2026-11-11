@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:quartz_nugget",
+    "ingredients": [
+      {
+        "tag": "c:gems/quartz"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:quartz_nugget"
+    }
+  }
+}

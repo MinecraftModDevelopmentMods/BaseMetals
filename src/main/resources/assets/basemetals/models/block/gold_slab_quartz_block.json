@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:block/quartz_block",
+  "textures": {
+    "particle": "minecraft:block/gold_block",
+    "down": "minecraft:block/gold_block",
+    "up": "minecraft:block/gold_block",
+    "north": "minecraft:block/gold_block",
+    "east": "minecraft:block/gold_block",
+    "south": "minecraft:block/gold_block",
+    "west": "minecraft:block/gold_block",
+    "end": "minecraft:block/gold_block",
+    "side": "minecraft:block/gold_block"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#up",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#north",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#south",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#west",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#east",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

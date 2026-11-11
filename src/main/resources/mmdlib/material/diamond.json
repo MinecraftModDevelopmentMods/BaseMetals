@@ -1,0 +1,31 @@
+{
+  "type": "gem",
+  "color": -7539487,
+  "hardness": 10,
+  "strength": 15,
+  "magic": 4,
+  "damage": 2.5,
+  "items": "arrow blend bolt bow crackhammer crossbow basemetals:powder fishing_rod gear nugget rod scythe shears shield smallblend smallpowder basemetals:bucket",
+  "blocks": "bars button door double_slab lever pressure_plate slab stairs trapdoor wall",
+  "entities": "arrow bolt",
+  "has_fluid": false,
+  "special": {
+    "viscosity": 19500,
+    "temperature": 1300,
+    "density": 2000,
+    "block_hardness": 20,
+    "blast_resistance": 37.5
+  },
+  "runtime": {
+    "repair_item": "minecraft:diamond",
+    "base_block": "minecraft:diamond_block",
+    "incorrect_blocks": "minecraft:incorrect_for_diamond_tool",
+    "armor_texture": "minecraft:iron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "glass",
+    "map_color": "stone"
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.04,
+  "ingredient": {
+    "tag": "c:small_blends/diamond"
+  },
+  "result": {
+    "id": "basemetals:diamond_nugget"
+  }
+}

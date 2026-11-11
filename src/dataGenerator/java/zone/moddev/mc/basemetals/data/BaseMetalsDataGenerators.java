@@ -56,6 +56,9 @@ public final class BaseMetalsDataGenerators {
             ModContent.blocksById().forEach((id, object) -> {
                 net.minecraft.world.level.block.Block block = object.get();
                 if (block instanceof LiquidBlock || id.endsWith("_ore")) return;
+                // The vanilla extensions ship static blockstates imported from MMDLib.
+                if (models().existingFileHelper.exists(modLoc(id), net.minecraft.server.packs.PackType.CLIENT_RESOURCES,
+                        ".json", "blockstates")) return;
                 if (block instanceof PlateBlock) {
                     plateBlock(block, existing(id));
                 } else if (block instanceof IronBarsBlock bars) {

@@ -1,0 +1,12 @@
+{
+  "type": "basemetals:legacy_smelting",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "ingredient": {
+    "item": "basemetals:quartz_crossbow"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:quartz"
+  }
+}

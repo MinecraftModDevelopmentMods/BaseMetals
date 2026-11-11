@@ -1,0 +1,23 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "group": "basemetals:gold_lever",
+    "key": {
+      "R": {
+        "tag": "c:rods/gold"
+      },
+      "X": {
+        "tag": "c:ingots/gold"
+      }
+    },
+    "pattern": [
+      "R",
+      "X"
+    ],
+    "result": {
+      "id": "basemetals:gold_lever"
+    }
+  }
+}

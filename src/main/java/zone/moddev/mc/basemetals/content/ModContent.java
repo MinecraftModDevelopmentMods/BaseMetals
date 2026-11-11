@@ -13,6 +13,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
 import zone.moddev.mc.lib.MMDLib;
 import zone.moddev.mc.lib.api.MaterialExtensions;
 import zone.moddev.mc.lib.common.factories.MaterialFactory;
+import zone.moddev.mc.lib.common.runtime.MaterialStats;
 import zone.moddev.mc.lib.common.runtime.RuntimeContentRegistrar;
 import zone.moddev.mc.lib.common.types.MMDBlock;
 
@@ -36,9 +37,10 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
- * Base Metals content. Materials, anvils and the human detector are MMDLib definitions
- * under {@code mmdlib/}, registered through MMDLib's runtime registrar; molten metals stay
- * Base Metals fluids, filled through the {@code basemetals:bucket} item form.
+ * Base Metals content. Materials, vanilla material extensions, anvils and the human
+ * detector are MMDLib definitions under {@code mmdlib/}, registered through MMDLib's
+ * runtime registrar; molten metals stay Base Metals fluids, filled through the
+ * {@code basemetals:bucket} item form.
  */
 public final class ModContent {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, BaseMetals.MOD_ID);
@@ -51,6 +53,8 @@ public final class ModContent {
     private static final Map<String, MaterialContent> MATERIALS = new LinkedHashMap<>();
     private static final Map<String, FluidContent> FLUID_CONTENT = new LinkedHashMap<>();
     private static final List<String> HIDDEN_BLOCKS = new ArrayList<>();
+
+    private static final ResourceLocation BUCKET = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "bucket");
 
     private static RuntimeContentRegistrar registrar;
 
@@ -74,15 +78,21 @@ public final class ModContent {
             registerFluid(material.name(), material.colour(), material.name().equals("mercury"),
                     material.moltenViscosity());
         }
+        // Vanilla extensions with a basemetals:bucket form melt into Base Metals fluids too.
+        MMDLib.loadedMaterials().forEach((id, result) -> {
+            var material = result.material();
+            if (MaterialCatalogue.isVanillaExtension(material) && material.parts().parts().stream()
+                    .anyMatch(part -> part.templateId().equals(BUCKET))) {
+                registerFluid(id.getPath(), material.properties().color() & 0xFFFFFF, false,
+                        new MaterialStats(material).integer("viscosity", 10000, 1));
+            }
+        });
         MMDLib.loadedMaterials().forEach((id, result) -> {
             if (id.getNamespace().equals(BaseMetals.MOD_ID)) queue(result);
         });
         MMDLib.standaloneBlocks().forEach((id, result) -> {
             if (id.getNamespace().equals(BaseMetals.MOD_ID)) queue(result);
         });
-        MATERIALS.values().forEach(content -> content.blocks().forEach((form, block) -> {
-            if (form.equals("double_slab")) HIDDEN_BLOCKS.add(block.getId().getPath());
-        }));
         MissingMappings.registerAliases();
     }
 
@@ -97,6 +107,9 @@ public final class ModContent {
                     var block = registrar.blocks().get(definition.name());
                     blocks.put(entry.getKey().templateId().getPath(), block);
                     BLOCKS_BY_ID.put(definition.name().getPath(), block);
+                    if (entry.getKey().templateId().getPath().equals("double_slab")) {
+                        HIDDEN_BLOCKS.add(definition.name().getPath());
+                    }
                 });
         result.content().items().entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())

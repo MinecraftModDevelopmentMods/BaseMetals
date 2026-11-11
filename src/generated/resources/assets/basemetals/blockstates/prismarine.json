@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": {
+      "custom": {
+        "fluid": "basemetals:prismarine"
+      },
+      "model": "minecraft:block/water"
+    }
+  }
+}

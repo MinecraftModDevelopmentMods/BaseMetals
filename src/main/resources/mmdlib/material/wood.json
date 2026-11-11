@@ -1,0 +1,26 @@
+{
+  "type": "wood",
+  "color": -9874381,
+  "hardness": 2,
+  "strength": 2,
+  "magic": 6,
+  "damage": 0.5,
+  "items": "crackhammer gear scythe",
+  "blocks": "",
+  "entities": "",
+  "has_fluid": false,
+  "special": {
+    "item_burn_time": 300,
+    "block_hardness": 4,
+    "blast_resistance": 5.0
+  },
+  "runtime": {
+    "repair_item": "minecraft:oak_planks",
+    "base_block": "minecraft:oak_planks",
+    "incorrect_blocks": "minecraft:incorrect_for_wooden_tool",
+    "armor_texture": "minecraft:iron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "stone"
+  }
+}

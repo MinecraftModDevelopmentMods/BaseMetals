@@ -1,0 +1,10 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ores/diamond"
+  },
+  "result": {
+    "count": 2,
+    "item": "basemetals:diamond_powder"
+  }
+}

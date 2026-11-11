@@ -1,0 +1,20 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:gold_blend",
+    "ingredients": [
+      {
+        "tag": "c:dusts/gold"
+      },
+      {
+        "tag": "c:dusts/gold"
+      }
+    ],
+    "result": {
+      "count": 2,
+      "id": "basemetals:gold_blend"
+    }
+  }
+}

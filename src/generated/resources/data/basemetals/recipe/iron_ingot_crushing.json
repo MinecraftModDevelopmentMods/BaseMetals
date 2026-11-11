@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:ingots/iron"
+  },
+  "result": {
+    "item": "basemetals:iron_powder"
+  }
+}
