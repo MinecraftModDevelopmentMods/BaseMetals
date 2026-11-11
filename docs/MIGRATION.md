@@ -135,3 +135,12 @@ over an older backup.
 Chunk reading uses Minecraft's supported region formats. Empty region files
 are left alone, and backups include external chunk files when their region
 needs conversion.
+# Companion Migration Hooks
+
+The local 3.1.2.121111 patch exposes `Legacy112MigrationExtension` for mods
+whose machine state must be preserved before Base Metals runs Minecraft's
+legacy chunk and player conversion. Register during common setup. The source
+payload is prepared before flattening, and extensions can restore their
+owned metadata states without replacing vanilla data fixes. The original
+world backup and migration markers remain in force.
+

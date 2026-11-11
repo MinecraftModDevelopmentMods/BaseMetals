@@ -5,6 +5,9 @@
 
 # Base Metals
 
+The 3.1.2.121111 shared-migration patch is a local test candidate, not a
+published release. It preserves expansion data before legacy world conversion.
+
 Base Metals adds historically common metals, useful alloys, and fantasy metals
 to Minecraft. Depending on the material, these are available as ores, storage
 and decorative blocks, molten fluids, crafting components, tools, armour,
@@ -12,7 +15,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.11 Forge version, `3.1.1.121111`. It keeps the
+This is the Minecraft 1.21.11 Forge version, `3.1.2.121111`. It keeps the
 fixes and features from the released 1.21.1 version, including raw metals, ore
 texture overlays and High/Low Fantasy modes. Existing Base Metals items and
 blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
@@ -28,7 +31,7 @@ Additional Loot Tables are no longer needed.
 The port has also been checked against Forge `61.2.4`.
 
 This version uses OreSpawn `4.1.0.121111`. Put
-`BaseMetals-3.1.1.121111.jar` and a compatible OreSpawn JAR in the `mods`
+`BaseMetals-3.1.2.121111.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -203,7 +206,7 @@ early splash window. Minecraft still opens its game window and runs the full
 world check. Ordinary client launches keep the normal splash screen.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.121111`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.2.121111`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
