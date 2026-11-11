@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/bismuth"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:bismuth_powder"
+    "item": "basemetals:bismuth_powder"
   }
 }

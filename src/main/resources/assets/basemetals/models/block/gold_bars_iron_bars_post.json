@@ -1,0 +1,73 @@
+{
+  "parent": "minecraft:block/iron_bars_post",
+  "textures": {
+    "particle": "minecraft:block/gold_block",
+    "bars": "basemetals:block/gold_bars"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        0,
+        7
+      ],
+      "to": [
+        8,
+        16,
+        9
+      ],
+      "faces": {
+        "west": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#bars"
+        },
+        "east": {
+          "uv": [
+            9,
+            0,
+            7,
+            16
+          ],
+          "texture": "#bars"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        0,
+        8
+      ],
+      "to": [
+        9,
+        16,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            0,
+            9,
+            16
+          ],
+          "texture": "#bars"
+        },
+        "south": {
+          "uv": [
+            9,
+            0,
+            7,
+            16
+          ],
+          "texture": "#bars"
+        }
+      }
+    }
+  ]
+}

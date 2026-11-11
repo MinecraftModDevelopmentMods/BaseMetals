@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "minecraft:charcoal",
+    "ingredients": [
+      {
+        "item": "basemetals:charcoal_block"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "minecraft:charcoal"
+    }
+  }
+}

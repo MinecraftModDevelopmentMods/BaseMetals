@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:zinc_clump"
+    {
+      "id": "basemetals:zinc_clump",
+      "required": false
+    }
   ]
 }

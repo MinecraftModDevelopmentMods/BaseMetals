@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ingots/lead"
   },
   "result": {
-    "id": "basemetals:lead_powder"
+    "item": "basemetals:lead_powder"
   }
 }

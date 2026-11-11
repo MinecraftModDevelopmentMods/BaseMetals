@@ -1,6 +1,6 @@
 {
-    "parent": "block/wall_inventory",
-    "textures": {
-        "wall": "minecraft:block/emerald_block"
-    }
+  "parent": "block/wall_inventory",
+  "textures": {
+    "wall": "minecraft:block/emerald_block"
+  }
 }

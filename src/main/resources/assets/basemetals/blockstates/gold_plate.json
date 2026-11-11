@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "basemetals:block/gold_plate_down"
+    },
+    "facing=up": {
+      "model": "basemetals:block/gold_plate_up"
+    },
+    "facing=north": {
+      "model": "basemetals:block/gold_plate_north"
+    },
+    "facing=south": {
+      "model": "basemetals:block/gold_plate_south"
+    },
+    "facing=west": {
+      "model": "basemetals:block/gold_plate_west"
+    },
+    "facing=east": {
+      "model": "basemetals:block/gold_plate_east"
+    }
+  }
+}

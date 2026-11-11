@@ -1,8 +1,30 @@
 [![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
 [![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 [![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+<h1>Base Metals</h1>
+<a href="https://discord.tophatcat.dev">
+    <img src="https://img.shields.io/badge/Discord-16181C?style=for-the-badge&logo=discord&logoColor=5865F2" alt="Discord server invite."/>
+</a>
+=======
+[![Discord](https://img.shields.io/badge/Discord-MMD-green.svg?style=flat&logo=Discord)](https://discord.moddev.zone)
+[![CurseForge downloads](https://cf.way2muchnoise.eu/full_base-metals_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
+[![Supported Minecraft versions](https://cf.way2muchnoise.eu/versions/Minecraft_base-metals_all.svg)](https://www.curseforge.com/minecraft/mc-mods/base-metals)
 
-# Base Metals
+<a href="https://www.curseforge.com/minecraft/mc-mods/base-metals">
+    <img src="https://img.shields.io/badge/CurseForge-16181C?style=for-the-badge&logo=curseforge&logoColor=FF784D" alt="CurseForge Badge.">
+</a>
+
+<a href="https://github.com/minecraftmoddevelopmentmods/basemetals/">
+    <img src="https://img.shields.io/badge/GitHub-16181C?style=for-the-badge&logo=github&logoColor=BBDDE5" alt="Github">
+</a>
+
+<a href="https://mc.moddev.zone">
+    <img src="https://img.shields.io/badge/mc.moddev.zone-16181C?style=for-the-badge&logo=&logoColor=57Z29S" alt="Website link."/>
+</a>
+
+<a href="https://github.com/MinecraftModDevelopmentMods/BaseMetals/actions/workflows/ci.yml?query=branch%3Amaster-1.21.1-neo">
+    <img src="https://img.shields.io/github/actions/workflow/status/MinecraftModDevelopmentMods/BaseMetals/ci.yml?branch=master-1.21.1-neo&style=for-the-badge" alt="Build and test"/>
+</a>
 
 Base Metals adds historically common metals, useful alloys, and fantasy metals
 to Minecraft. Depending on the material, these are available as ores, storage
@@ -11,7 +33,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.1 NeoForge port, `3.1.0.121012`. It includes raw
+This is the Minecraft 1.21.1 NeoForge port, `4.0.0.121012`. It includes raw
 metals, ore texture overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
 their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
 Tables are no longer needed.
@@ -24,7 +46,7 @@ Tables are no longer needed.
 - OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 
 This version builds against OreSpawn `4.0.16.121012`. Put
-`BaseMetals-3.1.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
+`BaseMetals-4.0.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -185,10 +207,10 @@ They do not change the build or deployment workflow. See
 [Port regression checks](tools/verification/README.md) for details.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.0.121012`.
+`zone.moddev.mc.basemetals:BaseMetals:4.0.0.121012`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
 
-Base Metals is licensed under [LGPL-2.1](LICENSE). Bundled or derived third-party
+Base Metals is licensed under [LGPL-2.1](LICENSE.md). Bundled or derived third-party
 art is covered by the accompanying attribution and licence files.

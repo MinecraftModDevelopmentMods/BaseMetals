@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_clump"
+    {
+      "id": "basemetals:platinum_clump",
+      "required": false
+    }
   ]
 }

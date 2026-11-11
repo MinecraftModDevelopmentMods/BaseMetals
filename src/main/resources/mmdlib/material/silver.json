@@ -1,0 +1,29 @@
+{
+  "type": "ore",
+  "color": -1,
+  "hardness": 5,
+  "strength": 4,
+  "magic": 6,
+  "damage": 1.3,
+  "items": "ingot nugget basemetals:powder smallpowder basemetals:bucket basemetals:raw pickaxe axe shovel hoe sword crackhammer scythe shears fishing_rod bow crossbow shield arrow bolt rod gear horse_armor helmet chestplate leggings boots",
+  "blocks": "block plate bars door trapdoor button slab double_slab lever pressure_plate stairs wall ore",
+  "entities": "arrow bolt",
+  "has_fluid": false,
+  "special": {
+    "block_hardness": 10,
+    "blast_resistance": 10
+  },
+  "runtime": {
+    "repair_item": "basemetals:silver_ingot",
+    "base_block": "basemetals:silver_block",
+    "incorrect_blocks": "minecraft:incorrect_for_stone_tool",
+    "armor_texture": "basemetals:silver",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "metal"
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe",
+    "minecraft:needs_stone_tool"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "type": "rare_ore",
+  "color": -3682576,
+  "hardness": 7,
+  "strength": 7,
+  "magic": 7,
+  "damage": 1.8,
+  "items": "ingot nugget basemetals:powder smallpowder basemetals:bucket basemetals:raw pickaxe axe shovel hoe sword crackhammer scythe shears fishing_rod bow crossbow shield arrow bolt rod gear horse_armor helmet chestplate leggings boots basemetals:casing basemetals:dense_plate basemetals:crushed basemetals:crushed_purified crystal shard clump powder_dirty",
+  "blocks": "block plate bars door trapdoor button slab double_slab lever pressure_plate stairs wall ore",
+  "entities": "arrow bolt",
+  "has_fluid": false,
+  "special": {
+    "block_hardness": 14,
+    "blast_resistance": 17.5
+  },
+  "runtime": {
+    "repair_item": "basemetals:coldiron_ingot",
+    "base_block": "basemetals:coldiron_block",
+    "incorrect_blocks": "minecraft:incorrect_for_iron_tool",
+    "armor_texture": "basemetals:coldiron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "metal"
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe",
+    "minecraft:needs_iron_tool"
+  ],
+  "event": {
+    "player-tick": "basemetals:coldiron_effects",
+    "basemetals:melee-damage": "basemetals:coldiron_melee"
+  }
+}

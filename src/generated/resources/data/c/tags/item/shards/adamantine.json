@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:adamantine_shard"
+    {
+      "id": "basemetals:adamantine_shard",
+      "required": false
+    }
   ]
 }

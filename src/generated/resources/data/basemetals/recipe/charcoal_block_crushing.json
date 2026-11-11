@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/charcoal"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:charcoal_powder"
+    "item": "basemetals:charcoal_powder"
   }
 }

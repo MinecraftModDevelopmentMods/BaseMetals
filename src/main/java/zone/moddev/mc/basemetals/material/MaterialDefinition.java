@@ -1,10 +1,13 @@
 package zone.moddev.mc.basemetals.material;
 
+import java.util.Locale;
 import java.util.Objects;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import zone.moddev.mc.lib.common.types.MMDMaterial;
 
-/** Immutable source of truth for every Base Metals material. */
+/** Base Metals' view of one of its MMDLib materials, with the historical derived statistics. */
 public record MaterialDefinition(
         String name,
         Kind kind,
@@ -24,6 +27,14 @@ public record MaterialDefinition(
         public boolean isAlloy() {
             return this == ALLOY || this == RARE_ALLOY;
         }
+
+        /** The kind named by a material's {@code type}; vanilla extensions use other types. */
+        public static java.util.Optional<Kind> of(String type) {
+            for (Kind kind : values()) {
+                if (kind.name().equalsIgnoreCase(type)) return java.util.Optional.of(kind);
+            }
+            return java.util.Optional.empty();
+        }
     }
 
     public MaterialDefinition {
@@ -35,6 +46,18 @@ public record MaterialDefinition(
         if (hardness <= 0 || strength <= 0 || magic < 0) {
             throw new IllegalArgumentException("Invalid material statistics for " + name);
         }
+    }
+
+    private static final ResourceLocation CASING = ResourceLocation.fromNamespaceAndPath("basemetals", "casing");
+
+    /** The material's {@code type} names its kind; selecting casings marks the processing chain. */
+    public static MaterialDefinition of(MMDMaterial material) {
+        var properties = material.properties();
+        return new MaterialDefinition(material.name().orElseThrow().getPath(),
+                Kind.valueOf(properties.type().toUpperCase(Locale.ROOT)),
+                properties.hardness(), properties.strength(), properties.magic(),
+                properties.color() & 0xFFFFFF,
+                material.parts().parts().stream().anyMatch(part -> part.templateId().equals(CASING)));
     }
 
     public boolean hasOre() {

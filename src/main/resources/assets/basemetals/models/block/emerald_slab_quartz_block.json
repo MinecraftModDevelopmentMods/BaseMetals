@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:block/quartz_block",
+  "textures": {
+    "particle": "minecraft:block/emerald_block",
+    "down": "minecraft:block/emerald_block",
+    "up": "minecraft:block/emerald_block",
+    "north": "minecraft:block/emerald_block",
+    "east": "minecraft:block/emerald_block",
+    "south": "minecraft:block/emerald_block",
+    "west": "minecraft:block/emerald_block",
+    "end": "minecraft:block/emerald_block",
+    "side": "minecraft:block/emerald_block"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#down",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#up",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#north",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#south",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#west",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#east",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

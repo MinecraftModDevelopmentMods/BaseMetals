@@ -1,0 +1,33 @@
+{
+  "type": "gem",
+  "color": -8194388,
+  "hardness": 10,
+  "strength": 15,
+  "magic": 4,
+  "damage": 2.5,
+  "items": "arrow axe bolt boots bow chestplate crackhammer crossbow basemetals:powder fishing_rod gear helmet hoe horse_armor leggings nugget pickaxe rod scythe shears shield shovel smallpowder sword basemetals:bucket",
+  "blocks": "bars button door double_slab lever pressure_plate slab stairs trapdoor wall",
+  "entities": "arrow bolt",
+  "has_fluid": false,
+  "special": {
+    "tool_durability": 660,
+    "viscosity": 19500,
+    "temperature": 1300,
+    "density": 2000,
+    "block_hardness": 20,
+    "blast_resistance": 37.5
+  },
+  "runtime": {
+    "repair_item": "minecraft:emerald",
+    "base_block": "minecraft:emerald_block",
+    "incorrect_blocks": "minecraft:incorrect_for_diamond_tool",
+    "armor_texture": "basemetals:emerald",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "glass",
+    "map_color": "stone",
+    "tinted_armor": false
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe"
+  ]
+}

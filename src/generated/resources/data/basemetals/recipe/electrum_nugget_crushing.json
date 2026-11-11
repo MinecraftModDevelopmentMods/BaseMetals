@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:nuggets/electrum"
   },
   "result": {
-    "id": "basemetals:electrum_smallpowder"
+    "item": "basemetals:electrum_smallpowder"
   }
 }

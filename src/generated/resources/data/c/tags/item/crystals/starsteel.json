@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:starsteel_crystal"
+    {
+      "id": "basemetals:starsteel_crystal",
+      "required": false
+    }
   ]
 }

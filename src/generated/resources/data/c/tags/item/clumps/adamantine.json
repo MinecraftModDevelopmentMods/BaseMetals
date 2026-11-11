@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:adamantine_clump"
+    {
+      "id": "basemetals:adamantine_clump",
+      "required": false
+    }
   ]
 }

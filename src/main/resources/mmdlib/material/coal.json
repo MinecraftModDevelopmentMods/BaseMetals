@@ -1,0 +1,31 @@
+{
+  "type": "mineral",
+  "color": -15395563,
+  "hardness": 4,
+  "strength": 4,
+  "magic": 2,
+  "damage": 1.0,
+  "items": "basemetals:powder nugget smallpowder basemetals:bucket",
+  "blocks": "",
+  "entities": "",
+  "has_fluid": false,
+  "special": {
+    "viscosity": 13500,
+    "temperature": 1300,
+    "density": 2000,
+    "block_hardness": 8,
+    "blast_resistance": 10.0,
+    "fuel_powder": 1600,
+    "fuel_smallpowder": 200,
+    "fuel_nugget": 200
+  },
+  "runtime": {
+    "repair_item": "minecraft:coal",
+    "base_block": "minecraft:coal_block",
+    "incorrect_blocks": "minecraft:incorrect_for_stone_tool",
+    "armor_texture": "minecraft:iron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "stone"
+  }
+}

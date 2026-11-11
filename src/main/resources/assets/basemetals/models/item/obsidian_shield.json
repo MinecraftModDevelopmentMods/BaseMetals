@@ -3,12 +3,12 @@
   "textures": {
     "shield": "minecraft:block/obsidian"
   },
-    "overrides": [
-        {
-            "predicate": {
-                "blocking": 1
-            },
-            "model": "basemetals:item/obsidian_shield_blocking"
-        }
-    ]
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "basemetals:item/obsidian_shield_blocking"
+    }
+  ]
 }

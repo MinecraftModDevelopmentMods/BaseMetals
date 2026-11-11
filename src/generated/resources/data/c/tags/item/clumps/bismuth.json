@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_clump"
+    {
+      "id": "basemetals:bismuth_clump",
+      "required": false
+    }
   ]
 }

@@ -1,0 +1,31 @@
+{
+  "type": "metal",
+  "color": -117,
+  "hardness": 1,
+  "strength": 1,
+  "magic": 10,
+  "damage": 0.3,
+  "items": "arrow blend bolt bow crackhammer crossbow basemetals:powder fishing_rod gear rod scythe shears shield smallblend smallpowder basemetals:bucket",
+  "blocks": "bars button door double_slab lever plate slab stairs trapdoor wall",
+  "entities": "arrow bolt",
+  "has_fluid": false,
+  "special": {
+    "viscosity": 10500,
+    "temperature": 1300,
+    "density": 2000,
+    "block_hardness": 2,
+    "blast_resistance": 2.5
+  },
+  "runtime": {
+    "repair_item": "minecraft:gold_ingot",
+    "base_block": "minecraft:gold_block",
+    "incorrect_blocks": "minecraft:incorrect_for_wooden_tool",
+    "armor_texture": "minecraft:iron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "metal"
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe"
+  ]
+}

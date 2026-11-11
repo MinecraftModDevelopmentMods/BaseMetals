@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/emerald"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:emerald_powder"
+    "item": "basemetals:emerald_powder"
   }
 }

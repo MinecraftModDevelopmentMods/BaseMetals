@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
-    "textures": {
-        "layer0": "basemetals:item/quartz_shovel"
-    }
+  "textures": {
+    "layer0": "basemetals:item/quartz_shovel"
+  }
 }

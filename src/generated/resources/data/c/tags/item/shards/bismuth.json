@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_shard"
+    {
+      "id": "basemetals:bismuth_shard",
+      "required": false
+    }
   ]
 }

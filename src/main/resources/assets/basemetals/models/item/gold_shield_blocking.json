@@ -2,5 +2,5 @@
   "parent": "basemetals:item/shield_blocking",
   "textures": {
     "shield": "minecraft:block/gold_block"
-    }
+  }
 }

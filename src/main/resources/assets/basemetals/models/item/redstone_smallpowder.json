@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
-    "textures": {
-        "layer0": "basemetals:item/redstone_smallpowder"
-    }
+  "textures": {
+    "layer0": "basemetals:item/redstone_smallpowder"
+  }
 }

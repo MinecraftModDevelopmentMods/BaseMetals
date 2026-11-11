@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/tin"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:tin_powder"
+    "item": "basemetals:tin_powder"
   }
 }

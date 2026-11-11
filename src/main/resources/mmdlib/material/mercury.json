@@ -1,0 +1,28 @@
+{
+  "type": "mercury",
+  "color": -1907998,
+  "hardness": 1,
+  "strength": 1,
+  "magic": 1,
+  "damage": 0.3,
+  "items": "ingot nugget basemetals:powder smallpowder basemetals:bucket basemetals:raw",
+  "blocks": "ore",
+  "entities": "",
+  "has_fluid": false,
+  "special": {
+    "block_hardness": 2,
+    "blast_resistance": 2.5
+  },
+  "runtime": {
+    "repair_item": "basemetals:mercury_ingot",
+    "base_block": "minecraft:iron_block",
+    "incorrect_blocks": "minecraft:incorrect_for_wooden_tool",
+    "armor_texture": "basemetals:mercury",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "metal"
+  },
+  "harvest_tags": [
+    "minecraft:mineable/pickaxe"
+  ]
+}

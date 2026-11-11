@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ingots/bronze"
   },
   "result": {
-    "id": "basemetals:bronze_powder"
+    "item": "basemetals:bronze_powder"
   }
 }

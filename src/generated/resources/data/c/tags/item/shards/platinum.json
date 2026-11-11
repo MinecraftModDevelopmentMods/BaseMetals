@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_shard"
+    {
+      "id": "basemetals:platinum_shard",
+      "required": false
+    }
   ]
 }

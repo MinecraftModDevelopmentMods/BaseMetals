@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:nuggets/charcoal"
   },
   "result": {
-    "id": "basemetals:charcoal_smallpowder"
+    "item": "basemetals:charcoal_smallpowder"
   }
 }

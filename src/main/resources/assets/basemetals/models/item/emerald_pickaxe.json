@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
-    "textures": {
-        "layer0": "basemetals:item/emerald_pickaxe"
-    }
+  "textures": {
+    "layer0": "basemetals:item/emerald_pickaxe"
+  }
 }

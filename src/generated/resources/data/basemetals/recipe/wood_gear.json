@@ -1,0 +1,25 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "group": "basemetals:wood_gear",
+    "key": {
+      "R": {
+        "tag": "c:rods/wooden"
+      },
+      "X": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "pattern": [
+      " X ",
+      "XRX",
+      " X "
+    ],
+    "result": {
+      "count": 4,
+      "id": "basemetals:wood_gear"
+    }
+  }
+}

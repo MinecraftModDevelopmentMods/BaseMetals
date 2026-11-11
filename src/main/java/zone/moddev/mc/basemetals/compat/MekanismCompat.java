@@ -28,16 +28,20 @@ public final class MekanismCompat {
 
     static {
         for (String name : PROCESSING_MATERIALS) {
-            int colour = MaterialCatalogue.get(name).colour();
             ResourceLocation oreTag = ResourceLocation.fromNamespaceAndPath("c", "ores/" + name);
             DIRTY.put(name, SLURRIES.register("dirty_" + name,
-                    () -> new Chemical(ChemicalBuilder.dirtySlurry().ore(oreTag).tint(colour))));
+                    () -> new Chemical(ChemicalBuilder.dirtySlurry().ore(oreTag).tint(colour(name)))));
             CLEAN.put(name, SLURRIES.register("clean_" + name,
-                    () -> new Chemical(ChemicalBuilder.cleanSlurry().tint(colour).ore(oreTag))));
+                    () -> new Chemical(ChemicalBuilder.cleanSlurry().tint(colour(name)).ore(oreTag))));
         }
     }
 
     private MekanismCompat() {}
+
+    // Materials load after mod construction, so colours are read when the slurry registers.
+    private static int colour(String name) {
+        return MaterialCatalogue.get(name).colour();
+    }
 
     public static void register(IEventBus modBus) {
         SLURRIES.register(modBus);

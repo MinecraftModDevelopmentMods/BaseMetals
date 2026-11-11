@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:zinc_powder_dirty"
+    {
+      "id": "basemetals:zinc_powder_dirty",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:zinc_crystal"
+    {
+      "id": "basemetals:zinc_crystal",
+      "required": false
+    }
   ]
 }

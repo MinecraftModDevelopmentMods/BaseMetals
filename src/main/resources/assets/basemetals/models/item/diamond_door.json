@@ -1,7 +1,7 @@
 {
-    "parent": "basemetals:item/door_item",
-    "textures": {
-        "bottom": "basemetals:block/diamond_door_lower",
-        "top": "basemetals:block/diamond_door_upper"
-    }
+  "parent": "basemetals:item/door_item",
+  "textures": {
+    "bottom": "basemetals:block/diamond_door_lower",
+    "top": "basemetals:block/diamond_door_upper"
+  }
 }

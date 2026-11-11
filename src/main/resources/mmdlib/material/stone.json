@@ -1,0 +1,25 @@
+{
+  "type": "rock",
+  "color": -7368817,
+  "hardness": 5,
+  "strength": 4,
+  "magic": 2,
+  "damage": 1.3,
+  "items": "crackhammer gear rod scythe",
+  "blocks": "",
+  "entities": "",
+  "has_fluid": false,
+  "special": {
+    "block_hardness": 10,
+    "blast_resistance": 10.0
+  },
+  "runtime": {
+    "repair_item": "minecraft:cobblestone",
+    "base_block": "minecraft:stone",
+    "incorrect_blocks": "minecraft:incorrect_for_stone_tool",
+    "armor_texture": "minecraft:iron",
+    "block_set_type": "minecraft:iron",
+    "block_sound": "metal",
+    "map_color": "stone"
+  }
+}

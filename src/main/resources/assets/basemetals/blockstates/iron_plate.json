@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "basemetals:block/iron_plate_down"
+    },
+    "facing=up": {
+      "model": "basemetals:block/iron_plate_up"
+    },
+    "facing=north": {
+      "model": "basemetals:block/iron_plate_north"
+    },
+    "facing=south": {
+      "model": "basemetals:block/iron_plate_south"
+    },
+    "facing=west": {
+      "model": "basemetals:block/iron_plate_west"
+    },
+    "facing=east": {
+      "model": "basemetals:block/iron_plate_east"
+    }
+  }
+}

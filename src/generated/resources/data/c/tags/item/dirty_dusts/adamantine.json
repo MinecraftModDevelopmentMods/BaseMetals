@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:adamantine_powder_dirty"
+    {
+      "id": "basemetals:adamantine_powder_dirty",
+      "required": false
+    }
   ]
 }

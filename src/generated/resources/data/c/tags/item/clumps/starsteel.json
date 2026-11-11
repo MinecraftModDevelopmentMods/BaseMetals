@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:starsteel_clump"
+    {
+      "id": "basemetals:starsteel_clump",
+      "required": false
+    }
   ]
 }

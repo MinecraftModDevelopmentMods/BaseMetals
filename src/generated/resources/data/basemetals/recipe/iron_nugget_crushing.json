@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:nuggets/iron"
   },
   "result": {
-    "id": "basemetals:iron_smallpowder"
+    "item": "basemetals:iron_smallpowder"
   }
 }

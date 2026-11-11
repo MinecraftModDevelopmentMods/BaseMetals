@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/pewter"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:pewter_powder"
+    "item": "basemetals:pewter_powder"
   }
 }

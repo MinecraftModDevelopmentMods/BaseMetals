@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:antimony_shard"
+    {
+      "id": "basemetals:antimony_shard",
+      "required": false
+    }
   ]
 }

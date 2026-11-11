@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/invar"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:invar_powder"
+    "item": "basemetals:invar_powder"
   }
 }

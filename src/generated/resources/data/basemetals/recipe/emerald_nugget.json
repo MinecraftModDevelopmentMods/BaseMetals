@@ -1,0 +1,17 @@
+{
+  "type": "basemetals:content_crafting",
+  "recipe": {
+    "type": "minecraft:crafting_shapeless",
+    "category": "misc",
+    "group": "basemetals:emerald_nugget",
+    "ingredients": [
+      {
+        "tag": "c:gems/emerald"
+      }
+    ],
+    "result": {
+      "count": 9,
+      "id": "basemetals:emerald_nugget"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+### Base Metals 4.0.0.121012 (in development)
+
+- Port Base Metals to Minecraft 1.21.1 and NeoForge.
+- Restore recipe-book unlocks and armour advancements in the new data-pack folders.
+- Fix chest additions using NeoForge's loot-modifier registration and conditions.
+- Use shared plate tags so shield upgrades work again.
+- Keep names, enchantments, lore and custom data when loading older embedded arrows and bolts.
+- Keep the bolt pickup item a bolt when no saved ammunition is available.
+- Resolve enchanted smith trades through the world's enchantment registry.
+- Add optional regression tests without changing the normal build or deployment tasks.
+- Document the Eclipse cache settings needed to avoid duplicate launcher modules.
+- Build on MMDLib 2.0: materials, anvils and the human detector are MMDLib definitions, and armour and weapon effects are MMDLib event handlers.
+- Bring the vanilla extras (diamond doors, iron crackhammers, emerald armour, molten diamond and so on) back from MMDLib as `basemetals:` content. Their powders keep the 1.12 `_powder` names, and their molten metals are Base Metals fluids. Base Metals keeps its own copper set rather than MMDLib's vanilla-copper extension.
+- Compatibility double slabs are now `<metal>_double_slab`; old saves are remapped.
+- Crystals, shards, clumps and dirty powders exist only when Mekanism is installed.
+
+### Base Metals 3.1.0.119041
+
+- Port the 1.18 version to Minecraft 1.19.4 and Forge 45.4.0.
+- Keep raw metals, Kiri's ore overlays, High/Low Fantasy modes and the fixes from 1.18.
+- Use the new creative tabs and fluid types. Filled molten-metal buckets remain visible and searchable.
+- Update door models, recipes, loot, configuration screens and save conversion for the newer Minecraft APIs.
+- Save configuration-screen changes together so quick edits aren't lost.
+- Preserve translated characters when building on Windows.
+- Remove obsolete vanilla biome registry snapshots during upgrades, with a backup. Keep modded biome snapshots untouched.
+- Require the published OreSpawn 4.1.0.119041 release, keeping the same ore rules and copper defaults.
+- Keep unsupported optional-mod jars out of development launches. Their integration data is retained for future compatibility work.
+
+### Base Metals 3.1.0.118021
+
+- Bring raw metals, ore overlays and High/Low Fantasy modes to Minecraft 1.18.2, along with the fixes from the earlier ports.
+- Use KiriCattus' ore overlays over vanilla block textures, including resource-pack replacements.
+- Add twelve raw metals, Fortune and Silk Touch drops, raw crushing, smelting and blasting. Copper uses vanilla raw copper.
+- Add High and Low Fantasy modes and a configuration screen in both the Mods list and OreSpawn. Old configs default to High Fantasy.
+- Stop metal powders and nuggets burning in furnaces (#473).
+- Give doors distinct six-ingredient recipes, separate from trapdoors (#474).
+- Restore sixteen steel rails, material-based ranged damage, and ingot-based recipe discovery (#467).
+- Fix Obsidian and equipment recipe loops. Keep plate repair recipes out of the recipe book and preserve names and custom item data.
+- Fix thin transparent blocks hiding neighbouring faces, improve bucket names and tooltips, and make horse armour unstackable.
+- Improve old-world aliases and wall conversion, remove phantom bed entities, and protect saved terrain while allowing 1.18's new underground.
+- Require the published OreSpawn 4.1.0.118021 release. Keep the existing ore rules, height ranges and disabled-by-default Base Metals copper generation.
+- Move native model and data generation out of the production source set. The generateResources task updates the checked-in data.
+- Keep optional mods out of normal development launches. Add a separate client profile for Tinkers, Mantle and compatibility testing.
+- Fix flickering bar textures by using the correct centre-post and end pieces, without changing their collision shapes.
+
+### Base Metals 3.0.1.118021
+
+- Modernize the Minecraft 1.18.2 build to ForgeGradle 7.0.34 and Gradle 9.6.1.
+- Qualify against the exact OreSpawn 4.0.16.118021 CurseForge release while retaining the supported OreSpawn 4.x runtime range.
+- Add deterministic main, sources, and Javadocs artifacts with release checksums and guarded publication validation.
+- Isolate GameTests and smoke fixtures from production artifacts and Eclipse production launches.
+- Add pinned GitHub Actions for build, GameTests, generated-data drift, CodeQL, wrapper validation, and target-qualified releases.
+
+- Gameplay, registry IDs, recipes, save migration, and the OreSpawn provider rules are unchanged from Base Metals 3.0.0.

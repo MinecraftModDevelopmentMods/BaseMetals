@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ores/mercury"
   },
   "result": {
     "count": 2,
-    "id": "basemetals:mercury_powder"
+    "item": "basemetals:mercury_powder"
   }
 }

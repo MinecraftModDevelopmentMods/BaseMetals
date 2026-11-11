@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
-    "textures": {
-        "layer0": "basemetals:block/gold_bars"
-    }
+  "textures": {
+    "layer0": "basemetals:block/gold_bars"
+  }
 }

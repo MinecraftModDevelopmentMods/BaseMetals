@@ -40,7 +40,7 @@ public final class BMBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        for (MaterialDefinition material : MaterialCatalogue.ALL) {
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
             if (!material.hasOre()) continue;
 
             Block block = ModContent.blocksById().get(material.name() + "_ore").get();

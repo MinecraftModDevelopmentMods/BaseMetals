@@ -1,6 +1,6 @@
 {
-    "parent": "block/wall_inventory",
-    "textures": {
-        "wall": "minecraft:block/obsidian"
-    }
+  "parent": "block/wall_inventory",
+  "textures": {
+    "wall": "minecraft:block/obsidian"
+  }
 }

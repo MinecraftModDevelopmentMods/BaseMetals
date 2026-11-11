@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:raw_materials/gold"
   },
   "result": {
-    "id": "basemetals:gold_powder"
+    "item": "basemetals:gold_powder"
   }
 }

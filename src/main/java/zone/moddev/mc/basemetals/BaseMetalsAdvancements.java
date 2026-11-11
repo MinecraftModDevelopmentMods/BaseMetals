@@ -2,9 +2,8 @@ package zone.moddev.mc.basemetals;
 
 import java.util.Map;
 
-import zone.moddev.mc.basemetals.content.CrackhammerItem;
-import zone.moddev.mc.basemetals.content.MaterialBacked;
-import zone.moddev.mc.basemetals.content.MaterialItems;
+import zone.moddev.mc.basemetals.effects.MaterialEffects;
+import zone.moddev.mc.lib.common.runtime.StandardItems;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
@@ -42,8 +41,8 @@ final class BaseMetalsAdvancements {
     private BaseMetalsAdvancements() {}
 
     static void onCrafted(ServerPlayer player, ItemStack result) {
-        if (result.getItem() instanceof CrackhammerItem) award(player, "geologist");
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(result.getItem());
+        if (id != null && id.getPath().endsWith("_crackhammer")) award(player, "geologist");
         if (id != null && id.getNamespace().equals(BaseMetals.MOD_ID)
                 && (id.getPath().endsWith("_blend") || id.getPath().endsWith("_smallblend"))) {
             award(player, "metallurgy");
@@ -98,12 +97,11 @@ final class BaseMetalsAdvancements {
 
     private static boolean mainHandSword(ServerPlayer player, String material) {
         ItemStack stack = player.getMainHandItem();
-        return stack.getItem() instanceof MaterialItems.Sword && material(stack, material);
+        return stack.getItem() instanceof StandardItems.Sword && material(stack, material);
     }
 
     private static boolean material(ItemStack stack, String expected) {
-        return stack.getItem() instanceof MaterialBacked backed
-                && backed.baseMetalsMaterial().name().equals(expected);
+        return MaterialEffects.is(stack, expected);
     }
 
     static boolean award(ServerPlayer player, String id) {

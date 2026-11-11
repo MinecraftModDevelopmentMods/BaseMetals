@@ -1,5 +1,7 @@
 package zone.moddev.mc.basemetals.trade;
 
+import zone.moddev.mc.basemetals.BaseMetals;
+
 import java.util.List;
 
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
@@ -29,7 +32,7 @@ public final class BaseMetalsTrades {
         if (event.getType() != VillagerProfession.ARMORER
                 && event.getType() != VillagerProfession.TOOLSMITH
                 && event.getType() != VillagerProfession.WEAPONSMITH) return;
-        for (MaterialDefinition material : MaterialCatalogue.ALL) {
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
             if (material.kind() == MaterialDefinition.Kind.RARE_ORE
                     || material.kind() == MaterialDefinition.Kind.RARE_ALLOY) continue;
             int value = (int) (material.hardness() + material.strength() + material.magic() + material.toolLevel());
@@ -55,8 +58,11 @@ public final class BaseMetalsTrades {
         }
         if (event.getType() == VillagerProfession.ARMORER || event.getType() == VillagerProfession.TOOLSMITH
                 || event.getType() == VillagerProfession.WEAPONSMITH) {
-            event.getTrades().get(1).add(selling(ModContent.item("coal_powder").get(), 10, 1));
-            event.getTrades().get(1).add(selling(ModContent.item("charcoal_powder").get(), 10, 1));
+            // Coal and charcoal powders are Base Metals' vanilla extensions.
+            for (String powder : List.of("coal_powder", "charcoal_powder")) {
+                BuiltInRegistries.ITEM.getOptional(ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, powder))
+                        .ifPresent(item -> event.getTrades().get(1).add(selling(item, 10, 1)));
+            }
         }
     }
 

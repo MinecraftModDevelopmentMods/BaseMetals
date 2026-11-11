@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "item": "minecraft:diamond"
   },
   "result": {
-    "id": "basemetals:diamond_powder"
+    "item": "basemetals:diamond_powder"
   }
 }
