@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ingots/brass"
   },
   "result": {
-    "id": "basemetals:brass_powder"
+    "item": "basemetals:brass_powder"
   }
 }

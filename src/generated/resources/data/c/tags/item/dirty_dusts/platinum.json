@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:platinum_powder_dirty"
+    {
+      "id": "basemetals:platinum_powder_dirty",
+      "required": false
+    }
   ]
 }

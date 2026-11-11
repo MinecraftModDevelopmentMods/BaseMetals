@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/lead"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:lead_powder"
+    "item": "basemetals:lead_powder"
   }
 }

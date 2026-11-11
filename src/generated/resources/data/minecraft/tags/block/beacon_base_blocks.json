@@ -21,7 +21,6 @@
     "basemetals:starsteel_block",
     "basemetals:steel_block",
     "basemetals:tin_block",
-    "basemetals:zinc_block",
-    "basemetals:charcoal_block"
+    "basemetals:zinc_block"
   ]
 }

@@ -135,6 +135,8 @@ dependencies {
     //TODO Move version strings to gradle.properties
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation 'zone.moddev.mc.orespawn:OreSpawn:4.0.16.121012'
+    // MMDLib 2.0 is not published yet; the alpha build is vendored in libs/.
+    implementation files('libs/mmdlib-2.0.0-alpha.jar')
     // API only: Mekanism remains optional at runtime. Its public slurry
     // registry is required to provide the eight historical processing chains.
     compileOnly 'mekanism:Mekanism:1.21.1-10.7.19.85:api'

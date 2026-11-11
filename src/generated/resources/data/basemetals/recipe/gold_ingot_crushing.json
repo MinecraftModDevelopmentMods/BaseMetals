@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "c:ingots/gold"
-  },
-  "result": {
-    "id": "basemetals:gold_powder"
-  }
-}

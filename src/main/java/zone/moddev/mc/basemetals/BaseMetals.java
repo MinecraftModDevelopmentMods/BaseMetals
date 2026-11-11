@@ -4,9 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
+import zone.moddev.mc.basemetals.content.BaseMetalBucketItem;
 import zone.moddev.mc.basemetals.content.ModContent;
-import zone.moddev.mc.basemetals.recipe.CrushingRecipe;
-import zone.moddev.mc.basemetals.entity.ModEntities;
+import zone.moddev.mc.basemetals.effects.MaterialEffects;
+import zone.moddev.mc.basemetals.recipe.ModRecipes;
 import zone.moddev.mc.basemetals.loot.ModLoot;
 import zone.moddev.mc.basemetals.compat.MekanismCompat;
 
@@ -23,13 +24,14 @@ public final class BaseMetals {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public BaseMetals(IEventBus modBus, ModContainer modContainer) {
-        MissingMappings.registerAliases();
+        // MMDLib loads mmdlib/ definitions after mod construction; the event contract
+        // and bucket implementation they name must already be registered.
+        MaterialEffects.register();
+        BaseMetalBucketItem.registerImplementation();
         ModContent.register(modBus);
         ModTabs.REGISTER.register(modBus);
         modBus.addListener(BaseMetalsConfig::onConfigLoading);
-        CrushingRecipe.TYPES.register(modBus);
-        CrushingRecipe.SERIALIZERS.register(modBus);
-        ModEntities.register(modBus);
+        ModRecipes.SERIALIZERS.register(modBus);
         ModLoot.register(modBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, BaseMetalsConfig.SPEC);
         if (ModList.get().isLoaded("mekanism")) {

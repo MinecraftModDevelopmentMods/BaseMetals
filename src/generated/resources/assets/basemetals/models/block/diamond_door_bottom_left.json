@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom_left",
-  "textures": {
-    "bottom": "basemetals:block/diamond_door_lower",
-    "top": "basemetals:block/diamond_door_upper"
-  }
-}

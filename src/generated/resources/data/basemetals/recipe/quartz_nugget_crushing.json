@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "c:nuggets/quartz"
-  },
-  "result": {
-    "id": "basemetals:quartz_smallpowder"
-  }
-}

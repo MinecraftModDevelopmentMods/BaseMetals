@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:antimony_clump"
+    {
+      "id": "basemetals:antimony_clump",
+      "required": false
+    }
   ]
 }

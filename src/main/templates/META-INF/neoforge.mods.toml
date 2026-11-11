@@ -19,6 +19,13 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
+modId="mmdlib"
+type="required"
+versionRange="[2.0.0-alpha,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"
 versionRange="[${neo_version},)"

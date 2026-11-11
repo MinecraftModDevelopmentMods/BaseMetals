@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:storage_blocks/bronze"
   },
   "result": {
     "count": 9,
-    "id": "basemetals:bronze_powder"
+    "item": "basemetals:bronze_powder"
   }
 }

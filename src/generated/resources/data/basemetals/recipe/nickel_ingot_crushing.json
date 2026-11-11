@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ingots/nickel"
   },
   "result": {
-    "id": "basemetals:nickel_powder"
+    "item": "basemetals:nickel_powder"
   }
 }

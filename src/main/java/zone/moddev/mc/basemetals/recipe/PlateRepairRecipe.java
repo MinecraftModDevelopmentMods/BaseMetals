@@ -81,7 +81,7 @@ public final class PlateRepairRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return CrushingRecipe.PLATE_REPAIR_SERIALIZER.get();
+        return ModRecipes.PLATE_REPAIR_SERIALIZER.get();
     }
 
     public static final class Serializer implements RecipeSerializer<PlateRepairRecipe> {

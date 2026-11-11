@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_crystal"
+    {
+      "id": "basemetals:bismuth_crystal",
+      "required": false
+    }
   ]
 }

@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:coldiron_shard"
+    {
+      "id": "basemetals:coldiron_shard",
+      "required": false
+    }
   ]
 }

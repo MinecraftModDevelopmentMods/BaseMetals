@@ -32,10 +32,10 @@ import com.mojang.serialization.Dynamic;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.MissingMappings;
-import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
-import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
+import zone.moddev.mc.lib.common.runtime.MaterialAnvilBlock;
+import zone.moddev.mc.lib.common.runtime.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.ModContent;
-import zone.moddev.mc.basemetals.content.PlateBlock;
+import zone.moddev.mc.lib.common.runtime.PlateBlock;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.AnvilBlock;
@@ -446,9 +446,9 @@ public final class LegacyWorldDataHook {
                     .setValue(TrapDoorBlock.POWERED, Boolean.FALSE)
                     .setValue(TrapDoorBlock.WATERLOGGED, Boolean.FALSE);
         }
-        if (block instanceof BaseMetalAnvilBlock) {
+        if (block instanceof MaterialAnvilBlock) {
             return state.setValue(AnvilBlock.FACING, Direction.from2DDataValue(meta & 3))
-                    .setValue(BaseMetalAnvilBlock.DAMAGE, Integer.valueOf(Math.min(2, (meta & 15) >> 2)));
+                    .setValue(MaterialAnvilBlock.DAMAGE, Integer.valueOf(Math.min(2, (meta & 15) >> 2)));
         }
         if (block instanceof ButtonBlock) return attachedState(state, meta, ButtonBlock.POWERED);
         if (block instanceof LeverBlock) return legacyLeverState(state, meta);

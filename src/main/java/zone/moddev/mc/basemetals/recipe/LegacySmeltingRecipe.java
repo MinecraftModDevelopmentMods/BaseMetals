@@ -42,7 +42,7 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
     }
 
     @Override public RecipeSerializer<?> getSerializer() {
-        return CrushingRecipe.LEGACY_SMELTING_SERIALIZER.get();
+        return ModRecipes.LEGACY_SMELTING_SERIALIZER.get();
     }
 
     public static final class Serializer implements RecipeSerializer<LegacySmeltingRecipe> {
@@ -50,7 +50,7 @@ public final class LegacySmeltingRecipe extends SmeltingRecipe {
                 instance.group(
                         Codec.STRING.optionalFieldOf("group", "").forGetter(LegacySmeltingRecipe::getGroup),
                         Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.input),
-                        CrushingRecipe.Serializer.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
+                        ModRecipes.RESULT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output),
                         Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(LegacySmeltingRecipe::getExperience),
                         Codec.intRange(1, Integer.MAX_VALUE).optionalFieldOf("cookingtime", 200)
                                 .forGetter(LegacySmeltingRecipe::getCookingTime)

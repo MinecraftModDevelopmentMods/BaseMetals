@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:coldiron_clump"
+    {
+      "id": "basemetals:coldiron_clump",
+      "required": false
+    }
   ]
 }

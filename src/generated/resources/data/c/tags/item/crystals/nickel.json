@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:nickel_crystal"
+    {
+      "id": "basemetals:nickel_crystal",
+      "required": false
+    }
   ]
 }

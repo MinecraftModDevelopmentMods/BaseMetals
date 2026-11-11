@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:starsteel_powder_dirty"
+    {
+      "id": "basemetals:starsteel_powder_dirty",
+      "required": false
+    }
   ]
 }

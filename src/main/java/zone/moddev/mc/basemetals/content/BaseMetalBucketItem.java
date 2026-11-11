@@ -5,10 +5,16 @@ import java.util.function.Supplier;
 import javax.annotation.Nullable;
 
 import zone.moddev.mc.basemetals.BaseMetals;
+import zone.moddev.mc.lib.api.ItemContext;
+import zone.moddev.mc.lib.api.ItemImplementation;
+import zone.moddev.mc.lib.api.MaterialExtensions;
+import zone.moddev.mc.lib.common.types.MMDItem;
+import zone.moddev.mc.lib.common.types.MMDMaterial;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -90,6 +96,32 @@ public final class BaseMetalBucketItem extends BucketItem {
         FluidStack contents = new FluidStack(content, FluidType.BUCKET_VOLUME);
         return FluidUtil.tryPlaceFluid(player, level, hand,
                 position, bucket, contents).isSuccess();
+    }
+
+    /** Lets the {@code basemetals:bucket} item module fill each material's molten metal. */
+    public static void registerImplementation() {
+        MaterialExtensions.GLOBAL.registerItemImplementation(
+                ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "bucket"), new Implementation());
+    }
+
+    private static final class Implementation implements ItemImplementation<BaseMetalBucketItem> {
+        @Override
+        public Class<BaseMetalBucketItem> itemClass() {
+            return BaseMetalBucketItem.class;
+        }
+
+        @Override
+        public BaseMetalBucketItem create(MMDMaterial material, MMDItem definition) {
+            throw new IllegalStateException("Created by the runtime registrar with an ItemContext: " + definition.name());
+        }
+
+        @Override
+        public BaseMetalBucketItem create(ItemContext context) {
+            String material = context.material().name().orElseThrow().getPath();
+            FluidContent fluid = ModContent.fluids().get(material);
+            if (fluid == null) throw new IllegalStateException("No molten fluid for " + material);
+            return new BaseMetalBucketItem(fluid.source(), context.properties());
+        }
     }
 
     @SubscribeEvent

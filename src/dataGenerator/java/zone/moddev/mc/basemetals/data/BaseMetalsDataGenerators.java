@@ -14,11 +14,9 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-//import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
-import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
-import zone.moddev.mc.basemetals.content.HumanDetectorBlock;
 import zone.moddev.mc.basemetals.content.ModContent;
-import zone.moddev.mc.basemetals.content.PlateBlock;
+import zone.moddev.mc.lib.common.runtime.MaterialAnvilBlock;
+import zone.moddev.mc.lib.common.runtime.PlateBlock;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 
 import net.minecraft.world.level.block.AnvilBlock;
@@ -70,7 +68,7 @@ public final class BaseMetalsDataGenerators {
                 } else if (block instanceof ButtonBlock button) {
                     buttonBlock(button, existing(id), existing(id + "_pressed"));
                 } else if (block instanceof SlabBlock slab) {
-                    String base = id.startsWith("double_") ? id.substring(7, id.length() - 5) : id.substring(0, id.length() - 5);
+                    String base = id.substring(0, id.length() - (id.endsWith("_double_slab") ? "_double_slab" : "_slab").length());
                     slabBlock(slab, existing("half_slab_" + base), existing("upper_slab_" + base),
                             fullBlockModel(base));
                 } else if (block instanceof PressurePlateBlock plate) {
@@ -84,11 +82,9 @@ public final class BaseMetalsDataGenerators {
                 } else if (block instanceof LeverBlock lever) {
                     getVariantBuilder(lever).forAllStates(state -> ConfiguredModel.builder()
                             .modelFile(existing(state.getValue(BlockStateProperties.POWERED) ? id : id + "_off")).build());
-                } else if (block instanceof HumanDetectorBlock detector) {
-                    pressurePlateBlock(detector, existing("human_detector_up"), existing("human_detector_down"));
-                } else if (block instanceof BaseMetalAnvilBlock anvil) {
+                } else if (block instanceof MaterialAnvilBlock anvil) {
                     getVariantBuilder(anvil).forAllStates(state -> ConfiguredModel.builder()
-                            .modelFile(existing(id + switch (state.getValue(BaseMetalAnvilBlock.DAMAGE)) {
+                            .modelFile(existing(id + switch (state.getValue(MaterialAnvilBlock.DAMAGE)) {
                                 case 0 -> "_undamaged";
                                 case 1 -> "_slightly_damaged";
                                 default -> "_very_damaged";
@@ -133,14 +129,14 @@ public final class BaseMetalsDataGenerators {
         }
 
         private ModelFile fullBlockModel(String material) {
-            return MaterialCatalogue.BY_NAME.containsKey(material)
+            return MaterialCatalogue.byName().containsKey(material)
                     ? existing(material + "_block")
                     : models().getExistingFile(mcLoc("block/" + (material.equals("obsidian")
                             ? "obsidian" : material + "_block")));
         }
 
         private net.minecraft.resources.ResourceLocation fullBlockTexture(String material) {
-            return MaterialCatalogue.BY_NAME.containsKey(material)
+            return MaterialCatalogue.byName().containsKey(material)
                     ? modLoc("block/" + material + "_block")
                     : mcLoc("block/" + switch (material) {
                         case "obsidian" -> "obsidian";
@@ -208,12 +204,8 @@ public final class BaseMetalsDataGenerators {
 
         @Override
         protected void registerModels() {
-            MaterialCatalogue.ALL.stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
+            MaterialCatalogue.all().stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
                     .forEach(material -> basicFromTexture(material.name() + "_raw", material.name() + "_raw"));
-            for (String material : java.util.List.of("diamond", "gold", "iron")) {
-                basicFromTexture(material + "_blend", material + "_powder");
-                basicFromTexture(material + "_smallblend", material + "_smallpowder");
-            }
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name + "_bucket")
                     .parent(getExistingFile(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))

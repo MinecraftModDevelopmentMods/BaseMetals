@@ -1,10 +1,10 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ores/bismuth"
   },
   "result": {
     "count": 2,
-    "id": "basemetals:bismuth_powder"
+    "item": "basemetals:bismuth_powder"
   }
 }

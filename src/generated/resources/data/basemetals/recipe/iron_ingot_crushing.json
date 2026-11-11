@@ -1,9 +1,0 @@
-{
-  "type": "basemetals:crushing",
-  "ingredient": {
-    "tag": "c:ingots/iron"
-  },
-  "result": {
-    "id": "basemetals:iron_powder"
-  }
-}

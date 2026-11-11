@@ -30,10 +30,10 @@ import java.util.zip.DeflaterOutputStream;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.MissingMappings;
-import zone.moddev.mc.basemetals.content.BaseMetalAnvilBlock;
-import zone.moddev.mc.basemetals.content.CompatibilityDoubleSlabBlock;
+import zone.moddev.mc.lib.common.runtime.MaterialAnvilBlock;
+import zone.moddev.mc.lib.common.runtime.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.ModContent;
-import zone.moddev.mc.basemetals.content.PlateBlock;
+import zone.moddev.mc.lib.common.runtime.PlateBlock;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -703,9 +703,9 @@ public final class Legacy112WorldMigrator {
         if (block instanceof CompatibilityDoubleSlabBlock) {
             return state.setValue(SlabBlock.TYPE, SlabType.DOUBLE).setValue(SlabBlock.WATERLOGGED, false);
         }
-        if (block instanceof BaseMetalAnvilBlock) {
-            return state.setValue(BaseMetalAnvilBlock.FACING, Direction.from2DDataValue(metadata & 3))
-                    .setValue(BaseMetalAnvilBlock.DAMAGE, Math.min(2, (metadata & 15) >> 2));
+        if (block instanceof MaterialAnvilBlock) {
+            return state.setValue(MaterialAnvilBlock.FACING, Direction.from2DDataValue(metadata & 3))
+                    .setValue(MaterialAnvilBlock.DAMAGE, Math.min(2, (metadata & 15) >> 2));
         }
         if (block instanceof DoorBlock) {
             if ((metadata & 8) != 0) {
@@ -900,3 +900,4 @@ public final class Legacy112WorldMigrator {
             return BlockPos.asLong(x(), y() + yOffset, z());
         }
     }
+}

@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:nuggets/platinum"
   },
   "result": {
-    "id": "basemetals:platinum_smallpowder"
+    "item": "basemetals:platinum_smallpowder"
   }
 }

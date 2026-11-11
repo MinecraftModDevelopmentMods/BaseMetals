@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:coldiron_crystal"
+    {
+      "id": "basemetals:coldiron_crystal",
+      "required": false
+    }
   ]
 }

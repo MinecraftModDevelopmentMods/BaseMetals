@@ -9,6 +9,10 @@
 - Resolve enchanted smith trades through the world's enchantment registry.
 - Add optional regression tests without changing the normal build or deployment tasks.
 - Document the Eclipse cache settings needed to avoid duplicate launcher modules.
+- Build on MMDLib 2.0: materials, anvils and the human detector are MMDLib definitions, and armour and weapon effects are MMDLib event handlers.
+- Remove the vanilla extras (diamond doors, iron crackhammers, molten diamond and so on); MMDLib adds these now.
+- Compatibility double slabs are now `<metal>_double_slab`; old saves are remapped.
+- Crystals, shards, clumps and dirty powders exist only when Mekanism is installed.
 
 ### Base Metals 3.1.0.119041
 

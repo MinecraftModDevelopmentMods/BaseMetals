@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:starsteel_shard"
+    {
+      "id": "basemetals:starsteel_shard",
+      "required": false
+    }
   ]
 }

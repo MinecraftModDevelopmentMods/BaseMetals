@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "basemetals:bismuth_powder_dirty"
+    {
+      "id": "basemetals:bismuth_powder_dirty",
+      "required": false
+    }
   ]
 }

@@ -1,9 +1,9 @@
 {
-  "type": "basemetals:crushing",
+  "type": "mmdlib:crushing",
   "ingredient": {
     "tag": "c:ingots/pewter"
   },
   "result": {
-    "id": "basemetals:pewter_powder"
+    "item": "basemetals:pewter_powder"
   }
 }

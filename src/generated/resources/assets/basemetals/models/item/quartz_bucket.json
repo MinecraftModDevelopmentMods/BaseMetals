@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "basemetals:quartz",
-  "loader": "neoforge:fluid_container"
-}
