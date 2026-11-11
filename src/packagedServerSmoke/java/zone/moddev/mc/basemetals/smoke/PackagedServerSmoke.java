@@ -38,7 +38,7 @@ public final class PackagedServerSmoke {
     public void onServerStarted(ServerStartedEvent event) throws IOException {
         String baseMetals = version("basemetals");
         String oreSpawn = version("orespawn");
-        if (!"3.1.1.121011".equals(baseMetals) || !"4.1.0.121011".equals(oreSpawn)) {
+        if (!"3.1.2.121011".equals(baseMetals) || !"4.1.0.121011".equals(oreSpawn)) {
             throw new IllegalStateException("PACKAGED_SERVER_SMOKE FAIL versions basemetals="
                     + baseMetals + " orespawn=" + oreSpawn);
         }

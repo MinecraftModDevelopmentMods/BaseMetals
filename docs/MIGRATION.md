@@ -39,6 +39,13 @@ Base Metals 2.5 line. Registry paths containing uppercase characters, which
 Minecraft 1.10 still allowed, are normalized to the lowercase form required by
 modern Minecraft.
 
+Updated companion mods can supply their own metadata decoder and legacy
+data conversions through `Legacy112MigrationExtension`. When a companion
+claims a block, its saved state is restored instead of using the block's
+default. The extension can also preserve item data before Minecraft turns
+it into components. Companions without a decoder keep the default-state
+behavior described above.
+
 Base Metals 3.1.0 preserves historical `basemetals:*` IDs, including hidden
 `double_<material>_slab` blocks and molten-fluid block IDs such as
 `basemetals:adamantine`. Dedicated bucket items and flowing-fluid registry
