@@ -2,6 +2,8 @@ package zone.moddev.mc.basemetals.migration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
@@ -23,6 +25,43 @@ import org.junit.jupiter.api.Test;
 
 /** Catches renamed injection targets before a packaged world is opened. */
 class NativeMigrationHooksTest {
+    @Test
+    void chunkFinalizationCannotCancelCompanionReturnHooks() throws Exception {
+        var node = new org.objectweb.asm.tree.ClassNode();
+        try (var input = getClass().getResourceAsStream(
+                "/zone/moddev/mc/basemetals/mixin/SimpleRegionStorageMixin.class")) {
+            new org.objectweb.asm.ClassReader(input).accept(node, 0);
+        }
+        var finish = node.methods.stream().filter(method -> method.name.equals("basemetals$finishChunk"))
+                .findFirst().orElseThrow();
+        var annotations = new java.util.ArrayList<org.objectweb.asm.tree.AnnotationNode>();
+        if (finish.visibleAnnotations != null) annotations.addAll(finish.visibleAnnotations);
+        if (finish.invisibleAnnotations != null) annotations.addAll(finish.invisibleAnnotations);
+        var inject = annotations.stream().filter(annotation -> annotation.desc.endsWith("/Inject;"))
+                .findFirst().orElseThrow();
+        int cancellation = inject.values.indexOf("cancellable");
+        assertTrue(cancellation < 0 || !Boolean.TRUE.equals(inject.values.get(cancellation + 1)));
+        for (var instruction : finish.instructions.toArray()) {
+            if (instruction instanceof org.objectweb.asm.tree.MethodInsnNode call) {
+                assertFalse(call.name.equals("setReturnValue") || call.name.equals("cancel"));
+            }
+        }
+    }
+
+    @Test
+    void finalizationEditsTheSameCompoundAndRetainsUnownedData() throws Exception {
+        var field = LegacyWorldDataHook.class.getDeclaredField("PRESERVE_CHUNK_MARKER");
+        field.setAccessible(true);
+        String marker = (String) field.get(null);
+        CompoundTag root = new CompoundTag();
+        root.putBoolean(marker, true);
+        root.putString("UnownedWitness", "retain exactly");
+        assertSame(root, LegacyWorldDataHook.finalizeLegacyChunk(root));
+        assertFalse(root.contains(marker));
+        assertEquals("full", root.getString("Status").orElseThrow());
+        assertEquals("retain exactly", root.getString("UnownedWitness").orElseThrow());
+    }
+
     @Test
     void levelCaptureStillRunsBeforeVanillaConversion() throws Exception {
         var method = LevelStorageSource.class.getDeclaredMethod(
