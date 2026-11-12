@@ -1,3 +1,8 @@
+Base Metals 3.1.2.2601021
+- Let companion mods preserve legacy machine directions, inventories and item wear before conversion.
+- Keep companion chunk return callbacks running in either transformer order.
+- Preserve host player data before native 26.1 world-file relocation without replacing existing player files.
+
 Base Metals 3.1.1.2601021
 
 - Port the released 1.21.11 version to Minecraft 26.1.2, Forge 64 and Java 25.

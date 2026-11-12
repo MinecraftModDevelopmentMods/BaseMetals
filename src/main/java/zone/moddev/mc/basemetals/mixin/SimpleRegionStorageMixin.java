@@ -19,9 +19,10 @@ abstract class SimpleRegionStorageMixin {
     }
 
     @Inject(method = "upgradeChunkTag(Lnet/minecraft/nbt/CompoundTag;ILnet/minecraft/nbt/CompoundTag;I)Lnet/minecraft/nbt/CompoundTag;",
-            at = @At("RETURN"), cancellable = true)
+            at = @At("RETURN"))
     private void basemetals$finishChunk(CompoundTag chunk, int fallbackVersion,
             CompoundTag context, int targetVersion, CallbackInfoReturnable<CompoundTag> callback) {
-        callback.setReturnValue(LegacyWorldDataHook.finalizeLegacyChunk(callback.getReturnValue()));
+        // In-place finalization must not cancel companion RETURN callbacks.
+        LegacyWorldDataHook.finalizeLegacyChunk(callback.getReturnValue());
     }
 }
