@@ -38,6 +38,17 @@ class LegacyBlockStateCodecTest {
     }
 
     @Test
+    void nativeSerializationRemainsSeparateFromHistoricalFlattening() {
+        var state = Blocks.OAK_DOOR.defaultBlockState()
+                .setValue(DoorBlock.FACING, Direction.WEST);
+        var nativeTag = net.minecraft.nbt.NbtUtils.writeBlockState(state);
+        assertEquals("minecraft:oak_door", nativeTag.getStringOr("id", ""));
+        assertEquals("west", nativeTag.getCompoundOrEmpty("properties").getStringOr("facing", ""));
+        assertFalse(nativeTag.contains("Name"));
+        assertFalse(nativeTag.contains("Properties"));
+    }
+
+    @Test
     void vanillaCanUpgradeTheIntermediateStateWithoutLosingItsProperties() {
         BlockState state = Blocks.OAK_DOOR.defaultBlockState()
                 .setValue(DoorBlock.FACING, Direction.WEST)

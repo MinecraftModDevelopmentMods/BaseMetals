@@ -1,3 +1,9 @@
+Base Metals 3.1.2.2603001 (local candidate)
+
+* Add shared migration callbacks for companion blocks, inventories and host players.
+* Give each companion an independent selected-world registry snapshot.
+* Keep chunk-return hooks cooperative and retain historical flattening state fields.
+
 Base Metals 3.1.1.2603001
 
 - Port the released 26.2 version to Minecraft 26.3 and Forge 66, keeping Java 25.
