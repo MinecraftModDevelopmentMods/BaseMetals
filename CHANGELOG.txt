@@ -1,4 +1,4 @@
-Base Metals 3.1.2.2602001 - local candidate
+Base Metals 3.1.2.2602001
 
 - Port the shared companion migration API from 26.1.2, including saved-world registry context.
 - Preserve companion block metadata, inventories and embedded host players before vanilla flattening.
