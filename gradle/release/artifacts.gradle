@@ -202,7 +202,7 @@ tasks.register('verifyReleaseConfiguration') {
     dependsOn tasks.named('verifyMavenizerCompatibilityFixture')
     dependsOn tasks.named('verifyJava25Toolchain')
     doLast {
-        if (configuredReleaseIdentity.modVersion != '3.1.1.2602001'
+        if (configuredReleaseIdentity.modVersion != '3.1.2.2602001'
                 || configuredReleaseIdentity.modGroup != expectedMavenGroup
                 || configuredReleaseIdentity.minecraftVersion != '26.2'
                 || configuredReleaseIdentity.forgeVersion != '65.1.0'
@@ -332,7 +332,7 @@ tasks.register('verifyReleaseArtifacts') {
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${')
-                    || !modsToml.contains('version="3.1.1.2602001"')
+                    || !modsToml.contains('version="3.1.2.2602001"')
                     || !modsToml.contains('versionRange="[4.1.0.2602001,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }

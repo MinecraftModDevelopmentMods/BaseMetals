@@ -12,7 +12,8 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 26.2 Forge version, `3.1.1.2602001`. It keeps the
+This is the Minecraft 26.2 Forge version, `3.1.2.2602001`, with the shared
+companion migration hook. It keeps the
 fixes and features from the released 26.1.2 version, including raw metals, ore
 texture overlays and High/Low Fantasy modes. Existing Base Metals items and
 blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
@@ -25,10 +26,11 @@ Additional Loot Tables are no longer needed.
 - A current Java 25 runtime
 - OreSpawn `[4.1.0.2602001,5.0.0)` on both client and server
 
-The build uses Forge `65.1.0` and is also tested on `65.1.5`.
+The build uses Forge `65.1.0`; `65.1.5` remains the additional compatibility
+target.
 
 This version uses OreSpawn `4.1.0.2602001`. Put
-`BaseMetals-3.1.1.2602001.jar` and a compatible OreSpawn JAR in the `mods`
+`BaseMetals-3.1.2.2602001.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
 an older installation. Mineralogy is optional.
 
@@ -201,7 +203,7 @@ early splash window. Minecraft still opens its game window and runs the full
 world check. Ordinary client launches keep the normal splash screen.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.2602001`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.2.2602001`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
