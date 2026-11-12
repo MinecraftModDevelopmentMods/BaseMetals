@@ -1,4 +1,5 @@
 Base Metals 3.1.2.2601021
+- Supply companion mods with the saved world registry before conversion, so old item enchantments use the right IDs in either hook order.
 - Let companion mods preserve legacy machine directions, inventories and item wear before conversion.
 - Keep companion chunk return callbacks running in either transformer order.
 - Preserve host player data before native 26.1 world-file relocation without replacing existing player files.

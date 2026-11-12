@@ -97,9 +97,11 @@ public final class Legacy112WorldMigrator {
 
     /** Keep this load's provenance before Minecraft rewrites level.dat. */
     static void prepareWorld(Path levelDat, CompoundTag root) {
+        for (Legacy112MigrationExtension extension : EXTENSIONS.values()) {
+            extension.prepareWorld(root.copy());
+        }
         if (!isLegacyLevel(root)) return;
 
-        CompoundTag data = root.getCompoundOrEmpty("Data");
         preparedWorld = levelDat.toAbsolutePath().normalize().getParent();
     }
 

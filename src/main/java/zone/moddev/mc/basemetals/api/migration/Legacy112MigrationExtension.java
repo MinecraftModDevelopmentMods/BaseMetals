@@ -9,6 +9,13 @@ import zone.moddev.mc.basemetals.migration.Legacy112WorldMigrator;
 public interface Legacy112MigrationExtension {
     enum Payload { CHUNK, PLAYER }
 
+    /**
+     * Supplies this selected world's saved registry context before any conversion.
+     * Each extension receives its own copy. Modern worlds are included so a
+     * companion can clear registry IDs retained from a previous world.
+     */
+    default void prepareWorld(CompoundTag levelSnapshot) { }
+
     /** Mutates owned legacy data before vanilla fixes and the block-entity snapshot. */
     default boolean prepareData(CompoundTag tag, int dataVersion, Payload payload) { return false; }
 

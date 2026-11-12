@@ -27,6 +27,11 @@ Additional Loot Tables are no longer needed.
 
 The build uses Forge `64.0.9` and is also tested on `64.1.5`.
 
+The local companion-migration patch gives basePower the saved world's registry
+before conversion begins. This keeps old machine items and enchantments intact
+without depending on which mod's world hook runs first. The patch is being
+qualified locally and has not been published.
+
 This version uses OreSpawn `4.1.0.2601021`. Put
 `BaseMetals-3.1.2.2601021.jar` and a compatible OreSpawn JAR in the `mods`
 directory. MMDLib and Additional Loot Tables must not be carried forward from
