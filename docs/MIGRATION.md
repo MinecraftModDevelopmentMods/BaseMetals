@@ -1,7 +1,7 @@
 # Migrating from Base Metals 1.10 or 1.12
 
 Always upgrade a copy and retain the original legacy world. Install Base Metals
-3.1.1 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
+3.1.2 and OreSpawn 4.1.0, but do not carry MMDLib, Additional Loot Tables, the
 OreSpawn 3 plugin, or the old native fallback generator into the 26.2 instance.
 
 Minecraft's data fixer cannot identify third-party numeric block IDs from
@@ -156,3 +156,30 @@ an older `level.dat` over the upgraded save.
 If an older single-player save has its player only in `level.dat`, Base Metals
 preserves a separate player file before Minecraft converts the folders. An
 existing player file always wins; a stale backup cannot restore an older player.
+
+## Companion migration extensions
+
+Companion mods can register a common-side
+`zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension` with a
+unique `Identifier` during common setup, before a world opens. Registrations
+run in identifier order; duplicate identifiers fail rather than replace an owner.
+
+`prepareWorld` receives an independent copy of the selected world's saved
+registry snapshot before conversion. It also runs for modern worlds, so a
+companion can clear registry IDs retained from a previously opened legacy world.
+
+`prepareData` receives `Payload.CHUNK` or `Payload.PLAYER` before legacy
+flattening. `beforeChunkFlattening` runs before the block-entity snapshot, and
+`decodeBlockState` can restore owned block properties from raw metadata.
+Return `null` for an unowned block; air or multiple claims fail conversion.
+
+When a legacy host has no existing player file, `afterPlayerFlattening`
+receives its prepared source and the mutable schema-3465 player, before item
+componentization. The resulting native player seeds a separate disk file before
+FileFixerUpper moves it. The legacy level retains its source schema. Detached
+player files receive preparation only and remain under native player-loading
+authority. Existing player files in either layout are never replaced by the host.
+
+Chunk finalization edits the returned tag in place and does not cancel other
+mods' return callbacks. Extensions must preserve unowned data, register on both
+physical sides, and avoid client-only classes in these common callbacks.

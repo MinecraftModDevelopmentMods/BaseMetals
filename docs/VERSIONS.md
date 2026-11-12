@@ -1,6 +1,7 @@
 # Supported versions
 
-Base Metals `3.1.1.2602001` targets Minecraft 26.2, Forge 65.1.0 and Java 25.
+Base Metals `3.1.2.2602001` is a local candidate for Minecraft 26.2, Forge 65.1.0
+and Java 25. It is not published or fully qualified yet.
 Forge 65.1.5 is the additional compatibility target.
 OreSpawn `4.1.0.2602001` is the exact build and test dependency. Clients and
 servers need OreSpawn `[4.1.0.2602001,5.0.0)`.
@@ -11,7 +12,7 @@ Its SHA-256 is
 `F74785025898DF059E0F00F6ADA53364E07ECBBC306807ED7CD55350609E2547`.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.1.1.2602001`.
+`zone.moddev.mc.basemetals:BaseMetals:3.1.2.2602001` once approved and published.
 
 The provider remains schema 3, revision 1. OreSpawn 4.1 is needed for the
 configuration-screen API; the provider's eleven rule IDs and 1.18 distributions
