@@ -124,6 +124,8 @@ public final class LegacyWorldDataHook {
         Path file = world.resolve("playerdata/" + uuid + ".dat");
         if (Files.exists(file) || Files.exists(world.resolve("players/data/" + uuid + ".dat"))) return;
 
+        // Only the new host file receives components; level.dat retains its source schema.
+        player = Legacy112WorldMigrator.flattenEmbeddedPlayer(player, sourceVersion);
         // The native file fixer discards an embedded player with a UUID, expecting its disk file to exist.
         if (!NbtCompat.containsTag(player, "DataVersion", 99)) player.putInt("DataVersion", sourceVersion);
         Files.createDirectories(file.getParent());
