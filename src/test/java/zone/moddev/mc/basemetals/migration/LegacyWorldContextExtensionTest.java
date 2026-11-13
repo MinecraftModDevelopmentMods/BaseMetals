@@ -1,0 +1,79 @@
+package zone.moddev.mc.basemetals.migration;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class LegacyWorldContextExtensionTest {
+    private static final List<Integer> VERSIONS = new ArrayList<>();
+    private static final List<CompoundTag> SECOND = new ArrayList<>();
+
+    @BeforeAll static void register() {
+        Legacy112MigrationExtension.register(Identifier.parse("contexttest:a_mutator"),
+                new Legacy112MigrationExtension() {
+                    @Override public void prepareWorld(CompoundTag levelSnapshot) {
+                        VERSIONS.add(levelSnapshot.getCompoundOrEmpty("Data").getIntOr("DataVersion", 0));
+                        levelSnapshot.remove("Protected");
+                        levelSnapshot.putBoolean("Injected", true);
+                    }
+                });
+        Legacy112MigrationExtension.register(Identifier.parse("contexttest:b_observer"),
+                new Legacy112MigrationExtension() {
+                    @Override public void prepareWorld(CompoundTag levelSnapshot) {
+                        SECOND.add(levelSnapshot.copy());
+                    }
+                });
+    }
+
+    @BeforeEach void clearObservations() {
+        VERSIONS.clear();
+        SECOND.clear();
+    }
+
+    @AfterAll static void unregister() throws Exception {
+        var field = Legacy112WorldMigrator.class.getDeclaredField("EXTENSIONS");
+        field.setAccessible(true);
+        var extensions = (java.util.Map<?, ?>) field.get(null);
+        extensions.remove(Identifier.parse("contexttest:a_mutator"));
+        extensions.remove(Identifier.parse("contexttest:b_observer"));
+        Legacy112WorldMigrator.beginWorldLoad();
+    }
+
+    @Test void companionsReceiveIndependentSnapshotsBeforeLegacyConversion() {
+        CompoundTag root = snapshot(512), before = root.copy();
+        Legacy112WorldMigrator.prepareWorld(Path.of("build", "context-test", "level.dat"), root);
+        assertEquals(List.of(512), VERSIONS);
+        assertEquals(List.of(before), SECOND, "One extension must not change another extension's snapshot");
+        assertEquals(before, root, "Companions must not mutate the authoritative world root");
+    }
+
+    @Test void modernWorldSelectionAlsoNotifiesCompanionsToResetLegacyContext() {
+        CompoundTag legacy = snapshot(1343), modern = snapshot(4790), before = modern.copy();
+        CompoundTag current = snapshot(5023), currentBefore = current.copy();
+        Legacy112WorldMigrator.prepareWorld(Path.of("build", "context-old", "level.dat"), legacy);
+        Legacy112WorldMigrator.prepareWorld(Path.of("build", "context-new", "level.dat"), modern);
+        Legacy112WorldMigrator.prepareWorld(Path.of("build", "context-current", "level.dat"), current);
+        assertEquals(List.of(1343, 4790, 5023), VERSIONS);
+        assertEquals(before, SECOND.get(1));
+        assertEquals(before, modern);
+        assertEquals(currentBefore, SECOND.get(2));
+        assertEquals(currentBefore, current);
+    }
+
+    private static CompoundTag snapshot(int version) {
+        CompoundTag root = new CompoundTag(), data = new CompoundTag();
+        data.putInt("DataVersion", version);
+        root.put("Data", data);
+        root.putString("Protected", "saved-registry-snapshot");
+        return root;
+    }
+}

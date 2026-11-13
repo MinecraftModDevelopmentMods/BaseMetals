@@ -1,3 +1,10 @@
+Base Metals 3.1.2.2603001
+
+* Let compatible companion mods join the same legacy-world upgrade for blocks, inventories and players.
+* Keep each companion's selected-world registry snapshot independent.
+* Keep chunk-return hooks cooperative and preserve the old block-state fields used during conversion.
+* Test the shared upgrade with Power, Steam and Electric Advantage on 26.3.
+
 Base Metals 3.1.1.2603001
 
 - Port the released 26.2 version to Minecraft 26.3 and Forge 66, keeping Java 25.
