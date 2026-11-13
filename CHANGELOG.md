@@ -1,4 +1,11 @@
-### Base Metals 4.0.0.121012 (in development)
+### Base Metals 4.0.1.121012
+
+- Let compatible mods join the legacy world conversion before Minecraft fixes old chunk and item data.
+- Keep basePower, baseSteam and baseElectric machine state, inventories and equipment when upgrading old Advantage worlds.
+- Skip legacy conversion for modern worlds and keep backups and source registry snapshots for genuine old saves.
+- Add native NeoForge regression tests for the shared migration hook and modern-world safety checks.
+
+### Base Metals 4.0.0.121012
 
 - Port Base Metals to Minecraft 1.21.1 and NeoForge.
 - Restore recipe-book unlocks and armour advancements in the new data-pack folders.

@@ -33,22 +33,31 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the Minecraft 1.21.1 NeoForge port, `4.0.0.121012`. It includes raw
+This is the Minecraft 1.21.1 NeoForge port, `4.0.1.121012`. It includes raw
 metals, ore texture overlays and High/Low Fantasy modes. Existing Base Metals items and blocks keep
-their registry IDs. OreSpawn handles ore generation; MMDLib and Additional Loot
-Tables are no longer needed.
+their registry IDs. OreSpawn handles ore generation. MMDLib supplies the shared
+materials, crushing recipes, anvils and equipment effects used by this version.
+Additional Loot Tables is not needed.
 
 ## Requirements
 
 - Minecraft `1.21.1`
 - NeoForge `21.1.247` or newer in the Minecraft 1.21.1 line
 - Java 21
+- MMDLib `2.0.1.121012+Neo` on both client and server
 - OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 
 This version builds against OreSpawn `4.0.16.121012`. Put
-`BaseMetals-4.0.0.121012.jar` and a compatible OreSpawn JAR in the `mods`
-directory. MMDLib and Additional Loot Tables must not be carried forward from
-an older installation. Mineralogy is optional.
+`basemetals-4.0.1.121012.jar`, the matching MMDLib jar and a compatible OreSpawn
+jar in the `mods` directory. Do not carry older Forge or 1.12 MMDLib jars
+forward. Additional Loot Tables is not required. Mineralogy is optional.
+
+### Upgrading Existing Worlds
+
+Back up the whole save before upgrading. This patch adds a shared conversion
+hook so basePower and its expansions can preserve old Advantage machine data
+before Minecraft converts legacy chunks and items. Existing Base Metals registry
+names stay unchanged. Modern saves bypass the old-world conversion path.
 
 ## Materials and gameplay
 

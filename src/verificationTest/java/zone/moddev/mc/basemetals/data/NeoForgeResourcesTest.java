@@ -13,7 +13,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 class NeoForgeResourcesTest {
-    private static final Path DATA = Path.of("src/generated/resources/data");
+    private static final Path ROOT = Path.of(System.getProperty("basemetals.test.projectDir"));
+    private static final Path DATA = ROOT.resolve("src/generated/resources/data");
 
     @Test
     void recipeDiscoveryUsesNativeAdvancementFilesAndStableIds() throws Exception {
@@ -58,7 +59,7 @@ class NeoForgeResourcesTest {
 
     @Test
     void everyLocaleIncludesTheCurrentPlayerText() throws Exception {
-        Path languages = Path.of("src/generated/resources/assets/basemetals/lang");
+        Path languages = ROOT.resolve("src/generated/resources/assets/basemetals/lang");
         var expected = read(languages.resolve("en_us.json")).keySet().stream()
                 .filter(key -> key.startsWith("config.basemetals.")
                         || key.startsWith("message.basemetals.")

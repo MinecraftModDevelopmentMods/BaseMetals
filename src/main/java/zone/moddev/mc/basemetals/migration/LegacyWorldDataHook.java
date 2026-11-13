@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -88,6 +89,7 @@ public final class LegacyWorldDataHook {
 
     /** Called by the coremod before Forge reads level.dat. */
     public static synchronized void prepareLegacyWorld(File levelDat) {
+        Legacy112WorldMigrator.beginWorldLoad();
         legacyWorldActive = false;
         legacyTerrainChunks = Collections.emptyMap();
         LEGACY_BASE_METALS_BLOCK_COUNTS.clear();
@@ -116,12 +118,29 @@ public final class LegacyWorldDataHook {
             try (FileInputStream input = new FileInputStream(levelDat)) {
                 root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
             }
+            Legacy112WorldMigrator.prepareWorld(levelDat.toPath(), root);
             boolean changed = removeRetiredVanillaProfessionRegistry(root);
             changed |= removeObsoleteVanillaBiomeSnapshot(root);
             changed |= migrateRemovedVanillaBiomeSources(root);
+            preserveLegacySource(levelDat, root);
             if (changed) writeWithBackup(levelDat, root);
         } catch (IOException exception) {
             throw new IllegalStateException("Could not prepare the saved world metadata in " + levelDat, exception);
+        }
+    }
+
+    private static void preserveLegacySource(File levelDat, CompoundTag root) throws IOException {
+        CompoundTag data = root.getCompound("Data");
+        if (!data.contains("DataVersion", Tag.TAG_ANY_NUMERIC) || data.getInt("DataVersion") >= 2834) return;
+        Path sidecar = levelDat.toPath().resolveSibling(REGISTRY_SIDECAR);
+        if (Files.exists(sidecar)) return;
+        CompoundTag saved = new CompoundTag();
+        CompoundTag source = new CompoundTag();
+        source.putInt("DataVersion", data.getInt("DataVersion"));
+        saved.put("Data", source);
+        if (root.contains("FML", Tag.TAG_COMPOUND)) saved.put("FML", root.getCompound("FML").copy());
+        try (java.io.OutputStream output = Files.newOutputStream(sidecar, StandardOpenOption.CREATE_NEW)) {
+            NbtIo.writeCompressed(saved, output);
         }
     }
 
@@ -657,13 +676,13 @@ public final class LegacyWorldDataHook {
     }
 
     private static File legacyRegistrySource(File levelDat) {
-        for (File candidate : new File[] { levelDat, new File(levelDat.getParentFile(), "level.dat_old"),
-                new File(levelDat.getParentFile(), REGISTRY_SIDECAR) }) {
+        for (File candidate : new File[] { levelDat, new File(levelDat.getParentFile(), REGISTRY_SIDECAR) }) {
             if (!candidate.isFile()) continue;
             try (FileInputStream input = new FileInputStream(candidate)) {
                 CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
                 if ((root.contains("FML", 10) && containsLegacyBaseMetalsRegistryEntry(root))
-                        || (root.contains("Data", 10) && root.getCompound("Data").getInt("DataVersion") < 2834)) return candidate;
+                        || (root.getCompound("Data").contains("DataVersion", Tag.TAG_ANY_NUMERIC)
+                                && root.getCompound("Data").getInt("DataVersion") < 2834)) return candidate;
             } catch (IOException ignored) {}
         }
         return null;
