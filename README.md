@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and structure loot.
 
-This is the local Minecraft 26.3 Forge candidate, `3.1.2.2603001`. It keeps the
+This branch contains Base Metals `3.1.2.2603001` for Minecraft 26.3 Forge. It keeps the
 fixes and features from the released 26.2 version, including raw metals, ore
 texture overlays and High/Low Fantasy modes. Existing Base Metals items and
 blocks keep their registry IDs. OreSpawn handles ore generation; MMDLib and
@@ -146,6 +146,12 @@ in place; genuine legacy upgrades still make backups before changing saved data.
 
 The 26.3 update also protects imported terrain from dungeon placement during
 conversion. New chunks and the new underground areas can still generate normally.
+
+Compatible companion mods can now take part in the same legacy-world upgrade.
+Each companion keeps its own registry snapshot, so one mod's conversion does not
+replace another's. The shared hooks retain old block-state and inventory data for
+the companion to convert. This has been tested with the Power, Steam and Electric
+Advantage family on 26.3.
 
 ## Mod and data-pack compatibility
 

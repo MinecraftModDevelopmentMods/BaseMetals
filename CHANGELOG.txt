@@ -1,8 +1,9 @@
-Base Metals 3.1.2.2603001 (local candidate)
+Base Metals 3.1.2.2603001
 
-* Add shared migration callbacks for companion blocks, inventories and host players.
-* Give each companion an independent selected-world registry snapshot.
-* Keep chunk-return hooks cooperative and retain historical flattening state fields.
+* Let compatible companion mods join the same legacy-world upgrade for blocks, inventories and players.
+* Keep each companion's selected-world registry snapshot independent.
+* Keep chunk-return hooks cooperative and preserve the old block-state fields used during conversion.
+* Test the shared upgrade with Power, Steam and Electric Advantage on 26.3.
 
 Base Metals 3.1.1.2603001
 
