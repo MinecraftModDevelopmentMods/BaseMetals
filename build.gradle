@@ -66,9 +66,12 @@ tasks.withType(Javadoc).configureEach {
     failOnError = false
     options.encoding = 'UTF-8'
     options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('docencoding', 'UTF-8')
+    options.addStringOption('charset', 'UTF-8')
     options.addBooleanOption('notimestamp', true)
 }
 tasks.withType(AbstractArchiveTask).configureEach {
+    inputs.property('releaseArchiveTextFormat', 'UTF-8 LF 1')
     preserveFileTimestamps = false
     reproducibleFileOrder = true
     filesMatching(['**/*.java', '**/*.json', '**/*.html', '**/*.css', '**/*.js',
@@ -77,6 +80,7 @@ tasks.withType(AbstractArchiveTask).configureEach {
         filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'))
     }
 }
+tasks.withType(Jar).configureEach { filteringCharset = 'UTF-8' }
 
 sourceSets {
     // Build-only model generator; not part of the mod jar.
