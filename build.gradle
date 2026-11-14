@@ -63,6 +63,10 @@ tasks.withType(Test).configureEach {
     workingDir = project.projectDir
 }
 tasks.withType(Javadoc).configureEach {
+    inputs.property('releaseJavadocFormat', 'UTF-8 sorted sources 1')
+    setSource(files(project.providers.provider {
+        project.sourceSets.main.allJava.files.sort { project.relativePath(it).replace('\\', '/') }
+    }))
     failOnError = false
     options.encoding = 'UTF-8'
     options.addStringOption('Xdoclint:none', '-quiet')
@@ -71,9 +75,10 @@ tasks.withType(Javadoc).configureEach {
     options.addBooleanOption('notimestamp', true)
 }
 tasks.withType(AbstractArchiveTask).configureEach {
-    inputs.property('releaseArchiveTextFormat', 'UTF-8 LF 1')
+    inputs.property('releaseArchiveTextFormat', 'UTF-8 LF no empty directories 1')
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    includeEmptyDirs = false
     filesMatching(['**/*.java', '**/*.json', '**/*.html', '**/*.css', '**/*.js',
                    '**/*.lang', '**/*.mcmeta', '**/*.md', '**/*.txt', '**/*.xml',
                    '**/*.properties', '**/*.cfg', '**/*.info', '**/package-list', '**/element-list']) {
