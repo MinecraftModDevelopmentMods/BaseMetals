@@ -91,7 +91,8 @@ final class GameplayRegressionChecks {
                     && !name.endsWith("_smallpowder")) continue;
 
             ItemStack stack = new ItemStack(entry.getValue().get());
-            boolean combustible = name.startsWith("coal_") || name.startsWith("charcoal_");
+            // Coal powder must be compressed before it can be recovered as fuel.
+            boolean combustible = name.startsWith("charcoal_") || "coal_nugget".equals(name);
             int expected = combustible ? (name.endsWith("_powder") ? 1600 : 200) : 0;
             int actual = furnaceBurnTime(stack);
             check(actual == expected, "fuel " + name + " expected=" + expected + " actual=" + actual);
@@ -168,6 +169,13 @@ final class GameplayRegressionChecks {
             check(door.getCraftingResult(grid).getCount() == 3, materials[i] + " three doors");
             grid.setInventorySlotContents(6, ItemStack.EMPTY);
             grid.setInventorySlotContents(7, ItemStack.EMPTY);
+            if ("quartz".equals(materials[i])) {
+                check(!trapdoor.matches(grid, world), "quartz square stays available for vanilla blocks");
+                grid = craftingGrid();
+                for (int slot : new int[] {1, 3, 5, 7}) {
+                    grid.setInventorySlotContents(slot, new ItemStack(Items.QUARTZ));
+                }
+            }
             check(!door.matches(grid, world) && trapdoor.matches(grid, world),
                     materials[i] + " trapdoor pattern");
         }

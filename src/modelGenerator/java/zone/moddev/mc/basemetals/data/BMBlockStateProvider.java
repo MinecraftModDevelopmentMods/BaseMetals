@@ -101,8 +101,8 @@ public final class BMBlockStateProvider {
         // Element 1: base block (Stone, Netherrack or End Stone).
         elements.add(element(0, 16, "#base"));
 
-        // Element 2: Kiri's 0.001 offset keeps the overlay from z-fighting with the base.
-        elements.add(element(-0.001F, 16.001F, "#overlay"));
+        // Use the wider gap from the legacy overlay fix to avoid depth flicker.
+        elements.add(element(-0.05F, 16.05F, "#overlay"));
 
         model.add("elements", elements);
         return model;
@@ -116,6 +116,9 @@ public final class BMBlockStateProvider {
         JsonObject faces = new JsonObject();
         for (String direction : FACES) {
             JsonObject face = new JsonObject();
+            JsonArray uv = new JsonArray();
+            for (int coordinate : new int[] {0, 0, 16, 16}) uv.add(coordinate);
+            face.add("uv", uv);
             face.addProperty("texture", texture);
             face.addProperty("cullface", direction);
             faces.add(direction, face);

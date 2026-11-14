@@ -1,3 +1,23 @@
+3.0.3.113021 for Minecraft 1.13.2
+
+- Widen the gap between ore overlays and their host blocks to stop the textures flickering.
+- Review metal mining levels independently of the legacy hardness score, including soft metals and Invar.
+- Separate solid-metal and ore requirements, and document all material choices.
+- Use the normal hammer mining speed for ores and storage blocks from other mods.
+- Use OreSpawn 4.1.7 for the latest world generation and saved-profile fixes.
+- Fix a startup hang with other fluid-adding mods, without disabling parallel loading.
+- Allow iron and gold blends to replace matching dust in steel, invar and
+  electrum recipes, including mixed dust and blend inputs.
+- Register the legacy save hook after parallel mod loading, avoiding a startup race
+  that could crash world loading or saving with other Metals mods.
+- Reveal furnace recipes when you collect their ingredients.
+- Recover coal from dust through the coal-block recipe. Coal powders no longer
+  burn directly, matching the standalone Modern Metals processing route.
+- Discover recipes from saved inventories on login and after a data pack reload,
+  and restore earned recipes when changing back to an eligible Fantasy Level.
+- Give the quartz trapdoor a four-quartz diamond pattern so its recipe can be
+  distinguished from vanilla's quartz block recipe.
+
 Base Metals 3.0.2.113021
 
 - Fix an error converting leaves when you open a 1.10.2 or 1.12.2 world in

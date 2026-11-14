@@ -141,9 +141,11 @@ jobs:
           ./gradlew "${gradle_args[@]}"
           first="$RUNNER_TEMP/basemetals-first"
           mkdir -p "$first"
-          cp build/libs/BaseMetals-3.0.2.113021.jar "$first/"
-          cp build/libs/BaseMetals-3.0.2.113021-sources.jar "$first/"
-          cp build/libs/BaseMetals-3.0.2.113021-javadoc.jar "$first/"
+          version="$(sed -n 's/^mod_version=//p' gradle.properties)"
+          echo "CI_RELEASE_VERSION=$version" >> "$GITHUB_ENV"
+          for classifier in '' -sources -javadoc; do
+            cp "build/libs/BaseMetals-$version$classifier.jar" "$first/"
+          done
           cp build/release/SHA256SUMS "$first/"
 
       - name: Rebuild and prove byte-identical archives
@@ -159,9 +161,10 @@ jobs:
             -Dorg.gradle.java.installations.auto-download=false
           )
           ./gradlew "${gradle_args[@]}"
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.2.113021.jar" build/libs/BaseMetals-3.0.2.113021.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.2.113021-sources.jar" build/libs/BaseMetals-3.0.2.113021-sources.jar
-          cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-3.0.2.113021-javadoc.jar" build/libs/BaseMetals-3.0.2.113021-javadoc.jar
+          for classifier in '' -sources -javadoc; do
+            cmp "$RUNNER_TEMP/basemetals-first/BaseMetals-$CI_RELEASE_VERSION$classifier.jar" \
+              "build/libs/BaseMetals-$CI_RELEASE_VERSION$classifier.jar"
+          done
           cmp "$RUNNER_TEMP/basemetals-first/SHA256SUMS" build/release/SHA256SUMS
 
       - name: Run exact-OreSpawn dedicated-server probe
@@ -185,9 +188,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
           path: |
-            build/libs/BaseMetals-3.0.2.113021.jar
-            build/libs/BaseMetals-3.0.2.113021-sources.jar
-            build/libs/BaseMetals-3.0.2.113021-javadoc.jar
+            build/libs/*.jar
             build/release/SHA256SUMS
             CHANGELOG.txt
 

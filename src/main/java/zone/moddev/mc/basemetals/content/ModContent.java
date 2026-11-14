@@ -99,8 +99,9 @@ public final class ModContent {
 
     private ModContent() {}
 
-    /** Forge 25 still owns fluids in Minecraft's vanilla registry. */
-    public static synchronized void initializeFluids() {
+    // Forge 25's vanilla fluid and state registries are not thread-safe. Register
+    // here, during the sequential block event, rather than in the mod constructor.
+    private static void initializeFluids() {
         for (Map.Entry<String, FluidContent> entry : FLUID_CONTENT.entrySet()) {
             FluidContent content = entry.getValue();
             if (isBound(content.source())) continue;
@@ -124,6 +125,7 @@ public final class ModContent {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        initializeFluids();
         for (Map.Entry<String, Supplier<? extends Block>> entry : BLOCK_FACTORIES.entrySet()) {
             Block value = entry.getValue().get();
             value.setRegistryName(BaseMetals.MOD_ID, entry.getKey());
@@ -203,7 +205,7 @@ public final class ModContent {
             String id = material.name() + "_ore";
             blocks.put("ore", registerBlock(id,
                     new Supplier<Block>() {
-                        @Override public Block get() { return new HarvestOre(oreProperties(material), material.requiredHarvestLevel()); }
+                        @Override public Block get() { return new HarvestOre(oreProperties(material), material.requiredOreHarvestLevel()); }
                     }, true));
             items.put("ore", ITEMS_BY_ID.get(id));
         }
@@ -492,6 +494,7 @@ public final class ModContent {
         if (separator < 0) return -1;
         String material = id.substring(0, separator);
         if (!"coal".equals(material) && !"charcoal".equals(material)) return -1;
+        if ("coal".equals(material) && (id.endsWith("_powder") || id.endsWith("_smallpowder"))) return -1;
         if (id.endsWith("_powder")) return 1600;
         if (id.endsWith("_nugget") || id.endsWith("_smallpowder")) return 200;
         return -1;

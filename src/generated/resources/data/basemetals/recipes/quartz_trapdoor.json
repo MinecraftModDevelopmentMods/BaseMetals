@@ -3,8 +3,9 @@
   "recipe": {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "XX",
-      "XX"
+      " X ",
+      "X X",
+      " X "
     ],
     "key": {
       "X": {

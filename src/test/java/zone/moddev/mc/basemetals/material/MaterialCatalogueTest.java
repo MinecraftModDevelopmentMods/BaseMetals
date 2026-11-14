@@ -43,15 +43,13 @@ class MaterialCatalogueTest {
     }
 
     @Test
-    void everyDerivedValueUsesTheHistoricalFormulaAndModernBounds() {
+    void nonMiningValuesKeepTheHistoricalFormulaAndModernBounds() {
         for (MaterialDefinition material : MaterialCatalogue.ALL) {
             assertEquals((float) (2.0D * material.hardness()), material.blockHardness(), material.name());
             assertEquals((float) (0.5D * material.hardness()), material.oreHardness(), material.name());
             float resistance = material.name().equals("adamantine") || material.name().equals("starsteel")
                     ? 2000.0F : (float) (2.5D * material.strength());
             assertEquals(resistance, material.blastResistance(), material.name());
-            assertEquals(Math.max(0, Math.min(4, (int) (material.hardness() / 3.0D))),
-                    material.toolLevel(), material.name());
             assertEquals(Math.max(1, (int) (32.0D * material.strength())),
                     material.toolDurability(), material.name());
             assertEquals((float) material.hardness(), material.toolEfficiency(), material.name());

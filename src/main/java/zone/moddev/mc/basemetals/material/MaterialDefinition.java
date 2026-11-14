@@ -25,9 +25,22 @@ public final class MaterialDefinition {
     private final double magic;
     private final int colour;
     private final boolean processingForms;
+    private final int toolHarvestLevel;
+    private final int blockHarvestLevel;
+    private final int oreHarvestLevel;
 
     public MaterialDefinition(String name, Kind kind, double hardness, double strength,
             double magic, int colour, boolean processingForms) {
+        this(name, kind, hardness, strength, magic, colour, processingForms,
+                Math.max(0, Math.min(4, (int) (hardness / 3.0D))),
+                Math.max(-1, Math.min(3, (int) ((0.9D * hardness) / 3.0D))),
+                Math.max(-1, Math.min(3, (int) ((0.9D * hardness) / 3.0D))));
+    }
+
+    /** Explicit mining policy; hardness still controls the existing speed and combat statistics. */
+    public MaterialDefinition(String name, Kind kind, double hardness, double strength,
+            double magic, int colour, boolean processingForms,
+            int toolHarvestLevel, int blockHarvestLevel, int oreHarvestLevel) {
         this.name = Objects.requireNonNull(name, "name");
         this.kind = Objects.requireNonNull(kind, "kind");
         if (!name.matches("[a-z][a-z0-9_]*")) {
@@ -41,6 +54,13 @@ public final class MaterialDefinition {
         this.magic = magic;
         this.colour = colour;
         this.processingForms = processingForms;
+        if (toolHarvestLevel < 0 || toolHarvestLevel > 4 || blockHarvestLevel < -1
+                || blockHarvestLevel > 3 || oreHarvestLevel < -1 || oreHarvestLevel > 3) {
+            throw new IllegalArgumentException("Invalid mining levels for " + name);
+        }
+        this.toolHarvestLevel = toolHarvestLevel;
+        this.blockHarvestLevel = blockHarvestLevel;
+        this.oreHarvestLevel = oreHarvestLevel;
     }
 
     public String name() { return name; }
@@ -59,8 +79,9 @@ public final class MaterialDefinition {
         return name.equals("adamantine") || name.equals("starsteel")
                 ? 2000.0F : (float) (2.5D * strength);
     }
-    public int toolLevel() { return Math.max(0, Math.min(4, (int) (hardness / 3.0D))); }
-    public int requiredHarvestLevel() { return Math.max(-1, Math.min(3, (int) ((0.9D * hardness) / 3.0D))); }
+    public int toolLevel() { return toolHarvestLevel; }
+    public int requiredHarvestLevel() { return blockHarvestLevel; }
+    public int requiredOreHarvestLevel() { return oreHarvestLevel; }
     public int toolDurability() { return Math.max(1, (int) (32.0D * strength)); }
     public float toolEfficiency() { return (float) hardness; }
     public float baseAttackDamage() { return Math.round((float) (2.5D * hardness)) / 10.0F; }

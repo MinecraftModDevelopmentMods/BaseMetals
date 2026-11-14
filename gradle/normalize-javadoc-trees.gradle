@@ -1,0 +1,16 @@
+// Java 8's doclet leaves enum siblings in platform-dependent order.
+// Keep the full hierarchy while giving leaf-only sibling lists a stable order.
+tasks.withType(Javadoc).configureEach {
+    inputs.property('javadocTreeOrder', 'lexical leaf siblings 1')
+    doLast {
+        fileTree(destinationDir) { include '**/*-tree.html' }.files.each { page ->
+            String original = page.getText('UTF-8')
+            String ordered = original.replaceAll(
+                    /(<ul>\r?\n)((?:<li type="circle">[^\r\n]*<\/li>\r?\n){2,})(<\/ul>)/) {
+                all, opening, siblings, closing ->
+                opening + siblings.readLines().sort().join('\n') + '\n' + closing
+            }
+            if (ordered != original) page.setText(ordered, 'UTF-8')
+        }
+    }
+}
