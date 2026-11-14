@@ -1331,3 +1331,5 @@ tasks.register('contentModeIntegrationTest', Exec) {
         if (providers.gradleProperty('contentModeCycleOnly').isPresent()) args '--cycle-only'
     }
 }
+
+apply from: 'gradle/normalize-javadoc-trees.gradle'
