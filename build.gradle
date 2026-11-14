@@ -3,6 +3,7 @@ import groovy.xml.XmlSlurper
 import java.security.MessageDigest
 import java.util.jar.Manifest
 import java.util.zip.ZipFile
+import org.apache.tools.ant.filters.FixCrLfFilter
 
 plugins {
     id 'java'
@@ -70,6 +71,11 @@ tasks.withType(Javadoc).configureEach {
 tasks.withType(AbstractArchiveTask).configureEach {
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    filesMatching(['**/*.java', '**/*.json', '**/*.html', '**/*.css', '**/*.js',
+                   '**/*.lang', '**/*.mcmeta', '**/*.md', '**/*.txt', '**/*.xml',
+                   '**/*.properties', '**/*.cfg', '**/*.info', '**/package-list', '**/element-list']) {
+        filter(FixCrLfFilter, eol: FixCrLfFilter.CrLf.newInstance('lf'))
+    }
 }
 
 sourceSets {
@@ -87,6 +93,12 @@ sourceSets {
 }
 dependencies {
     testImplementation sourceSets.modelGenerator.output
+}
+tasks.withType(ProcessResources).configureEach {
+    if (name in ['processIntegrationTestResources', 'processClientIntegrationTestResources']) {
+        inputs.property('probeTargetVersion', project.mod_version)
+        filesMatching('META-INF/mods.toml') { expand(mod_version: project.mod_version) }
+    }
 }
 configurations {
     orespawnRelease
@@ -1050,10 +1062,12 @@ def compileClientIntegrationTestMod = tasks.register('compileClientIntegrationTe
 }
 def clientIntegrationTestModJar = tasks.register('clientIntegrationTestModJar', Jar) {
     dependsOn compileClientIntegrationTestMod
+    inputs.property('probeTargetVersion', project.mod_version)
     archiveFileName = 'basemetalsclientprobe-deobf.jar'
     destinationDirectory = layout.buildDirectory.dir('client-integration-fixture')
     from clientIntegrationClasses
     from 'src/clientIntegrationTest/resources'
+    filesMatching('META-INF/mods.toml') { expand(mod_version: project.mod_version) }
 }
 def oreOverlayClientFixtures = layout.buildDirectory.dir('ore-overlay-client-fixtures')
 def generateOreOverlayClientFixtures = tasks.register('generateOreOverlayClientFixtures', JavaExec) {
