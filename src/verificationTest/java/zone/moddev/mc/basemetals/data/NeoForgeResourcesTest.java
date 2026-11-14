@@ -13,7 +13,35 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 class NeoForgeResourcesTest {
-    private static final Path DATA = Path.of("src/generated/resources/data");
+    private static final Path ROOT = projectRoot();
+    private static final Path DATA = ROOT.resolve("src/generated/resources/data");
+
+    static Path projectRoot() {
+        String configured = System.getProperty("basemetals.test.projectDir");
+        if (configured != null && !configured.isBlank()) return Path.of(configured);
+        Path working = Path.of(".").toAbsolutePath().normalize();
+        for (Path candidate = working; candidate != null; candidate = candidate.getParent()) {
+            if (Files.isRegularFile(candidate.resolve("build.gradle"))
+                    && Files.isDirectory(candidate.resolve("src/generated/resources/data/basemetals"))) return candidate;
+        }
+        return working;
+    }
+
+    @Test
+    void projectRootFallsBackWhenTheIdeDoesNotSetAGradleProperty() {
+        String configured = System.getProperty("basemetals.test.projectDir");
+        try {
+            System.clearProperty("basemetals.test.projectDir");
+            assertEquals(ROOT.toAbsolutePath().normalize(), projectRoot());
+            System.setProperty("basemetals.test.projectDir", "");
+            assertEquals(ROOT.toAbsolutePath().normalize(), projectRoot());
+            System.setProperty("basemetals.test.projectDir", "example-checkout");
+            assertEquals(Path.of("example-checkout"), projectRoot());
+        } finally {
+            if (configured == null) System.clearProperty("basemetals.test.projectDir");
+            else System.setProperty("basemetals.test.projectDir", configured);
+        }
+    }
 
     @Test
     void recipeDiscoveryUsesNativeAdvancementFilesAndStableIds() throws Exception {
@@ -58,7 +86,7 @@ class NeoForgeResourcesTest {
 
     @Test
     void everyLocaleIncludesTheCurrentPlayerText() throws Exception {
-        Path languages = Path.of("src/generated/resources/assets/basemetals/lang");
+        Path languages = ROOT.resolve("src/generated/resources/assets/basemetals/lang");
         var expected = read(languages.resolve("en_us.json")).keySet().stream()
                 .filter(key -> key.startsWith("config.basemetals.")
                         || key.startsWith("message.basemetals.")

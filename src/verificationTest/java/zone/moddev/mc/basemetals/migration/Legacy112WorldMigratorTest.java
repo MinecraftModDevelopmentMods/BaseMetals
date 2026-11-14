@@ -62,9 +62,16 @@ class Legacy112WorldMigratorTest {
     }
 
     @Test
-    void rewrittenLevelStillDetectsOldMetadata() throws Exception {
+    void oldBackupAloneDoesNotEnableLegacyFallback() throws Exception {
         writeLevel("level.dat", 3955);
         writeLevel("level.dat_old", 1343);
+        assertTrue(Legacy112WorldMigrator.legacyBlockIdsForTest(world).isEmpty());
+    }
+
+    @Test
+    void retainedSourceSidecarStillEnablesLegacyFallback() throws Exception {
+        writeLevel("level.dat", 3955);
+        writeLevel("basemetals-legacy-registry.dat", 1343);
         assertFalse(Legacy112WorldMigrator.legacyBlockIdsForTest(world).isEmpty());
     }
 }

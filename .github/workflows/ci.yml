@@ -46,10 +46,7 @@ jobs:
       - name: Build with Gradle
         env:
           BUILD_NUMBER: ${{ github.run_number }}
-        run: ./gradlew assemble
-
-      - name: Run tests
-        run: ./gradlew check
+        run: ./gradlew clean build
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v4

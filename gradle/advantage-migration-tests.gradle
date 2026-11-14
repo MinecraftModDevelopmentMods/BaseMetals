@@ -1,0 +1,19 @@
+// The migration extension is qualified in the native NeoForge test runtime.
+sourceSets.test.java.srcDir 'src/verificationTest/java'
+neoForge.unitTest {
+    enable()
+    testedMod = neoForge.mods.basemetals
+}
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+}
+tasks.named('test', Test) {
+    useJUnitPlatform()
+    maxParallelForks = 1
+    maxHeapSize = '2G'
+    jvmArgs '-XX:ActiveProcessorCount=4'
+    workingDir projectDir
+    systemProperty 'basemetals.test.projectDir', projectDir.absolutePath
+    testLogging { events 'failed', 'skipped'; exceptionFormat = 'full' }
+}
