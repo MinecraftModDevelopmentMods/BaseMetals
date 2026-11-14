@@ -1,4 +1,14 @@
-### Base Metals 4.0.0.121012 (in development)
+### Base Metals 4.0.1.121012 (in development)
+
+- Extend vanilla copper like the other vanilla materials instead of re-adding its ingot, block, ore, door and trapdoor. Old Base Metals copper IDs map to the vanilla ones.
+- Move the human detector, the vanilla material extensions and the eight generic crushing recipes from MMDLib into Base Metals.
+- Generate block, item, tool, armour, enchantable and ore convention tags with datagen instead of hand-written files, and add the double slabs to `minecraft:slabs`.
+- Set the ore cutout render type in the generated models.
+- Archive the 1.20-era Ender IO and Tinkers' Construct compatibility to `archive/compat-1.20/`.
+- Replace deprecated NeoForge API uses.
+
+### Base Metals 4.0.0.121012
+
 
 - Port Base Metals to Minecraft 1.21.1 and NeoForge.
 - Restore recipe-book unlocks and armour advancements in the new data-pack folders.

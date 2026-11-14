@@ -19,7 +19,7 @@ import zone.moddev.mc.basemetals.config.BaseMetalsConfig;
 import zone.moddev.mc.basemetals.config.ContentMode;
 
 /** Checks content modes during configuration, before a player joins the world. */
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID)
 public final class ContentModeNetwork {
     private static final ConfigurationTask.Type TASK_TYPE =
             new ConfigurationTask.Type(BaseMetals.MOD_ID + ":content_mode");

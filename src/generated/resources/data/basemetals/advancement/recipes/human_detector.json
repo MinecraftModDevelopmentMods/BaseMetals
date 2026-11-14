@@ -15,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:brick"
-            ]
+            "items": "#c:bricks/normal"
           }
         ]
       },

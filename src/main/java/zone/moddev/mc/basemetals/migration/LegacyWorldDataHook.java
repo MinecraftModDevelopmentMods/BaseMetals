@@ -335,6 +335,9 @@ public final class LegacyWorldDataHook {
         return "";
     }
 
+    // WorldGenRegion.getLevel() is deprecated against touching the live level off-thread;
+    // the dimension key is immutable and the region exposes no other way to read it.
+    @SuppressWarnings("deprecation")
     public static boolean shouldBlockWorldgenWrite(net.minecraft.server.level.WorldGenRegion region,
             net.minecraft.core.BlockPos position) {
         return legacyWorldActive && position != null

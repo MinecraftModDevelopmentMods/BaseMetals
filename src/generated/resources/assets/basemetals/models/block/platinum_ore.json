@@ -78,6 +78,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "base": "minecraft:block/stone",
     "overlay": "basemetals:block/ore_overlays/platinum_ore",

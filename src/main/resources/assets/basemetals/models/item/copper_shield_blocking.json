@@ -1,6 +1,6 @@
 {
   "parent": "basemetals:item/shield_blocking",
   "textures": {
-    "shield": "basemetals:block/copper_block"
+    "shield": "minecraft:block/copper_block"
     }
 }

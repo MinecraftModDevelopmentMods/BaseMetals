@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_stairs",
+    "basemetals:antimony_stairs",
+    "basemetals:aquarium_stairs",
+    "basemetals:bismuth_stairs",
+    "basemetals:brass_stairs",
+    "basemetals:bronze_stairs",
+    "basemetals:coldiron_stairs",
+    "basemetals:copper_stairs",
+    "basemetals:cupronickel_stairs",
+    "basemetals:diamond_stairs",
+    "basemetals:electrum_stairs",
+    "basemetals:emerald_stairs",
+    "basemetals:gold_stairs",
+    "basemetals:invar_stairs",
+    "basemetals:iron_stairs",
+    "basemetals:lead_stairs",
+    "basemetals:mithril_stairs",
+    "basemetals:nickel_stairs",
+    "basemetals:obsidian_stairs",
+    "basemetals:pewter_stairs",
+    "basemetals:platinum_stairs",
+    "basemetals:silver_stairs",
+    "basemetals:starsteel_stairs",
+    "basemetals:steel_stairs",
+    "basemetals:tin_stairs",
+    "basemetals:zinc_stairs"
+  ]
+}

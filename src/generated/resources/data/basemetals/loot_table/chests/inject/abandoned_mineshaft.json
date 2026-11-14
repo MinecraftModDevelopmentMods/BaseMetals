@@ -75,7 +75,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "basemetals:copper_ingot",
+          "name": "minecraft:copper_ingot",
           "weight": 3
         },
         {

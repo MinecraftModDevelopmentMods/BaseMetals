@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_pressure_plate",
+    "basemetals:antimony_pressure_plate",
+    "basemetals:aquarium_pressure_plate",
+    "basemetals:bismuth_pressure_plate",
+    "basemetals:brass_pressure_plate",
+    "basemetals:bronze_pressure_plate",
+    "basemetals:coldiron_pressure_plate",
+    "basemetals:copper_pressure_plate",
+    "basemetals:cupronickel_pressure_plate",
+    "basemetals:diamond_pressure_plate",
+    "basemetals:electrum_pressure_plate",
+    "basemetals:emerald_pressure_plate",
+    "basemetals:invar_pressure_plate",
+    "basemetals:lead_pressure_plate",
+    "basemetals:mithril_pressure_plate",
+    "basemetals:nickel_pressure_plate",
+    "basemetals:obsidian_pressure_plate",
+    "basemetals:pewter_pressure_plate",
+    "basemetals:platinum_pressure_plate",
+    "basemetals:quartz_pressure_plate",
+    "basemetals:silver_pressure_plate",
+    "basemetals:starsteel_pressure_plate",
+    "basemetals:steel_pressure_plate",
+    "basemetals:tin_pressure_plate",
+    "basemetals:zinc_pressure_plate",
+    "basemetals:human_detector"
+  ]
+}

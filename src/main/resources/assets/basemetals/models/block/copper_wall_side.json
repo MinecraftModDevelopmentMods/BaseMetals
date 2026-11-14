@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:block/template_wall_side",
     "textures": {
-        "wall": "basemetals:block/copper_block"
+        "wall": "minecraft:block/copper_block"
     }
 }

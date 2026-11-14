@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "provider_modid": "basemetals",
-  "provider_revision": 1,
+  "provider_revision": 2,
   "ores": {
     "basemetals:ore/coldiron": {
       "block": "basemetals:coldiron_ore",
@@ -112,16 +112,6 @@
       "dimension_selectors": {"orespawn:all_except_nether_end": {
         "enabled": true, "min_y": -64, "max_y": 16, "frequency": 0.125,
         "min_quantity": 4, "max_quantity": 11, "pattern": "vein", "height_distribution": "bottom_triangle",
-        "discard_chance_on_air_exposure": 0, "spread": 8, "vertical_spread": 4, "node_size": 4, "length": 16,
-        "host_families": ["sedimentary", "metamorphic", "igneous_intrusive", "igneous_volcanic"],
-        "host_tags": ["minecraft:stone_ore_replaceables", "minecraft:deepslate_ore_replaceables"]
-      }}
-    },
-    "basemetals:ore/copper": {
-      "block": "basemetals:copper_ore", "enabled": true, "source_mod": "basemetals", "retrogen": false,
-      "dimension_selectors": {"orespawn:all_except_nether_end": {
-        "enabled": false, "min_y": -16, "max_y": 112, "frequency": 10,
-        "min_quantity": 4, "max_quantity": 11, "pattern": "vein", "height_distribution": "triangle",
         "discard_chance_on_air_exposure": 0, "spread": 8, "vertical_spread": 4, "node_size": 4, "length": 16,
         "host_families": ["sedimentary", "metamorphic", "igneous_intrusive", "igneous_volcanic"],
         "host_tags": ["minecraft:stone_ore_replaceables", "minecraft:deepslate_ore_replaceables"]

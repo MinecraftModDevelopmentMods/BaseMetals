@@ -18,7 +18,7 @@ final class ConfigFileEdits {
 
     static void save(CommentedConfig current, Path destination, Map<String, Object> edits) throws IOException {
         CommentedConfig snapshot = CommentedConfig.copy(current);
-        snapshot.valueMap().putAll(edits);
+        edits.forEach(snapshot::set);
 
         Path temporary = Files.createTempFile(destination.getParent(), destination.getFileName().toString(), ".tmp");
         try {

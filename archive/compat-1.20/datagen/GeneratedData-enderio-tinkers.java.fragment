@@ -1,0 +1,180 @@
+// Archived from GeneratedData (src/dataGenerator/java/zone/moddev/mc/basemetals/data/GeneratedData.java).
+// A fragment of that class, not a compilable file: paste these methods back into GeneratedData to restore.
+// They use GeneratedData helpers that remain there: save, saveConditionalRecipe, object, ingredient,
+// hasItem, MaterialCatalogue/MaterialDefinition, ALLOYS and ALLOY_OUTPUTS.
+
+    private void writeEnderIoRecipes(CachedOutput cache) throws IOException {
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
+            String name = material.name();
+            enderSag(cache, "compat/enderio/" + name + "/ingot_sag_milling",
+                    "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
+            if (material.hasOre()) {
+                enderSag(cache, "compat/enderio/" + name + "/ore_sag_milling",
+                        "#c:ores/" + name, "basemetals:" + name + "_powder", 2);
+            }
+        }
+        for (Map.Entry<String, List<AlloyComponent>> alloy : ALLOYS.entrySet()) {
+            JsonObject root = object("type", "enderio_machines:alloy_smelting", "energy", 6400,
+                    "experience", 0.3F);
+            JsonArray inputs = new JsonArray();
+            for (AlloyComponent component : alloy.getValue()) {
+                JsonObject counted = object("count", component.count());
+                counted.add("ingredient", ingredient(component.ingredient())); inputs.add(counted);
+            }
+            root.add("inputs", inputs);
+            root.add("result", result("basemetals:" + alloy.getKey() + "_ingot",
+                    ALLOY_OUTPUTS.get(alloy.getKey())));
+            saveConditionalRecipe(cache, root, "compat/enderio/alloys/" + alloy.getKey(), "enderio_machines");
+        }
+    }
+
+    private void enderSag(CachedOutput cache, String id, String input, String output, int count) throws IOException {
+        JsonObject root = object("type", "enderio_machines:sagmilling", "energy", 2400);
+        root.add("input", ingredient(input));
+        JsonArray outputs = new JsonArray(); outputs.add(result(output, count)); root.add("outputs", outputs);
+        saveConditionalRecipe(cache, root, id, "enderio_machines");
+    }
+
+    private void writeTinkersRecipes(CachedOutput cache) throws IOException {
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
+            String name = material.name();
+            int temperature = 769;
+            tinkerMelting(cache, name, "ingot", 90, temperature);
+            tinkerMelting(cache, name, "nugget", 10, temperature);
+            if (material.hasEquipment()) {
+                tinkerMelting(cache, name, "block", 810, temperature);
+                tinkerMelting(cache, name, "plate", 90, temperature);
+                tinkerMelting(cache, name, "rod", 45, temperature);
+                tinkerMelting(cache, name, "gear", 360, temperature);
+                tinkerCasting(cache, name, "ingot", 90, temperature, "ingot");
+                tinkerCasting(cache, name, "nugget", 10, temperature, "nugget");
+                tinkerCasting(cache, name, "plate", 90, temperature, "plate");
+                tinkerCasting(cache, name, "rod", 45, temperature, "rod");
+                tinkerCasting(cache, name, "gear", 360, temperature, "gear");
+                tinkerBlockCasting(cache, name, temperature);
+            }
+        }
+        for (String name : List.of("aquarium", "brass", "bronze", "cupronickel",
+                "electrum", "invar", "mithril", "pewter")) {
+            JsonObject root = object("type", "tconstruct:alloy", "temperature", 769);
+            JsonArray inputs = new JsonArray();
+            for (AlloyComponent component : ALLOYS.get(name)) {
+                String fluidTag;
+                if (component.ingredient().equals("#c:dusts/prismarine")) {
+                    fluidTag = "tconstruct:molten_glass";
+                } else {
+                    String material = component.ingredient().substring(component.ingredient().lastIndexOf('/') + 1);
+                    fluidTag = "forge:molten_" + material;
+                }
+                inputs.add(object("tag", fluidTag, "amount", component.count() * 90));
+            }
+            root.add("inputs", inputs);
+            root.add("result", object("fluid", "basemetals:" + name,
+                    "amount", ALLOY_OUTPUTS.get(name) * 90));
+            saveConditionalRecipe(cache, root, "compat/tconstruct/alloys/" + name, "tconstruct");
+        }
+    }
+
+    private void tinkerMelting(CachedOutput cache, String material, String form, int amount,
+            int temperature) throws IOException {
+        String tagFamily = switch (form) {
+            case "block" -> "storage_blocks";
+            case "plate" -> "plates";
+            case "rod" -> "rods";
+            case "gear" -> "gears";
+            default -> form + "s";
+        };
+        JsonObject root = object("type", "tconstruct:melting", "temperature", temperature,
+                "time", Math.max(16, (int) Math.sqrt(amount) * 5));
+        root.add("ingredient", ingredient("#c:" + tagFamily + "/" + material));
+        root.add("result", object("fluid", "basemetals:" + material, "amount", amount));
+        saveConditionalRecipe(cache, root, "compat/tconstruct/melting/" + material + "/" + form, "tconstruct");
+    }
+
+    private void tinkerCasting(CachedOutput cache, String material, String form, int amount,
+            int temperature, String cast) throws IOException {
+        for (boolean reusable : List.of(true, false)) {
+            JsonObject root = object("type", "tconstruct:casting_table",
+                    "cooling_time", Math.max(16, (int) Math.sqrt(amount) * 5));
+            root.add("cast", ingredient("#tconstruct:casts/" + (reusable ? "multi_use/" : "single_use/") + cast));
+            if (!reusable) root.addProperty("cast_consumed", true);
+            root.add("fluid", object("tag", "c:molten_" + material, "amount", amount));
+            root.add("result", result("basemetals:" + material + "_" + form, 1));
+            saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/" + form
+                    + (reusable ? "_gold_cast" : "_sand_cast"), "tconstruct");
+        }
+    }
+
+    private void tinkerBlockCasting(CachedOutput cache, String material, int temperature) throws IOException {
+        JsonObject root = object("type", "tconstruct:casting_basin", "cooling_time", 141);
+        root.add("fluid", object("tag", "c:molten_" + material, "amount", 810));
+        root.add("result", result("basemetals:" + material + "_block", 1));
+        saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/block", "tconstruct");
+    }
+
+    private void writeTinkersMaterials(CachedOutput cache) throws IOException {
+        int order = 0;
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
+            if (!material.hasEquipment()) continue;
+            String name = material.name();
+            JsonObject definition = object("craftable", false,
+                    "tier", Math.max(1, Math.min(4, material.toolLevel() + 1)),
+                    "sortOrder", order++, "hidden", false);
+            save(cache, definition, "data/basemetals/tinkering/materials/definition/" + name + ".json");
+
+            JsonObject stats = new JsonObject();
+            stats.add("tconstruct:extra", new JsonObject());
+            stats.add("tconstruct:handle", object("durability", 1.0F, "miningSpeed", 1.0F,
+                    "attackSpeed", 1.0F, "attackDamage", 1.0F));
+            stats.add("tconstruct:head", object("durability", material.toolDurability(),
+                    "miningSpeed", material.toolEfficiency(), "harvestTier", harvestTier(material.toolLevel()),
+                    "attack", material.baseAttackDamage()));
+            stats.add("tconstruct:limb", object("durability", material.toolDurability(),
+                    "drawSpeed", 0.0F, "velocity", Math.min(0.3F, (float) material.hardness() / 50.0F),
+                    "accuracy", 0.0F));
+            stats.add("tconstruct:grip", object("durability", 1.0F, "accuracy", 0.0F,
+                    "meleeAttack", material.baseAttackDamage()));
+            JsonObject statsRoot = new JsonObject(); statsRoot.add("stats", stats);
+            save(cache, statsRoot, "data/basemetals/tinkering/materials/stats/" + name + ".json");
+            JsonObject traits = new JsonObject(); traits.add("default", new JsonArray());
+            save(cache, traits, "data/basemetals/tinkering/materials/traits/" + name + ".json");
+
+            JsonObject render = object("color", String.format(Locale.ROOT, "%06X", material.colour()),
+                    "skipUniqueTexture", true, "luminosity", 0);
+            render.add("fallbacks", array("metal"));
+            save(cache, render, "assets/basemetals/tinkering/materials/" + name + ".json");
+
+            tinkerMaterialIngredient(cache, name, "ingot", 1, 1);
+            tinkerMaterialIngredient(cache, name, "nugget", 1, 9);
+            tinkerMaterialIngredient(cache, name, "storage_blocks", 9, 1);
+
+            JsonObject melting = object("type", "tconstruct:material_melting", "input", "basemetals:" + name,
+                    "temperature", 769);
+            melting.add("result", object("fluid", "basemetals:" + name, "amount", 90));
+            saveConditionalRecipe(cache, melting, "compat/tconstruct/materials/melting/" + name, "tconstruct");
+            JsonObject casting = object("type", "tconstruct:material_fluid", "temperature", 769,
+                    "output", "basemetals:" + name);
+            casting.add("fluid", object("tag", "c:molten_" + name, "amount", 90));
+            saveConditionalRecipe(cache, casting, "compat/tconstruct/materials/casting/" + name, "tconstruct");
+        }
+    }
+
+    private void tinkerMaterialIngredient(CachedOutput cache, String material, String family,
+            int value, int needed) throws IOException {
+        String normalized = family.equals("ingot") || family.equals("nugget") ? family + "s" : family;
+        JsonObject root = object("type", "tconstruct:material", "value", value, "needed", needed,
+                "material", "basemetals:" + material);
+        root.add("ingredient", ingredient("#c:" + normalized + "/" + material));
+        saveConditionalRecipe(cache, root, "compat/tconstruct/materials/" + material + "/" + family, "tconstruct");
+    }
+
+    private static String harvestTier(int level) {
+        return switch (level) {
+            case 0 -> "minecraft:wood";
+            case 1 -> "minecraft:stone";
+            case 2 -> "minecraft:iron";
+            case 3 -> "minecraft:diamond";
+            default -> "minecraft:netherite";
+        };
+    }
+

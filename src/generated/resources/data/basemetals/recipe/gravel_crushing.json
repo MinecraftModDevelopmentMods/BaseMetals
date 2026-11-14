@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:gravels"
+  },
+  "result": {
+    "item": "minecraft:sand"
+  }
+}

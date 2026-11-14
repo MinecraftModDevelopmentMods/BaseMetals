@@ -4,8 +4,6 @@ import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.content.MetalFluidType;
 import zone.moddev.mc.basemetals.content.ModContent;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
@@ -21,7 +19,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
  * Client hooks for Base Metals. MMDLib's runtime client registers projectile renderers,
  * bow/crossbow/rod/shield item properties and cutout layers for registrar content.
  */
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID, value = Dist.CLIENT)
 public final class ClientSetup {
     private ClientSetup() {}
 
@@ -30,15 +28,7 @@ public final class ClientSetup {
         ModList.get().getModContainerById(BaseMetals.MOD_ID).orElseThrow()
                 .registerExtensionPoint(IConfigScreenFactory.class,
                         (container, parent) -> new BaseMetalsConfigScreen(parent));
-        event.enqueueWork(() -> {
-            ModContent.blocksById().forEach((id, block) -> {
-                if (id.endsWith("_ore")) ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
-            });
-            ModContent.fluids().values().forEach(fluid -> {
-                ItemBlockRenderTypes.setRenderLayer(fluid.source().get(), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(fluid.flowing().get(), RenderType.translucent());
-            });
-        });
+        // Ore cutout comes from "render_type" in the generated ore models.
     }
 
     // MMDLib tints layer 0 of every registrar item and block with the material colour.

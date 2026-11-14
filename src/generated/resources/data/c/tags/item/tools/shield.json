@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_shield",
+    "basemetals:antimony_shield",
+    "basemetals:aquarium_shield",
+    "basemetals:bismuth_shield",
+    "basemetals:brass_shield",
+    "basemetals:bronze_shield",
+    "basemetals:coldiron_shield",
+    "basemetals:copper_shield",
+    "basemetals:cupronickel_shield",
+    "basemetals:diamond_shield",
+    "basemetals:electrum_shield",
+    "basemetals:emerald_shield",
+    "basemetals:gold_shield",
+    "basemetals:invar_shield",
+    "basemetals:iron_shield",
+    "basemetals:lead_shield",
+    "basemetals:mithril_shield",
+    "basemetals:nickel_shield",
+    "basemetals:obsidian_shield",
+    "basemetals:pewter_shield",
+    "basemetals:platinum_shield",
+    "basemetals:quartz_shield",
+    "basemetals:silver_shield",
+    "basemetals:starsteel_shield",
+    "basemetals:steel_shield",
+    "basemetals:tin_shield",
+    "basemetals:zinc_shield"
+  ]
+}

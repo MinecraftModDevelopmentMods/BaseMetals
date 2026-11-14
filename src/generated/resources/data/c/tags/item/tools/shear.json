@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_shears",
+    "basemetals:antimony_shears",
+    "basemetals:aquarium_shears",
+    "basemetals:bismuth_shears",
+    "basemetals:brass_shears",
+    "basemetals:bronze_shears",
+    "basemetals:coldiron_shears",
+    "basemetals:copper_shears",
+    "basemetals:cupronickel_shears",
+    "basemetals:diamond_shears",
+    "basemetals:electrum_shears",
+    "basemetals:emerald_shears",
+    "basemetals:gold_shears",
+    "basemetals:invar_shears",
+    "basemetals:lead_shears",
+    "basemetals:mithril_shears",
+    "basemetals:nickel_shears",
+    "basemetals:obsidian_shears",
+    "basemetals:pewter_shears",
+    "basemetals:platinum_shears",
+    "basemetals:quartz_shears",
+    "basemetals:silver_shears",
+    "basemetals:starsteel_shears",
+    "basemetals:steel_shears",
+    "basemetals:tin_shears",
+    "basemetals:zinc_shears"
+  ]
+}

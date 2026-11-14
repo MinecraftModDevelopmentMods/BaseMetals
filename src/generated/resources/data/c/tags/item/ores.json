@@ -5,7 +5,6 @@
     "#c:ores/antimony",
     "#c:ores/bismuth",
     "#c:ores/coldiron",
-    "#c:ores/copper",
     "#c:ores/lead",
     "#c:ores/mercury",
     "#c:ores/nickel",
@@ -13,6 +12,7 @@
     "#c:ores/silver",
     "#c:ores/starsteel",
     "#c:ores/tin",
-    "#c:ores/zinc"
+    "#c:ores/zinc",
+    "#c:ores/copper"
   ]
 }

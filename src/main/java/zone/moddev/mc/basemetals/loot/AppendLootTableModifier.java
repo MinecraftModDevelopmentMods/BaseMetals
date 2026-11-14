@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import com.mojang.serialization.MapCodec;
 
@@ -30,14 +31,15 @@ public final class AppendLootTableModifier extends LootModifier {
     }
 
     @Override
+    @SuppressWarnings("deprecation") // As NeoForge's AddTableLootModifier: the non-raw call would re-run loot modifiers.
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         context.getLevel().getServer().reloadableRegistries()
                 .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, table))
-                .getRandomItemsRaw(context, item -> {
+                .getRandomItemsRaw(context, LootTable.createStackSplitter(context.getLevel(), item -> {
             if (zone.moddev.mc.basemetals.config.ContentPolicy.active().allows(BuiltInRegistries.ITEM.getKey(item.getItem()).toString())) {
                 generatedLoot.add(item);
             }
-        });
+        }));
         return generatedLoot;
     }
 

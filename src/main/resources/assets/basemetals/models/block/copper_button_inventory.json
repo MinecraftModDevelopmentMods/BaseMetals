@@ -1,6 +1,6 @@
 {
     "parent": "block/button_inventory",
     "textures": {
-        "texture": "basemetals:block/copper_block"
+        "texture": "minecraft:block/copper_block"
     }
 }

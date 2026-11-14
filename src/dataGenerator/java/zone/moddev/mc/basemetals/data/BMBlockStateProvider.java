@@ -19,7 +19,7 @@ import zone.moddev.mc.basemetals.material.MaterialDefinition;
  *
  * @author KiriCattus (Kiri), original two-layer model
  */
-@EventBusSubscriber(modid = "basemetals", bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = "basemetals")
 public final class BMBlockStateProvider extends BlockStateProvider {
     private static final float OVERLAY_OFFSET = 0.05F;
 
@@ -44,22 +44,25 @@ public final class BMBlockStateProvider extends BlockStateProvider {
             if (!material.hasOre()) continue;
 
             Block block = ModContent.blocksById().get(material.name() + "_ore").get();
-            String host = "stone";
-            if (material.name().equals("adamantine") || material.name().equals("coldiron")) {
-                host = "netherrack";
-            } else if (material.name().equals("starsteel")) {
-                host = "end_stone";
-            }
-
-            createOverlayOre(block, mcLoc("block/" + host),
+            createOverlayOre(block, mcLoc("block/" + oreHost(material.name())),
                     modLoc("block/ore_overlays/" + material.name() + "_ore"));
         }
+    }
+
+    /** The vanilla block an ore sits in: its model's base texture and its {@code c:ores_in_ground} tag. */
+    static String oreHost(String material) {
+        return switch (material) {
+            case "adamantine", "coldiron" -> "netherrack";
+            case "starsteel" -> "end_stone";
+            default -> "stone";
+        };
     }
 
     private void createOverlayOre(Block block, ResourceLocation baseTexture, ResourceLocation overlayTexture) {
         String blockName = BuiltInRegistries.BLOCK.getKey(block).getPath();
 
         BlockModelBuilder builder = models().withExistingParent(blockName, mcLoc("block/block"))
+                .renderType("cutout")
                 .texture("particle", baseTexture)
                 .texture("base", baseTexture)
                 .texture("overlay", overlayTexture)

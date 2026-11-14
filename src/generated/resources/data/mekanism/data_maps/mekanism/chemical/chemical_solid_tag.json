@@ -1,0 +1,52 @@
+{
+  "values": {
+    "basemetals:clean_adamantine": {
+      "representation": "c:ores/adamantine"
+    },
+    "basemetals:clean_antimony": {
+      "representation": "c:ores/antimony"
+    },
+    "basemetals:clean_bismuth": {
+      "representation": "c:ores/bismuth"
+    },
+    "basemetals:clean_coldiron": {
+      "representation": "c:ores/coldiron"
+    },
+    "basemetals:clean_nickel": {
+      "representation": "c:ores/nickel"
+    },
+    "basemetals:clean_platinum": {
+      "representation": "c:ores/platinum"
+    },
+    "basemetals:clean_starsteel": {
+      "representation": "c:ores/starsteel"
+    },
+    "basemetals:clean_zinc": {
+      "representation": "c:ores/zinc"
+    },
+    "basemetals:dirty_adamantine": {
+      "representation": "c:ores/adamantine"
+    },
+    "basemetals:dirty_antimony": {
+      "representation": "c:ores/antimony"
+    },
+    "basemetals:dirty_bismuth": {
+      "representation": "c:ores/bismuth"
+    },
+    "basemetals:dirty_coldiron": {
+      "representation": "c:ores/coldiron"
+    },
+    "basemetals:dirty_nickel": {
+      "representation": "c:ores/nickel"
+    },
+    "basemetals:dirty_platinum": {
+      "representation": "c:ores/platinum"
+    },
+    "basemetals:dirty_starsteel": {
+      "representation": "c:ores/starsteel"
+    },
+    "basemetals:dirty_zinc": {
+      "representation": "c:ores/zinc"
+    }
+  }
+}

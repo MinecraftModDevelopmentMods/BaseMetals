@@ -3,10 +3,10 @@
   "recipe": {
     "type": "minecraft:crafting_shaped",
     "category": "misc",
-    "group": "basemetals:copper_ingot",
+    "group": "minecraft:copper_ingot",
     "key": {
       "X": {
-        "item": "basemetals:copper_nugget"
+        "tag": "c:nuggets/copper"
       }
     },
     "pattern": [
@@ -15,7 +15,7 @@
       "XXX"
     ],
     "result": {
-      "id": "basemetals:copper_ingot"
+      "id": "minecraft:copper_ingot"
     }
   }
 }

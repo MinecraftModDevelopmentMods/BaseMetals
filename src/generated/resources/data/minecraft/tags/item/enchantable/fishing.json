@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_fishing_rod",
+    "basemetals:antimony_fishing_rod",
+    "basemetals:aquarium_fishing_rod",
+    "basemetals:bismuth_fishing_rod",
+    "basemetals:brass_fishing_rod",
+    "basemetals:bronze_fishing_rod",
+    "basemetals:coldiron_fishing_rod",
+    "basemetals:copper_fishing_rod",
+    "basemetals:cupronickel_fishing_rod",
+    "basemetals:diamond_fishing_rod",
+    "basemetals:electrum_fishing_rod",
+    "basemetals:emerald_fishing_rod",
+    "basemetals:gold_fishing_rod",
+    "basemetals:invar_fishing_rod",
+    "basemetals:iron_fishing_rod",
+    "basemetals:lead_fishing_rod",
+    "basemetals:mithril_fishing_rod",
+    "basemetals:nickel_fishing_rod",
+    "basemetals:obsidian_fishing_rod",
+    "basemetals:pewter_fishing_rod",
+    "basemetals:platinum_fishing_rod",
+    "basemetals:quartz_fishing_rod",
+    "basemetals:silver_fishing_rod",
+    "basemetals:starsteel_fishing_rod",
+    "basemetals:steel_fishing_rod",
+    "basemetals:tin_fishing_rod",
+    "basemetals:zinc_fishing_rod"
+  ]
+}
