@@ -6,9 +6,17 @@
 - Set the ore cutout render type in the generated models.
 - Archive the 1.20-era Ender IO and Tinkers' Construct compatibility to `archive/compat-1.20/`.
 - Replace deprecated NeoForge API uses.
+- Let compatible mods join the legacy world conversion before Minecraft fixes old chunk and item data.
+- Keep basePower, baseSteam and baseElectric machine state, inventories and equipment when upgrading old Advantage worlds.
+- Skip legacy conversion for modern worlds and keep backups and source registry snapshots for genuine old saves.
+- Add native NeoForge regression tests for the shared migration hook and modern-world safety checks.
+- Keep oversized external chunks writable during conversion and leave original region backups untouched.
+- Recover player data after an interrupted startup, and run companion fixes for dedicated-server players too.
+- Keep host recovery available if region conversion finishes before the first modern world save.
+- End legacy terrain protection after the current world has upgraded, while retaining its old registry map.
+- Keep ordinary CI builds independent of release tags and support resource tests started from an IDE.
 
 ### Base Metals 4.0.0.121012
-
 
 - Port Base Metals to Minecraft 1.21.1 and NeoForge.
 - Restore recipe-book unlocks and armour advancements in the new data-pack folders.

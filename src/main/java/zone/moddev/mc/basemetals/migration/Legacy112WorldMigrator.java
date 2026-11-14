@@ -1,12 +1,9 @@
 package zone.moddev.mc.basemetals.migration;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
@@ -16,20 +13,20 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.InflaterInputStream;
-import java.util.zip.DeflaterOutputStream;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.MissingMappings;
+import zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension;
+import zone.moddev.mc.basemetals.api.migration.Legacy112MigrationExtension.Payload;
 import zone.moddev.mc.lib.common.runtime.MaterialAnvilBlock;
 import zone.moddev.mc.lib.common.runtime.CompatibilityDoubleSlabBlock;
 import zone.moddev.mc.basemetals.content.ModContent;
@@ -39,7 +36,6 @@ import com.google.gson.JsonParser;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
@@ -67,7 +63,11 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.storage.RegionFile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.storage.RegionStorageInfo;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
  * Runs Mojang's complete legacy-to-flattening chunk data fixes, then restores the
@@ -78,18 +78,119 @@ import net.minecraft.core.component.DataComponents;
 public final class Legacy112WorldMigrator {
     private static final int LAST_SUPPORTED_LEGACY_DATA_VERSION = 1_343;
     private static final int PALETTED_PRE_PROTOCHUNK_DATA_VERSION = 1_456;
+    private static final int NAMESPACED_BLOCK_ENTITY_DATA_VERSION = 704;
+    private static final int PRE_COMPONENT_PLAYER_DATA_VERSION = 3_465;
     private static final int REGION_HEADER_BYTES = 8_192;
     private static final int SECTOR_BYTES = 4_096;
     private static final String MARKER = "BASEMETALS_1_12_BLOCK_MIGRATION_COMPLETE.txt";
     private static final String BACKUP_DIRECTORY = "basemetals-1.12-region-backup";
+    private static final String PLAYER_SOURCE = "player-migration-source.dat";
+    private static final Map<ResourceLocation, Legacy112MigrationExtension> EXTENSIONS = new ConcurrentSkipListMap<>();
+    private static Path preparedWorld;
+    private static CompoundTag preparedPlayer;
+    private static int preparedVersion;
+    private static CompoundTag preparedIntegratedPlayer;
 
     private Legacy112WorldMigrator() {}
 
-    public static boolean migrateIfNeeded(Path worldRoot) throws IOException {
-        Path root = worldRoot.toAbsolutePath().normalize();
-        if (Files.isRegularFile(root.resolve(MARKER))) return false;
+    static synchronized void beginWorldLoad() {
+        preparedWorld = null;
+        preparedPlayer = null;
+        preparedVersion = 0;
+        preparedIntegratedPlayer = null;
+    }
 
+    /** Keep the original player before Forge and vanilla read the old save. */
+    static synchronized void prepareWorld(Path levelDat, CompoundTag root) throws IOException {
+        Path world = levelDat.toAbsolutePath().normalize().getParent();
+        if (Files.isRegularFile(world.resolve(MARKER)) && sourceDataVersion(root) >= currentDataVersion()) return;
+        Path journal = world.resolve(BACKUP_DIRECTORY).resolve(PLAYER_SOURCE);
+        if (Files.exists(journal) && !Files.isRegularFile(journal))
+            throw new IOException("Pending legacy player snapshot is not a file: " + journal);
+        if (isLegacyLevel(root)) {
+            preparedWorld = world;
+            preparedVersion = sourceDataVersion(root);
+            CompoundTag data = root.getCompound("Data");
+            preparedPlayer = data.contains("Player", Tag.TAG_COMPOUND) ? data.getCompound("Player").copy() : null;
+            // Persist before the loader can rewrite level.dat. Never replace the
+            // first snapshot with an already-fixed player after an interrupted load.
+            if (preparedPlayer != null && !Files.exists(journal)) {
+                CompoundTag saved = new CompoundTag();
+                saved.putInt("DataVersion", preparedVersion);
+                saved.put("Player", preparedPlayer.copy());
+                Files.createDirectories(journal.getParent());
+                writeCompressedAtomically(journal, saved);
+            }
+        }
+        if (Files.isRegularFile(journal)) {
+            CompoundTag saved = NbtIo.readCompressed(journal, NbtAccounter.unlimitedHeap());
+            if (!saved.contains("Player", Tag.TAG_COMPOUND)
+                    || !saved.contains("DataVersion", Tag.TAG_ANY_NUMERIC)
+                    || saved.getInt("DataVersion") > LAST_SUPPORTED_LEGACY_DATA_VERSION) {
+                throw new IOException("Invalid pending legacy player snapshot: " + journal);
+            }
+            preparedWorld = world;
+            preparedVersion = saved.getInt("DataVersion");
+            preparedPlayer = saved.getCompound("Player").copy();
+        }
+    }
+
+    private static boolean isLegacyLevel(CompoundTag root) {
+        return root.contains("Data", Tag.TAG_COMPOUND)
+                && sourceDataVersion(root) <= LAST_SUPPORTED_LEGACY_DATA_VERSION;
+    }
+
+    static int sourceDataVersion(CompoundTag root) {
+        CompoundTag data = root.getCompound("Data");
+        if (data.contains("DataVersion", Tag.TAG_ANY_NUMERIC)) return data.getInt("DataVersion");
+        if (data.getCompound("Version").contains("Id", Tag.TAG_ANY_NUMERIC))
+            return data.getCompound("Version").getInt("Id");
+        // Very old saves have no version tag. Known modern level metadata must
+        // not opt into the packaged numeric-ID fallback just because a tag is missing.
+        return data.contains("WorldGenSettings", Tag.TAG_COMPOUND) ? Integer.MAX_VALUE : 0;
+    }
+
+    private static boolean hasLegacySource(Path root) throws IOException {
+        if (root.equals(preparedWorld) || isLegacyLevel(NbtIo.readCompressed(root.resolve("level.dat"), NbtAccounter.unlimitedHeap()))) {
+            return true;
+        }
+
+        // This sidecar survives Forge's first rewrite. An old level.dat_old alone
+        // is not evidence that the current world still needs flattening.
+        Path sidecar = root.resolve("basemetals-legacy-registry.dat");
+        if (!Files.isRegularFile(sidecar)) return false;
+
+        CompoundTag source = NbtIo.readCompressed(sidecar, NbtAccounter.unlimitedHeap());
+        return isLegacyLevel(source) || oldBlockIds(source).values().stream()
+                .map(Legacy112WorldMigrator::normalizeLegacyRegistryName)
+                .anyMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":") || id.startsWith("mmdlib:"));
+    }
+
+    public static void registerExtension(ResourceLocation id, Legacy112MigrationExtension extension) {
+        if (EXTENSIONS.putIfAbsent(Objects.requireNonNull(id), Objects.requireNonNull(extension)) != null) {
+            throw new IllegalArgumentException("Duplicate legacy world migration extension: " + id);
+        }
+    }
+
+    public static synchronized boolean migrateIfNeeded(Path worldRoot) throws IOException {
+        return migrateIfNeeded(worldRoot, List.copyOf(EXTENSIONS.values()));
+    }
+
+    static synchronized boolean migrateIfNeeded(Path worldRoot, List<Legacy112MigrationExtension> extensions) throws IOException {
+        Path root = worldRoot.toAbsolutePath().normalize();
         if (!Files.isRegularFile(root.resolve("level.dat"))) return false;
+        if (Files.isRegularFile(root.resolve(MARKER))) {
+            // Region conversion may finish before the first modern level.dat save.
+            // A new process must still repair that host, without converting regions again.
+            if (root.equals(preparedWorld) && preparedPlayer != null && preparedIntegratedPlayer == null
+                    && sourceDataVersion(NbtIo.readCompressed(root.resolve("level.dat"), NbtAccounter.unlimitedHeap()))
+                            < currentDataVersion()) {
+                return !migrateLooseInventories(root, extensions).isEmpty();
+            }
+            return false;
+        }
+        if (!hasLegacySource(root)) return false;
+
         Map<Integer, String> oldBlockIds = legacyBlockIds(root);
         if (oldBlockIds.values().stream().noneMatch(id -> id.startsWith(BaseMetals.MOD_ID + ":"))) return false;
 
@@ -103,7 +204,7 @@ public final class Legacy112WorldMigrator {
         int convertedItemAliases = 0;
         int convertedDamageValues = 0;
         for (Path region : regions) {
-            RegionConversion result = convertRegion(root, region, oldBlockIds);
+            RegionConversion result = convertRegion(root, region, oldBlockIds, extensions);
             if (result.convertedChunks() > 0) {
                 convertedRegions++;
                 convertedChunks += result.convertedChunks();
@@ -114,14 +215,14 @@ public final class Legacy112WorldMigrator {
                 convertedDamageValues += result.convertedDamageValues();
             }
         }
-        ItemMigration looseItems = restoreRewrittenSingleplayerPlayer(root)
-                .plus(migrateLooseInventories(root));
+        ItemMigration looseItems = restoreRewrittenSingleplayerPlayer(root, extensions)
+                .plus(migrateLooseInventories(root, extensions));
         convertedBuckets += looseItems.convertedBuckets();
         convertedItemAliases += looseItems.convertedItemAliases();
         convertedDamageValues += looseItems.convertedDamageValues();
 
         if (convertedChunks == 0 && convertedBuckets == 0
-                && convertedItemAliases == 0 && convertedDamageValues == 0) {
+                && convertedItemAliases == 0 && convertedDamageValues == 0 && !looseItems.extensionChanged()) {
             Files.writeString(root.resolve(MARKER),
                     "No legacy Forge numeric chunks or filled buckets required Base Metals migration."
                             + System.lineSeparator(),
@@ -131,11 +232,12 @@ public final class Legacy112WorldMigrator {
 
         String result = "Converted " + convertedChunks + " legacy chunks in " + convertedRegions
                 + " region files through Mojang's legacy flattening fixes. Backups: " + BACKUP_DIRECTORY
-                + ". Third-party states preserved by registry name at their default state: "
+                + ". Third-party states restored: "
                 + externalStates + ". Legacy block entities preserved: " + preservedBlockEntities
                 + ". Legacy filled buckets converted: " + convertedBuckets
                 + ". Legacy item aliases forwarded: " + convertedItemAliases
-                + ". Mod-item damage values preserved: " + convertedDamageValues + ".";
+                + ". Mod-item damage values preserved: " + convertedDamageValues + "."
+                + (looseItems.extensionChanged() ? " Companion player data migrated." : "");
         Files.writeString(root.resolve(MARKER), result + System.lineSeparator(), StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE_NEW);
         BaseMetals.LOGGER.info(result);
@@ -143,26 +245,31 @@ public final class Legacy112WorldMigrator {
     }
 
     /**
-     * Refresh the single-player inventory from the migrated level.dat. The
-     * integrated server reads it before
-     * {@link net.neoforged.neoforge.event.server.ServerAboutToStartEvent}, so it
-     * would otherwise keep the old items until the next load.
      * The integrated server reads the root Player tag before
      * {@link net.neoforged.neoforge.event.server.ServerAboutToStartEvent}. Reload
      * that one tag from the corrected level.dat so the first upgraded
      * single-player session receives the same item migration as playerdata.
      */
-    public static void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
-        CompoundTag loaded = server.getWorldData().getLoadedPlayerTag();
+    public static synchronized void refreshLoadedSingleplayerPlayer(MinecraftServer server, Path worldRoot) throws IOException {
+        refreshLoadedSingleplayerPlayer(server.getWorldData().getLoadedPlayerTag(), worldRoot);
+    }
+
+    static synchronized void refreshLoadedSingleplayerPlayer(CompoundTag loaded, Path worldRoot) throws IOException {
         if (loaded == null) return;
-        CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat"), NbtAccounter.unlimitedHeap());
-        CompoundTag data = level.getCompound("Data");
-        if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
-        int version = data.getInt("DataVersion");
-        CompoundTag corrected = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                data.getCompound("Player"), version);
+        CompoundTag corrected;
+        if (preparedIntegratedPlayer != null && worldRoot.toAbsolutePath().normalize().equals(preparedWorld)) {
+            corrected = preparedIntegratedPlayer;
+            preparedIntegratedPlayer = null;
+        } else {
+            CompoundTag level = NbtIo.readCompressed(worldRoot.resolve("level.dat"), NbtAccounter.unlimitedHeap());
+            CompoundTag data = level.getCompound("Data");
+            if (!data.contains("Player", Tag.TAG_COMPOUND)) return;
+            corrected = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
+                    data.getCompound("Player"), data.getInt("DataVersion"));
+        }
         for (String key : List.copyOf(loaded.getAllKeys())) loaded.remove(key);
         loaded.merge(corrected);
+        preparedPlayer = null;
     }
 
     private static Map<Integer, String> oldBlockIds(CompoundTag level) {
@@ -177,22 +284,21 @@ public final class Legacy112WorldMigrator {
     }
 
     private static Map<Integer, String> legacyBlockIds(Path root) throws IOException {
-        boolean legacyWorld = false;
-        for (String fileName : List.of("level.dat", "level.dat_old", "basemetals-legacy-registry.dat")) {
+        for (String fileName : List.of("level.dat", "basemetals-legacy-registry.dat", "level.dat_old")) {
             Path file = root.resolve(fileName);
             if (!Files.isRegularFile(file)) continue;
             CompoundTag candidate = NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap());
-            int dataVersion = candidate.getCompound("Data").getInt("DataVersion");
-            if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) continue;
-            legacyWorld |= candidate.contains("Data", Tag.TAG_COMPOUND);
+            int dataVersion = sourceDataVersion(candidate);
+            if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
+                    && !fileName.equals("basemetals-legacy-registry.dat")) continue;
             Map<Integer, String> ids = oldBlockIds(candidate);
             if (!ids.isEmpty()) return ids;
         }
-        // Use packaged IDs only when saved metadata confirms an old world.
-        return legacyWorld ? embeddedBlockIds() : Map.of();
+        return embeddedBlockIds();
     }
 
-    static Map<Integer, String> legacyBlockIdsForTest(Path root) throws IOException {
+    static synchronized Map<Integer, String> legacyBlockIdsForTest(Path root) throws IOException {
+        if (!Files.isRegularFile(root.resolve("level.dat")) || !hasLegacySource(root)) return Map.of();
         return legacyBlockIds(root);
     }
 
@@ -212,7 +318,7 @@ public final class Legacy112WorldMigrator {
 
     private static List<Path> findRegionFiles(Path root) throws IOException {
         List<Path> result = new ArrayList<>();
-        try (var paths = Files.walk(root, 4)) {
+        try (var paths = Files.walk(root)) {
             paths.filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().matches("r\\.-?\\d+\\.-?\\d+\\.mca"))
                     .filter(path -> path.getParent() != null && path.getParent().getFileName().toString().equals("region"))
@@ -237,75 +343,110 @@ public final class Legacy112WorldMigrator {
         }
     }
 
-    private static RegionConversion convertRegion(Path root, Path region, Map<Integer, String> ids) throws IOException {
+    private static RegionConversion convertRegion(Path root, Path region, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         byte[] source = Files.readAllBytes(region);
+        if (source.length == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
         if (source.length < REGION_HEADER_BYTES) throw new IOException("Invalid region header: " + region);
         ByteBuffer locations = ByteBuffer.wrap(source, 0, SECTOR_BYTES).order(ByteOrder.BIG_ENDIAN);
-        byte[] timestamps = Arrays.copyOfRange(source, SECTOR_BYTES, REGION_HEADER_BYTES);
-        List<RegionChunk> chunks = new ArrayList<>();
+        Map<ChunkPos, CompoundTag> updates = new LinkedHashMap<>();
         int converted = 0;
         int externalStates = 0;
         int preservedBlockEntities = 0;
         int convertedBuckets = 0;
         int convertedItemAliases = 0;
         int convertedDamageValues = 0;
+        Set<Path> externalFiles = new java.util.LinkedHashSet<>();
+        String[] coordinates = region.getFileName().toString().split("\\.");
+        int regionX = Integer.parseInt(coordinates[1]);
+        int regionZ = Integer.parseInt(coordinates[2]);
 
-        for (int index = 0; index < 1_024; index++) {
-            int location = locations.getInt(index * 4);
-            if (location == 0) continue;
-            int offset = location >>> 8;
-            int position = offset * SECTOR_BYTES;
-            if (position < REGION_HEADER_BYTES || position + 5 > source.length) {
-                throw new IOException("Invalid chunk offset in " + region + " entry " + index);
-            }
-            int length = intAt(source, position);
-            if (length < 1 || position + 4 + length > source.length) {
-                throw new IOException("Invalid chunk length in " + region + " entry " + index);
-            }
-            int compression = source[position + 4] & 0xff;
-            byte[] payload = Arrays.copyOfRange(source, position + 5, position + 4 + length);
-            CompoundTag chunk = readChunk(payload, compression);
-            ChunkConversion conversion = convertChunk(chunk, ids);
-            byte[] record;
-            if (conversion.converted()) {
-                record = writeChunk(conversion.chunk());
-                converted++;
-                externalStates += conversion.externalStates();
-                preservedBlockEntities += conversion.preservedBlockEntities();
-                convertedBuckets += conversion.convertedBuckets();
-                convertedItemAliases += conversion.convertedItemAliases();
-                convertedDamageValues += conversion.convertedDamageValues();
-            } else {
-                record = Arrays.copyOfRange(source, position, position + 4 + length);
-            }
-            chunks.add(new RegionChunk(index, record));
-        }
-
-        if (converted == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
-        ensureBackupCapacity(root, List.of(region));
-        byte[] output = buildRegion(chunks, timestamps);
-        Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(region));
-        Files.createDirectories(backup.getParent());
-        if (!Files.exists(backup)) Files.copy(region, backup, StandardCopyOption.COPY_ATTRIBUTES);
-
-        Path temporary = region.resolveSibling(region.getFileName() + ".basemetals.tmp");
-        Files.write(temporary, output, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        // RegionFile opens read-write and pads on close. Inspect a disposable copy
+        // so even a no-op scan cannot alter the source or its later backup.
+        Path inspection = Files.createTempDirectory("basemetals-region-");
         try {
-            Files.move(temporary, region, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
-        } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
-            Files.move(temporary, region, StandardCopyOption.REPLACE_EXISTING);
+            Path copy = inspection.resolve(region.getFileName());
+            Files.copy(region, copy);
+            for (int index = 0; index < 1_024; index++) {
+                int location = locations.getInt(index * 4);
+                if (location == 0) continue;
+                int offset = location >>> 8;
+                int position = offset * SECTOR_BYTES;
+                if (position < REGION_HEADER_BYTES || position + 5 > source.length) {
+                    throw new IOException("Invalid chunk offset in " + region + " entry " + index);
+                }
+                int length = intAt(source, position);
+                if (length < 1 || position + 4 + length > source.length) {
+                    throw new IOException("Invalid chunk length in " + region + " entry " + index);
+                }
+                int compression = source[position + 4] & 0xff;
+                ChunkPos chunkPos = new ChunkPos(regionX * 32 + (index & 31), regionZ * 32 + (index >>> 5));
+                if ((compression & 128) != 0) {
+                    Path external = region.getParent().resolve("c." + chunkPos.x + "." + chunkPos.z + ".mcc");
+                    externalFiles.add(external);
+                    Files.copy(external, inspection.resolve(external.getFileName()));
+                }
+            }
+            try (RegionFile reader = new RegionFile(new RegionStorageInfo("Base Metals migration", Level.OVERWORLD, "chunk"),
+                    copy, inspection, false)) {
+                for (int index = 0; index < 1_024; index++) {
+                    if (locations.getInt(index * 4) == 0) continue;
+                    ChunkPos chunkPos = new ChunkPos(regionX * 32 + (index & 31), regionZ * 32 + (index >>> 5));
+                    CompoundTag chunk;
+                    try (DataInputStream input = reader.getChunkDataInputStream(chunkPos)) {
+                        if (input == null) throw new IOException("Could not read chunk " + chunkPos + " in " + region);
+                        chunk = NbtIo.read(input, NbtAccounter.unlimitedHeap());
+                    }
+                    ChunkConversion conversion = convertChunk(chunk, ids, extensions);
+                    if (!conversion.converted()) continue;
+                    updates.put(chunkPos, conversion.chunk());
+                    converted++;
+                    externalStates += conversion.externalStates();
+                    preservedBlockEntities += conversion.preservedBlockEntities();
+                    convertedBuckets += conversion.convertedBuckets();
+                    convertedItemAliases += conversion.convertedItemAliases();
+                    convertedDamageValues += conversion.convertedDamageValues();
+                }
+            }
+
+            if (converted == 0) return new RegionConversion(0, 0, 0, 0, 0, 0);
+            List<Path> originals = new ArrayList<>(externalFiles);
+            originals.add(region);
+            ensureBackupCapacity(root, originals);
+            for (Path original : originals) {
+                Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(original));
+                Files.createDirectories(backup.getParent());
+                if (!Files.exists(backup)) Files.copy(original, backup, StandardCopyOption.COPY_ATTRIBUTES);
+            }
+
+            // Let Minecraft handle compression, oversized .mcc records and their
+            // stub/header updates rather than imposing an inline sector limit.
+            try (RegionFile writer = new RegionFile(new RegionStorageInfo("Base Metals migration", Level.OVERWORLD, "chunk"),
+                    region, region.getParent(), true)) {
+                for (var entry : updates.entrySet()) {
+                    try (DataOutputStream output = writer.getChunkDataOutputStream(entry.getKey())) {
+                        NbtIo.write(entry.getValue(), output);
+                    }
+                }
+            }
+        } finally {
+            try (var paths = Files.walk(inspection)) {
+                for (Path path : paths.sorted(java.util.Comparator.reverseOrder()).toList()) Files.deleteIfExists(path);
+            }
         }
         return new RegionConversion(converted, externalStates, preservedBlockEntities, convertedBuckets,
                 convertedItemAliases, convertedDamageValues);
     }
 
-    private static ChunkConversion convertChunk(CompoundTag chunk, Map<Integer, String> ids) throws IOException {
+    private static ChunkConversion convertChunk(CompoundTag chunk, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         int sourceVersion = chunk.getInt("DataVersion");
         if (sourceVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
         ItemMigration itemMigration = convertLegacyItems(chunk);
+        boolean extensionChanged = prepareExtensions(extensions, chunk, sourceVersion, Payload.CHUNK);
         CompoundTag level = chunk.getCompound("Level");
         ListTag sections = level.getList("Sections", Tag.TAG_COMPOUND);
         List<LegacyBlock> savedBlocks = new ArrayList<>();
@@ -317,16 +458,18 @@ public final class Legacy112WorldMigrator {
             savedBlocks.addAll(snapshot.blocks());
             externalStates += snapshot.externalStates();
         }
-        Map<Long, List<CompoundTag>> savedBlockEntities = snapshotLegacyBlockEntities(level, savedBlocks);
-        if (savedBlocks.isEmpty() && itemMigration.isEmpty()) {
+        if (savedBlocks.isEmpty() && itemMigration.isEmpty() && !extensionChanged) {
             return new ChunkConversion(false, 0, 0, 0, 0, 0, chunk);
         }
 
+        for (Legacy112MigrationExtension extension : extensions) extension.beforeChunkFlattening(chunk);
+        Map<Long, List<CompoundTag>> savedBlockEntities =
+                snapshotLegacyBlockEntities(chunk.getCompound("Level"), savedBlocks);
         CompoundTag fixed = DataFixTypes.CHUNK.update(DataFixers.getDataFixer(),
                 chunk, sourceVersion, PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         fixed.putInt("DataVersion", PALETTED_PRE_PROTOCHUNK_DATA_VERSION);
         if (!savedBlocks.isEmpty()) {
-            restoreSavedBlocks(fixed, savedBlocks);
+            restoreSavedBlocks(fixed, savedBlocks, extensions);
             restoreLegacyBlockEntities(fixed, savedBlocks, savedBlockEntities);
         }
         int preservedBlockEntities = savedBlockEntities.values().stream().mapToInt(List::size).sum();
@@ -335,14 +478,29 @@ public final class Legacy112WorldMigrator {
     }
 
     static CompoundTag convertChunkForTest(CompoundTag chunk, Map<Integer, String> ids) throws IOException {
-        ChunkConversion conversion = convertChunk(chunk, ids);
+        return convertChunkForTest(chunk, ids, List.of());
+    }
+
+    static CompoundTag convertChunkForTest(CompoundTag chunk, Map<Integer, String> ids,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
+        ChunkConversion conversion = convertChunk(chunk, ids, extensions);
         if (!conversion.converted()) throw new IOException("Validation chunk did not contain a third-party block");
         return conversion.chunk();
     }
 
-    private static ItemMigration migrateLooseInventories(Path root) throws IOException {
+    private static boolean prepareExtensions(List<Legacy112MigrationExtension> extensions, CompoundTag tag,
+            int dataVersion, Payload payload) {
+        if (dataVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION) return false;
+        boolean changed = false;
+        for (Legacy112MigrationExtension extension : extensions) changed |= extension.prepareData(tag, dataVersion, payload);
+        return changed;
+    }
+
+    private static ItemMigration migrateLooseInventories(Path root, List<Legacy112MigrationExtension> extensions)
+            throws IOException {
         List<Path> files = new ArrayList<>();
-        files.add(root.resolve("level.dat"));
+        Path levelDat = root.resolve("level.dat");
+        files.add(levelDat);
         Path playerData = root.resolve("playerdata");
         if (Files.isDirectory(playerData)) {
             try (var paths = Files.list(playerData)) {
@@ -358,56 +516,103 @@ public final class Legacy112WorldMigrator {
             if (!Files.isRegularFile(file)) continue;
             CompoundTag data = NbtIo.readCompressed(file, NbtAccounter.unlimitedHeap());
             ItemMigration changed = convertLegacyItems(data);
-            if (changed.isEmpty()) continue;
+            boolean extensionChanged = false;
+            if (file.equals(levelDat)) {
+                CompoundTag world = data.getCompound("Data");
+                if (root.equals(preparedWorld) && preparedPlayer != null && sourceDataVersion(data) < currentDataVersion()) {
+                    CompoundTag player = preparedPlayer.copy();
+                    ItemMigration originalItems = convertLegacyItems(player);
+                    prepareExtensions(extensions, player, preparedVersion, Payload.PLAYER);
+                    preparedIntegratedPlayer = flattenPreparedPlayer(player, preparedVersion, extensions).player();
+                    converted = converted.plus(originalItems).withExtensionChange(true);
+                } else if (!extensions.isEmpty() && isLegacyLevel(data) && world.contains("Player", Tag.TAG_COMPOUND)) {
+                    CompoundTag player = world.getCompound("Player");
+                    int version = sourceDataVersion(data);
+                    extensionChanged = prepareExtensions(extensions, player, version, Payload.PLAYER);
+                    if (root.equals(preparedWorld)) {
+                        // Integrated startup can still have legacy level.dat on disk. Keep its
+                        // version and layout intact; refresh only the already-loaded player.
+                        PlayerConversion fixed = flattenPreparedPlayer(player, version, extensions);
+                        preparedIntegratedPlayer = fixed.player();
+                        converted = converted.withExtensionChange(fixed.extensionChanged());
+                    }
+                }
+            } else {
+                int version = data.getInt("DataVersion");
+                extensionChanged = prepareExtensions(extensions, data, version, Payload.PLAYER);
+                if (version <= LAST_SUPPORTED_LEGACY_DATA_VERSION) {
+                    PlayerConversion fixed = flattenPreparedPlayer(data, version, extensions);
+                    data = fixed.player();
+                    data.putInt("DataVersion", currentDataVersion());
+                    extensionChanged = true;
+                }
+            }
+            if (changed.isEmpty() && !extensionChanged) continue;
             Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(file));
             Files.createDirectories(backup.getParent());
             if (!Files.exists(backup)) Files.copy(file, backup, StandardCopyOption.COPY_ATTRIBUTES);
             writeCompressedAtomically(file, data);
-            converted = converted.plus(changed);
+            converted = converted.plus(changed.withExtensionChange(extensionChanged));
         }
         return converted;
     }
 
-    /**
-     * Forge can rewrite level.dat before ServerAboutToStartEvent, which means
-     * Mojang has already interpreted a legacy mod tool's Damage field as
-     * flattening metadata. The untouched legacy player remains in
-     * level.dat_old, so rebuild only that player record through the normal
-     * player data fixer after first protecting mod durability and aliases.
-     */
-    private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root) throws IOException {
+    /** Restore the original player captured before rewriting, including crash recovery. */
+    private static ItemMigration restoreRewrittenSingleplayerPlayer(Path root,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         Path currentFile = root.resolve("level.dat");
-        Path legacyFile = root.resolve("level.dat_old");
-        if (!Files.isRegularFile(currentFile) || !Files.isRegularFile(legacyFile)) {
+        if (!root.equals(preparedWorld) || preparedPlayer == null || !Files.isRegularFile(currentFile)) {
             return ItemMigration.NONE;
         }
 
         CompoundTag current = NbtIo.readCompressed(currentFile, NbtAccounter.unlimitedHeap());
         CompoundTag currentData = current.getCompound("Data");
-        if (currentData.getInt("DataVersion") <= LAST_SUPPORTED_LEGACY_DATA_VERSION
-                || !currentData.contains("Player", Tag.TAG_COMPOUND)) {
+        if (sourceDataVersion(current) < currentDataVersion()) {
             return ItemMigration.NONE;
         }
 
-        CompoundTag legacy = NbtIo.readCompressed(legacyFile, NbtAccounter.unlimitedHeap());
-        CompoundTag legacyData = legacy.getCompound("Data");
-        int legacyVersion = legacyData.getInt("DataVersion");
-        if (legacyVersion > LAST_SUPPORTED_LEGACY_DATA_VERSION
-                || !legacyData.contains("Player", Tag.TAG_COMPOUND)) {
-            return ItemMigration.NONE;
-        }
-
-        CompoundTag player = legacyData.getCompound("Player").copy();
+        CompoundTag player = preparedPlayer.copy();
         ItemMigration migration = convertLegacyItems(player);
-        CompoundTag fixedPlayer = DataFixTypes.PLAYER.updateToCurrentVersion(DataFixers.getDataFixer(),
-                player, legacyVersion);
-        currentData.put("Player", fixedPlayer);
+        boolean extensionChanged = prepareExtensions(extensions, player, preparedVersion, Payload.PLAYER);
+        PlayerConversion fixed = flattenPreparedPlayer(player, preparedVersion, extensions);
+        boolean playerChanged = !currentData.getCompound("Player").equals(fixed.player());
+        currentData.put("Player", fixed.player());
+        preparedIntegratedPlayer = fixed.player().copy();
 
         Path backup = root.resolve(BACKUP_DIRECTORY).resolve(root.relativize(currentFile));
         Files.createDirectories(backup.getParent());
         if (!Files.exists(backup)) Files.copy(currentFile, backup, StandardCopyOption.COPY_ATTRIBUTES);
         writeCompressedAtomically(currentFile, current);
-        return migration;
+        return migration.withExtensionChange(extensionChanged || fixed.extensionChanged() || playerChanged);
+    }
+
+    private static PlayerConversion flattenPreparedPlayer(CompoundTag player, int version,
+            List<Legacy112MigrationExtension> extensions) {
+        var fixer = DataFixers.getDataFixer();
+        if (extensions.isEmpty()) {
+            return new PlayerConversion(DataFixTypes.PLAYER.updateToCurrentVersion(fixer, player, version), false);
+        }
+
+        CompoundTag preparedSource = player.copy();
+        if (version < NAMESPACED_BLOCK_ENTITY_DATA_VERSION) {
+            player = DataFixTypes.PLAYER.update(fixer, player, version,
+                    NAMESPACED_BLOCK_ENTITY_DATA_VERSION);
+            version = NAMESPACED_BLOCK_ENTITY_DATA_VERSION;
+        }
+
+        // Give extensions the flattened 1.20.1 item shape so they can restore names before componentization.
+        CompoundTag flattened = DataFixTypes.PLAYER.update(fixer, player, version, PRE_COMPONENT_PLAYER_DATA_VERSION);
+        CompoundTag beforeCallbacks = flattened.copy();
+        for (Legacy112MigrationExtension extension : extensions) {
+            extension.afterPlayerFlattening(preparedSource, flattened);
+        }
+        boolean changed = !beforeCallbacks.equals(flattened);
+        CompoundTag current = DataFixTypes.PLAYER.updateToCurrentVersion(fixer, flattened, PRE_COMPONENT_PLAYER_DATA_VERSION);
+        return new PlayerConversion(current, changed);
+    }
+
+    private static int currentDataVersion() {
+        return net.minecraft.SharedConstants.getCurrentVersion().getDataVersion().getVersion();
     }
 
     private static ItemMigration convertLegacyItems(Tag value) {
@@ -433,15 +638,13 @@ public final class Legacy112WorldMigrator {
                         || oldId.getNamespace().equals("mmdlib"))
                         && compound.contains("Count", Tag.TAG_ANY_NUMERIC)) {
                     ResourceLocation targetId = MissingMappings.itemTargetId(oldId.getPath());
-                    net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.get(targetId);
+                    net.minecraft.world.item.Item item = BuiltInRegistries.ITEM.getOptional(targetId).orElse(null);
                     if (item != null && !oldId.equals(targetId)) {
                         compound.putString("id", targetId.toString());
                         convertedItemAliases++;
                     }
                     int damage = compound.getInt("Damage");
-                    if (item != null
-                            && item.components().getOrDefault(DataComponents.MAX_DAMAGE, 0) > 0
-                            && damage > 0
+                    if (item != null && item.getDefaultInstance().isDamageableItem() && damage > 0
                             && compound.contains("Damage", Tag.TAG_ANY_NUMERIC)) {
                         CompoundTag itemTag = compound.contains("tag", Tag.TAG_COMPOUND)
                                 ? compound.getCompound("tag") : new CompoundTag();
@@ -476,6 +679,9 @@ public final class Legacy112WorldMigrator {
     private static void writeCompressedAtomically(Path file, CompoundTag data) throws IOException {
         Path temporary = file.resolveSibling(file.getFileName() + ".basemetals.tmp");
         NbtIo.writeCompressed(data, temporary);
+        try (var channel = java.nio.channels.FileChannel.open(temporary, StandardOpenOption.WRITE)) {
+            channel.force(true);
+        }
         try {
             Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
         } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
@@ -520,7 +726,8 @@ public final class Legacy112WorldMigrator {
         return new SectionSnapshot(savedBlocks, externalStates);
     }
 
-    private static void restoreSavedBlocks(CompoundTag chunk, List<LegacyBlock> savedBlocks) throws IOException {
+    private static void restoreSavedBlocks(CompoundTag chunk, List<LegacyBlock> savedBlocks,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         Map<Integer, CompoundTag> targetSections = new HashMap<>();
         ListTag sections = chunk.getCompound("Level").getList("Sections", Tag.TAG_COMPOUND);
         for (Tag value : sections) {
@@ -552,7 +759,7 @@ public final class Legacy112WorldMigrator {
             }
 
             for (LegacyBlock legacy : entry.getValue()) {
-                CompoundTag state = restoredState(legacy, byPosition);
+                CompoundTag state = restoredState(legacy, byPosition, extensions);
                 Integer paletteId = paletteIds.get(state);
                 if (paletteId == null) {
                     paletteId = palette.size();
@@ -646,15 +853,15 @@ public final class Legacy112WorldMigrator {
         return Math.max(4, 32 - Integer.numberOfLeadingZeros(Math.max(1, paletteSize - 1)));
     }
 
-    private static CompoundTag restoredState(LegacyBlock legacy, Map<Long, LegacyBlock> byPosition)
-            throws IOException {
+    private static CompoundTag restoredState(LegacyBlock legacy, Map<Long, LegacyBlock> byPosition,
+            List<Legacy112MigrationExtension> extensions) throws IOException {
         String normalizedName = normalizeLegacyRegistryName(legacy.name());
         ResourceLocation oldId = ResourceLocation.tryParse(normalizedName);
         if (oldId == null) throw new IOException("Invalid legacy block registry name " + legacy.name());
         if (oldId.getNamespace().equals(BaseMetals.MOD_ID) || oldId.getNamespace().equals("mmdlib")) {
             String path = MissingMappings.blockTargetPath(oldId.getPath());
             ResourceLocation targetId = ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, path);
-            Block block = BuiltInRegistries.BLOCK.get(targetId);
+            Block block = BuiltInRegistries.BLOCK.getOptional(targetId).orElse(null);
             if (block == null) throw new IOException("No 1.18 block exists for legacy block " + legacy.name());
             BlockState state = stateForLegacyMetadata(block, legacy.metadata());
             if (block instanceof DoorBlock) {
@@ -673,6 +880,17 @@ public final class Legacy112WorldMigrator {
             }
             return NbtUtils.writeBlockState(state);
         }
+
+        BlockState decoded = null;
+        for (Legacy112MigrationExtension extension : extensions) {
+            BlockState state = extension.decodeBlockState(oldId, legacy.metadata());
+            if (state == null) continue;
+            if (decoded != null || state.isAir()) {
+                throw new IOException("Unsafe or ambiguous migration state for legacy block " + oldId);
+            }
+            decoded = state;
+        }
+        if (decoded != null) return NbtUtils.writeBlockState(decoded);
 
         CompoundTag state = new CompoundTag();
         state.putString("Name", normalizedName);
@@ -805,77 +1023,38 @@ public final class Legacy112WorldMigrator {
         return value >>> ((index & 1) * 4) & 15;
     }
 
-    private static CompoundTag readChunk(byte[] payload, int compression) throws IOException {
-        InputStream input = switch (compression) {
-            case 1 -> new GZIPInputStream(new ByteArrayInputStream(payload));
-            case 2 -> new InflaterInputStream(new ByteArrayInputStream(payload));
-            case 3 -> new ByteArrayInputStream(payload);
-            default -> throw new IOException("Unsupported region compression type " + compression);
-        };
-        try (DataInputStream data = new DataInputStream(input)) {
-            return NbtIo.read(data);
-        }
-    }
-
-    private static byte[] writeChunk(CompoundTag chunk) throws IOException {
-        ByteArrayOutputStream compressed = new ByteArrayOutputStream();
-        try (OutputStream deflater = new DeflaterOutputStream(compressed);
-                DataOutputStream data = new DataOutputStream(deflater)) {
-            NbtIo.write(chunk, data);
-        }
-        byte[] payload = compressed.toByteArray();
-        ByteBuffer record = ByteBuffer.allocate(payload.length + 5).order(ByteOrder.BIG_ENDIAN);
-        record.putInt(payload.length + 1);
-        record.put((byte) 2);
-        record.put(payload);
-        return record.array();
-    }
-
-    private static byte[] buildRegion(List<RegionChunk> chunks, byte[] timestamps) throws IOException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        byte[] header = new byte[REGION_HEADER_BYTES];
-        System.arraycopy(timestamps, 0, header, SECTOR_BYTES, SECTOR_BYTES);
-        int sector = 2;
-        List<byte[]> records = new ArrayList<>();
-        for (RegionChunk chunk : chunks) {
-            int sectors = (chunk.record().length + SECTOR_BYTES - 1) / SECTOR_BYTES;
-            if (sectors > 255) throw new IOException("Chunk exceeds the region format sector limit");
-            putInt(header, chunk.index() * 4, sector << 8 | sectors);
-            byte[] padded = Arrays.copyOf(chunk.record(), sectors * SECTOR_BYTES);
-            records.add(padded);
-            sector += sectors;
-        }
-        output.write(header);
-        for (byte[] record : records) output.write(record);
-        return output.toByteArray();
-    }
-
     private static int intAt(byte[] bytes, int position) {
         return ByteBuffer.wrap(bytes, position, 4).order(ByteOrder.BIG_ENDIAN).getInt();
     }
 
-    private static void putInt(byte[] bytes, int position, int value) {
-        ByteBuffer.wrap(bytes, position, 4).order(ByteOrder.BIG_ENDIAN).putInt(value);
-    }
-
-    private record RegionChunk(int index, byte[] record) {}
     private record RegionConversion(int convertedChunks, int externalStates, int preservedBlockEntities,
             int convertedBuckets,
             int convertedItemAliases, int convertedDamageValues) {}
     private record ChunkConversion(boolean converted, int externalStates, int preservedBlockEntities,
             int convertedBuckets,
             int convertedItemAliases, int convertedDamageValues, CompoundTag chunk) {}
-    private record ItemMigration(int convertedBuckets, int convertedItemAliases, int convertedDamageValues) {
+    private record PlayerConversion(CompoundTag player, boolean extensionChanged) {}
+    private record ItemMigration(int convertedBuckets, int convertedItemAliases, int convertedDamageValues,
+            boolean extensionChanged) {
         private static final ItemMigration NONE = new ItemMigration(0, 0, 0);
 
+        private ItemMigration(int convertedBuckets, int convertedItemAliases, int convertedDamageValues) {
+            this(convertedBuckets, convertedItemAliases, convertedDamageValues, false);
+        }
+
         private boolean isEmpty() {
-            return convertedBuckets == 0 && convertedItemAliases == 0 && convertedDamageValues == 0;
+            return convertedBuckets == 0 && convertedItemAliases == 0 && convertedDamageValues == 0 && !extensionChanged;
+        }
+
+        private ItemMigration withExtensionChange(boolean changed) {
+            return changed && !extensionChanged
+                    ? new ItemMigration(convertedBuckets, convertedItemAliases, convertedDamageValues, true) : this;
         }
 
         private ItemMigration plus(ItemMigration other) {
             return new ItemMigration(convertedBuckets + other.convertedBuckets,
                     convertedItemAliases + other.convertedItemAliases,
-                    convertedDamageValues + other.convertedDamageValues);
+                    convertedDamageValues + other.convertedDamageValues, extensionChanged || other.extensionChanged);
         }
     }
     private record SectionSnapshot(List<LegacyBlock> blocks, int externalStates) {}
