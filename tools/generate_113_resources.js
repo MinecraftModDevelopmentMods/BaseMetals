@@ -166,6 +166,9 @@ crushable.values = crushable.values.filter(value =>
 if (!crushable.values.includes('minecraft:gravel')) {
   crushable.values.push('minecraft:gravel');
 }
+for (const tag of ['#forge:ores', '#forge:storage_blocks']) {
+  if (!crushable.values.includes(tag)) crushable.values.push(tag);
+}
 writeJson(crushableFile, crushable);
 
 // Forge 25 did not provide a forge:gravel item tag. Keep the historical
@@ -306,12 +309,20 @@ const genericSteelRecipes = new Set([
   'activator_rail', 'detector_rail', 'flint_and_steel', 'human_detector',
   'minecart', 'piston', 'rail', 'tripwire_hook'
 ]);
+const directBlendInputs = { electrum_blend: 'gold', invar_blend: 'iron', steel_blend: 'iron' };
 
 // Vanilla Bits used several shortened patterns that collided or returned too much when recycled.
 for (const file of filesUnder(recipesDirectory, '.json')) {
   const name = path.basename(file, '.json');
   const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
   const recipe = saved.type === 'basemetals:content_crafting' ? saved.recipe : saved;
+
+  const blendMaterial = directBlendInputs[name];
+  if (blendMaterial) {
+    recipe.ingredients = recipe.ingredients.map(ingredient =>
+      ingredient.tag === `forge:dusts/${blendMaterial}`
+        ? [ingredient, { tag: `forge:blends/${blendMaterial}` }] : ingredient);
+  }
 
   if (name.endsWith('_door') && recipe.type === 'minecraft:crafting_shaped') {
     recipe.pattern = ['XX', 'XX', 'XX'];
@@ -324,6 +335,7 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
     recipe.pattern = ['X', 'X', 'S'];
   }
   if (name === 'rail') recipe.result.count = 16;
+  if (name === 'quartz_trapdoor') recipe.pattern = [' X ', 'X X', ' X '];
   if (name === 'obsidian_ingot') recipe.result.item = 'basemetals:obsidian_ingot';
   if (name === 'obsidian_block') recipe.pattern = ['XXX', 'XXX', 'XXX'];
 
@@ -335,38 +347,49 @@ for (const file of filesUnder(recipesDirectory, '.json')) {
     writeJson(file, recipe);
   }
 
-  if (!recipe.type.startsWith('minecraft:crafting_')) {
+  const crafting = recipe.type.startsWith('minecraft:crafting_');
+  const smelting = ['minecraft:smelting', 'basemetals:legacy_smelting'].includes(recipe.type);
+  if (!crafting && !smelting) {
     const oldUnlock = path.join(unlockDirectory, `${name}.json`);
     if (fs.existsSync(oldUnlock)) fs.rmSync(oldUnlock);
     continue;
   }
 
   // Variants of one result share a cell; different tools and weapons do not.
-  recipe.group = recipe.result.item;
-  writeJson(file, { type: 'basemetals:content_crafting', recipe });
+  if (crafting) {
+    recipe.group = recipe.result.item;
+    writeJson(file, { type: 'basemetals:content_crafting', recipe });
+  }
 
-  const ingredients = recipe.key ? Object.values(recipe.key) : recipe.ingredients;
+  const ingredients = smelting ? [recipe.ingredient]
+    : recipe.key ? Object.values(recipe.key) : recipe.ingredients;
   const choices = ingredients.flat().filter(value => value.item || value.tag);
   const materialChoices = choices.filter(value =>
     value.tag !== 'forge:rods/wooden' && value.item !== 'minecraft:stick'
       && value.item !== 'minecraft:string' && value.item !== 'minecraft:feather');
-  const material = genericSteelRecipes.has(name) ? 'steel' : name.split('_')[0];
-  const discovery = discoveryIngredients[material];
-  if (!discovery) throw new Error(`Missing recipe discovery material: ${name}`);
-
-  const criteria = {
-    has_material: {
+  const criteria = {};
+  if (crafting) {
+    const material = genericSteelRecipes.has(name) ? 'steel' : name.split('_')[0];
+    const discovery = discoveryIngredients[material];
+    if (!discovery) throw new Error(`Missing recipe discovery material: ${name}`);
+    criteria.has_material = {
       trigger: 'minecraft:inventory_changed',
       conditions: { items: [discovery] }
-    },
-    has_recipe: {
-      trigger: 'minecraft:recipe_unlocked',
-      conditions: { recipe: `basemetals:${name}` }
-    }
+    };
+  }
+  criteria.has_recipe = {
+    trigger: 'minecraft:recipe_unlocked',
+    conditions: { recipe: `basemetals:${name}` }
   };
   // Keep the old ingredient criteria so earned progress survives this update.
   const seen = new Set();
   for (const ingredient of materialChoices.length ? materialChoices : choices) {
+    if (blendMaterial && ingredient.tag === `forge:blends/${blendMaterial}`) {
+      criteria[`has_blend_${blendMaterial}`] = {
+        trigger: 'minecraft:inventory_changed', conditions: { items: [{ tag: ingredient.tag }] }
+      };
+      continue;
+    }
     const key = JSON.stringify(ingredient);
     if (seen.has(key)) continue;
     seen.add(key);

@@ -21,6 +21,27 @@ class RecipeRegressionTest {
     private static final Path DATA = Paths.get("src", "generated", "resources", "data", "basemetals");
 
     @Test
+    void alloyInputsAcceptMatchingFullBlendsWithoutChangingTheirMaterialCost() throws Exception {
+        for (String[] expected : new String[][] {
+                {"electrum", "gold", "1", "2"}, {"invar", "iron", "2", "3"}, {"steel", "iron", "8", "8"}}) {
+            JsonObject recipe = read(DATA.resolve("recipes/" + expected[0] + "_blend.json"));
+            int positions = Integer.parseInt(expected[2]);
+            for (int index = 0; index < positions; index++) {
+                com.google.gson.JsonArray choices = recipe.getAsJsonArray("ingredients").get(index).getAsJsonArray();
+                assertEquals(2, choices.size());
+                assertEquals("forge:dusts/" + expected[1], choices.get(0).getAsJsonObject().get("tag").getAsString());
+                assertEquals("forge:blends/" + expected[1], choices.get(1).getAsJsonObject().get("tag").getAsString());
+            }
+            assertEquals(Integer.parseInt(expected[3]), recipe.getAsJsonObject("result").get("count").getAsInt());
+            JsonObject criteria = read(DATA.resolve("advancements/recipes/" + expected[0] + "_blend.json"))
+                    .getAsJsonObject("criteria");
+            assertTrue(criteria.has("has_blend_" + expected[1]));
+            assertEquals("forge:dusts/" + expected[1], criteria.getAsJsonObject("has_ingredient_1")
+                    .getAsJsonObject("conditions").getAsJsonArray("items").get(0).getAsJsonObject().get("tag").getAsString());
+        }
+    }
+
+    @Test
     void doorsAndTrapdoorsHaveDifferentPatterns() throws Exception {
         try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
             for (Path file : (Iterable<Path>) files.filter(path -> path.toString().endsWith("_door.json"))::iterator) {
@@ -29,10 +50,18 @@ class RecipeRegressionTest {
                 JsonObject trapdoor = read(DATA.resolve("recipes").resolve(trapdoorName));
 
                 assertEquals(3, door.getAsJsonArray("pattern").size(), file.toString());
-                assertEquals(2, trapdoor.getAsJsonArray("pattern").size(), trapdoorName);
+                assertEquals("quartz_trapdoor.json".equals(trapdoorName) ? 3 : 2,
+                        trapdoor.getAsJsonArray("pattern").size(), trapdoorName);
                 assertFalse(door.get("pattern").equals(trapdoor.get("pattern")), file.toString());
             }
         }
+    }
+
+    @Test
+    void quartzTrapdoorKeepsFourQuartzWithoutMatchingVanillasSquare() throws Exception {
+        JsonObject recipe = read(DATA.resolve("recipes/quartz_trapdoor.json"));
+        assertEquals("[\" X \",\"X X\",\" X \"]", recipe.getAsJsonArray("pattern").toString());
+        assertEquals("forge:gems/quartz", recipe.getAsJsonObject("key").getAsJsonObject("X").get("tag").getAsString());
     }
 
     @Test
@@ -61,6 +90,27 @@ class RecipeRegressionTest {
                 }
             }
         }
+    }
+
+    @Test
+    void everyFurnaceRecipeHasAnIngredientUnlock() throws Exception {
+        int tested = 0;
+        try (Stream<Path> files = Files.list(DATA.resolve("recipes"))) {
+            for (Path file : (Iterable<Path>) files::iterator) {
+                JsonObject recipe = read(file);
+                String type = recipe.get("type").getAsString();
+                if (!"minecraft:smelting".equals(type) && !"basemetals:legacy_smelting".equals(type)) continue;
+                JsonObject advancement = read(DATA.resolve("advancements/recipes").resolve(file.getFileName()));
+                JsonObject criteria = advancement.getAsJsonObject("criteria");
+                assertTrue(criteria.has("has_ingredient_1"), file.toString());
+                assertFalse(criteria.has("has_material"), file.toString());
+                assertEquals(1, advancement.getAsJsonArray("requirements").size(), file.toString());
+                assertEquals("basemetals:" + file.getFileName().toString().replace(".json", ""),
+                        advancement.getAsJsonObject("rewards").getAsJsonArray("recipes").get(0).getAsString());
+                tested++;
+            }
+        }
+        assertEquals(754, tested, "Check the full furnace catalogue");
     }
 
     @Test

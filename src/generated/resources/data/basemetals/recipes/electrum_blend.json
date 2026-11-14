@@ -3,9 +3,14 @@
   "recipe": {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-      {
-        "tag": "forge:dusts/gold"
-      },
+      [
+        {
+          "tag": "forge:dusts/gold"
+        },
+        {
+          "tag": "forge:blends/gold"
+        }
+      ],
       {
         "tag": "forge:dusts/silver"
       }

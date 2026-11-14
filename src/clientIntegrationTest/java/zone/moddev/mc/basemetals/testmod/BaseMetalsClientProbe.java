@@ -364,8 +364,8 @@ public final class BaseMetalsClientProbe {
     private static void validateOreVertices(BakedQuad quad, boolean overlay, String name) {
         int[] vertices = quad.getVertexData();
         int stride = vertices.length / 4;
-        float low = overlay ? -0.001F / 16 : 0;
-        float high = overlay ? 16.001F / 16 : 1;
+        float low = overlay ? -0.05F / 16 : 0;
+        float high = overlay ? 16.05F / 16 : 1;
 
         for (int vertex = 0; vertex < 4; vertex++) {
             for (int axis = 0; axis < 3; axis++) {
@@ -373,6 +373,11 @@ public final class BaseMetalsClientProbe {
                 require(Math.min(Math.abs(coordinate - low), Math.abs(coordinate - high)) < 0.000001F,
                         name + " incorrect " + (overlay ? "overlay" : "base") + " vertex");
             }
+            float u = Float.intBitsToFloat(vertices[vertex * stride + 4]);
+            float v = Float.intBitsToFloat(vertices[vertex * stride + 5]);
+            require(u >= quad.getSprite().getMinU() && u <= quad.getSprite().getMaxU()
+                            && v >= quad.getSprite().getMinV() && v <= quad.getSprite().getMaxV(),
+                    name + " texture coordinates extend outside the sprite");
         }
     }
 

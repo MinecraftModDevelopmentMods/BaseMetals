@@ -6,9 +6,9 @@ Java 8. The Gradle build itself runs on Java `17.0.1+12` and uses ForgeGradle
 8 requirement of the released mod.
 
 Builds and tests use the published OreSpawn
-`4.1.0.113021` release (CurseForge project `245586`, file `9035885`, SHA-256
-`66C9CC5F8BE8F08F3DD5FA26EBEA79B52972B2FB86CB4DADBEEBC29AC01D3435`).
-At runtime, Base Metals requires OreSpawn `[4.1.0.113021,5.0.0)` for Minecraft 1.13.2.
+`4.1.7.113021` release (CurseForge project `245586`, file `9611746`, SHA-256
+`E65DCCA0623A20111C40779CB0FE2078E98C618FAA68F79C9A28E1E53C63957E`).
+At runtime, Base Metals requires OreSpawn `[4.1.7.113021,5.0.0)` for Minecraft 1.13.2.
 The configuration cog uses OreSpawn's public 4.1 client API.
 
 Builds download this file through CurseMaven. CI verifies the download and

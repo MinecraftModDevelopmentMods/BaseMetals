@@ -37,7 +37,24 @@ class OreOverlayModelTest {
         JsonArray elements = model.getAsJsonArray("elements");
         assertEquals(2, elements.size());
         assertElement(elements.get(0).getAsJsonObject(), 0, 16, "#base");
-        assertElement(elements.get(1).getAsJsonObject(), -0.001, 16.001, "#overlay");
+        assertElement(elements.get(1).getAsJsonObject(), -0.05, 16.05, "#overlay");
+    }
+
+    @Test
+    void expandedOreFacesKeepTheFullTextureInsideItsSprite() {
+        JsonObject model = BMBlockStateProvider.createOverlayOre(
+                "minecraft:block/stone", "basemetals:block/ore_overlays/tin_ore");
+        for (JsonElement element : model.getAsJsonArray("elements")) {
+            for (Map.Entry<String, JsonElement> face : element.getAsJsonObject().getAsJsonObject("faces").entrySet()) {
+                JsonArray uv = face.getValue().getAsJsonObject().getAsJsonArray("uv");
+                org.junit.jupiter.api.Assertions.assertNotNull(uv, "Explicit UVs required on " + face.getKey());
+                assertEquals(4, uv.size());
+                assertEquals(0, uv.get(0).getAsInt());
+                assertEquals(0, uv.get(1).getAsInt());
+                assertEquals(16, uv.get(2).getAsInt());
+                assertEquals(16, uv.get(3).getAsInt());
+            }
+        }
     }
 
     @Test

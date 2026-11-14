@@ -41,6 +41,27 @@ class ContentModeDataTest {
         for (Path file : files) {
             JsonObject value = read(file);
             if (value.has("recipe")) value = value.getAsJsonObject("recipe");
+            String filename = file.getFileName().toString();
+            if (filename.equals("electrum_blend.json") || filename.equals("invar_blend.json")
+                    || filename.equals("steel_blend.json")) {
+                // The alternative inputs have dedicated coverage. Keep the original dust catalogue digest.
+                JsonArray previousInputs = new JsonArray();
+                String material = filename.equals("electrum_blend.json") ? "gold" : "iron";
+                for (JsonElement ingredient : value.getAsJsonArray("ingredients")) {
+                    boolean knownAlternative = ingredient.isJsonArray() && ingredient.getAsJsonArray().size() == 2
+                            && ingredient.getAsJsonArray().get(0).toString().equals("{\"tag\":\"forge:dusts/" + material + "\"}")
+                            && ingredient.getAsJsonArray().get(1).toString().equals("{\"tag\":\"forge:blends/" + material + "\"}");
+                    previousInputs.add(knownAlternative ? ingredient.getAsJsonArray().get(0) : ingredient);
+                }
+                value.add("ingredients", previousInputs);
+            }
+            if (file.getFileName().toString().equals("quartz_trapdoor.json")) {
+                // Its four-quartz cost is unchanged. The layout has a dedicated conflict regression test.
+                JsonArray previousPattern = new JsonArray();
+                previousPattern.add("XX");
+                previousPattern.add("XX");
+                value.add("pattern", previousPattern);
+            }
             if (file.getFileName().toString().equals("mercury_smallpowder_smelting.json")) {
                 value.addProperty("type", "minecraft:smelting");
                 if (value.get("result").isJsonObject()) {

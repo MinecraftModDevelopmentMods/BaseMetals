@@ -531,7 +531,7 @@ tasks.register('verifyReleaseConfiguration') {
                 loaderCode: project.loader_code.toString(), javaVersion: project.java_version.toString(),
                 gradleJavaVersion: project.gradle_java_version.toString(),
                 curseForgeProjectId: project.curseforge_project_id.toString()]
-        def expected = [modVersion: '3.0.2.113021', modGroup: expectedMavenGroup,
+        def expected = [modVersion: '3.0.3.113021', modGroup: expectedMavenGroup,
                 minecraftVersion: '1.13.2', forgeVersion: '25.0.223',
                 forgeInstallerSha256: 'D46CB326E7DC32695084090C8169BB57F32F1C23B801DDB35A336F252E381191',
                 mappingChannel: 'snapshot', mappingVersion: '20180921-1.13',
@@ -544,8 +544,8 @@ tasks.register('verifyReleaseConfiguration') {
 tasks.register('verifyReleaseDependencies') {
     group = 'verification'
     doLast {
-        def expected = [version: '4.1.0.113021', curseProjectId: '245586', curseFileId: '9035885',
-                sha256: '66C9CC5F8BE8F08F3DD5FA26EBEA79B52972B2FB86CB4DADBEEBC29AC01D3435']
+        def expected = [version: '4.1.7.113021', curseProjectId: '245586', curseFileId: '9611746',
+                sha256: 'E65DCCA0623A20111C40779CB0FE2078E98C618FAA68F79C9A28E1E53C63957E']
         if (configuredOreSpawnIdentity != expected) {
             throw new GradleException("Unexpected OreSpawn identity: ${configuredOreSpawnIdentity}")
         }
@@ -560,7 +560,7 @@ tasks.register('verifyReleaseDependencies') {
             if (metadataEntry == null) throw new GradleException('OreSpawn mod metadata is missing')
             String metadata = zip.getInputStream(metadataEntry).getText('UTF-8')
             if (!metadata.contains('modId="orespawn"')
-                    || !metadata.contains('version="4.1.0.113021"')
+                    || !metadata.contains('version="4.1.7.113021"')
                     || !metadata.contains('versionRange="[1.13.2]"')
                     || zip.getEntry('zone/moddev/mc/orespawn/api/OreSpawnApi.class') == null) {
                 throw new GradleException('Expected the published Minecraft 1.13.2 OreSpawn 4.1 release and public API')
@@ -621,7 +621,7 @@ tasks.register('verifyReleaseArtifacts') {
             }
             String modsToml = zip.getInputStream(zip.getEntry('META-INF/mods.toml')).getText('UTF-8')
             if (modsToml.contains('${') || !modsToml.contains("version=\"${project.mod_version}\"")
-                    || !modsToml.contains('versionRange="[4.1.0.113021,5.0.0)"')) {
+                    || !modsToml.contains('versionRange="[4.1.7.113021,5.0.0)"')) {
                 throw new GradleException('Release mods.toml contains unresolved or incompatible metadata')
             }
             def provider = new JsonSlurper().parse(zip.getInputStream(
@@ -700,6 +700,13 @@ tasks.withType(PublishToMavenRepository).configureEach {
     dependsOn(preparedReleaseDir == null
             ? tasks.named('verifyReleaseArtifacts') : tasks.named('verifyPreparedReleaseArtifacts'))
 }
+
+def verifyFluidRegistration = tasks.register('verifyFluidRegistration', Exec) {
+    group = 'verification'
+    description = 'Checks that shared fluid registries are only written during sequential registration.'
+    commandLine 'node', '--test', 'tools/test_fluid_registration.js'
+}
+tasks.named('check') { dependsOn verifyFluidRegistration }
 
 def verifyGeneratedData = tasks.register('verifyGeneratedData', Exec) {
     group = 'verification'

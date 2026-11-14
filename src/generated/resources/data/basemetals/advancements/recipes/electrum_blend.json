@@ -27,6 +27,16 @@
         ]
       }
     },
+    "has_blend_gold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:blends/gold"
+          }
+        ]
+      }
+    },
     "has_ingredient_2": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -43,6 +53,7 @@
       "has_material",
       "has_recipe",
       "has_ingredient_1",
+      "has_blend_gold",
       "has_ingredient_2"
     ]
   ],

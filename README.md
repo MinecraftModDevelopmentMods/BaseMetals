@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and extra loot to find in chests.
 
-This is the Minecraft 1.13.2 version, `3.0.1.113021`, adapted from the 1.18.2
+This is the Minecraft 1.13.2 version, `3.0.3.113021`, adapted from the 1.18.2
 port. It keeps the historical `basemetals` block and item IDs, but no longer
 needs MMDLib or Additional Loot Tables. OreSpawn places the ores, and Base
 Metals supplies the metals and their recipes.
@@ -22,13 +22,31 @@ Metals supplies the metals and their recipes.
 - Minecraft `1.13.2`
 - Forge `25.0.223`
 - Java 8
-- OreSpawn `[4.1.0.113021,5.0.0)` on both client and server
+- OreSpawn `[4.1.7.113021,5.0.0)` on both client and server
 
-Put `BaseMetals-3.0.1.113021.jar` and OreSpawn `4.1.0.113021` (or a later
+Put `BaseMetals-3.0.3.113021.jar` and OreSpawn `4.1.7.113021` (or a later
 compatible OreSpawn 4 build for 1.13.2) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
 ## Materials and gameplay
+
+Collecting an ingredient reveals the recipes that use it in the crafting or
+furnace book. Saved inventories are checked when joining a world and after a
+data pack reload. The changelog lists the processing, mining and ore overlay
+fixes in this release.
+
+Ore overlays use the wider gap from the legacy branches to prevent flickering
+against their host textures, including resource pack replacements.
+
+Coal dust and small coal dust need processing before use as fuel. Nine dust
+make a coal block, which can be crafted back into nine coal.
+
+Iron blends can replace iron dust in steel and invar. Gold blends can replace
+gold dust in electrum. You can mix whole blends and matching dust in the same
+recipe, with the usual output quantities.
+
+The quartz trapdoor uses four quartz in a diamond pattern in the crafting
+table. A square of four quartz makes the vanilla quartz block.
 
 Base Metals provides 22 materials:
 
@@ -41,12 +59,20 @@ Not every material has every form. Recipes use Forge tags, so compatible ores,
 ingots, powders, plates, rods, gears and other components from different mods
 can be used together.
 
+[The mining-level audit](docs/MINING_LEVELS.md) lists every material's tool,
+solid-block and ore requirements, with the evidence and gameplay assumptions.
+Iron and steel remain the reference for ordinary engineering tools; rarity
+and scratch hardness alone do not grant a higher mining tier.
+New smith offers also follow the reviewed tiers through the existing pricing formula.
+
 Notable mechanics include:
 
 - Crack Hammers crush ores and other supported blocks as you mine them. They
   can also crush dropped items by using the hammer on the block beneath them;
   sneaking processes as much of a stack as the hammer's remaining durability
   allows.
+  The hammer must meet the block's mining level. Ores and storage blocks from
+  other mods use normal hammer mining speed through the shared Forge block tags.
 - Supported ore powders can be smelted into ingots, and alloy blends provide
   the historical furnace-based alloying route.
 - Scythes harvest plants in a horizontal 3x3 area. They work with enchantments
@@ -183,7 +209,7 @@ builds, CodeQL, wrapper validation, and Eclipse classpath isolation. Test probes
 and historical fixtures are excluded from the published JAR.
 
 Development and CI use the published
-[OreSpawn 4.1.0.113021 release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9035885)
+[OreSpawn 4.1.7.113021 release](https://www.curseforge.com/minecraft/mc-mods/mmd-orespawn/files/9611746)
 from CurseMaven. The build checks its exact file ID and SHA-256 before release
 auditing and packaged tests; no local OreSpawn build is needed.
 
