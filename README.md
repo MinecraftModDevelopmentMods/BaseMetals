@@ -41,7 +41,7 @@ Tables are no longer needed.
 ## Requirements
 
 - Minecraft `1.21.1`
-- NeoForge `21.1.247` or newer in the Minecraft 1.21.1 line
+- NeoForge `21.1.265` or newer in the Minecraft 1.21.1 line
 - Java 21
 - OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 

@@ -21,7 +21,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="mmdlib"
 type="required"
-versionRange="[2.0.1,)"
+versionRange="[2.0.2,)"
 ordering="AFTER"
 side="BOTH"
 
