@@ -59,6 +59,16 @@ hook so basePower and its expansions can preserve old Advantage machine data
 before Minecraft converts legacy chunks and items. Existing Base Metals registry
 names stay unchanged. Modern saves bypass the old-world conversion path.
 
+The converter keeps original regions and player files under
+`basemetals-1.12-region-backup`. Before the loader rewrites old single-player
+data, it saves a player snapshot there so an interrupted first load can resume.
+The snapshot is not reapplied after the first modern world save. Finishing
+region conversion alone does not discard recovery before that save. Keep the
+backups with the world until you have checked
+the upgrade. Large external chunk files are handled by Minecraft's own region
+writer. The retained registry map does not keep world-generation protection
+enabled on an already-upgraded world.
+
 ## Materials and gameplay
 
 Base Metals provides 22 materials:
@@ -204,7 +214,11 @@ the generated resources with the source changes. Ore models use KiriCattus'
 transparent overlays over vanilla textures,
 so resource packs can replace the surrounding stone, netherrack or end stone.
 
-The port regression checks are separate from the normal build. Run them with:
+`./gradlew check` runs the native resource and migration regression tests as part
+of the normal build. These include interrupted upgrades, dedicated-server
+players, large external chunks and unchanged backups.
+
+The additional port GameTests can be run with:
 
 ```text
 ./gradlew -I tools/verification/port-checks.init.gradle portTest runPortGameTestServer

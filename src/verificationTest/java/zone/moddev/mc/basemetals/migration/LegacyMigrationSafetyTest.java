@@ -236,7 +236,7 @@ class LegacyMigrationSafetyTest {
     }
 
     @Test
-    void terrainProtectionSurvivesReloadWithoutTrustingAnOldBackup() throws Exception {
+    void terrainProtectionEndsAfterUpgradeWhileTheRegistrySnapshotIsRetained() throws Exception {
         Path world = world("flattened-upgrade", false);
         writeLevel(world.resolve("level.dat"), 2730, false, 0);
         region(world, false, false);
@@ -248,7 +248,8 @@ class LegacyMigrationSafetyTest {
 
         Field active = LegacyWorldDataHook.class.getDeclaredField("legacyWorldActive");
         active.setAccessible(true);
-        assertTrue(active.getBoolean(null));
+        assertFalse(active.getBoolean(null));
+        assertTrue(Files.exists(world.resolve("basemetals-legacy-registry.dat")));
         runEntry(world);
         assertFalse(Files.exists(world.resolve(MARKER)));
     }

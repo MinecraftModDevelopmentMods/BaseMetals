@@ -87,21 +87,18 @@ public final class LegacyWorldDataHook {
 
     private LegacyWorldDataHook() {}
 
-    /** Called by the coremod before Forge reads level.dat. */
+    /** Called by the coremod before the loader reads level.dat. */
     public static synchronized void prepareLegacyWorld(File levelDat) {
         Legacy112WorldMigrator.beginWorldLoad();
         legacyWorldActive = false;
         legacyTerrainChunks = Collections.emptyMap();
         LEGACY_BASE_METALS_BLOCK_COUNTS.clear();
         prepareLevelMetadata(levelDat);
+        if (legacyWorldActive) indexLegacyChunks(levelDat.getParentFile());
         File source = legacyRegistrySource(levelDat);
         if (source == null) return;
         try (FileInputStream input = new FileInputStream(source)) {
             CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
-            if (root.getCompound("Data").getInt("DataVersion") < 2834) {
-                legacyWorldActive = true;
-                indexLegacyChunks(levelDat.getParentFile());
-            }
             if (root.contains("FML", 10)) {
                 prepareLegacyData(levelDat.getParentFile(), root.getCompound("FML"));
             }
@@ -119,6 +116,8 @@ public final class LegacyWorldDataHook {
                 root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
             }
             Legacy112WorldMigrator.prepareWorld(levelDat.toPath(), root);
+            legacyWorldActive = root.contains("Data", Tag.TAG_COMPOUND)
+                    && Legacy112WorldMigrator.sourceDataVersion(root) < 2834;
             boolean changed = removeRetiredVanillaProfessionRegistry(root);
             changed |= removeObsoleteVanillaBiomeSnapshot(root);
             changed |= migrateRemovedVanillaBiomeSources(root);
@@ -130,13 +129,12 @@ public final class LegacyWorldDataHook {
     }
 
     private static void preserveLegacySource(File levelDat, CompoundTag root) throws IOException {
-        CompoundTag data = root.getCompound("Data");
-        if (!data.contains("DataVersion", Tag.TAG_ANY_NUMERIC) || data.getInt("DataVersion") >= 2834) return;
+        if (!root.contains("Data", Tag.TAG_COMPOUND) || Legacy112WorldMigrator.sourceDataVersion(root) >= 2834) return;
         Path sidecar = levelDat.toPath().resolveSibling(REGISTRY_SIDECAR);
         if (Files.exists(sidecar)) return;
         CompoundTag saved = new CompoundTag();
         CompoundTag source = new CompoundTag();
-        source.putInt("DataVersion", data.getInt("DataVersion"));
+        source.putInt("DataVersion", Legacy112WorldMigrator.sourceDataVersion(root));
         saved.put("Data", source);
         if (root.contains("FML", Tag.TAG_COMPOUND)) saved.put("FML", root.getCompound("FML").copy());
         try (java.io.OutputStream output = Files.newOutputStream(sidecar, StandardOpenOption.CREATE_NEW)) {
@@ -375,7 +373,6 @@ public final class LegacyWorldDataHook {
         boolean first = !LEGACY_WORLD_DATA.containsKey(key);
         int states = installLegacyBlockStates(registries.getCompound(BLOCK_REGISTRY.toString()));
         if (first) LEGACY_WORLD_DATA.put(key, tag.copy());
-        legacyWorldActive |= states > 0;
         File sidecar = new File(worldDirectory, REGISTRY_SIDECAR);
         if (!sidecar.isFile()) {
             CompoundTag saved = new CompoundTag();
@@ -386,7 +383,7 @@ public final class LegacyWorldDataHook {
                 throw new IllegalStateException("Could not preserve the legacy registry in " + sidecar, exception);
             }
         }
-        int chunks = indexLegacyChunks(worldDirectory);
+        int chunks = legacyTerrainChunks.values().stream().mapToInt(LongSet::size).sum();
         if (first && states > 0) {
             BaseMetals.LOGGER.info("Prepared {} legacy Base Metals states and protected {} existing chunks in '{}'",
                     Integer.valueOf(states), Integer.valueOf(chunks), worldDirectory);
@@ -681,8 +678,8 @@ public final class LegacyWorldDataHook {
             try (FileInputStream input = new FileInputStream(candidate)) {
                 CompoundTag root = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
                 if ((root.contains("FML", 10) && containsLegacyBaseMetalsRegistryEntry(root))
-                        || (root.getCompound("Data").contains("DataVersion", Tag.TAG_ANY_NUMERIC)
-                                && root.getCompound("Data").getInt("DataVersion") < 2834)) return candidate;
+                        || (root.contains("Data", Tag.TAG_COMPOUND)
+                                && Legacy112WorldMigrator.sourceDataVersion(root) < 2834)) return candidate;
             } catch (IOException ignored) {}
         }
         return null;
