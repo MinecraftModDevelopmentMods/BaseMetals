@@ -1,6 +1,6 @@
 ### Base Metals 4.0.1.121012 (in development)
 
-- Extend vanilla copper like the other vanilla materials instead of re-adding its ingot, block, ore, door and trapdoor. Old Base Metals copper IDs map to the vanilla ones.
+- Extend vanilla copper like the other vanilla materials instead of re-adding its ingot, block, ore, door and trapdoor. Old Base Metals copper IDs map to the vanilla ones. Like iron and gold, copper no longer has villager trades, copper shields leave the anvil plate-upgrade chain, and copper blocks are no longer a beacon base.
 - Move the human detector, the vanilla material extensions and the eight generic crushing recipes from MMDLib into Base Metals.
 - Generate block, item, tool, armour, enchantable and ore convention tags with datagen instead of hand-written files, and add the double slabs to `minecraft:slabs`.
 - Set the ore cutout render type in the generated models.
