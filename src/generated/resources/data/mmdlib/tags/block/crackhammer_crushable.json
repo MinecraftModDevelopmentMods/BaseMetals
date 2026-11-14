@@ -5,7 +5,6 @@
     "#c:ores/antimony",
     "#c:ores/bismuth",
     "#c:ores/coldiron",
-    "#c:ores/copper",
     "#c:ores/lead",
     "#c:ores/mercury",
     "#c:ores/nickel",
@@ -21,7 +20,6 @@
     "#c:storage_blocks/brass",
     "#c:storage_blocks/bronze",
     "#c:storage_blocks/coldiron",
-    "#c:storage_blocks/copper",
     "#c:storage_blocks/cupronickel",
     "#c:storage_blocks/electrum",
     "#c:storage_blocks/invar",
@@ -36,6 +34,7 @@
     "#c:storage_blocks/tin",
     "#c:storage_blocks/zinc",
     "#c:ores/coal",
+    "#c:ores/copper",
     "#c:ores/diamond",
     "#c:ores/emerald",
     "#c:ores/gold",
@@ -46,6 +45,7 @@
     "#c:ores/netherite_scrap",
     "#c:storage_blocks/coal",
     "#c:storage_blocks/charcoal",
+    "#c:storage_blocks/copper",
     "#c:storage_blocks/diamond",
     "#c:storage_blocks/emerald",
     "#c:storage_blocks/gold",
@@ -76,6 +76,9 @@
     "minecraft:prismarine_bricks",
     "minecraft:dark_prismarine",
     "minecraft:sea_lantern",
-    "minecraft:slime_block"
+    "minecraft:slime_block",
+    "minecraft:smooth_stone",
+    "minecraft:bricks",
+    "minecraft:nether_bricks"
   ]
 }

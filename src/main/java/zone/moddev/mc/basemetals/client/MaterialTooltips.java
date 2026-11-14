@@ -19,7 +19,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 /** Describes each special material's effect on its equipment. */
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID, value = Dist.CLIENT)
 public final class MaterialTooltips {
     // Material -> bonus shown in its tool tooltip; 0 when that tooltip takes no value.
     private static final Map<String, Integer> TOOL_BONUS = Map.of(

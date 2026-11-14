@@ -12,7 +12,7 @@ import zone.moddev.mc.basemetals.BaseMetals;
 import zone.moddev.mc.basemetals.config.ContentPolicy;
 
 /** Applies the selected mode to outputs made by optional machines. */
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID)
 public record ContentRecipeCondition(String item) implements ICondition {
     public static final MapCodec<ContentRecipeCondition> CODEC = Codec.STRING.fieldOf("item")
             .xmap(ContentRecipeCondition::new, ContentRecipeCondition::item);

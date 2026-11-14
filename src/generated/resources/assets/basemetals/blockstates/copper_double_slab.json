@@ -4,7 +4,7 @@
       "model": "basemetals:block/half_slab_copper"
     },
     "type=double": {
-      "model": "basemetals:block/copper_block"
+      "model": "minecraft:block/copper_block"
     },
     "type=top": {
       "model": "basemetals:block/upper_slab_copper"

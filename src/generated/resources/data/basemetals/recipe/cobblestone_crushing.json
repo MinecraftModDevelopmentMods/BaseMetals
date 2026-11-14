@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:cobblestones"
+  },
+  "result": {
+    "item": "minecraft:gravel"
+  }
+}

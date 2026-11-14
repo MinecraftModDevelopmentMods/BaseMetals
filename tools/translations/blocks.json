@@ -1,0 +1,35 @@
+{
+  "_comment": "Block names that are not in the 1.12 .lang files. A locale's own entry wins over its alias source in config.json.",
+  "locales": {
+    "de_de": {
+      "block.basemetals.human_detector": "Sicherheits-Druckplatte"
+    },
+    "en_pt": {
+      "block.basemetals.human_detector": "Secret Floor Button"
+    },
+    "en_us": {
+      "block.basemetals.human_detector": "Security Pressure Plate"
+    },
+    "es_es": {
+      "block.basemetals.human_detector": "Seguridad plato de presión"
+    },
+    "fr_fr": {
+      "block.basemetals.human_detector": "Sécurité plaque de pression"
+    },
+    "ja_jp": {
+      "block.basemetals.human_detector": "セキュリティ重量感圧板"
+    },
+    "pt_br": {
+      "block.basemetals.human_detector": "Placa de Pressão de Segurança"
+    },
+    "ru_ru": {
+      "block.basemetals.human_detector": "Защищённая нажимная пластина"
+    },
+    "zh_cn": {
+      "block.basemetals.human_detector": "安全压盘"
+    },
+    "zh_tw": {
+      "block.basemetals.human_detector": "私人壓力板"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_wall",
+    "basemetals:antimony_wall",
+    "basemetals:aquarium_wall",
+    "basemetals:bismuth_wall",
+    "basemetals:brass_wall",
+    "basemetals:bronze_wall",
+    "basemetals:coldiron_wall",
+    "basemetals:copper_wall",
+    "basemetals:cupronickel_wall",
+    "basemetals:diamond_wall",
+    "basemetals:electrum_wall",
+    "basemetals:emerald_wall",
+    "basemetals:gold_wall",
+    "basemetals:invar_wall",
+    "basemetals:iron_wall",
+    "basemetals:lead_wall",
+    "basemetals:mithril_wall",
+    "basemetals:nickel_wall",
+    "basemetals:obsidian_wall",
+    "basemetals:pewter_wall",
+    "basemetals:platinum_wall",
+    "basemetals:quartz_wall",
+    "basemetals:silver_wall",
+    "basemetals:starsteel_wall",
+    "basemetals:steel_wall",
+    "basemetals:tin_wall",
+    "basemetals:zinc_wall"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_button",
+    "basemetals:antimony_button",
+    "basemetals:aquarium_button",
+    "basemetals:bismuth_button",
+    "basemetals:brass_button",
+    "basemetals:bronze_button",
+    "basemetals:coldiron_button",
+    "basemetals:copper_button",
+    "basemetals:cupronickel_button",
+    "basemetals:diamond_button",
+    "basemetals:electrum_button",
+    "basemetals:emerald_button",
+    "basemetals:gold_button",
+    "basemetals:invar_button",
+    "basemetals:iron_button",
+    "basemetals:lead_button",
+    "basemetals:mithril_button",
+    "basemetals:nickel_button",
+    "basemetals:obsidian_button",
+    "basemetals:pewter_button",
+    "basemetals:platinum_button",
+    "basemetals:quartz_button",
+    "basemetals:silver_button",
+    "basemetals:starsteel_button",
+    "basemetals:steel_button",
+    "basemetals:tin_button",
+    "basemetals:zinc_button"
+  ]
+}

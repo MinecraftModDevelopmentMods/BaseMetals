@@ -8,7 +8,6 @@
     "#c:storage_blocks/brass",
     "#c:storage_blocks/bronze",
     "#c:storage_blocks/coldiron",
-    "#c:storage_blocks/copper",
     "#c:storage_blocks/cupronickel",
     "#c:storage_blocks/electrum",
     "#c:storage_blocks/invar",
@@ -21,6 +20,7 @@
     "#c:storage_blocks/starsteel",
     "#c:storage_blocks/steel",
     "#c:storage_blocks/tin",
-    "#c:storage_blocks/zinc"
+    "#c:storage_blocks/zinc",
+    "#c:storage_blocks/copper"
   ]
 }

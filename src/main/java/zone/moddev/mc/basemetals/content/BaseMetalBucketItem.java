@@ -42,7 +42,7 @@ import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
  * tab and vanilla's global search, with fluid placement through NeoForge's
  * fluid handler API.
  */
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID)
 public final class BaseMetalBucketItem extends BucketItem {
     public BaseMetalBucketItem(Supplier<? extends Fluid> fluid, Properties properties) {
         super(fluid.get(), properties);
@@ -75,12 +75,6 @@ public final class BaseMetalBucketItem extends BucketItem {
         player.awardStat(Stats.ITEM_USED.get(this));
         level.gameEvent(player, GameEvent.FLUID_PLACE, destination);
         return InteractionResultHolder.sidedSuccess(getEmptySuccessItem(held, player), level.isClientSide());
-    }
-
-    @Override
-    public boolean emptyContents(@Nullable net.minecraft.world.entity.player.Player player,
-            Level level, BlockPos position, @Nullable BlockHitResult hit) {
-        return emptyContents(player, level, position, hit, getDefaultInstance());
     }
 
     @Override

@@ -25,6 +25,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 /**
@@ -114,7 +115,7 @@ public final class MaterialEffects {
     }
 
     public static void aquariumMelee(LivingEntity attacker, LivingEntity target, LivingIncomingDamageEvent event) {
-        if (target.canBreatheUnderwater()) event.setAmount(event.getAmount() + 4.0F);
+        if (!target.canDrownInFluidType(NeoForgeMod.WATER_TYPE.value())) event.setAmount(event.getAmount() + 4.0F);
     }
 
     public static void coldironMelee(LivingEntity attacker, LivingEntity target, LivingIncomingDamageEvent event) {

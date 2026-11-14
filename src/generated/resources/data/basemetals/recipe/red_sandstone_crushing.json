@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "tag": "c:sandstone/red_blocks"
+  },
+  "result": {
+    "item": "minecraft:red_sand"
+  }
+}

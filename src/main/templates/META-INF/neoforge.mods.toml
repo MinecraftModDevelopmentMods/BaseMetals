@@ -21,7 +21,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="mmdlib"
 type="required"
-versionRange="[2.0.1,)"
+versionRange="[2.0.2,)"
 ordering="AFTER"
 side="BOTH"
 
@@ -42,7 +42,7 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="mekanism"
 type="optional"
-versionRange="[10.2,11)"
+versionRange="[10.7.11,11)"
 ordering="AFTER"
 side="BOTH"
 
@@ -50,22 +50,5 @@ side="BOTH"
 modId="thermal_expansion"
 type="optional"
 versionRange="[9,10)"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="tconstruct"
-type="optional"
-versionRange="[3.7,4)"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="enderio_machines"
-type="optional"
-# Maven qualifier ordering places commit-suffixed 6.0.0 alpha builds below
-# the bare 6.0.0-alpha token. This range admits the intended major-6 alpha
-# line while still rejecting every other Ender IO major version.
-versionRange="(5,7)"
 ordering="AFTER"
 side="BOTH"

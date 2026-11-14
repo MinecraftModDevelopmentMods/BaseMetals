@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_chestplate",
+    "basemetals:antimony_chestplate",
+    "basemetals:aquarium_chestplate",
+    "basemetals:bismuth_chestplate",
+    "basemetals:brass_chestplate",
+    "basemetals:bronze_chestplate",
+    "basemetals:coldiron_chestplate",
+    "basemetals:copper_chestplate",
+    "basemetals:cupronickel_chestplate",
+    "basemetals:electrum_chestplate",
+    "basemetals:emerald_chestplate",
+    "basemetals:invar_chestplate",
+    "basemetals:lead_chestplate",
+    "basemetals:mithril_chestplate",
+    "basemetals:nickel_chestplate",
+    "basemetals:obsidian_chestplate",
+    "basemetals:pewter_chestplate",
+    "basemetals:platinum_chestplate",
+    "basemetals:quartz_chestplate",
+    "basemetals:silver_chestplate",
+    "basemetals:starsteel_chestplate",
+    "basemetals:steel_chestplate",
+    "basemetals:tin_chestplate",
+    "basemetals:zinc_chestplate"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_slab",
+    "basemetals:antimony_slab",
+    "basemetals:aquarium_slab",
+    "basemetals:bismuth_slab",
+    "basemetals:brass_slab",
+    "basemetals:bronze_slab",
+    "basemetals:coldiron_slab",
+    "basemetals:copper_slab",
+    "basemetals:cupronickel_slab",
+    "basemetals:diamond_slab",
+    "basemetals:electrum_slab",
+    "basemetals:emerald_slab",
+    "basemetals:gold_slab",
+    "basemetals:invar_slab",
+    "basemetals:iron_slab",
+    "basemetals:lead_slab",
+    "basemetals:mithril_slab",
+    "basemetals:nickel_slab",
+    "basemetals:obsidian_slab",
+    "basemetals:pewter_slab",
+    "basemetals:platinum_slab",
+    "basemetals:silver_slab",
+    "basemetals:starsteel_slab",
+    "basemetals:steel_slab",
+    "basemetals:tin_slab",
+    "basemetals:zinc_slab"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "mmdlib:crushing",
+  "ingredient": {
+    "item": "minecraft:smooth_stone"
+  },
+  "result": {
+    "item": "minecraft:stone"
+  }
+}

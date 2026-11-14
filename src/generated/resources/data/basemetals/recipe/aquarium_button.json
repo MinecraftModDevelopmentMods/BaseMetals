@@ -2,7 +2,7 @@
   "type": "basemetals:content_crafting",
   "recipe": {
     "type": "minecraft:crafting_shaped",
-    "category": "building",
+    "category": "redstone",
     "group": "basemetals:aquarium_button",
     "key": {
       "X": {

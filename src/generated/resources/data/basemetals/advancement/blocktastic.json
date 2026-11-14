@@ -12,7 +12,7 @@
     },
     "frame": "task",
     "icon": {
-      "id": "basemetals:copper_block"
+      "id": "minecraft:copper_block"
     },
     "show_toast": true,
     "title": {

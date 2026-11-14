@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:antimony_ore",
+    "basemetals:bismuth_ore",
+    "basemetals:lead_ore",
+    "basemetals:mercury_ore",
+    "basemetals:nickel_ore",
+    "basemetals:platinum_ore",
+    "basemetals:silver_ore",
+    "basemetals:tin_ore",
+    "basemetals:zinc_ore"
+  ]
+}

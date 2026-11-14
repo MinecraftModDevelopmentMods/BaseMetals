@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_anvil",
+    "basemetals:steel_anvil",
+    "basemetals:stone_anvil"
+  ]
+}

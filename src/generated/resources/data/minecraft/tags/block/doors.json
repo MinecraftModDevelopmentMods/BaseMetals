@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_door",
+    "basemetals:antimony_door",
+    "basemetals:aquarium_door",
+    "basemetals:bismuth_door",
+    "basemetals:brass_door",
+    "basemetals:bronze_door",
+    "basemetals:coldiron_door",
+    "basemetals:cupronickel_door",
+    "basemetals:diamond_door",
+    "basemetals:electrum_door",
+    "basemetals:emerald_door",
+    "basemetals:gold_door",
+    "basemetals:invar_door",
+    "basemetals:lead_door",
+    "basemetals:mithril_door",
+    "basemetals:nickel_door",
+    "basemetals:obsidian_door",
+    "basemetals:pewter_door",
+    "basemetals:platinum_door",
+    "basemetals:quartz_door",
+    "basemetals:silver_door",
+    "basemetals:starsteel_door",
+    "basemetals:steel_door",
+    "basemetals:tin_door",
+    "basemetals:zinc_door"
+  ]
+}

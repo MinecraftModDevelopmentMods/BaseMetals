@@ -8,7 +8,6 @@
     "#c:nuggets/brass",
     "#c:nuggets/bronze",
     "#c:nuggets/coldiron",
-    "#c:nuggets/copper",
     "#c:nuggets/cupronickel",
     "#c:nuggets/electrum",
     "#c:nuggets/invar",
@@ -22,6 +21,7 @@
     "#c:nuggets/starsteel",
     "#c:nuggets/steel",
     "#c:nuggets/tin",
-    "#c:nuggets/zinc"
+    "#c:nuggets/zinc",
+    "#c:nuggets/copper"
   ]
 }

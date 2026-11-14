@@ -84,8 +84,8 @@ public final class BaseMetalsEvents {
         if (upgrade == null) return;
         if (!zone.moddev.mc.basemetals.config.ContentPolicy.active().allows("basemetals:" + upgrade.name() + "_shield")) return;
         ItemStack output = ModContent.item(upgrade.name() + "_shield").get().getDefaultInstance();
-        output.set(DataComponents.ENCHANTMENTS, event.getLeft().getEnchantments());
-        int enchantments = event.getLeft().getEnchantments().size();
+        output.set(DataComponents.ENCHANTMENTS, event.getLeft().getTagEnchantments());
+        int enchantments = event.getLeft().getTagEnchantments().size();
         int cost = shieldUpgradeCost(current, upgrade, enchantments);
         event.setOutput(output);
         event.setCost(cost);

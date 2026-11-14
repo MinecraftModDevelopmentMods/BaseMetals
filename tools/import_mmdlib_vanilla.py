@@ -6,7 +6,7 @@ armour and so on) while its 2.0 API was being dogfooded. They are Base Metals
 content, so this copies them back:
 
 * material definitions from ``src/main/resources/mmdlib/material`` (copper is
-  skipped: Base Metals defines its own full copper material);
+  skipped: Base Metals keeps its own copper extension definition);
 * the static blockstates, models and textures they use, from
   ``src/main/resources/assets/mmdlib``.
 
@@ -16,6 +16,9 @@ moves to Base Metals' own fluids (``has_fluid`` false plus the
 ``basemetals:bucket`` item form) for the 11 materials 1.12 melted; lapis, stone
 and wood have no molten form. Recipes, tags, loot and names are produced by
 Base Metals' datagen, not copied.
+
+MMDLib removed its copies in d026e1f ("Remove the vanilla extensions"), so this
+only runs against an MMDLib checkout from before that commit.
 
 Usage: python3 tools/import_mmdlib_vanilla.py [--mmdlib ../MMDLib] [--check]
 """

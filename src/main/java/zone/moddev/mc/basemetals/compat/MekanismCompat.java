@@ -10,7 +10,6 @@ import zone.moddev.mc.basemetals.material.MaterialCatalogue;
 import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalBuilder;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -27,12 +26,12 @@ public final class MekanismCompat {
     private static final Map<String, DeferredHolder<Chemical, Chemical>> CLEAN = new LinkedHashMap<>();
 
     static {
+        // Each slurry's ore tag is the mekanism:chemical_solid_tag data map, written by datagen.
         for (String name : PROCESSING_MATERIALS) {
-            ResourceLocation oreTag = ResourceLocation.fromNamespaceAndPath("c", "ores/" + name);
             DIRTY.put(name, SLURRIES.register("dirty_" + name,
-                    () -> new Chemical(ChemicalBuilder.dirtySlurry().ore(oreTag).tint(colour(name)))));
+                    () -> new Chemical(ChemicalBuilder.dirtySlurry().tint(colour(name)))));
             CLEAN.put(name, SLURRIES.register("clean_" + name,
-                    () -> new Chemical(ChemicalBuilder.cleanSlurry().tint(colour(name)).ore(oreTag))));
+                    () -> new Chemical(ChemicalBuilder.cleanSlurry().tint(colour(name)))));
         }
     }
 

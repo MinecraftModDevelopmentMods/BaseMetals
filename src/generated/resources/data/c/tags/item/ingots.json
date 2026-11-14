@@ -8,7 +8,6 @@
     "#c:ingots/brass",
     "#c:ingots/bronze",
     "#c:ingots/coldiron",
-    "#c:ingots/copper",
     "#c:ingots/cupronickel",
     "#c:ingots/electrum",
     "#c:ingots/invar",
@@ -22,6 +21,7 @@
     "#c:ingots/starsteel",
     "#c:ingots/steel",
     "#c:ingots/tin",
-    "#c:ingots/zinc"
+    "#c:ingots/zinc",
+    "#c:ingots/copper"
   ]
 }

@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "basemetals:adamantine_trapdoor",
+    "basemetals:antimony_trapdoor",
+    "basemetals:aquarium_trapdoor",
+    "basemetals:bismuth_trapdoor",
+    "basemetals:brass_trapdoor",
+    "basemetals:bronze_trapdoor",
+    "basemetals:coldiron_trapdoor",
+    "basemetals:cupronickel_trapdoor",
+    "basemetals:diamond_trapdoor",
+    "basemetals:electrum_trapdoor",
+    "basemetals:emerald_trapdoor",
+    "basemetals:gold_trapdoor",
+    "basemetals:invar_trapdoor",
+    "basemetals:lead_trapdoor",
+    "basemetals:mithril_trapdoor",
+    "basemetals:nickel_trapdoor",
+    "basemetals:obsidian_trapdoor",
+    "basemetals:pewter_trapdoor",
+    "basemetals:platinum_trapdoor",
+    "basemetals:quartz_trapdoor",
+    "basemetals:silver_trapdoor",
+    "basemetals:starsteel_trapdoor",
+    "basemetals:steel_trapdoor",
+    "basemetals:tin_trapdoor",
+    "basemetals:zinc_trapdoor"
+  ]
+}

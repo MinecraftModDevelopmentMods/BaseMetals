@@ -26,6 +26,29 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.BaseRailBlock;
+import net.minecraft.world.level.block.BasePressurePlateBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallBlock;
 
 /** Small catalogue-driven generator for server data and compatibility manifests. */
 final class GeneratedData implements DataProvider {
@@ -45,7 +68,7 @@ final class GeneratedData implements DataProvider {
     private static final String WOODEN_ROD = "#c:rods/wooden";
     /** Vanilla materials whose extensions include equipment and decorative blocks. */
     private static final List<String> VANILLA_EQUIPMENT = List.of(
-            "diamond", "emerald", "gold", "iron", "obsidian", "quartz");
+            "copper", "diamond", "emerald", "gold", "iron", "obsidian", "quartz");
     private static final Map<String, List<AlloyComponent>> ALLOYS = Map.ofEntries(
             Map.entry("aquarium", List.of(component("copper", 2), component("zinc", 1),
                     new AlloyComponent("#c:dusts/prismarine", 1))),
@@ -80,7 +103,6 @@ final class GeneratedData implements DataProvider {
             writeTags(cache);
             writeRecipes(cache);
             writeRawProcessing(cache);
-            writeTinkersMaterials(cache);
             writeAdvancements(cache);
             writeChestLoot(cache);
             writeLanguages(cache);
@@ -168,6 +190,9 @@ final class GeneratedData implements DataProvider {
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
         beaconBases.add("basemetals:charcoal_block");
         tag(cache, "minecraft", "blocks/beacon_base_blocks", beaconBases);
+        writeShapeTags(cache);
+        writeEquipmentTags(cache);
+        writeOreConventionTags(cache);
         // MMDLib's scythe and crackhammer read these tags; add Base Metals blocks to them.
         tag(cache, "mmdlib", "blocks/scythe_harvestable", scytheHarvestableBlocks());
         tag(cache, "mmdlib", "blocks/crackhammer_crushable", crackhammerCrushableBlocks());
@@ -186,7 +211,7 @@ final class GeneratedData implements DataProvider {
         Map<String, List<String>> aggregateBlocks = new LinkedHashMap<>();
         for (MaterialDefinition material : MaterialCatalogue.all()) {
             String name = material.name();
-            itemTag(cache, "ingots", name, entries(name, "ingot", name.equals("copper") ? "minecraft:copper_ingot" : null));
+            itemTag(cache, "ingots", name, entries(name, "ingot"));
             itemTag(cache, "nuggets", name, entries(name, "nugget"));
             itemTag(cache, "dusts", name, entries(name, "powder"));
             itemTag(cache, "tiny_dusts", name, entries(name, "smallpowder"));
@@ -194,16 +219,12 @@ final class GeneratedData implements DataProvider {
                 itemTag(cache, "plates", name, entries(name, "plate"));
                 itemTag(cache, "rods", name, entries(name, "rod"));
                 itemTag(cache, "gears", name, entries(name, "gear"));
-                blockTag(cache, "storage_blocks", name, entries(name, "block",
-                        name.equals("copper") ? "minecraft:copper_block" : null));
-                itemTag(cache, "storage_blocks", name, entries(name, "block",
-                        name.equals("copper") ? "minecraft:copper_block" : null));
+                blockTag(cache, "storage_blocks", name, entries(name, "block"));
+                itemTag(cache, "storage_blocks", name, entries(name, "block"));
             }
             if (material.hasOre()) {
-                List<String> extra = name.equals("copper")
-                        ? List.of("minecraft:copper_ore", "minecraft:deepslate_copper_ore") : List.of();
-                blockTag(cache, "ores", name, entries(name, "ore", extra));
-                itemTag(cache, "ores", name, entries(name, "ore", extra));
+                blockTag(cache, "ores", name, entries(name, "ore"));
+                itemTag(cache, "ores", name, entries(name, "ore"));
             }
             if (material.isAlloy()) {
                 itemTag(cache, "blends", name, entries(name, "blend"));
@@ -243,14 +264,21 @@ final class GeneratedData implements DataProvider {
                 addAggregate(aggregateBlocks, "ores", "#c:ores/" + name);
             }
         }
-        for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz", "stone", "wood")) {
+        for (String name : List.of("copper", "diamond", "emerald", "gold", "iron", "obsidian", "quartz", "stone", "wood")) {
             addAggregate(aggregateItems, "gears", "#c:gears/" + name);
         }
-        for (String name : List.of("diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
+        for (String name : List.of("copper", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             addAggregate(aggregateItems, "rods", "#c:rods/" + name);
         }
-        for (String name : List.of("diamond", "emerald", "gold", "iron")) {
+        for (String name : List.of("copper", "diamond", "emerald", "gold", "iron")) {
             addAggregate(aggregateItems, "plates", "#c:plates/" + name);
+        }
+        // Copper's vanilla tags stay in the aggregates, as they were when copper was a catalogue metal.
+        for (String family : List.of("ingots", "nuggets", "dusts", "tiny_dusts", "storage_blocks", "ores")) {
+            addAggregate(aggregateItems, family, "#c:" + family + "/copper");
+        }
+        for (String family : List.of("storage_blocks", "ores")) {
+            addAggregate(aggregateBlocks, family, "#c:" + family + "/copper");
         }
         aggregateItems.forEach((path, values) -> uncheckedTag(cache, "forge", "items/" + path, values));
         aggregateBlocks.forEach((path, values) -> uncheckedTag(cache, "forge", "blocks/" + path, values));
@@ -272,11 +300,11 @@ final class GeneratedData implements DataProvider {
     /** Tags for the vanilla material extensions (1.12's Vanilla Bits). */
     private void writeVanillaBitsTags(CachedOutput cache) throws IOException {
         Map<String, String> vanillaIngot = Map.of(
-                "diamond", "minecraft:diamond", "emerald", "minecraft:emerald",
+                "copper", "minecraft:copper_ingot", "diamond", "minecraft:diamond", "emerald", "minecraft:emerald",
                 "gold", "minecraft:gold_ingot", "iron", "minecraft:iron_ingot",
                 "quartz", "minecraft:quartz", "obsidian", "basemetals:obsidian_ingot");
         Map<String, String> vanillaBlock = Map.of(
-                "diamond", "minecraft:diamond_block", "emerald", "minecraft:emerald_block",
+                "copper", "minecraft:copper_block", "diamond", "minecraft:diamond_block", "emerald", "minecraft:emerald_block",
                 "gold", "minecraft:gold_block", "iron", "minecraft:iron_block",
                 "quartz", "minecraft:quartz_block", "obsidian", "minecraft:obsidian");
         for (String material : VANILLA_EQUIPMENT) {
@@ -294,7 +322,7 @@ final class GeneratedData implements DataProvider {
         for (String material : List.of("wood", "stone")) {
             tag(cache, "forge", "items/gears/" + material, List.of("basemetals:" + material + "_gear"));
         }
-        for (String material : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
+        for (String material : List.of("coal", "charcoal", "copper", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             tag(cache, "forge", "items/dusts/" + material, List.of("basemetals:" + material + "_powder"));
             tag(cache, "forge", "items/tiny_dusts/" + material, List.of("basemetals:" + material + "_smallpowder"));
         }
@@ -303,13 +331,14 @@ final class GeneratedData implements DataProvider {
         tag(cache, "forge", "items/dusts/redstone", List.of("minecraft:redstone"));
         tag(cache, "forge", "items/dusts/lapis", List.of("minecraft:lapis_lazuli"));
         tag(cache, "forge", "items/dusts/prismarine", List.of("minecraft:prismarine_shard"));
-        for (String material : List.of("coal", "charcoal", "diamond", "emerald", "obsidian", "quartz")) {
+        for (String material : List.of("coal", "charcoal", "copper", "diamond", "emerald", "obsidian", "quartz")) {
             tag(cache, "forge", "items/nuggets/" + material, List.of("basemetals:" + material + "_nugget"));
         }
         tag(cache, "forge", "items/ingots/obsidian", List.of("basemetals:obsidian_ingot"));
         tag(cache, "forge", "items/ingots/redstone", List.of("basemetals:redstone_ingot"));
         tag(cache, "forge", "items/plates/gold", List.of("basemetals:gold_plate"));
         tag(cache, "forge", "items/plates/iron", List.of("basemetals:iron_plate"));
+        tag(cache, "forge", "items/plates/copper", List.of("basemetals:copper_plate"));
         for (String material : List.of("diamond", "gold", "iron")) {
             tag(cache, "forge", "items/blends/" + material, List.of("basemetals:" + material + "_blend"));
             tag(cache, "forge", "items/small_blends/" + material, List.of("basemetals:" + material + "_smallblend"));
@@ -349,11 +378,11 @@ final class GeneratedData implements DataProvider {
                 .map(material -> "#c:ores/" + material.name()).forEach(values::add);
         MaterialCatalogue.all().stream().filter(MaterialDefinition::hasEquipment)
                 .map(material -> "#c:storage_blocks/" + material.name()).forEach(values::add);
-        for (String name : List.of("coal", "diamond", "emerald", "gold", "iron",
+        for (String name : List.of("coal", "copper", "diamond", "emerald", "gold", "iron",
                 "lapis", "redstone", "quartz", "netherite_scrap")) {
             values.add("#c:ores/" + name);
         }
-        for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold",
+        for (String name : List.of("coal", "charcoal", "copper", "diamond", "emerald", "gold",
                 "iron", "lapis", "redstone")) {
             values.add("#c:storage_blocks/" + name);
         }
@@ -366,7 +395,8 @@ final class GeneratedData implements DataProvider {
                 "minecraft:red_sandstone_slab", "minecraft:glowstone", "minecraft:obsidian",
                 "minecraft:sugar_cane", "minecraft:bone_block", "minecraft:quartz_block",
                 "minecraft:quartz_slab", "minecraft:prismarine", "minecraft:prismarine_bricks",
-                "minecraft:dark_prismarine", "minecraft:sea_lantern", "minecraft:slime_block"));
+                "minecraft:dark_prismarine", "minecraft:sea_lantern", "minecraft:slime_block",
+                "minecraft:smooth_stone", "minecraft:bricks", "minecraft:nether_bricks"));
         return List.copyOf(values);
     }
 
@@ -385,7 +415,7 @@ final class GeneratedData implements DataProvider {
         });
         Map<String, Integer> vanillaLevels = Map.of(
                 "diamond", 3, "emerald", 3, "obsidian", 3,
-                "iron", 2, "quartz", 1);
+                "iron", 2, "copper", 1, "quartz", 1);
         vanillaLevels.forEach((name, level) -> ModContent.blocksById().keySet().stream()
                 .filter(id -> id.startsWith(name + "_"))
                 .map(id -> "basemetals:" + id)
@@ -404,6 +434,152 @@ final class GeneratedData implements DataProvider {
                 byTier.get(3).stream().sorted().toList());
     }
 
+    /**
+     * Vanilla and NeoForge convention tags that follow from what a block or item is.
+     * Vanilla behaviour depends on several of them: fences and walls connect through
+     * minecraft:fences and minecraft:walls, ladders climb through minecraft:climbable,
+     * and mobs and other mods find doors, plates and so on by tag.
+     */
+    private void writeShapeTags(CachedOutput cache) throws IOException {
+        List<String> hiddenBlocks = ModContent.hiddenBlocks();
+        Map<String, List<String>> blockTags = new LinkedHashMap<>();
+        Map<String, List<String>> itemTags = new LinkedHashMap<>();
+        ModContent.blocksById().forEach((id, holder) -> {
+            if (ModContent.fluids().containsKey(id)) return;
+            String entry = "basemetals:" + id;
+            Block block = holder.get();
+            if (hiddenBlocks.contains(id)) {
+                // Compatibility double slabs are still slab blocks (as MMDLib tagged its own); they have no items.
+                if (block instanceof SlabBlock) blockTags.computeIfAbsent("slabs", key -> new ArrayList<>()).add(entry);
+                return;
+            }
+            // Tags vanilla keeps for both the block and its item.
+            String shared = switch (block) {
+                case DoorBlock door -> "doors";
+                case TrapDoorBlock trapdoor -> "trapdoors";
+                case ButtonBlock button -> "buttons";
+                case SlabBlock slab -> "slabs";
+                case StairBlock stairs -> "stairs";
+                case WallBlock wall -> "walls";
+                case FenceBlock fence -> "fences";
+                case FenceGateBlock gate -> "fence_gates";
+                case AnvilBlock anvil -> "anvil";
+                case BaseRailBlock rail -> "rails";
+                default -> null;
+            };
+            if (shared != null) {
+                blockTags.computeIfAbsent(shared, key -> new ArrayList<>()).add(entry);
+                if (ModContent.itemsById().containsKey(id)) {
+                    itemTags.computeIfAbsent(shared, key -> new ArrayList<>()).add(entry);
+                }
+            }
+            String blockOnly = switch (block) {
+                case BasePressurePlateBlock plate -> "pressure_plates";
+                case LadderBlock ladder -> "climbable";
+                case FlowerPotBlock pot -> "flower_pots";
+                default -> null;
+            };
+            if (blockOnly != null) blockTags.computeIfAbsent(blockOnly, key -> new ArrayList<>()).add(entry);
+        });
+        for (Map.Entry<String, List<String>> tag : blockTags.entrySet()) {
+            tag(cache, "minecraft", "blocks/" + tag.getKey(), tag.getValue());
+        }
+        for (Map.Entry<String, List<String>> tag : itemTags.entrySet()) {
+            tag(cache, "minecraft", "items/" + tag.getKey(), tag.getValue());
+        }
+
+        // NeoForge's tool tags name vanilla items rather than including #minecraft:swords and the like.
+        Map<String, List<String>> toolTags = new LinkedHashMap<>();
+        ModContent.itemsById().forEach((id, holder) -> {
+            Item item = holder.get();
+            List<String> tags = switch (item) {
+                case SwordItem sword -> List.of("tools/melee_weapon");
+                case AxeItem axe -> List.of("tools/melee_weapon");
+                case PickaxeItem pickaxe -> List.of("tools/mining_tool");
+                case ShieldItem shield -> List.of("tools/shield");
+                case BowItem bow -> List.of("tools/bow", "tools/ranged_weapon");
+                case CrossbowItem crossbow -> List.of("tools/crossbow", "tools/ranged_weapon");
+                case ShearsItem shears -> List.of("tools/shear");
+                case FishingRodItem rod -> List.of("tools/fishing_rod");
+                default -> List.of();
+            };
+            tags.forEach(tag -> toolTags.computeIfAbsent(tag, key -> new ArrayList<>()).add("basemetals:" + id));
+        });
+        for (Map.Entry<String, List<String>> tag : toolTags.entrySet()) {
+            tag(cache, "forge", "items/" + tag.getKey(), tag.getValue());
+        }
+
+        // Compatibility-only content: hidden double slabs, and molten block items kept for old saves.
+        List<String> hiddenItems = new ArrayList<>();
+        ModContent.itemsById().keySet().forEach(id -> {
+            if (hiddenBlocks.contains(id) || ModContent.fluids().containsKey(id)) hiddenItems.add("basemetals:" + id);
+        });
+        tag(cache, "forge", "blocks/hidden_from_recipe_viewers",
+                hiddenBlocks.stream().map(id -> "basemetals:" + id).toList());
+        tag(cache, "forge", "items/hidden_from_recipe_viewers", hiddenItems);
+    }
+
+    /**
+     * Vanilla's equipment and enchantability tags, by what each item is. Vanilla builds its
+     * enchantable/sword, /armor and so on from these, so they decide which enchantments apply.
+     */
+    private void writeEquipmentTags(CachedOutput cache) throws IOException {
+        Map<String, List<String>> tags = new LinkedHashMap<>();
+        ModContent.itemsById().forEach((id, holder) -> {
+            Item item = holder.get();
+            List<String> itemTags = new ArrayList<>();
+            if (item instanceof SwordItem) itemTags.add("swords");
+            if (item instanceof AxeItem) itemTags.add("axes");
+            // Crackhammers are MMDLib tools with the pickaxe ability.
+            if (item.canPerformAction(item.getDefaultInstance(),
+                    net.neoforged.neoforge.common.ItemAbilities.PICKAXE_DIG)) itemTags.add("pickaxes");
+            if (item instanceof net.minecraft.world.item.ShovelItem) itemTags.add("shovels");
+            if (item instanceof net.minecraft.world.item.HoeItem
+                    || item instanceof zone.moddev.mc.lib.common.runtime.ScytheItem) itemTags.add("hoes");
+            if (item instanceof net.minecraft.world.item.ArmorItem armor) {
+                switch (armor.getType()) {
+                    case HELMET -> itemTags.add("head_armor");
+                    case CHESTPLATE -> itemTags.add("chest_armor");
+                    case LEGGINGS -> itemTags.add("leg_armor");
+                    case BOOTS -> itemTags.add("foot_armor");
+                    default -> { } // horse armour
+                }
+            }
+            if (item instanceof BowItem) itemTags.add("enchantable/bow");
+            if (item instanceof CrossbowItem) itemTags.add("enchantable/crossbow");
+            if (item instanceof FishingRodItem) itemTags.add("enchantable/fishing");
+            // Vanilla lists shears itself in enchantable/mining (Efficiency).
+            if (item instanceof ShearsItem) itemTags.add("enchantable/mining");
+            if (item instanceof BowItem || item instanceof CrossbowItem || item instanceof FishingRodItem
+                    || item instanceof ShearsItem || item instanceof ShieldItem) itemTags.add("enchantable/durability");
+            itemTags.forEach(tag -> tags.computeIfAbsent(tag, key -> new ArrayList<>()).add("basemetals:" + id));
+        });
+        for (Map.Entry<String, List<String>> tag : tags.entrySet()) {
+            tag(cache, "minecraft", "items/" + tag.getKey(), tag.getValue().stream().sorted().toList());
+        }
+    }
+
+    /** NeoForge's ore convention tags: the stone an ore sits in and how much it drops. */
+    private void writeOreConventionTags(CachedOutput cache) throws IOException {
+        Map<String, List<String>> inGround = new LinkedHashMap<>();
+        List<String> singular = new ArrayList<>();
+        for (MaterialDefinition material : MaterialCatalogue.all()) {
+            if (!material.hasOre()) continue;
+            String ore = "basemetals:" + material.name() + "_ore";
+            String host = BMBlockStateProvider.oreHost(material.name());
+            // NeoForge has no end stone ore convention.
+            if (!host.equals("end_stone")) inGround.computeIfAbsent(host, key -> new ArrayList<>()).add(ore);
+            // Every Base Metals ore drops one raw item.
+            singular.add(ore);
+        }
+        for (String family : List.of("blocks", "items")) {
+            for (Map.Entry<String, List<String>> host : inGround.entrySet()) {
+                tag(cache, "forge", family + "/ores_in_ground/" + host.getKey(), host.getValue());
+            }
+            tag(cache, "forge", family + "/ore_rates/singular", singular);
+        }
+    }
+
     private void writeCompatibilityTags(CachedOutput cache) throws IOException {
         // Chemical registry tags use the registry namespace as part of their directory.
         for (String state : List.of("dirty", "clean")) {
@@ -411,6 +587,17 @@ final class GeneratedData implements DataProvider {
                     PROCESSING_MATERIALS.stream()
                             .map(material -> "basemetals:" + state + "_" + material).toList());
         }
+        // Mekanism's slurry ore link (replaces ChemicalBuilder.ore); merged with Mekanism's own file.
+        JsonObject solidTags = new JsonObject();
+        for (String material : PROCESSING_MATERIALS) {
+            for (String state : List.of("dirty", "clean")) {
+                solidTags.add("basemetals:" + state + "_" + material,
+                        object("representation", "c:ores/" + material));
+            }
+        }
+        JsonObject solidTagMap = new JsonObject();
+        solidTagMap.add("values", solidTags);
+        save(cache, solidTagMap, "data/mekanism/data_maps/mekanism/chemical/chemical_solid_tag.json");
         for (String fluid : ModContent.fluids().keySet()) {
             tag(cache, "forge", "fluids/molten_" + fluid, List.of(
                     "basemetals:" + fluid, "basemetals:flowing_" + fluid));
@@ -428,15 +615,11 @@ final class GeneratedData implements DataProvider {
             String name = material.name();
             String ingot = "basemetals:" + name + "_ingot";
             String ingotIngredient = "#c:ingots/" + name;
-            String compactingIngotIngredient = name.equals("copper") ? ingot : ingotIngredient;
             if (material.hasEquipment()) {
                 shaped(cache, name + "_block", List.of("XXX", "XXX", "XXX"),
-                        Map.of('X', compactingIngotIngredient),
+                        Map.of('X', ingotIngredient),
                         "basemetals:" + name + "_block", 1);
-                String blockIngredient = name.equals("copper")
-                        ? "basemetals:copper_block"
-                        : "#c:storage_blocks/" + name;
-                shapeless(cache, name + "_block_ingot", List.of(blockIngredient), ingot, 9);
+                shapeless(cache, name + "_block_ingot", List.of("#c:storage_blocks/" + name), ingot, 9);
                 shaped(cache, name + "_plate", List.of("XXX"), Map.of('X', ingotIngredient),
                         "basemetals:" + name + "_plate", 3);
                 shaped(cache, name + "_rod", List.of("X", "X"), Map.of('X', ingotIngredient),
@@ -447,13 +630,9 @@ final class GeneratedData implements DataProvider {
                 equipmentRecipes(cache, name, ingotIngredient);
                 decorativeRecipes(cache, name, ingotIngredient, "#c:storage_blocks/" + name);
             }
-            String nuggetIngredient = name.equals("copper")
-                    ? "basemetals:copper_nugget"
-                    : "#c:nuggets/" + name;
             shaped(cache, name + "_ingot_from_nuggets", List.of("XXX", "XXX", "XXX"),
-                    Map.of('X', nuggetIngredient), ingot, 1);
-            String decompactingIngotIngredient = name.equals("copper") ? ingot : ingotIngredient;
-            shapeless(cache, name + "_nuggets", List.of(decompactingIngotIngredient),
+                    Map.of('X', "#c:nuggets/" + name), ingot, 1);
+            shapeless(cache, name + "_nuggets", List.of(ingotIngredient),
                     "basemetals:" + name + "_nugget", 9);
             shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
                     Map.of('X', "#c:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
@@ -563,7 +742,7 @@ final class GeneratedData implements DataProvider {
 
     private void vanillaBitsRecipes(CachedOutput cache) throws IOException {
         Map<String, String> materials = Map.of(
-                "diamond", "#c:gems/diamond", "emerald", "#c:gems/emerald",
+                "copper", "#c:ingots/copper", "diamond", "#c:gems/diamond", "emerald", "#c:gems/emerald",
                 "gold", "#c:ingots/gold", "iron", "#c:ingots/iron",
                 "obsidian", "#c:ingots/obsidian", "quartz", "#c:gems/quartz");
         for (String name : VANILLA_EQUIPMENT) {
@@ -585,6 +764,12 @@ final class GeneratedData implements DataProvider {
                 "basemetals:gold_plate", 3);
         shaped(cache, "iron_plate", List.of("XXX"), Map.of('X', "#c:ingots/iron"),
                 "basemetals:iron_plate", 3);
+        shaped(cache, "copper_plate", List.of("XXX"), Map.of('X', "#c:ingots/copper"),
+                "basemetals:copper_plate", 3);
+        // Vanilla 1.21.1 has no copper nugget, so Base Metals keeps its own.
+        shaped(cache, "copper_ingot_from_nuggets", List.of("XXX", "XXX", "XXX"),
+                Map.of('X', "#c:nuggets/copper"), "minecraft:copper_ingot", 1);
+        shapeless(cache, "copper_nuggets", List.of("minecraft:copper_ingot"), "basemetals:copper_nugget", 9);
         for (String name : List.of("stone", "wood")) {
             if (hasItem(name + "_crackhammer")) {
                 String hammerHead = name.equals("stone") ? "minecraft:stone_bricks" : "#minecraft:logs";
@@ -618,9 +803,19 @@ final class GeneratedData implements DataProvider {
     }
 
     private void vanillaCrushingRecipes(CachedOutput cache) throws IOException {
+        // The generic vanilla crushing recipes every *Metals and *Advantage mod shares.
+        crushing(cache, "cobblestone_crushing", "#c:cobblestones", "minecraft:gravel", 1);
+        crushing(cache, "gravel_crushing", "#c:gravels", "minecraft:sand", 1);
+        crushing(cache, "stone_crushing", "minecraft:stone", "minecraft:cobblestone", 1);
+        crushing(cache, "smooth_stone_crushing", "minecraft:smooth_stone", "minecraft:stone", 1);
+        crushing(cache, "bricks_crushing", "minecraft:bricks", "minecraft:brick", 4);
+        crushing(cache, "nether_bricks_crushing", "minecraft:nether_bricks", "minecraft:nether_brick", 4);
+        crushing(cache, "sandstone_crushing", "#c:sandstone/uncolored_blocks", "minecraft:sand", 1);
+        crushing(cache, "red_sandstone_crushing", "#c:sandstone/red_blocks", "minecraft:red_sand", 1);
+
         // Default MMDLib 1.12 ore-dictionary behaviour, extended through
         // the common ore tags so normal and deepslate ores share a recipe.
-        for (String name : List.of("coal", "diamond", "emerald", "gold", "iron")) {
+        for (String name : List.of("coal", "copper", "diamond", "emerald", "gold", "iron")) {
             crushing(cache, name + "_ore_crushing", "#c:ores/" + name,
                     "basemetals:" + name + "_powder", 2);
         }
@@ -644,7 +839,7 @@ final class GeneratedData implements DataProvider {
             crushing(cache, name + "_nugget_crushing", "#c:nuggets/" + name,
                     "basemetals:" + name + "_smallpowder", 1);
         }
-        for (String name : List.of("gold", "iron")) {
+        for (String name : List.of("copper", "gold", "iron")) {
             crushing(cache, name + "_ingot_crushing", "#c:ingots/" + name,
                     "basemetals:" + name + "_powder", 1);
             crushing(cache, name + "_block_crushing", "#c:storage_blocks/" + name,
@@ -739,13 +934,14 @@ final class GeneratedData implements DataProvider {
     }
 
     private void vanillaPowderRecipes(CachedOutput cache) throws IOException {
-        for (String name : List.of("coal", "charcoal", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
+        for (String name : List.of("coal", "charcoal", "copper", "diamond", "emerald", "gold", "iron", "obsidian", "quartz")) {
             shaped(cache, name + "_powder_from_small", List.of("XXX", "XXX", "XXX"),
                     Map.of('X', "#c:tiny_dusts/" + name), "basemetals:" + name + "_powder", 1);
             shapeless(cache, name + "_smallpowder", List.of("#c:dusts/" + name),
                     "basemetals:" + name + "_smallpowder", 9);
         }
         Map<String, String> ingots = Map.of(
+                "copper", "minecraft:copper_ingot",
                 "diamond", "minecraft:diamond",
                 "emerald", "minecraft:emerald",
                 "gold", "minecraft:gold_ingot",
@@ -753,6 +949,7 @@ final class GeneratedData implements DataProvider {
                 "obsidian", "basemetals:obsidian_ingot",
                 "quartz", "minecraft:quartz");
         Map<String, String> nuggets = Map.of(
+                "copper", "basemetals:copper_nugget",
                 "diamond", "basemetals:diamond_nugget",
                 "emerald", "basemetals:emerald_nugget",
                 "gold", "minecraft:gold_nugget",
@@ -760,6 +957,7 @@ final class GeneratedData implements DataProvider {
                 "obsidian", "basemetals:obsidian_nugget",
                 "quartz", "basemetals:quartz_nugget");
         Map<String, String> blocks = Map.of(
+                "copper", "minecraft:copper_block",
                 "diamond", "minecraft:diamond_block",
                 "emerald", "minecraft:emerald_block",
                 "gold", "minecraft:gold_block",
@@ -806,6 +1004,8 @@ final class GeneratedData implements DataProvider {
         return switch (name) {
             case "gold" -> 1.0F;
             case "iron" -> 0.45F;
+            // Base Metals' catalogue value for copper (0.1 x magic 5), kept from before it became an extension.
+            case "copper" -> 0.5F;
             case "diamond", "emerald", "obsidian" -> 0.4F;
             case "quartz" -> 0.2F;
             default -> throw new IllegalArgumentException("No Vanilla Bits furnace material " + name);
@@ -869,7 +1069,7 @@ final class GeneratedData implements DataProvider {
                 .map(MaterialDefinition::name)
                 .filter(name -> !List.of("aquarium", "invar", "mercury", "mithril").contains(name))
                 .toList());
-        materials.addAll(List.of("gold", "iron"));
+        materials.addAll(List.of("copper", "gold", "iron"));
         for (String material : materials) {
             for (String form : List.of("boots", "chestplate", "helmet", "leggings", "shield")) {
                 // Vanilla gold and iron armour, with the Base Metals shield.
@@ -905,7 +1105,7 @@ final class GeneratedData implements DataProvider {
         shapeless(cache, "flint_and_steel", List.of(steel, "minecraft:flint"),
                 "minecraft:flint_and_steel", 1);
         shaped(cache, "human_detector", List.of("XX", "GG"),
-                Map.of('X', "minecraft:brick", 'G', "#c:gears"),
+                Map.of('X', "#c:bricks/normal", 'G', "#c:gears"),
                 "basemetals:human_detector", 1);
 
         shaped(cache, "charcoal_block", List.of("XXX", "XXX", "XXX"),
@@ -981,8 +1181,6 @@ final class GeneratedData implements DataProvider {
     private void writeCompatibilityRecipes(CachedOutput cache) throws IOException {
         writeMekanismRecipes(cache);
         writeThermalRecipes(cache);
-        writeTinkersRecipes(cache);
-        writeEnderIoRecipes(cache);
     }
 
     private void writeMekanismRecipes(CachedOutput cache) throws IOException {
@@ -1160,181 +1358,6 @@ final class GeneratedData implements DataProvider {
         JsonObject result = object("count", component.count()); result.add("value", accepted); return result;
     }
 
-    private void writeEnderIoRecipes(CachedOutput cache) throws IOException {
-        for (MaterialDefinition material : MaterialCatalogue.all()) {
-            String name = material.name();
-            enderSag(cache, "compat/enderio/" + name + "/ingot_sag_milling",
-                    "#c:ingots/" + name, "basemetals:" + name + "_powder", 1);
-            if (material.hasOre()) {
-                enderSag(cache, "compat/enderio/" + name + "/ore_sag_milling",
-                        "#c:ores/" + name, "basemetals:" + name + "_powder", 2);
-            }
-        }
-        for (Map.Entry<String, List<AlloyComponent>> alloy : ALLOYS.entrySet()) {
-            JsonObject root = object("type", "enderio_machines:alloy_smelting", "energy", 6400,
-                    "experience", 0.3F);
-            JsonArray inputs = new JsonArray();
-            for (AlloyComponent component : alloy.getValue()) {
-                JsonObject counted = object("count", component.count());
-                counted.add("ingredient", ingredient(component.ingredient())); inputs.add(counted);
-            }
-            root.add("inputs", inputs);
-            root.add("result", result("basemetals:" + alloy.getKey() + "_ingot",
-                    ALLOY_OUTPUTS.get(alloy.getKey())));
-            saveConditionalRecipe(cache, root, "compat/enderio/alloys/" + alloy.getKey(), "enderio_machines");
-        }
-    }
-
-    private void enderSag(CachedOutput cache, String id, String input, String output, int count) throws IOException {
-        JsonObject root = object("type", "enderio_machines:sagmilling", "energy", 2400);
-        root.add("input", ingredient(input));
-        JsonArray outputs = new JsonArray(); outputs.add(result(output, count)); root.add("outputs", outputs);
-        saveConditionalRecipe(cache, root, id, "enderio_machines");
-    }
-
-    private void writeTinkersRecipes(CachedOutput cache) throws IOException {
-        for (MaterialDefinition material : MaterialCatalogue.all()) {
-            String name = material.name();
-            int temperature = 769;
-            tinkerMelting(cache, name, "ingot", 90, temperature);
-            tinkerMelting(cache, name, "nugget", 10, temperature);
-            if (material.hasEquipment()) {
-                tinkerMelting(cache, name, "block", 810, temperature);
-                tinkerMelting(cache, name, "plate", 90, temperature);
-                tinkerMelting(cache, name, "rod", 45, temperature);
-                tinkerMelting(cache, name, "gear", 360, temperature);
-                tinkerCasting(cache, name, "ingot", 90, temperature, "ingot");
-                tinkerCasting(cache, name, "nugget", 10, temperature, "nugget");
-                tinkerCasting(cache, name, "plate", 90, temperature, "plate");
-                tinkerCasting(cache, name, "rod", 45, temperature, "rod");
-                tinkerCasting(cache, name, "gear", 360, temperature, "gear");
-                tinkerBlockCasting(cache, name, temperature);
-            }
-        }
-        for (String name : List.of("aquarium", "brass", "bronze", "cupronickel",
-                "electrum", "invar", "mithril", "pewter")) {
-            JsonObject root = object("type", "tconstruct:alloy", "temperature", 769);
-            JsonArray inputs = new JsonArray();
-            for (AlloyComponent component : ALLOYS.get(name)) {
-                String fluidTag;
-                if (component.ingredient().equals("#c:dusts/prismarine")) {
-                    fluidTag = "tconstruct:molten_glass";
-                } else {
-                    String material = component.ingredient().substring(component.ingredient().lastIndexOf('/') + 1);
-                    fluidTag = "forge:molten_" + material;
-                }
-                inputs.add(object("tag", fluidTag, "amount", component.count() * 90));
-            }
-            root.add("inputs", inputs);
-            root.add("result", object("fluid", "basemetals:" + name,
-                    "amount", ALLOY_OUTPUTS.get(name) * 90));
-            saveConditionalRecipe(cache, root, "compat/tconstruct/alloys/" + name, "tconstruct");
-        }
-    }
-
-    private void tinkerMelting(CachedOutput cache, String material, String form, int amount,
-            int temperature) throws IOException {
-        String tagFamily = switch (form) {
-            case "block" -> "storage_blocks";
-            case "plate" -> "plates";
-            case "rod" -> "rods";
-            case "gear" -> "gears";
-            default -> form + "s";
-        };
-        JsonObject root = object("type", "tconstruct:melting", "temperature", temperature,
-                "time", Math.max(16, (int) Math.sqrt(amount) * 5));
-        root.add("ingredient", ingredient("#c:" + tagFamily + "/" + material));
-        root.add("result", object("fluid", "basemetals:" + material, "amount", amount));
-        saveConditionalRecipe(cache, root, "compat/tconstruct/melting/" + material + "/" + form, "tconstruct");
-    }
-
-    private void tinkerCasting(CachedOutput cache, String material, String form, int amount,
-            int temperature, String cast) throws IOException {
-        for (boolean reusable : List.of(true, false)) {
-            JsonObject root = object("type", "tconstruct:casting_table",
-                    "cooling_time", Math.max(16, (int) Math.sqrt(amount) * 5));
-            root.add("cast", ingredient("#tconstruct:casts/" + (reusable ? "multi_use/" : "single_use/") + cast));
-            if (!reusable) root.addProperty("cast_consumed", true);
-            root.add("fluid", object("tag", "c:molten_" + material, "amount", amount));
-            root.add("result", result("basemetals:" + material + "_" + form, 1));
-            saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/" + form
-                    + (reusable ? "_gold_cast" : "_sand_cast"), "tconstruct");
-        }
-    }
-
-    private void tinkerBlockCasting(CachedOutput cache, String material, int temperature) throws IOException {
-        JsonObject root = object("type", "tconstruct:casting_basin", "cooling_time", 141);
-        root.add("fluid", object("tag", "c:molten_" + material, "amount", 810));
-        root.add("result", result("basemetals:" + material + "_block", 1));
-        saveConditionalRecipe(cache, root, "compat/tconstruct/casting/" + material + "/block", "tconstruct");
-    }
-
-    private void writeTinkersMaterials(CachedOutput cache) throws IOException {
-        int order = 0;
-        for (MaterialDefinition material : MaterialCatalogue.all()) {
-            if (!material.hasEquipment()) continue;
-            String name = material.name();
-            JsonObject definition = object("craftable", false,
-                    "tier", Math.max(1, Math.min(4, material.toolLevel() + 1)),
-                    "sortOrder", order++, "hidden", false);
-            save(cache, definition, "data/basemetals/tinkering/materials/definition/" + name + ".json");
-
-            JsonObject stats = new JsonObject();
-            stats.add("tconstruct:extra", new JsonObject());
-            stats.add("tconstruct:handle", object("durability", 1.0F, "miningSpeed", 1.0F,
-                    "attackSpeed", 1.0F, "attackDamage", 1.0F));
-            stats.add("tconstruct:head", object("durability", material.toolDurability(),
-                    "miningSpeed", material.toolEfficiency(), "harvestTier", harvestTier(material.toolLevel()),
-                    "attack", material.baseAttackDamage()));
-            stats.add("tconstruct:limb", object("durability", material.toolDurability(),
-                    "drawSpeed", 0.0F, "velocity", Math.min(0.3F, (float) material.hardness() / 50.0F),
-                    "accuracy", 0.0F));
-            stats.add("tconstruct:grip", object("durability", 1.0F, "accuracy", 0.0F,
-                    "meleeAttack", material.baseAttackDamage()));
-            JsonObject statsRoot = new JsonObject(); statsRoot.add("stats", stats);
-            save(cache, statsRoot, "data/basemetals/tinkering/materials/stats/" + name + ".json");
-            JsonObject traits = new JsonObject(); traits.add("default", new JsonArray());
-            save(cache, traits, "data/basemetals/tinkering/materials/traits/" + name + ".json");
-
-            JsonObject render = object("color", String.format(Locale.ROOT, "%06X", material.colour()),
-                    "skipUniqueTexture", true, "luminosity", 0);
-            render.add("fallbacks", array("metal"));
-            save(cache, render, "assets/basemetals/tinkering/materials/" + name + ".json");
-
-            tinkerMaterialIngredient(cache, name, "ingot", 1, 1);
-            tinkerMaterialIngredient(cache, name, "nugget", 1, 9);
-            tinkerMaterialIngredient(cache, name, "storage_blocks", 9, 1);
-
-            JsonObject melting = object("type", "tconstruct:material_melting", "input", "basemetals:" + name,
-                    "temperature", 769);
-            melting.add("result", object("fluid", "basemetals:" + name, "amount", 90));
-            saveConditionalRecipe(cache, melting, "compat/tconstruct/materials/melting/" + name, "tconstruct");
-            JsonObject casting = object("type", "tconstruct:material_fluid", "temperature", 769,
-                    "output", "basemetals:" + name);
-            casting.add("fluid", object("tag", "c:molten_" + name, "amount", 90));
-            saveConditionalRecipe(cache, casting, "compat/tconstruct/materials/casting/" + name, "tconstruct");
-        }
-    }
-
-    private void tinkerMaterialIngredient(CachedOutput cache, String material, String family,
-            int value, int needed) throws IOException {
-        String normalized = family.equals("ingot") || family.equals("nugget") ? family + "s" : family;
-        JsonObject root = object("type", "tconstruct:material", "value", value, "needed", needed,
-                "material", "basemetals:" + material);
-        root.add("ingredient", ingredient("#c:" + normalized + "/" + material));
-        saveConditionalRecipe(cache, root, "compat/tconstruct/materials/" + material + "/" + family, "tconstruct");
-    }
-
-    private static String harvestTier(int level) {
-        return switch (level) {
-            case 0 -> "minecraft:wood";
-            case 1 -> "minecraft:stone";
-            case 2 -> "minecraft:iron";
-            case 3 -> "minecraft:diamond";
-            default -> "minecraft:netherite";
-        };
-    }
-
     private void saveConditionalRecipe(CachedOutput cache, JsonObject recipe, String id,
             String modId) throws IOException {
         JsonArray conditions = new JsonArray();
@@ -1393,6 +1416,8 @@ final class GeneratedData implements DataProvider {
         JsonObject configText = JsonParser.parseString(Files.readString(translations.resolve("config.json"))).getAsJsonObject();
         JsonObject playerText = JsonParser.parseString(Files.readString(translations.resolve("player.json"))).getAsJsonObject();
         JsonObject bucketText = JsonParser.parseString(Files.readString(translations.resolve("bucket.json"))).getAsJsonObject();
+        JsonObject blockText = JsonParser.parseString(Files.readString(translations.resolve("blocks.json"))).getAsJsonObject()
+                .getAsJsonObject("locales");
         Map<String, String> rawTemplates = Map.ofEntries(Map.entry("en_us", "Raw %s"), Map.entry("de_de", "%s-Erzbrocken"),
                 Map.entry("es_es", "%s en bruto"), Map.entry("fr_fr", "%s brut"), Map.entry("it_it", "%s grezzo"),
                 Map.entry("ja_jp", "%sの原石"), Map.entry("nl_nl", "Ruw %s"), Map.entry("pt_br", "%s bruto"),
@@ -1438,12 +1463,16 @@ final class GeneratedData implements DataProvider {
                     .forEach(entry -> language.add(entry.getKey(), entry.getValue()));
             playerText.getAsJsonObject("locales").getAsJsonObject(source).entrySet()
                     .forEach(entry -> language.add(entry.getKey(), entry.getValue()));
+            // A locale's own block names win over its alias source's (en_pt keeps its pirate names).
+            JsonObject blockNames = blockText.has(locale) ? blockText.getAsJsonObject(locale)
+                    : blockText.has(source) ? blockText.getAsJsonObject(source) : new JsonObject();
+            blockNames.entrySet().forEach(entry -> language.add(entry.getKey(), entry.getValue()));
             ModContent.fluids().keySet().forEach(material -> {
                 String name = bucketText.getAsJsonObject("locales").getAsJsonObject(source).get(material).getAsString();
                 language.addProperty("item.bucket." + material, name);
                 language.addProperty("item.basemetals." + material + "_bucket", name);
             });
-            MaterialCatalogue.all().stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
+            MaterialCatalogue.all().stream().filter(MaterialDefinition::hasOre)
                     .forEach(material -> language.addProperty("item.basemetals." + material.name() + "_raw",
                             String.format(rawTemplates.get(source), materialName(language, material.name()))));
             save(cache, language, "assets/basemetals/lang/" + locale + ".json");
@@ -1542,8 +1571,25 @@ final class GeneratedData implements DataProvider {
         }
         JsonObject table = JsonParser.parseString(Files.readString(source, StandardCharsets.UTF_8)).getAsJsonObject();
         modernizeLootJson(table);
+        remapLegacyItems(table);
         table.addProperty("type", "minecraft:chest");
         return table;
+    }
+
+    /** Points 1.12 item names at their current IDs, as the save migration does. */
+    private static void remapLegacyItems(JsonElement element) {
+        if (element.isJsonArray()) {
+            element.getAsJsonArray().forEach(GeneratedData::remapLegacyItems);
+            return;
+        }
+        if (!element.isJsonObject()) return;
+        JsonObject object = element.getAsJsonObject();
+        if (object.has("name") && object.get("name").isJsonPrimitive()
+                && object.get("name").getAsString().startsWith(BaseMetals.MOD_ID + ":")) {
+            String path = object.get("name").getAsString().substring(BaseMetals.MOD_ID.length() + 1);
+            object.addProperty("name", zone.moddev.mc.basemetals.MissingMappings.itemTargetId(path).toString());
+        }
+        object.entrySet().forEach(entry -> remapLegacyItems(entry.getValue()));
     }
 
     private static void modernizeLootJson(JsonElement element) {
@@ -1715,7 +1761,7 @@ final class GeneratedData implements DataProvider {
     }
     private static String advancementIcon(String id) {
         return switch (id) {
-            case "blocktastic" -> "basemetals:copper_block";
+            case "blocktastic" -> "minecraft:copper_block";
             case "geologist" -> "basemetals:iron_crackhammer";
             case "metallurgy" -> "basemetals:bronze_blend";
             case "angel_of_death" -> "basemetals:mithril_sword";
@@ -1724,7 +1770,7 @@ final class GeneratedData implements DataProvider {
             case "juggernaut" -> "basemetals:adamantine_chestplate";
             case "moon_boots" -> "basemetals:starsteel_boots";
             default -> id.endsWith("_maker") ? "basemetals:" + id.substring(0, id.length() - 6) + "_blend"
-                    : "basemetals:copper_ingot";
+                    : "minecraft:copper_ingot";
         };
     }
 
@@ -1785,7 +1831,7 @@ final class GeneratedData implements DataProvider {
             net.minecraft.world.item.Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM
                     .get(ResourceLocation.parse(result));
             String category = switch (zone.moddev.mc.basemetals.ModTabs.category(item)) {
-                case "blocks" -> "building";
+                case "blocks" -> isRedstoneComponent(item) ? "redstone" : "building";
                 case "tools", "combat" -> "equipment";
                 default -> "misc";
             };
@@ -1797,6 +1843,15 @@ final class GeneratedData implements DataProvider {
         pendingWrites.add(DataProvider.saveStable(cache, value, output.resolve(relative)));
     }
 
+    /** Blocks vanilla's recipe book files under redstone rather than building. */
+    private static boolean isRedstoneComponent(Item item) {
+        return item instanceof net.minecraft.world.item.BlockItem blockItem
+                && (blockItem.getBlock() instanceof BasePressurePlateBlock || blockItem.getBlock() instanceof DoorBlock
+                        || blockItem.getBlock() instanceof TrapDoorBlock || blockItem.getBlock() instanceof ButtonBlock
+                        || blockItem.getBlock() instanceof net.minecraft.world.level.block.LeverBlock
+                        || blockItem.getBlock() instanceof net.minecraft.world.level.block.TripWireHookBlock);
+    }
+
     private static String materialName(JsonObject language, String material) {
         String legacyKey = "material." + material + ".name";
         String key = language.has(legacyKey) ? legacyKey : "material.basemetals." + material;
@@ -1806,12 +1861,8 @@ final class GeneratedData implements DataProvider {
 
     private void writeOreLoot(CachedOutput cache, String ore) throws IOException {
         String material = ore.substring(0, ore.length() - 4);
-        String raw = material.equals("copper") ? "minecraft:raw_copper" : "basemetals:" + material + "_raw";
+        String raw = "basemetals:" + material + "_raw";
         JsonArray functions = new JsonArray();
-        if (material.equals("copper")) {
-            functions.add(object("function", "minecraft:set_count", "count",
-                    object("type", "minecraft:uniform", "min", 2, "max", 3)));
-        }
         functions.add(object("function", "minecraft:apply_bonus", "enchantment", "minecraft:fortune",
                 "formula", "minecraft:ore_drops"));
         functions.add(object("function", "minecraft:explosion_decay"));
@@ -1834,7 +1885,7 @@ final class GeneratedData implements DataProvider {
 
     private void writeRawProcessing(CachedOutput cache) throws IOException {
         List<String> rawMaterials = new ArrayList<>(List.of("iron", "gold", "copper"));
-        MaterialCatalogue.all().stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
+        MaterialCatalogue.all().stream().filter(MaterialDefinition::hasOre)
                 .map(MaterialDefinition::name).forEach(rawMaterials::add);
 
         for (String material : rawMaterials) {

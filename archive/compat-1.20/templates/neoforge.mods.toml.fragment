@@ -1,0 +1,19 @@
+# Archived from src/main/templates/META-INF/neoforge.mods.toml.
+# These ranges are 1.20.1-era (Tinkers 3.7.x, Ender IO 6.x): update them for the target version before restoring.
+
+[[dependencies.${mod_id}]]
+modId="tconstruct"
+type="optional"
+versionRange="[3.7,4)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="enderio_machines"
+type="optional"
+# Maven qualifier ordering places commit-suffixed 6.0.0 alpha builds below
+# the bare 6.0.0-alpha token. This range admits the intended major-6 alpha
+# line while still rejecting every other Ender IO major version.
+versionRange="(5,7)"
+ordering="AFTER"
+side="BOTH"

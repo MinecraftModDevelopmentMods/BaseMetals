@@ -8,7 +8,6 @@
     "#c:dusts/brass",
     "#c:dusts/bronze",
     "#c:dusts/coldiron",
-    "#c:dusts/copper",
     "#c:dusts/cupronickel",
     "#c:dusts/electrum",
     "#c:dusts/invar",
@@ -22,6 +21,7 @@
     "#c:dusts/starsteel",
     "#c:dusts/steel",
     "#c:dusts/tin",
-    "#c:dusts/zinc"
+    "#c:dusts/zinc",
+    "#c:dusts/copper"
   ]
 }

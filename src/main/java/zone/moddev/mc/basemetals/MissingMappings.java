@@ -2,6 +2,7 @@ package zone.moddev.mc.basemetals;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +13,16 @@ import zone.moddev.mc.lib.common.runtime.RuntimeContentRegistrar;
 /** Registry-name aliases used when loading older Minecraft and Base Metals saves. */
 public final class MissingMappings {
     private MissingMappings() {}
+
+    /**
+     * Copper is a vanilla extension: Base Metals' own copper ingot, block, ore, door and
+     * trapdoor became vanilla's. Paths are the same in both namespaces.
+     */
+    private static final List<String> VANILLA_COPPER_BLOCKS = List.of(
+            "copper_block", "copper_ore", "copper_door", "copper_trapdoor");
+    private static final Map<String, String> VANILLA_COPPER_ITEMS = Map.of(
+            "copper_ingot", "copper_ingot", "copper_block", "copper_block", "copper_ore", "copper_ore",
+            "copper_door", "copper_door", "copper_door_item", "copper_door", "copper_trapdoor", "copper_trapdoor");
 
     /** Called once Base Metals content has been queued, before registry events. */
     public static void registerAliases() {
@@ -38,6 +49,11 @@ public final class MissingMappings {
             alias(ModContent.ITEMS, registered, namespace, "liquid_mercury", id(BaseMetals.MOD_ID, "mercury_bucket"));
             alias(ModContent.ITEMS, registered, namespace, "carbon_powder", itemTargetId("carbon_powder"));
             alias(ModContent.ITEMS, registered, namespace, "iron_nugget", id("minecraft", "iron_nugget"));
+            for (String path : VANILLA_COPPER_BLOCKS) {
+                alias(ModContent.BLOCKS, registered, namespace, path, id("minecraft", path));
+            }
+            VANILLA_COPPER_ITEMS.forEach((path, target) ->
+                    alias(ModContent.ITEMS, registered, namespace, path, id("minecraft", target)));
             alias(ModContent.FLUIDS, registered, namespace, "liquid_mercury", id(BaseMetals.MOD_ID, "mercury"));
         }
         for (String path : List.of("sign", "wall_sign")) {
@@ -93,6 +109,9 @@ public final class MissingMappings {
     public static ResourceLocation itemTargetId(String path) {
         // 1.12's carbon powder is the coal vanilla extension's powder.
         if ("carbon_powder".equals(path)) return ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, "coal_powder");
+        if (VANILLA_COPPER_ITEMS.containsKey(path)) {
+            return ResourceLocation.fromNamespaceAndPath("minecraft", VANILLA_COPPER_ITEMS.get(path));
+        }
         return "iron_nugget".equals(path)
                 ? ResourceLocation.fromNamespaceAndPath("minecraft", "iron_nugget")
                 : ResourceLocation.fromNamespaceAndPath(BaseMetals.MOD_ID, itemTargetPath(path));

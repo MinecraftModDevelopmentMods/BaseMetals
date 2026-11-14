@@ -18,6 +18,7 @@ import zone.moddev.mc.basemetals.content.ModContent;
 import zone.moddev.mc.lib.common.runtime.MaterialAnvilBlock;
 import zone.moddev.mc.lib.common.runtime.PlateBlock;
 import zone.moddev.mc.basemetals.material.MaterialCatalogue;
+import zone.moddev.mc.basemetals.material.MaterialDefinition;
 
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -32,7 +33,7 @@ import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-@EventBusSubscriber(modid = BaseMetals.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = BaseMetals.MOD_ID)
 public final class BaseMetalsDataGenerators {
     private BaseMetalsDataGenerators() {}
 
@@ -207,7 +208,7 @@ public final class BaseMetalsDataGenerators {
 
         @Override
         protected void registerModels() {
-            MaterialCatalogue.all().stream().filter(material -> material.hasOre() && !material.name().equals("copper"))
+            MaterialCatalogue.all().stream().filter(MaterialDefinition::hasOre)
                     .forEach(material -> basicFromTexture(material.name() + "_raw", material.name() + "_raw"));
 
             ModContent.fluids().forEach((name, fluid) -> getBuilder(name + "_bucket")

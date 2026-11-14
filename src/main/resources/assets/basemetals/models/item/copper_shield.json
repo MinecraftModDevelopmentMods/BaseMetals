@@ -1,7 +1,7 @@
 {
   "parent": "basemetals:item/shield",
   "textures": {
-    "shield": "basemetals:block/copper_block"
+    "shield": "minecraft:block/copper_block"
   },
     "overrides": [
         {

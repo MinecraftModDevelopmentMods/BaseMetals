@@ -42,9 +42,9 @@ Additional Loot Tables is not needed.
 ## Requirements
 
 - Minecraft `1.21.1`
-- NeoForge `21.1.247` or newer in the Minecraft 1.21.1 line
+- NeoForge `21.1.265` or newer in the Minecraft 1.21.1 line
 - Java 21
-- MMDLib `2.0.1.121012+Neo` on both client and server
+- MMDLib `2.0.2.121012+Neo` or newer on both client and server
 - OreSpawn `[4.0.16.121012,5.0.0)` for Minecraft 1.21.1 NeoForge on both client and server
 
 This version builds against OreSpawn `4.0.16.121012`. Put
@@ -230,7 +230,7 @@ They do not change the build or deployment workflow. See
 [Port regression checks](tools/verification/README.md) for details.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:4.0.0.121012`.
+`zone.moddev.mc.basemetals:BaseMetals:4.0.1.121012`.
 
 Report defects and compatibility problems through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
