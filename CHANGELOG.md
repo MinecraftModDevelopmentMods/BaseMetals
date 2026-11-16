@@ -1,3 +1,10 @@
+### Base Metals 4.0.2.121012
+
+- Give Overworld tin, lead, zinc, silver and mercury more selective rock and geological-province preferences.
+- Favour mafic rocks for nickel and platinum, with optional Mineralogy hosts and natural vanilla-stone fallbacks.
+- Use the public OreSpawn 4.1.1 release used for the combined geology checks.
+- Keep vein sizes, Nether/End rules, custom-dimension fallbacks and saved profiles unchanged.
+
 ### Base Metals 4.0.1.121012 (in development)
 
 - Extend vanilla copper like the other vanilla materials instead of re-adding its ingot, block, ore, door and trapdoor. Old Base Metals copper IDs map to the vanilla ones. Like iron and gold, copper no longer has villager trades, copper shields leave the anvil plate-upgrade chain, and copper blocks are no longer a beacon base.
