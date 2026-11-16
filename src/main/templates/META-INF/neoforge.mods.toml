@@ -14,7 +14,7 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
 modId="orespawn"
 type="required"
-versionRange="[4.0.16.121012,5.0.0)"
+versionRange="[4.1.1.121012,5.0.0)"
 ordering="AFTER"
 side="BOTH"
 
