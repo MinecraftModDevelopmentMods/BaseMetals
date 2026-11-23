@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_post_ends",
+  "textures": {
+    "particle": "basemetals:block/quartz_bars",
+    "bars": "basemetals:block/quartz_bars",
+    "edge": "basemetals:block/quartz_bars"
+  }
+}

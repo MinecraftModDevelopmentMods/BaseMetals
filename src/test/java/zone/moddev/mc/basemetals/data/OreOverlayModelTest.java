@@ -37,7 +37,7 @@ class OreOverlayModelTest {
         JsonArray elements = model.getAsJsonArray("elements");
         assertEquals(2, elements.size());
         assertElement(elements.get(0).getAsJsonObject(), 0, 16, "#base");
-        assertElement(elements.get(1).getAsJsonObject(), -0.001, 16.001, "#overlay");
+        assertElement(elements.get(1).getAsJsonObject(), -0.05, 16.05, "#overlay");
     }
 
     @Test
@@ -165,6 +165,7 @@ class OreOverlayModelTest {
         for (Map.Entry<String, JsonElement> face : faces.entrySet()) {
             assertEquals(texture, face.getValue().getAsJsonObject().get("texture").getAsString());
             assertEquals(face.getKey(), face.getValue().getAsJsonObject().get("cullface").getAsString());
+            assertEquals("[0,0,16,16]", face.getValue().getAsJsonObject().getAsJsonArray("uv").toString());
         }
     }
 

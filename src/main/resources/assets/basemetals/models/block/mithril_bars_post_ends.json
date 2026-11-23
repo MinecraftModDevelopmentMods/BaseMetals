@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_post_ends",
+  "textures": {
+    "particle": "basemetals:block/mithril_bars",
+    "bars": "basemetals:block/mithril_bars",
+    "edge": "basemetals:block/mithril_bars"
+  }
+}

@@ -430,4 +430,6 @@ for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang
   writeJson(file, language);
 }
 
+require('./generate_bar_models')('basemetals', path.join(generated,'assets/basemetals/blockstates'), path.join(main,'assets/basemetals/models/block'), 'block');
+
 console.log('Generated Minecraft 1.14.4-compatible Base Metals resources.');
