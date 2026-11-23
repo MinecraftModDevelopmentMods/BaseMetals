@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_post_ends",
+  "textures": {
+    "particle": "basemetals:block/starsteel_bars",
+    "bars": "basemetals:block/starsteel_bars",
+    "edge": "basemetals:block/starsteel_bars"
+  }
+}

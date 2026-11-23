@@ -93,3 +93,9 @@ tasks.named('check') {
 project.ext.baseMetalsBuild.putAll([
         generateOreModels: generateOreModels
 ])
+
+tasks.register('verifyBarModels', Exec) {
+    dependsOn verifyGeneratedData
+    commandLine 'node', '--test', 'tools/test_bar_models.js'
+}
+tasks.named('check') { dependsOn 'verifyBarModels' }

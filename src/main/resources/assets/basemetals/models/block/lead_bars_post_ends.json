@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/iron_bars_post_ends",
+  "textures": {
+    "particle": "basemetals:block/lead_bars",
+    "bars": "basemetals:block/lead_bars",
+    "edge": "basemetals:block/lead_bars"
+  }
+}

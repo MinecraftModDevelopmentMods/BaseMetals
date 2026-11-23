@@ -12,7 +12,7 @@ shields, bows, crossbows, arrows, and bolts. The mod also includes Crack
 Hammers, scythes, metal anvils, the human detector, villager trades,
 advancements, and extra loot to find in chests.
 
-This is the Minecraft 1.14.4 version, `3.0.1.114041`, continued from the finished
+This is the Minecraft 1.14.4 version, `3.0.2.114041`, continued from the finished
 1.13.2 port. It keeps the historical `basemetals` block and item IDs, but no longer
 needs MMDLib or Additional Loot Tables. OreSpawn places the ores, and Base
 Metals supplies the metals and their recipes.
@@ -29,7 +29,7 @@ Armorer, Weaponsmith and Toolsmith professions introduced in Minecraft 1.14.
 - Java 8
 - OreSpawn `[4.1.0.114041,5.0.0)` on both client and server
 
-Put `BaseMetals-3.0.1.114041.jar` and OreSpawn `4.1.0.114041` (or a later
+Put `BaseMetals-3.0.2.114041.jar` and OreSpawn `4.1.0.114041` (or a later
 compatible OreSpawn 4 build for 1.14.4) in the `mods` directory. MMDLib and
 Additional Loot Tables are not dependencies. Mineralogy is optional.
 
@@ -195,10 +195,18 @@ from CurseMaven. The build checks its exact file ID and SHA-256 before release
 auditing and packaged tests; no local OreSpawn build is needed.
 
 Release artifacts use Maven coordinate
-`zone.moddev.mc.basemetals:BaseMetals:3.0.1.114041`.
+`zone.moddev.mc.basemetals:BaseMetals:3.0.2.114041`.
 
 Report defects through the
 [Base Metals issue tracker](https://github.com/MinecraftModDevelopmentMods/BaseMetals/issues).
 
 Base Metals is licensed under [LGPL-2.1](LICENSE). Bundled or derived third-party
 art is covered by the accompanying attribution and licence files.
+
+## Bars and ore overlays
+
+This version fixes all 26 material bars and increases the ore
+overlay spacing to 0.05 pixels. The bars use Minecraft 1.14's own iron-bar
+parts for straight runs, corners, ends and junctions. Ore overlays keep their
+texture coordinates inside the sprite so the wider spacing does not pull in
+neighbouring textures.

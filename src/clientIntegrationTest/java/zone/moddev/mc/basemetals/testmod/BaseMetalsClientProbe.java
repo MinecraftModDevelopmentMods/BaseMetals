@@ -240,6 +240,7 @@ public final class BaseMetalsClientProbe {
         validateBucketModel(minecraft, "mercury_bucket");
         validateBucketModel(minecraft, "tin_bucket");
         validateOreModels(minecraft);
+        BarModelChecks.run(minecraft, "basemetals");
         minecraft.getResourceManager().getResource(
                 new ResourceLocation("basemetals", "textures/item/adamantine_sword.png"));
         minecraft.getResourceManager().getResource(
@@ -425,10 +426,13 @@ public final class BaseMetalsClientProbe {
     private static void validateOreVertices(BakedQuad quad, boolean overlay, String name) {
         int[] vertices = quad.getVertexData();
         int stride = vertices.length / 4;
-        float low = overlay ? -0.001F / 16 : 0;
-        float high = overlay ? 16.001F / 16 : 1;
+        float low = overlay ? -0.05F / 16 : 0;
+        float high = overlay ? 16.05F / 16 : 1;
 
         for (int vertex = 0; vertex < 4; vertex++) {
+            float u = quad.getSprite().getUnInterpolatedU(Float.intBitsToFloat(vertices[vertex * stride + 4]));
+            float v = quad.getSprite().getUnInterpolatedV(Float.intBitsToFloat(vertices[vertex * stride + 5]));
+            require(u >= -0.01F && u <= 16.01F && v >= -0.01F && v <= 16.01F, name + " samples outside its texture sprite");
             for (int axis = 0; axis < 3; axis++) {
                 float coordinate = Float.intBitsToFloat(vertices[vertex * stride + axis]);
                 require(Math.min(Math.abs(coordinate - low), Math.abs(coordinate - high)) < 0.000001F,

@@ -1,5 +1,11 @@
-Base Metals 3.0.1.114041
+Base Metals 3.0.2.114041 for Minecraft 1.14.4
 
+- Fix bars in every material so straight runs, corners and junctions use the
+  vanilla connection model without overlapping posts or caps.
+- Increase the ore overlay gap to 0.05 pixels to avoid flicker at shallow angles,
+  keeping the texture inside its sprite.
+
+Base Metals 3.0.1.114041 for Minecraft 1.14.4
 - Bring the finished 1.13.2 port to Minecraft 1.14.4 and Forge 28.2.26.
 - Keep existing blocks, items, recipes, save identities, High/Low Fantasy
   settings and material-based recipe discovery.
