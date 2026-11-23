@@ -289,3 +289,5 @@ apply from: 'gradle/verification/generated-data.gradle'
 apply from: 'gradle/ide/eclipse.gradle'
 apply from: 'gradle/ide/intellij.gradle'
 apply from: 'gradle/verification/packaged-forge.gradle'
+
+apply from: 'gradle/normalize-javadoc-trees.gradle'
