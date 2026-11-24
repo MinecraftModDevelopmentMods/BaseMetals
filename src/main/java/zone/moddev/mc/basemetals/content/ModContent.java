@@ -230,11 +230,11 @@ public final class ModContent {
         if ("plate".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new PlateBlock(properties.get(), material.requiredHarvestLevel()); } };
         } else if ("bars".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestPane(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestPane(properties.get().variableOpacity().notSolid(), material.requiredHarvestLevel()); } };
         } else if ("door".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestDoor(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestDoor(properties.get().variableOpacity().notSolid(), material.requiredHarvestLevel()); } };
         } else if ("trapdoor".equals(form)) {
-            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestTrapDoor(properties.get().variableOpacity(), material.requiredHarvestLevel()); } };
+            factory = new Supplier<Block>() { @Override public Block get() { return new HarvestTrapDoor(properties.get().variableOpacity().notSolid(), material.requiredHarvestLevel()); } };
         } else if ("button".equals(form)) {
             factory = new Supplier<Block>() { @Override public Block get() { return new HarvestButton(properties.get().doesNotBlockMovement(), material.requiredHarvestLevel()); } };
         } else if ("slab".equals(form)) {
