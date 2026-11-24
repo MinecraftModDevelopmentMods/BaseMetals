@@ -431,3 +431,5 @@ for (const file of filesUnder(path.join(generated, 'assets', 'basemetals', 'lang
 }
 
 console.log('Generated Minecraft 1.15.2-compatible Base Metals resources.');
+
+require('./generate_bar_models')('basemetals', path.join(generated,'assets/basemetals/blockstates'), path.join(main,'assets/basemetals/models/block'), 'block');

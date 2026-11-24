@@ -1,3 +1,9 @@
+Base Metals 3.0.3.115021
+
+- Fixed flickering ore overlays on stone, Netherrack and End Stone.
+- Bars now connect the same way as vanilla iron bars.
+- Fixed floors and walls disappearing through the gaps in doors and trapdoors.
+
 Base Metals 3.0.2.115021
 
 - Fix an intermittent world loading and saving failure when other mods also
